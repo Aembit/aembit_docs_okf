@@ -6,7 +6,7 @@ Aembit's public documentation published as an [Open Knowledge Format](https://op
 
 ## Provenance
 
-- **Source:** `aembit/aembit_docs_astro` @ [`900a21e65ae923db87382f44ba6f98f426054e2a`](https://github.com/aembit/aembit_docs_astro/commit/900a21e65ae923db87382f44ba6f98f426054e2a)
+- **Source:** `aembit/aembit_docs_astro` @ [`0381f195f8ca711c5d8384f0d45cbc87c8f57e88`](https://github.com/aembit/aembit_docs_astro/commit/0381f195f8ca711c5d8384f0d45cbc87c8f57e88)
 - **Synced:** 2026-07-09
 
 ## Using this bundle
