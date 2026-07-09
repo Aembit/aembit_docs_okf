@@ -1,0 +1,65 @@
+---
+type: explanation
+title: "Configure multiple Credential Providers"
+description: "Overview of configuring multiple Credential Providers in a single Access Policy"
+resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/multiple-credential-providers/
+tags: [credential-provider, access-policy]
+timestamp: 2025-12-04T22:08:22-08:00
+---
+
+# Configure multiple Credential Providers
+
+Some scenarios require multiple Credential Providers**Credential Provider**: Credential Providers obtain the specific access credentials—such as API keys, OAuth tokens, or temporary cloud credentials—that Client Workloads need to authenticate to Server Workloads.[Learn more](../../../get-started/concepts/credential-providers.md) in a single Access Policy**Access Policy**: Access Policies define, enforce, and audit access between Client and Server Workloads by cryptographically verifying workload identity and contextual factors rather than relying on static secrets.[Learn more](../../../get-started/concepts/access-policies.md). For example, you might need different credentials for different users accessing the same Server Workload**Server Workload**: Server Workloads represent target services, APIs, databases, or applications that receive and respond to access requests from Client Workloads.[Learn more](../../../get-started/concepts/server-workloads.md), or different IAM roles for accessing different AWS services.
+
+This page provides an overview of multiple Credential Provider support. For configuration procedures, see the type-specific documentation in the following sections.
+
+## Supported Credential Provider types
+
+[Section titled “Supported Credential Provider types”](#supported-credential-provider-types)
+
+You can add multiple Credential Providers of the following types to a single Access Policy:
+
+| Type                                                                                                                           | Selector mechanism                                              |
+| ------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------- |
+| **[AWS STS Credential Providers (STS)](aws-security-token-service-multiple.md)** | - Access Key ID                                                 |
+| **[JSON Web Token (JWT) Credential Providers](json-web-token-multiple.md)**      | - Username (Snowflake Server Workloads only) - HTTP header/body |
+
+## How Credential Provider selection works
+
+[Section titled “How Credential Provider selection works”](#how-credential-provider-selection-works)
+
+When you configure multiple Credential Providers in an Access Policy, Aembit uses selector values to determine which Credential Provider handles each request.
+
+### AWS STS Credential Providers
+
+[Section titled “AWS STS Credential Providers”](#aws-sts-credential-providers)
+
+AWS STS Credential Providers use **Access Key ID selectors**. Each Credential Provider in the Access Policy must have a unique Access Key ID that your application uses as a placeholder in requests. Agent Proxy extracts the Access Key ID from the AWS SigV4 Authorization header and routes the request to the matching Credential Provider.
+
+For configuration procedures, see [Configure an AWS STS Federation Credential Provider](aws-security-token-service-federation.md#configure-multiple-aws-sts-credential-providers).
+
+### JWT Credential Providers
+
+[Section titled “JWT Credential Providers”](#jwt-credential-providers)
+
+JWT Credential Providers use **username mapping** (for Snowflake) or **HTTP header/body mapping** (for HTTP workloads). Each Credential Provider must have a unique mapping value. When a request arrives, Aembit extracts the mapping value and routes the request to the matching Credential Provider.
+
+For configuration procedures, see [Configure a JWT Credential Provider](json-web-token.md#configure-multiple-jwt-credential-providers).
+
+## Benefits
+
+[Section titled “Benefits”](#benefits)
+
+* **Simplified policy management** - Manage multiple credentials within a single Access Policy instead of creating separate policies for each credential scenario.
+* **Scalability** - Efficiently supports multiple Credential Providers per Access Policy.
+* **Seamless application experience** - Applications can access different resources with different credentials without code changes or multiple Client Workload**Client Workload**: Client Workloads represent software applications, scripts, or automated processes that initiate access requests to Server Workloads, operating autonomously without direct user interaction.[Learn more](../../../get-started/concepts/client-workloads.md) identities.
+
+## Related topics
+
+[Section titled “Related topics”](#related-topics)
+
+* [Using multiple AWS STS Credential Providers](aws-security-token-service-multiple.md) - Learn how Aembit routes requests to multiple AWS STS Credential Providers
+* [Configure an AWS STS Federation Credential Provider](aws-security-token-service-federation.md) - Configure single and multiple AWS STS Credential Providers
+* [Using multiple JWT Credential Providers](json-web-token-multiple.md) - Learn how Aembit routes requests to multiple JWT Credential Providers
+* [Configure a JWT Credential Provider](json-web-token.md) - Configure single and multiple JWT Credential Providers
+* [Credential Providers overview](overview.md) - Overview of all available Credential Provider types
