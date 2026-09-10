@@ -3,42 +3,39 @@ type: explanation
 title: "About Credential Providers"
 description: "Understanding Credential Providers and their role in secure access credential management"
 resource: https://docs.aembit.io/get-started/concepts/credential-providers/
-tags: [concept]
-timestamp: 2026-04-13T13:05:24-07:00
-type_inferred: true
+tags: ["concept"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # About Credential Providers
 
-Credential Providers**Credential Provider**: Credential Providers obtain the specific access credentials—such as API keys, OAuth tokens, or temporary cloud credentials—that Client Workloads need to authenticate to Server Workloads.[Learn more](credential-providers.md) bridge the gap between authorized Client Workloads**Client Workload**: Client Workloads represent software applications, scripts, or automated processes that initiate access requests to Server Workloads, operating autonomously without direct user interaction.[Learn more](client-workloads.md) and the authentication requirements of target Server Workloads**Server Workload**: Server Workloads represent target services, APIs, databases, or applications that receive and respond to access requests from Client Workloads.[Learn more](server-workloads.md). They obtain the specific access credentials—such as API keys, OAuth tokens, temporary cloud credentials, or signed tokens—that Client Workloads need to authenticate successfully to Server Workloads.
+Credential Providers bridge the gap between authorized Client Workloads and the authentication requirements of target Server Workloads. They obtain the specific access credentials—such as API keys, OAuth tokens, temporary cloud credentials, or signed tokens—that Client Workloads need to authenticate successfully to Server Workloads.
 
 Credential Providers function as an abstraction layer, decoupling Client Workloads from the complex authentication mechanisms required by diverse Server Workloads. Whether a target service requires AWS federation, OAuth 2.0 flows, JWT validation, or basic API keys, the Client Workload doesn’t need to implement the corresponding protocol logic.
 
-Aembit invokes Credential Providers only after rigorous security checks: first, Trust Providers**Trust Provider**: Trust Providers validate Client Workload identities through workload attestation, verifying identity claims from the workload's runtime environment rather than relying on pre-shared secrets.[Learn more](trust-providers.md) verify the Client Workload’s identity through attestation, and second, all Access Conditions**Access Condition**: Access Conditions add dynamic, context-aware constraints to authorization by evaluating circumstances like time, location, or security posture to determine whether to grant access.[Learn more](access-conditions.md) must pass. This ensures that credentials are only dispensed to trusted and authorized requesters.
+Aembit invokes Credential Providers only after rigorous security checks: first, Trust Providers verify the Client Workload’s identity through attestation, and second, all Access Conditions must pass. This ensures that credentials are only dispensed to trusted and authorized requesters.
 
 ![](https://docs.aembit.io/aembit-icons/gears-light.svg)
 
-[Start configuring Credential Providers ](../../user-guide/access-policies/credential-providers/overview.md)See Credential Providers in the User Guide
+[Start configuring Credential Providers](../../user-guide/access-policies/credential-providers/overview.md)See Credential Providers in the User Guide
 
 →
 
 ## How Credential Providers work
 
-[Section titled “How Credential Providers work”](#how-credential-providers-work)
-
 The following steps outline how Aembit uses Credential Providers during the authorization process:
 
-1. **Request Access** - A Client Workload**Client Workload**: Client Workloads represent software applications, scripts, or automated processes that initiate access requests to Server Workloads, operating autonomously without direct user interaction.[Learn more](client-workloads.md) initiates a request to access a Server Workload, which Aembit Edge**Aembit Edge**: Aembit Edge represents components deployed within your operational environments that enforce Access Policies by intercepting traffic, verifying identities, and injecting credentials just-in-time.[Learn more](aembit-edge.md) intercepts.
+1. **Request Access** - A Client Workload initiates a request to access a Server Workload, which Aembit Edge intercepts.
 
 2. **Identity and Context Verification** - Aembit first verifies the workload’s identity through Trust Providers and evaluates all Access Conditions.
 
-3. **Credential Provider**Credential Provider**: Credential Providers obtain the specific access credentials—such as API keys, OAuth tokens, or temporary cloud credentials—that Client Workloads need to authenticate to Server Workloads.[Learn more](credential-providers.md) Selection** - Once all security checks pass, Aembit selects the appropriate Credential Provider based on the matched Access Policy configuration.
+3. **Credential Provider Selection** - Once all security checks pass, Aembit selects the appropriate Credential Provider based on the matched Access Policy configuration.
 
 4. **Backend Interaction** - The Credential Provider interacts with the relevant backend system (AWS Security Token Service (STS), OAuth server, internal vault, etc.) to obtain the required access credential.
 
 5. **Credential Acquisition** - The provider generates, retrieves, or manages the specific credential format needed by the target Server Workload.
 
-6. **Secure Transmission** - Aembit Cloud**Aembit Cloud**: Aembit Cloud serves as both the central control plane and management plane, making authorization decisions, evaluating policies, coordinating credential issuance, and providing administrative interfaces for configuration.[Learn more](aembit-cloud.md) securely transmits the obtained credential back to the Aembit Edge component that intercepted the original request.
+6. **Secure Transmission** - Aembit Cloud securely transmits the obtained credential back to the Aembit Edge component that intercepted the original request.
 
 7. **Credential Injection** - Aembit Edge modifies the original client request by injecting the credential (typically into HTTP headers) before forwarding it to the Server Workload.
 
@@ -48,13 +45,9 @@ The following diagram illustrates this process:
 
 ## Supported provider types
 
-[Section titled “Supported provider types”](#supported-provider-types)
-
 Aembit offers multiple types of Credential Providers to accommodate the varied authentication mechanisms used by modern and legacy Server Workloads:
 
 ### Local providers
-
-[Section titled “Local providers”](#local-providers)
 
 **Local Credential Providers** store and manage credential values within the Aembit platform itself. When invoked, Aembit retrieves the pre-configured secret from its internal secure storage.
 
@@ -70,8 +63,6 @@ Aembit offers multiple types of Credential Providers to accommodate the varied a
 * Bridging authentication for systems during modernization transitions
 
 ### Remote providers
-
-[Section titled “Remote providers”](#remote-providers)
 
 **Remote Credential Providers** interact with external systems to dynamically generate or retrieve access credentials on behalf of Client Workloads. Aembit acts as a broker to these external credential authorities.
 
@@ -102,8 +93,6 @@ Aembit offers multiple types of Credential Providers to accommodate the varied a
 
 ### Advanced configurations
 
-[Section titled “Advanced configurations”](#advanced-configurations)
-
 Aembit supports sophisticated configurations for complex scenarios:
 
 * **[Multiple Credential Providers](../../user-guide/access-policies/credential-providers/multiple-credential-providers.md)** - Associate multiple providers with a single Access Policy for different authentication paths.
@@ -112,8 +101,6 @@ Aembit supports sophisticated configurations for complex scenarios:
 * **[Integration Options](../../user-guide/access-policies/credential-providers/integrations/overview.md)** - Extended integration capabilities for specialized platforms.
 
 ## Benefits of using Credential Providers
-
-[Section titled “Benefits of using Credential Providers”](#benefits-of-using-credential-providers)
 
 * **Security Abstraction** - Shields Client Workloads from complex authentication protocols, reducing the risk of implementation errors and credential exposure.
 

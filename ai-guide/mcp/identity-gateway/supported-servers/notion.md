@@ -4,19 +4,19 @@ title: "Notion MCP Server"
 description: "Configure the Notion MCP Server to work with AI agents through the Aembit MCP Identity Gateway."
 resource: https://docs.aembit.io/ai-guide/mcp/identity-gateway/supported-servers/notion/
 interface: mcp
-tags: [supported-server, identity-gateway, mcp]
-timestamp: 2026-06-30T12:35:49-04:00
+tags: ["supported-server", "identity-gateway", "mcp"]
+timestamp: 2026-08-10T14:01:53-07:00
 ---
 
 # Notion MCP Server
 
-Aembit supports the official [Notion MCP server](https://developers.notion.com/guides/mcp/overview), which lets AI agents**AI Agent**: A software workload that authenticates to systems, requests credentials, and accesses resources, either on behalf of a person or on its own. Aembit secures AI agents with the same identity-first model it uses for any workload. User-driven agents such as Claude Desktop also carry a blended identity that ties access to both the user and the agent.[Learn more](../../../../get-started/use-cases/ai-agents.md) search and read workspace content through MCP**Model Context Protocol**: A standard protocol for AI agent and server interactions that defines how AI assistants communicate with external tools and data sources.[Learn more(opens in new tab)](https://modelcontextprotocol.io/) tools.
+Aembit supports the official [Notion MCP server](https://developers.notion.com/guides/mcp/overview), which lets AI agents search and read workspace content through MCP tools.
 
-This page describes how to configure Notion as an MCP server**MCP Server**: A server that implements the Model Context Protocol to provide tools, resources, or data to AI agents and MCP clients.[Learn more(opens in new tab)](https://modelcontextprotocol.io/specification/2025-03-26/server) behind the Aembit MCP Identity Gateway**MCP Identity Gateway**: A component that brokers MCP traffic between MCP clients and target MCP servers, validating authorization and presenting Aembit-managed credentials on each request.[Learn more](../overview.md). Each user authenticates with their own Notion identity, and the Gateway injects their token into MCP requests.
+This page describes how to configure Notion as an MCP server behind the Aembit MCP Identity Gateway. Each user authenticates with their own Notion identity, and the Gateway injects their token into MCP requests.
+
+This guide builds the Gateway-to-Server Policy—the second of the two Access Policies the MCP Identity Gateway requires. You create the first, the Client-to-Gateway Policy, during [Gateway setup](../setup-mcp-gateway.md).
 
 ## Prerequisites
-
-[Section titled “Prerequisites”](#prerequisites)
 
 Before you begin, ensure you have the following:
 
@@ -25,30 +25,23 @@ Before you begin, ensure you have the following:
 
 ## Requirements and considerations
 
-[Section titled “Requirements and considerations”](#requirements-and-considerations)
-
 Before you configure Notion, review these requirements and behaviors specific to Notion’s MCP server.
 
-* **Create a Public integration.** Notion’s OAuth flow requires a Public integration. Internal integrations and Personal Access Tokens (`ntn_*`) work only with the deprecated local (stdio) Notion MCP server, not the remote server Aembit connects to.
-* **Aembit refreshes tokens automatically.** Notion issues short-lived (one-hour) access tokens with rotating refresh tokens. Aembit refreshes them in the background, so users don’t need to re-authorize each hour.
+* **Internal integration tokens don’t work remotely.** Personal or internal integration tokens (`ntn_****`) work only with Notion’s local (stdio) MCP server, not the remote one. Notion is prioritizing the remote server and may deprecate the local stdio server, so always use the remote MCP server URL.
+* **Use User-Based Auth.** Aembit supports User-Based Auth for Notion.
 
 ## Create the integration
 
-[Section titled “Create the integration”](#create-the-integration)
-
-Notion requires a registered Public integration before users can authenticate through OAuth.
+Notion doesn’t support OAuth Dynamic Client Registration, so an administrator must create a Public Integration before users can authenticate.
 
 1. Go to [Notion integrations](https://www.notion.so/profile/integrations) and click **New integration**.
-
-2. Select the **Public** integration type, enter a name and the required organization and contact details, then create the integration.
-
-3. Copy the **OAuth client ID** and **OAuth client secret**, and store them for the next section. Keep the integration settings open. You add the Aembit Redirect URI after you create the Credential Provider.
+2. Set the type to **Public**. This enables OAuth; internal or private integrations don’t support OAuth.
+3. Under **OAuth Domain & URIs**, add the Aembit Credential Provider’s **Callback URL**. Copy the exact read-only value from the Credential Provider after you create it in Aembit.
+4. Save the integration, then note the **Client ID** and **Client Secret** for the Credential Provider configuration.
 
 ## Configure the Credential Provider
 
-[Section titled “Configure the Credential Provider”](#configure-the-credential-provider)
-
-Create an MCP User-Based Access Token Credential Provider**Credential Provider**: Credential Providers obtain the specific access credentials—such as API keys, OAuth tokens, or temporary cloud credentials—that Client Workloads need to authenticate to Server Workloads.[Learn more](../../../../get-started/concepts/credential-providers.md) in Aembit.
+Create an MCP User-Based Access Token Credential Provider in Aembit.
 
 1. Log into your Aembit Tenant.
 
@@ -56,14 +49,14 @@ Create an MCP User-Based Access Token Credential Provider**Credential Provider**
 
 3. Configure the following fields:
 
-   | Field               | Value                                                |
-   | ------------------- | ---------------------------------------------------- |
-   | **Name**            | A user-friendly name                                 |
-   | **Credential Type** | MCP User-Based Access Token                          |
-   | **MCP Server URL**  | `https://mcp.notion.com/mcp`                         |
-   | **Client ID**       | The OAuth client ID from your Notion integration     |
-   | **Client Secret**   | The OAuth client secret from your Notion integration |
-   | **PKCE Required**   | On                                                   |
+   | Field               | Value                                |
+   | ------------------- | ------------------------------------ |
+   | **Name**            | A user-friendly name                 |
+   | **Credential Type** | MCP User-Based Access Token          |
+   | **MCP Server URL**  | `https://mcp.notion.com/mcp`         |
+   | **Client ID**       | The Client ID you copied earlier     |
+   | **Client Secret**   | The Client Secret you copied earlier |
+   | **PKCE Required**   | On                                   |
 
    For **MCP Server URL**, click **Discover** to populate the Authorization URL and Token URL.
 
@@ -73,23 +66,17 @@ Create an MCP User-Based Access Token Credential Provider**Credential Provider**
 
 ## Finish configuring the integration
 
-[Section titled “Finish configuring the integration”](#finish-configuring-the-integration)
+After you create the Credential Provider, copy its read-only **Callback URL** and return to the Notion Public Integration.
 
-Return to the Notion integration’s settings.
-
-1. Under the OAuth configuration, add the Aembit **Callback URL** as a **Redirect URI**, then save.
+1. Under **OAuth Domain & URIs**, add the Aembit **Callback URL**, then save the integration.
 
 ## Authorize the Credential Provider
-
-[Section titled “Authorize the Credential Provider”](#authorize-the-credential-provider)
 
 1. Return to the Credential Provider in Aembit and click **Authorize**.
 
 2. Complete the Notion sign-in, select the workspace and pages to share, then approve access. The Credential Provider status changes to **Ready** when the flow completes.
 
 ## Create the Server Workload
-
-[Section titled “Create the Server Workload”](#create-the-server-workload)
 
 1. Go to **Server Workloads** in the left sidebar and click **+ New**.
 
@@ -109,12 +96,16 @@ Return to the Notion integration’s settings.
 
 ## Create an Access Policy
 
-[Section titled “Create an Access Policy”](#create-an-access-policy)
+This section creates the Gateway-to-Server Access Policy, which authorizes the MCP Identity Gateway to access Notion on behalf of authenticated users.
 
-Create an Access Policy**Access Policy**: Access Policies define, enforce, and audit access between Client and Server Workloads by cryptographically verifying workload identity and contextual factors rather than relying on static secrets.[Learn more](../../../../get-started/concepts/access-policies.md) linking your Client Workload**Client Workload**: Client Workloads represent software applications, scripts, or automated processes that initiate access requests to Server Workloads, operating autonomously without direct user interaction.[Learn more](../../../../get-started/concepts/client-workloads.md) (the AI agent), the MCP User-Based Access Token Credential Provider, and the Notion Server Workload. See [Access Policies](../../../../user-guide/access-policies/overview.md) for details.
+Create an Access Policy linking the MCP Identity Gateway (as the Client Workload), the Credential Provider you created, and the Server Workload for Notion.
+
+> **The Gateway is the Client Workload**
+>
+> In this policy, the Client Workload is the MCP Identity Gateway itself—not the AI agent or individual users. The AI agent connects through the separate Client-to-Gateway policy, and the Credential Provider enforces per-user access.
+
+For step-by-step instructions, including the Client Workload settings that identify the Gateway, see [Create the gateway-to-server Access Policy](../setup-mcp-gateway.md#create-the-gateway-to-server-access-policy).
 
 ## Verify
-
-[Section titled “Verify”](#verify)
 
 After a user authorizes access, the Aembit **AI Access Authorized** page lists the Notion MCP Server as **Ready**. The AI agent can then call Notion MCP tools through the Gateway.

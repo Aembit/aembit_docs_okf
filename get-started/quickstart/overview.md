@@ -1,11 +1,10 @@
 ---
-type: explanation
+type: reference
 title: "Aembit quickstart overview"
 description: "Get direct experience with Aembit by following linear quickstart guides."
 resource: https://docs.aembit.io/get-started/quickstart/
-tags: [quickstart]
-timestamp: 2025-06-04T12:28:26-07:00
-type_inferred: true
+tags: ["quickstart"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Aembit quickstart overview
@@ -13,8 +12,6 @@ type_inferred: true
 This section provides Aembit’s quickstart guides of how to quickly set up Aembit. These quickstart guides help you get started quickly, so you can get direct experience with and start using Aembit in your projects.
 
 ## How to use Aembit’s quickstart guides
-
-[Section titled “How to use Aembit’s quickstart guides”](#how-to-use-aembits-quickstart-guides)
 
 The quickstart guides are linear, meaning you should follow them in the order. Each guide builds on the previous one, so it’s important to follow them to get the most out of Aembit.
 

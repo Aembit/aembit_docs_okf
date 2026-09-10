@@ -4,7 +4,7 @@ title: "Set up the MCP Authorization Server"
 description: "How to configure Access Policies and register MCP clients for the Aembit MCP Authorization Server."
 resource: https://docs.aembit.io/ai-guide/mcp/authorization-server/setup-mcp-auth-server/
 interface: mcp
-tags: [authorization-server, mcp]
+tags: ["authorization-server", "mcp"]
 timestamp: 2026-07-07T18:35:05-07:00
 ---
 
@@ -12,38 +12,32 @@ timestamp: 2026-07-07T18:35:05-07:00
 
 Model Context Protocol (MCP), like many other AI-related technologies, is still novel when it comes to security best practices.
 
-This page explains how to configure the Aembit MCP**Model Context Protocol**: A standard protocol for AI agent and server interactions that defines how AI assistants communicate with external tools and data sources.[Learn more(opens in new tab)](https://modelcontextprotocol.io/) Authorization Server.
+This page explains how to configure the Aembit MCP Authorization Server.
 
 ## Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites)
-
 Before you begin, ensure you have:
 
-* An Aembit Tenant**Aembit Tenant**: Aembit Tenants serve as isolated, dedicated environments within Aembit that provide complete separation of administrative domains and security configurations.[Learn more](../../../get-started/concepts/administration.md) with admin access
+* An Aembit Tenant with admin access
 
 * If using user authentication (Enforce SSO on), at least one identity provider configured in **Administration > Identity Providers**:
 
   * [OIDC 1.0](../../../user-guide/administration/identity-providers/create-idp-oidc.md) - Requires an [OIDC ID Token Trust Provider](../../../user-guide/access-policies/trust-providers/oidc-id-token-trust-provider.md) and a [Credential Provider](../../../user-guide/access-policies/credential-providers/overview.md)
   * [SAML 2.0](../../../user-guide/administration/identity-providers/create-idp-saml.md) - Requires a [SAMLv2 Response Trust Provider](../../../user-guide/access-policies/trust-providers/saml-response-trust-provider.md) and a [Credential Provider](../../../user-guide/access-policies/credential-providers/overview.md)
 
-* An MCP server**MCP Server**: A server that implements the Model Context Protocol to provide tools, resources, or data to AI agents and MCP clients.[Learn more(opens in new tab)](https://modelcontextprotocol.io/specification/2025-03-26/server) (cloud, on-premises, or local demo)
+* An MCP server (cloud, on-premises, or local demo)
 
-* An MCP client**MCP Client**: An application (such as Claude Desktop, Claude Code, or Gemini CLI) that connects to MCP servers to access tools and resources on behalf of users.[Learn more](https://docs.aembit.io/user-guide/ai/mcp-auth-server/setup-mcp-auth-server/) (for example, [MCP Jam](https://www.mcpjam.com/) or Gemini CLI)
+* An MCP client (for example, [MCP Jam](https://www.mcpjam.com/) or Gemini CLI)
 
 For details on the differences between OIDC and SAML flows, see [Choosing between OIDC and SAML](overview.md#choosing-between-oidc-and-saml).
 
 ## Configure an Access Policy
 
-[Section titled “Configure an Access Policy”](#configure-an-access-policy)
-
-Configure your Access Policy**Access Policy**: Access Policies define, enforce, and audit access between Client and Server Workloads by cryptographically verifying workload identity and contextual factors rather than relying on static secrets.[Learn more](../../../get-started/concepts/access-policies.md) with these components:
+Configure your Access Policy with these components:
 
 ### Create a Client Workload
 
-[Section titled “Create a Client Workload”](#create-a-client-workload)
-
-Create a Client Workload**Client Workload**: Client Workloads represent software applications, scripts, or automated processes that initiate access requests to Server Workloads, operating autonomously without direct user interaction.[Learn more](../../../get-started/concepts/client-workloads.md) to represent the MCP clients that will request access to your MCP servers. For MCP, use the [**Redirect URI**](../../../user-guide/access-policies/client-workloads/identification/redirect-uri.md) identifier type - this allows MCP clients to register dynamically at runtime through [Dynamic Client Registration](reference-mcp-auth-server.md#dynamic-client-registration-dcr-support). For details on how redirect URIs work in MCP, see [Redirect URIs](concepts-mcp-auth-server.md#redirect-uris).
+Create a Client Workload to represent the MCP clients that will request access to your MCP servers. For MCP, use the [**Redirect URI**](../../../user-guide/access-policies/client-workloads/identification/redirect-uri.md) identifier type - this allows MCP clients to register dynamically at runtime through [Dynamic Client Registration](reference-mcp-auth-server.md#dynamic-client-registration-dcr-support). For details on how redirect URIs work in MCP, see [Redirect URIs](concepts-mcp-auth-server.md#redirect-uris).
 
 For general Client Workload configuration guidance, see [Client Workloads](../../../user-guide/access-policies/client-workloads/overview.md).
 
@@ -70,9 +64,9 @@ For general Client Workload configuration guidance, see [Client Workloads](../..
      | MCP Jam    | `http://localhost:6274/oauth/callback` |
      | Gemini CLI | `http://localhost:7777/oauth/callback` |
 
-     Local development
-
-     For local development, you can use either `127.0.0.1` or `localhost`. The MCP specification allows ephemeral ports, so the Authorization Server ignores port numbers in redirect URIs when matching policies against local IP addresses. See [Redirect URIs](concepts-mcp-auth-server.md#redirect-uris).
+     > **Local development**
+     >
+     > For local development, you can use either `127.0.0.1` or `localhost`. The MCP specification allows ephemeral ports, so the Authorization Server ignores port numbers in redirect URIs when matching policies against local IP addresses. See [Redirect URIs](concepts-mcp-auth-server.md#redirect-uris).
 
    * Remote/cloud
 
@@ -96,9 +90,7 @@ For general Client Workload configuration guidance, see [Client Workloads](../..
 
 ### Create a Server Workload
 
-[Section titled “Create a Server Workload”](#create-a-server-workload)
-
-Create a Server Workload**Server Workload**: Server Workloads represent target services, APIs, databases, or applications that receive and respond to access requests from Client Workloads.[Learn more](../../../get-started/concepts/server-workloads.md) to represent the MCP server you want to protect. The configuration must match the URL that MCP clients connect to and your MCP server’s resource server URL. The specific configuration name varies by implementation (for example, FastMCP uses `resource_server_url`).
+Create a Server Workload to represent the MCP server you want to protect. The configuration must match the URL that MCP clients connect to and your MCP server’s resource server URL. The specific configuration name varies by implementation (for example, FastMCP uses `resource_server_url`).
 
 For general Server Workload configuration guidance, see [Server Workloads](../../../user-guide/access-policies/server-workloads/overview.md).
 
@@ -118,26 +110,24 @@ For general Server Workload configuration guidance, see [Server Workloads](../..
 
    When you select **MCP** as the application protocol, Aembit automatically configures HTTP Authentication with the Bearer scheme. The **Aembit MCP Authorization Server URL** field displays the auto-generated authorization server URL that MCP clients use for OAuth discovery.
 
-   URL alignment
-
-   The Host, Port, and URL Path must match exactly with:
-
-   * The URL your MCP clients connect to
-   * The resource server URL in your MCP server configuration (for example, `resource_server_url` in FastMCP)
-
-   See [URL configuration alignment](concepts-mcp-auth-server.md#url-configuration-alignment) for details.
+   > **URL alignment**
+   >
+   > The Host, Port, and URL Path must match exactly with:
+   >
+   > * The URL your MCP clients connect to
+   > * The resource server URL in your MCP server configuration (for example, `resource_server_url` in FastMCP)
+   >
+   > See [URL configuration alignment](concepts-mcp-auth-server.md#url-configuration-alignment) for details.
 
 8. Click **Save** to create the Server Workload.
 
 ### Create a Trust Provider
 
-[Section titled “Create a Trust Provider”](#create-a-trust-provider)
+> **Enforce SSO only**
+>
+> A Trust Provider is only required when Enforce SSO is on for your Client Workload. If you turned off Enforce SSO, skip this step.
 
-Enforce SSO only
-
-A Trust Provider is only required when Enforce SSO is on for your Client Workload. If you turned off Enforce SSO, skip this step.
-
-Create a Trust Provider**Trust Provider**: Trust Providers validate Client Workload identities through workload attestation, verifying identity claims from the workload's runtime environment rather than relying on pre-shared secrets.[Learn more](../../../get-started/concepts/trust-providers.md) to validate user identity during the MCP authorization flow. The Trust Provider verifies that incoming identity tokens match your expected claims.
+Create a Trust Provider to validate user identity during the MCP authorization flow. The Trust Provider verifies that incoming identity tokens match your expected claims.
 
 For detailed configuration including advanced claim matching, see [OIDC ID Token Trust Provider](../../../user-guide/access-policies/trust-providers/oidc-id-token-trust-provider.md).
 
@@ -160,23 +150,19 @@ For detailed configuration including advanced claim matching, see [OIDC ID Token
    * **Issuer (`iss`)** - (Optional) The identity provider URL that issued the token.
    * **Subject (`sub`)** - (Optional) The user identifier pattern to match.
 
-   Avoid wildcards
-
-   You can use `*` as a wildcard to allow any value, but Aembit doesn’t recommend this approach. Wildcards weaken your security posture by allowing tokens from unintended sources. Always specify explicit values when possible, especially for the `aud` (audience) claim.
+   > **Avoid wildcards**
+   >
+   > You can use `*` as a wildcard to allow any value, but Aembit doesn’t recommend this approach. Wildcards weaken your security posture by allowing tokens from unintended sources. Always specify explicit values when possible, especially for the `aud` (audience) claim.
 
 7. Click **Save**. Aembit displays your new Trust Provider in the list of Trust Providers.
 
 ### Configure Access Conditions (optional)
 
-[Section titled “Configure Access Conditions (optional)”](#configure-access-conditions-optional)
-
-Optionally configure Access Conditions**Access Condition**: Access Conditions add dynamic, context-aware constraints to authorization by evaluating circumstances like time, location, or security posture to determine whether to grant access.[Learn more](../../../get-started/concepts/access-conditions.md) to add additional security requirements such as time-based restrictions or geolocation-based access control. For details, see [Access Conditions](../../../user-guide/access-policies/access-conditions/overview.md).
+Optionally configure Access Conditions to add additional security requirements such as time-based restrictions or geolocation-based access control. For details, see [Access Conditions](../../../user-guide/access-policies/access-conditions/overview.md).
 
 ### Create a Credential Provider
 
-[Section titled “Create a Credential Provider”](#create-a-credential-provider)
-
-Create a Credential Provider**Credential Provider**: Credential Providers obtain the specific access credentials—such as API keys, OAuth tokens, or temporary cloud credentials—that Client Workloads need to authenticate to Server Workloads.[Learn more](../../../get-started/concepts/credential-providers.md) to configure how Aembit issues tokens that MCP servers use to authenticate requests. The Credential Provider type depends on your identity provider protocol:
+Create a Credential Provider to configure how Aembit issues tokens that MCP servers use to authenticate requests. The Credential Provider type depends on your identity provider protocol:
 
 * **OIDC identity providers:** Use an OIDC ID Token Credential Provider. For configuration details, see [Create an OIDC ID Token Credential Provider](../../../user-guide/access-policies/credential-providers/oidc-id-token.md).
 * **SAML identity providers:** Use an OIDC ID Token Credential Provider. Aembit translates the SAML response into an OIDC-compatible token for downstream MCP servers.
@@ -203,8 +189,6 @@ Create a Credential Provider**Credential Provider**: Credential Providers obtain
 7. Click **Save** to create the Credential Provider.
 
 ## Use MCP clients
-
-[Section titled “Use MCP clients”](#use-mcp-clients)
 
 After configuring your Access Policy, connect an MCP client to your protected MCP server. The following clients support OAuth 2.1 with Dynamic Client Registration, which allows them to automatically discover and authenticate with the Aembit MCP Authorization Server.
 
@@ -293,9 +277,9 @@ Select your MCP client to see configuration instructions:
 
   Claude Desktop supports MCP servers through **Settings > Connectors**.
 
-  Adding remote MCP servers
-
-  Add remote MCP servers through the Connectors UI, not via `claude_desktop_config.json`.
+  > **Adding remote MCP servers**
+  >
+  > Add remote MCP servers through the Connectors UI, not via `claude_desktop_config.json`.
 
   **Key details:**
 
@@ -354,8 +338,6 @@ If you encounter authentication errors, see [Troubleshoot the MCP Authorization 
 
 ## MCP server requirements
 
-[Section titled “MCP server requirements”](#mcp-server-requirements)
-
 To work with Aembit’s MCP Authorization Server, your MCP server needs certain configuration settings. Most of these are standard OAuth concepts from the MCP specification—the exact field names vary by MCP server implementation.
 
 | Concept                      | Purpose                                           | Aembit value                                                                    | Required by |
@@ -366,19 +348,17 @@ To work with Aembit’s MCP Authorization Server, your MCP server needs certain 
 | **Token Audience**           | Must match your Credential Provider configuration | Your MCP server’s public URL                                                    | RFC 8707    |
 | **Token Algorithm**          | Signing algorithm for access tokens               | `ES256` (default) or RSA                                                        | Aembit      |
 
-Token algorithm
-
-The MCP specification doesn’t mandate a specific signing algorithm. Aembit supports ES256 (default) and RSA—configure your MCP server’s token verifier to match your Credential Provider settings.
+> **Token algorithm**
+>
+> The MCP specification doesn’t mandate a specific signing algorithm. Aembit supports ES256 (default) and RSA—configure your MCP server’s token verifier to match your Credential Provider settings.
 
 Consult your MCP server’s documentation for how to configure these settings. For a complete reference, see [Configuration concepts](reference-mcp-auth-server.md#configuration-concepts).
 
-Issuer subdomain
-
-When configuring your MCP server’s token verification, the `issuer` must use the `.id.` subdomain (for example, `abc123.id.useast2.aembit.io`), **not** the `.mcp.` subdomain. See [Tenant URL patterns](reference-mcp-auth-server.md#tenant-url-patterns) for details.
+> **Issuer subdomain**
+>
+> When configuring your MCP server’s token verification, the `issuer` must use the `.id.` subdomain (for example, `abc123.id.useast2.aembit.io`), **not** the `.mcp.` subdomain. See [Tenant URL patterns](reference-mcp-auth-server.md#tenant-url-patterns) for details.
 
 ## Test with a demo MCP server
-
-[Section titled “Test with a demo MCP server”](#test-with-a-demo-mcp-server)
 
 If you don’t have an existing MCP server, you can use this [FastMCP](https://gofastmcp.com/) demo server to test your Aembit configuration. This example shows one way to configure the settings from the preceding table—your production MCP server may use different field names or configuration methods.
 
@@ -474,13 +454,9 @@ For URL configuration details, see [URL configuration alignment](concepts-mcp-au
 
 ## Troubleshooting
 
-[Section titled “Troubleshooting”](#troubleshooting)
-
 For common errors and solutions, see [Troubleshoot the MCP Authorization Server](troubleshooting-mcp-auth-server.md).
 
 ## Next steps
-
-[Section titled “Next steps”](#next-steps)
 
 * Review the [MCP Authorization Server reference](reference-mcp-auth-server.md) for configuration options and endpoints
 * Learn more about [Access Policies](../../../user-guide/access-policies/overview.md)

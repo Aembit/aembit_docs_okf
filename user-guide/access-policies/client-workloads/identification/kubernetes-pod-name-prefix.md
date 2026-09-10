@@ -4,9 +4,8 @@ title: "Kubernetes Pod Name Prefix"
 description: "This document describes how the Kubernetes Pod Name Prefix method identifies Client Workloads in Aembit."
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/kubernetes-pod-name-prefix/
 interface: web-ui
-tags: [kubernetes, identification, client-workload, access-policy]
-timestamp: 2025-05-29T11:26:12-07:00
-type_inferred: true
+tags: ["kubernetes", "identification", "client-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Kubernetes Pod Name Prefix
@@ -16,17 +15,11 @@ In Kubernetes environments, pods are often dynamically created and assigned uniq
 
 ## Applicable Deployment Type
 
-[Section titled “Applicable Deployment Type”](#applicable-deployment-type)
-
 This method is suitable for Edge-based deployments.
 
 ## Configuration
 
-[Section titled “Configuration”](#configuration)
-
 ### Aembit Cloud
-
-[Section titled “Aembit Cloud”](#aembit-cloud)
 
 1. Create a new Client Workload.
 2. Choose **Kubernetes Pod Name Prefix** for client identification.
@@ -34,15 +27,11 @@ This method is suitable for Edge-based deployments.
 
 #### Finding the Pod Name Prefix:
 
-[Section titled “Finding the Pod Name Prefix:”](#finding-the-pod-name-prefix)
-
 * Use the `kubectl get pods` command to list all pods in your cluster.
 * Identify the pods belonging to your target deployment. Their names will share a common prefix.
 * Use this common prefix as the Value in the Client Workload configuration.
 
 #### Uniqueness
-
-[Section titled “Uniqueness”](#uniqueness)
 
 Ensure that the chosen prefix is unique enough to avoid unintentionally matching pods from other deployments. Please consult the [Client Workload multiple identifiers](client-workload-multiple-ids.md) documentation to enhance uniqueness.
 

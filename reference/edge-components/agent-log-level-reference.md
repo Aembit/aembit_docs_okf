@@ -3,9 +3,8 @@ type: reference
 title: "Edge Component log levels"
 description: "A reference page of all available Edge Component AEMBIT_LOG_LEVEL log levels"
 resource: https://docs.aembit.io/reference/edge-components/agent-log-level-reference/
-tags: [edge-component]
-timestamp: 2025-05-29T11:26:12-07:00
-type_inferred: true
+tags: ["edge-component"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Edge Component log levels
@@ -19,13 +18,11 @@ See the tables in the following sections for the available log levels and their 
 
 To change your Agent Controller’s and Agent Proxy’s log levels, see [Changing log levels](../../user-guide/deploy-install/advanced-options/changing-agent-log-levels.md).
 
-Tip
-
-All log levels are **case-insensitive**, so Aembit treats `ERROR`, `Error`, and `error` the same.
+> **Tip**
+>
+> All log levels are **case-insensitive**, so Aembit treats `ERROR`, `Error`, and `error` the same.
 
 ## Agent Controller log levels
-
-[Section titled “Agent Controller log levels”](#agent-controller-log-levels)
 
 The following table contains the *Agent Controller* log levels and their descriptions for when setting the `AEMBIT_LOG_LEVEL` environment variable:
 
@@ -39,8 +36,6 @@ The following table contains the *Agent Controller* log levels and their descrip
 | `verbose`        | Most granular logging, showing all possible detail. These capture every minor operation and state change within Agent Controller.                                                        |
 
 ## Agent Proxy log levels
-
-[Section titled “Agent Proxy log levels”](#agent-proxy-log-levels)
 
 The following table contains the *Agent Proxy* log levels and their descriptions for when setting the `AEMBIT_LOG_LEVEL` environment variable:
 

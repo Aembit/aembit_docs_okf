@@ -4,9 +4,8 @@ title: "Access Conditions for GeoIP Restriction"
 description: "This document provides a description on how to setup and configure an Access Condition for a GeoIP Restriction."
 resource: https://docs.aembit.io/user-guide/access-policies/access-conditions/aembit-geoip/
 interface: web-ui
-tags: [access-condition, access-policy]
-timestamp: 2025-05-22T22:55:26-07:00
-type_inferred: true
+tags: ["access-condition", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Access Conditions for GeoIP Restriction
@@ -15,8 +14,6 @@ type_inferred: true
 You may configure an Access Condition to enable GeoIP restrictions. This can be useful if you would like to only grant access to Client Workloads from specific locations. A GeoIP restriction ensures any request received from a locale that is not already specified will be blocked. For example, if you would like to allow requests from a specific country or region, you may simply add an Access Condition for that region or area.
 
 ## Creating a GeoIP Access Condition
-
-[Section titled “Creating a GeoIP Access Condition”](#creating-a-geoip-access-condition)
 
 To create a GeoIP Restriction Access Condition, perform the steps listed below.
 
@@ -44,17 +41,15 @@ To create a GeoIP Restriction Access Condition, perform the steps listed below.
 
 ![Access Condition Dialog Window - Country and Subdivision Selected](https://docs.aembit.io/_astro/access-conditions-geoip-country-selected.D19l2QD2_ZEU6b4.webp)
 
-Note
-
-You may select more than one Subdivision for a country by clicking on the **+** icon.
+> **Note**
+>
+> You may select more than one Subdivision for a country by clicking on the **+** icon.
 
 7. Click **Save**. Your new Aembit GeoIP Access Condition now appears on the main Access Conditions page.
 
 ![Access Conditions List With GeoIP Listed](https://docs.aembit.io/_astro/access-conditions-list-with-geoip.CcabgKA1_ZLHlvW.webp)
 
 ## GeoIP Accuracy Limitations and Best Practices for Cloud Data Centers
-
-[Section titled “GeoIP Accuracy Limitations and Best Practices for Cloud Data Centers”](#geoip-accuracy-limitations-and-best-practices-for-cloud-data-centers)
 
 When configuring GeoIP-based access conditions, it is important to know the limitations in geolocation accuracy, especially for workloads hosted in cloud data centers such as AWS, Azure, Google Cloud, and others. Due to the dynamic and shared nature of cloud infrastructure, geolocation services often provide lower confidence levels for specific subdivisions (e.g., states, provinces) or cities for cloud-based IP addresses.
 

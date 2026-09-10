@@ -4,9 +4,8 @@ title: "How to assign roles to a Resource Set"
 description: "How to assign roles for a Resource Set"
 resource: https://docs.aembit.io/user-guide/administration/resource-sets/assign-roles/
 interface: web-ui
-tags: [resource-set, administration]
-timestamp: 2026-06-26T13:11:59-07:00
-type_inferred: true
+tags: ["resource-set", "administration"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # How to assign roles to a Resource Set

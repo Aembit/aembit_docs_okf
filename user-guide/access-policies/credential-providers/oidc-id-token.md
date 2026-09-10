@@ -4,9 +4,8 @@ title: "Create an OIDC ID Token Credential Provider"
 description: "How to create an OIDC ID Token Credential Provider"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/oidc-id-token/
 interface: web-ui
-tags: [credential-provider, access-policy]
-timestamp: 2026-07-07T18:35:05-07:00
-type_inferred: true
+tags: ["credential-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Create an OIDC ID Token Credential Provider
@@ -20,8 +19,6 @@ You can configure the following options for your OIDC ID Token Credential Provid
 * support for Workload Identity Federation (WIF) solutions such as AWS Security Token Service (STS), Google Cloud Platform (GCP) WIF, Azure WIF, Vault, and more.
 
 ## Create an OIDC ID Token Credential Provider
-
-[Section titled “Create an OIDC ID Token Credential Provider”](#create-an-oidc-id-token-credential-provider)
 
 To create an OIDC ID Token Credential Provider, follow these steps:
 
@@ -95,8 +92,6 @@ To create an OIDC ID Token Credential Provider, follow these steps:
 10. Click **Save**.
 
 ## Verify your OIDC ID Token Credential Provider
-
-[Section titled “Verify your OIDC ID Token Credential Provider”](#verify-your-oidc-id-token-credential-provider)
 
 To verify an OIDC ID Token is retrievable from the identity provider you configured, follow these steps:
 

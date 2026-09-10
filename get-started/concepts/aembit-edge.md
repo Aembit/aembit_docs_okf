@@ -3,38 +3,37 @@ type: explanation
 title: "About Aembit Edge"
 description: "Understanding Aembit Edge and its role as the distributed enforcement layer within your environments"
 resource: https://docs.aembit.io/get-started/concepts/aembit-edge/
-tags: [concept]
-timestamp: 2026-06-05T14:13:51-07:00
-type_inferred: true
+tags: ["concept"]
+timestamp: 2026-09-09T15:44:57-07:00
 ---
 
 # About Aembit Edge
 
-Aembit Edge**Aembit Edge**: Aembit Edge represents components deployed within your operational environments that enforce Access Policies by intercepting traffic, verifying identities, and injecting credentials just-in-time.[Learn more](aembit-edge.md) represents the collection of components deployed directly within your operational environments to enforce Access Policies**Access Policy**: Access Policies define, enforce, and audit access between Client and Server Workloads by cryptographically verifying workload identity and contextual factors rather than relying on static secrets.[Learn more](access-policies.md) and enable secretless workload communication. It functions as a distributed enforcement and interaction layer, positioned within your compute environments alongside your workloads—spanning Kubernetes clusters, virtual machines, and serverless platforms.
+Aembit Edge is the collection of components deployed directly within your operational environments. These components enforce Access Policies and enable secretless workload communication. It functions as a distributed enforcement and interaction layer, positioned within your compute environments alongside your workloads—spanning Kubernetes clusters, virtual machines, and serverless platforms.
 
-The Edge architecture separates the control plane (Aembit Cloud) from the data plane (where workload traffic flows). While Aembit Cloud**Aembit Cloud**: Aembit Cloud serves as both the central control plane and management plane, making authorization decisions, evaluating policies, coordinating credential issuance, and providing administrative interfaces for configuration.[Learn more](aembit-cloud.md) makes authorization decisions and manages credential lifecycles, Aembit Edge components handle traffic interception, credential injection, and forwarding locally within your environment. This design ensures that your sensitive workload data remains within your network boundaries and never passes through Aembit’s infrastructure.
+The Edge architecture separates the control plane (Aembit Cloud) from the data plane (where workload traffic flows).
+
+Aembit Cloud makes authorization decisions and manages credential lifecycles. Aembit Edge components handle traffic interception, credential injection, and forwarding locally within your environment. This design ensures that your sensitive workload data remains within your network boundaries and never passes through Aembit’s infrastructure.
 
 Aembit Edge is essential for translating centralized policies into concrete access control actions at the point where your workloads interact. It eliminates the need for applications to store or manage long-lived secrets by intercepting requests, verifying identities, and injecting short-lived credentials just-in-time.
 
 ![](https://docs.aembit.io/aembit-icons/gears-light.svg)
 
-[Start deploying Aembit Edge ](../../user-guide/deploy-install/overview.md)See Aembit Edge deployment in the User Guide
+[Start deploying Aembit Edge](../../user-guide/deploy-install/overview.md)See Aembit Edge deployment in the User Guide
 
 →
 
 ### Edge Component registration
 
-[Section titled “Edge Component registration”](#edge-component-registration)
-
 Before Aembit Edge can enforce access control, first you must deploy it within your operational environments. This involves installing the necessary components that intercept workload traffic, gather identity evidence, and inject credentials as needed.
 
 Upon deployment, Aembit Edge components must register with Aembit Cloud to establish trust and enable policy synchronization. This registration process typically involves the following steps:
 
-1. **Controller Registration** - Agent Controller registers with Aembit Cloud to establish trust. Agent Controller has two registration options: using a Device Code flow or by providing a Controller ID and configured Trust Providers**Trust Provider**: Trust Providers validate Client Workload identities through workload attestation, verifying identity claims from the workload's runtime environment rather than relying on pre-shared secrets.[Learn more](trust-providers.md).
+1. **Controller Registration** - Agent Controller registers with Aembit Cloud to establish trust. Agent Controller has two registration options: using a Device Code flow or by providing a Controller ID and configured Trust Providers.
 
 2. **Proxy Retrieves Token** - Agent Proxy registers with Agent Controller to obtain a token for authenticating with Aembit Cloud. This is typically done via an HTTP/S call to the Agent Controller API endpoint `/api/token`.
 
-3. **Aembit Cloud Grants Token** - Aembit Cloud verifies grants Agent Proxy a token. This token is used to authenticate the Agent Proxy with Aembit Cloud.
+3. **Aembit Cloud Grants Token** - Aembit Cloud verifies the request and grants Agent Proxy a token. The Agent Proxy uses this token to authenticate with Aembit Cloud.
 
 4. **Proxy Registration with Aembit Cloud** - The Agent Proxy uses the obtained token to register with Aembit Cloud, allowing it to receive Access Policies and interact with the Aembit Cloud services.
 
@@ -44,19 +43,17 @@ Upon deployment, Aembit Edge components must register with Aembit Cloud to estab
 
 ## Credential injection
 
-[Section titled “Credential injection”](#credential-injection)
-
 Once Aembit Edge registers with Aembit Cloud and is operational, it can perform **credential injection** to enable secure workload communication. This process allows Client Workloads to access Server Workloads without needing to store or manage long-lived credentials. Aembit Edge intercepts outbound requests from Client Workloads, gathers identity evidence, and injects short-lived credentials just-in-time based on the evaluated Access Policy.
 
 The credential injection process typically follows these steps:
 
-1. **Request Interception** - Agent Proxy intercepts outbound requests from the Client Workload**Client Workload**: Client Workloads represent software applications, scripts, or automated processes that initiate access requests to Server Workloads, operating autonomously without direct user interaction.[Learn more](client-workloads.md). This interception allows Aembit to gather identity evidence and contextual information about the Client Workload and its runtime environment.
+1. **Request Interception** - Agent Proxy intercepts outbound requests from the Client Workload. This interception allows Aembit to gather identity evidence and contextual information about the Client Workload and its runtime environment.
 
 2. **Identity Attestation** - Agent Proxy collects identity attributes and contextual information about the Client Workload, such as Kubernetes service account tokens, cloud provider metadata, or process information.
 
-3. **Credential Request** - Agent Proxy directly requests the necessary short-lived access credentials from Aembit Cloud for the target Server Workload**Server Workload**: Server Workloads represent target services, APIs, databases, or applications that receive and respond to access requests from Client Workloads.[Learn more](server-workloads.md) based on the evaluated Access Policy.
+3. **Credential Request** - Agent Proxy directly requests the necessary short-lived access credentials from Aembit Cloud for the target Server Workload based on the evaluated Access Policy.
 
-4. **Credential Retrieval** - Aembit Cloud interacts with the configured Credential Provider**Credential Provider**: Credential Providers obtain the specific access credentials—such as API keys, OAuth tokens, or temporary cloud credentials—that Client Workloads need to authenticate to Server Workloads.[Learn more](credential-providers.md) to obtain the necessary short-lived access credentials and returns them to the Agent Proxy.
+4. **Credential Retrieval** - Aembit Cloud interacts with the configured Credential Provider to obtain the necessary short-lived access credentials and returns them to the Agent Proxy.
 
 5. **Credential Injection** - Agent Proxy receives the credentials and injects them just-in-time into the original client request, modifying headers, connection parameters, or authentication fields as required.
 
@@ -67,8 +64,6 @@ The following diagram illustrates this process:
 ![Aembit Edge credential injection flow from Client Workload through Agent Proxy to Server Workload](https://docs.aembit.io/d2/docs/get-started/concepts/aembit-edge-1.svg)
 
 ## Network protocols
-
-[Section titled “Network protocols”](#network-protocols)
 
 Aembit Edge components communicate via the HTTP application protocol. The specific version used depends on where the traffic flows:
 
@@ -94,8 +89,6 @@ Agent Proxy handles proxied workload traffic over HTTP/1.1. If your HTTP client 
 
 ## Supported deployment environments
 
-[Section titled “Supported deployment environments”](#supported-deployment-environments)
-
 Aembit designed Edge components for deployment across diverse modern computing environments:
 
 **Container Orchestration**
@@ -105,8 +98,10 @@ Aembit designed Edge components for deployment across diverse modern computing e
 
 **Virtual Machines**
 
-* [Linux deployment](../../user-guide/deploy-install/virtual-machine/overview.md) - Downloadable installers for Ubuntu 20.04/22.04 LTS and Red Hat Enterprise Linux 8/9 with SELinux support
-* [Windows deployment](../../user-guide/deploy-install/virtual-machine/overview.md) - MSI packages for Windows Server 2019/2022 environments
+Each installation guide lists supported versions:
+
+* [Linux deployment](../../user-guide/deploy-install/virtual-machine/linux/overview.md) - Downloadable installers for Ubuntu LTS and Red Hat Enterprise Linux with SELinux support
+* [Windows deployment](../../user-guide/deploy-install/virtual-machine/windows/overview.md) - MSI packages for Windows Server environments
 
 **CI/CD Platforms**
 
@@ -121,12 +116,9 @@ Aembit designed Edge components for deployment across diverse modern computing e
 
 **Specialized Deployments**
 
-* [Virtual appliance](../../user-guide/deploy-install/overview.md) - Pre-packaged `.ova` format bundling Agent Controller and Agent Proxy for virtualized environments
 * [High availability configurations](../../user-guide/deploy-install/advanced-options/agent-controller/agent-controller-high-availability.md) - Multiple Agent Controller instances with load balancing
 
 ## Benefits of using Aembit Edge
-
-[Section titled “Benefits of using Aembit Edge”](#benefits-of-using-aembit-edge)
 
 * **Local Traffic Control** - Intercepts and processes workload traffic within your environment, ensuring sensitive data never leaves your network boundaries while Aembit enforces Access Policies.
 * **Secretless Architecture** - Eliminates the need for workloads to store or manage long-lived credentials by handling credential injection transparently at the network layer.

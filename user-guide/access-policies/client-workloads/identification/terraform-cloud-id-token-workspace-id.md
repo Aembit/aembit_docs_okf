@@ -4,9 +4,8 @@ title: "Terraform Cloud Workspace ID"
 description: "How to identify Terraform Cloud Workloads using the workspace ID from a Terraform Cloud Identity Token in Aembit"
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/terraform-cloud-id-token-workspace-id/
 interface: web-ui
-tags: [cicd, identification, client-workload, access-policy]
-timestamp: 2026-07-06T21:42:08-07:00
-type_inferred: true
+tags: ["cicd", "identification", "client-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Terraform Cloud Workspace ID
@@ -15,21 +14,15 @@ This page explains how to use the **Terraform Cloud ID Token Workspace ID** iden
 
 ## Understanding the Terraform Cloud ID token workspace ID
 
-[Section titled “Understanding the Terraform Cloud ID token workspace ID”](#understanding-the-terraform-cloud-id-token-workspace-id)
-
 When Terraform Cloud executes runs, it can issue an [OIDC-compliant identity token](https://developer.hashicorp.com/terraform/enterprise/workspaces/dynamic-provider-credentials/workload-identity-tokens) that includes an `terraform_workspace_id` claim. This value uniquely identifies the Terraform Cloud workspace under which the workload runs. Aembit uses this value to associate a Terraform run with a specific Client Workload.
 
 For example, an workspace ID might look like: `ws-mbsd5E3Ktt5Rg2Xm`
 
 ## Applicable deployment type
 
-[Section titled “Applicable deployment type”](#applicable-deployment-type)
-
 Aembit supports this identifier only when you use the [Aembit Terraform provider](https://registry.terraform.io/providers/Aembit/aembit/latest).
 
 ## Create a Client Workload with a Terraform Cloud ID Token identifier
-
-[Section titled “Create a Client Workload with a Terraform Cloud ID Token identifier”](#create-a-client-workload-with-a-terraform-cloud-id-token-identifier)
 
 To configure a Client Workload using the Terraform Cloud ID Token identifier, follow these steps:
 
@@ -52,8 +45,6 @@ To configure a Client Workload using the Terraform Cloud ID Token identifier, fo
    Aembit displays the new Client Workload on the **Client Workloads** page.
 
 ## Find Terraform cloud workspace ID
-
-[Section titled “Find Terraform cloud workspace ID”](#find-terraform-cloud-workspace-id)
 
 1. Log into [Terraform Cloud](https://app.terraform.io).
 2. Choose your organization.

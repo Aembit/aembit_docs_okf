@@ -1,12 +1,10 @@
 ---
-type: how-to
+type: explanation
 title: "Agent Controller High Availability"
 description: "How to install and configure Agent Controllers in a high availability configuration"
 resource: https://docs.aembit.io/user-guide/deploy-install/advanced-options/agent-controller/agent-controller-high-availability/
-interface: web-ui
-tags: [agent-controller, advanced-option, deploy-install]
-timestamp: 2025-05-29T11:26:12-07:00
-type_inferred: true
+tags: ["agent-controller", "advanced-option", "deploy-install"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Agent Controller High Availability
@@ -23,8 +21,6 @@ The Agent Controller is a critical Aembit Edge Component that facilitates Agent 
 
 ## Remove single points of failure
 
-[Section titled “Remove single points of failure”](#remove-single-points-of-failure)
-
 Having one Agent Controller instance can be a single point of failure. To mitigate this, multiple Agent Controller instances should be operational within an environment, providing redundancy and eliminating this risk.
 
 To deploy multiple instances, repeat the [Agent Controller installation procedure](../../virtual-machine/overview.md).
@@ -35,8 +31,6 @@ If you opt for the device code registration method, you must create a separate A
 
 ## Ensure reliable crossover
 
-[Section titled “Ensure reliable crossover”](#ensure-reliable-crossover)
-
 For effective traffic routing to multiple Agent Controller instances, use a load balancer.
 
 It’s critical that the load balancer itself is configured for high availability to avoid becoming a single point of failure.
@@ -45,21 +39,15 @@ To accommodate the technical requirement of load balancing HTTPS (encrypted) tra
 
 ## Failure detection
 
-[Section titled “Failure detection”](#failure-detection)
-
 Monitoring of both Agent Controllers and load balancers is necessary to quickly detect any failures. Establish a manual or automated procedure for failure remediation upon detection.
 
 The health status of an Agent Controller can be checked through an `HTTP GET` request to the /health endpoint on port 80. A healthy Agent Controller will return an HTTP Response code of `200`.
 
 ## Transport Layer Security (TLS)
 
-[Section titled “Transport Layer Security (TLS)”](#transport-layer-security-tls)
-
 When Transport Layer Security (TLS) is configured on Agent Controllers behind a load balancer, it is crucial for the certificates on these Agent Controllers to include the domain names associated with the load balancer. This ensures that SSL/TLS termination at the Agent Controllers presents a certificate valid for the domain names clients use to connect.
 
 ### Agent Controller health endpoint Swagger documentation
-
-[Section titled “Agent Controller health endpoint Swagger documentation”](#agent-controller-health-endpoint-swagger-documentation)
 
 ```yaml
 openapi: 3.0.0
@@ -112,6 +100,6 @@ paths:
                     example: "hostname"
 ```
 
-Note
-
-A newly deployed Agent Controller may take up to 10 seconds to register and attain a healthy state.
+> **Note**
+>
+> A newly deployed Agent Controller may take up to 10 seconds to register and attain a healthy state.

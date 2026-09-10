@@ -4,9 +4,8 @@ title: "Configure OAuth 2.0 Authorization Code Credential Provider"
 description: "How to create and use an OAuth 2.0 Authorization Code Credential Provider"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/oauth-authorization-code/
 interface: web-ui
-tags: [credential-provider, access-policy]
-timestamp: 2026-04-27T11:40:47-04:00
-type_inferred: true
+tags: ["credential-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Configure OAuth 2.0 Authorization Code Credential Provider
@@ -28,8 +27,6 @@ Configuring an OAuth 2.0 Authorization Code Credential Provider requires a few s
 3. [Authorize the Credential Provider](#authorize-the-credential-provider) to complete the integration.
 
 ## Configure the Credential Provider
-
-[Section titled “Configure the Credential Provider”](#configure-the-credential-provider)
 
 Configure an OAuth 2.0 Authorization Code Credential Provider:
 
@@ -76,8 +73,6 @@ Configure an OAuth 2.0 Authorization Code Credential Provider:
    ![Credential Providers page showing the newly created OAuth 2.0 Authorization Code Credential Provider.](https://docs.aembit.io/_astro/credential_providers_auth_code_main_page_with_new_credential_provider.CWU8bWZU_Z12Ueuw.webp)
 
 ## Authorize the Credential Provider
-
-[Section titled “Authorize the Credential Provider”](#authorize-the-credential-provider)
 
 After you save the Credential Provider configuration, authorize it to complete the integration with the third-party service:
 

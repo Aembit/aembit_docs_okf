@@ -4,16 +4,13 @@ title: "Tenant Configuration"
 description: "This page describes steps for troubleshooting an Aembit Tenant misconfiguration."
 resource: https://docs.aembit.io/user-guide/troubleshooting/tenant-configuration/
 interface: web-ui
-tags: [troubleshooting]
-timestamp: 2025-05-22T22:55:26-07:00
-type_inferred: true
+tags: ["troubleshooting"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Tenant Configuration
 
 ### Troubleshooter Tool
-
-[Section titled “Troubleshooter Tool”](#troubleshooter-tool)
 
 Several common misconfigurations can occur. Aembit provides a troubleshooter tool that can detect such misconfigurations.
 
@@ -44,8 +41,6 @@ The checks could be in several states:
 * A red cross icon indicates that such a configuration will prevent the Client Workload from successfully authenticating to the Server Workload. Such a misconfiguration will have an action item on the right indicating how to rectify the issue.
 
 ### Credential Provider Verification
-
-[Section titled “Credential Provider Verification”](#credential-provider-verification)
 
 Some Credential Providers, like OAuth 2.0 Client Credentials, allow for the verification of credentials.
 

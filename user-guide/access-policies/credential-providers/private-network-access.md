@@ -1,12 +1,10 @@
 ---
-type: how-to
+type: explanation
 title: "Private Network Access for Credential Providers"
 description: "How to use Private Network Access to retrieve credentials from secrets managers in private networks"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/private-network-access/
-interface: web-ui
-tags: [credential-provider, access-policy]
-timestamp: 2026-01-16T16:50:50-08:00
-type_inferred: true
+tags: ["credential-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Private Network Access for Credential Providers
@@ -19,8 +17,6 @@ With PNA, credential retrieval happens through your Aembit Edge component (Aembi
 
 ## When to use Private Network Access
 
-[Section titled “When to use Private Network Access”](#when-to-use-private-network-access)
-
 Enable PNA when:
 
 * Your secrets manager endpoint is only reachable from within a private network or VPC endpoint
@@ -28,8 +24,6 @@ Enable PNA when:
 * You want all access to your secrets manager to originate from your own infrastructure
 
 ## How it works
-
-[Section titled “How it works”](#how-it-works)
 
 When you enable PNA for a Credential Provider:
 
@@ -41,8 +35,6 @@ Enabling PNA only affects *where* Aembit retrieves credentials from (Aembit Clou
 
 ## Requirements
 
-[Section titled “Requirements”](#requirements)
-
 PNA requires:
 
 * An Aembit Edge component (Aembit CLI or Agent Proxy) running in your private network
@@ -51,8 +43,6 @@ PNA requires:
 
 ### Agent Proxy version requirements
 
-[Section titled “Agent Proxy version requirements”](#agent-proxy-version-requirements)
-
 | Credential Provider          | Minimum Version  | Recommended Version    | Notes                                                                                                                                                                                                                |
 | ---------------------------- | ---------------- | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | HashiCorp Vault Client Token | Agent Proxy 1.20 | Agent Proxy 1.20+      | Initial and current PNA behavior are the same. When you enable PNA, all Vault access for this provider runs through your Edge component.                                                                             |
@@ -60,8 +50,6 @@ PNA requires:
 | Azure Key Vault Value        | Agent Proxy 1.26 | Agent Proxy 1.26+      | Private Network Access for Azure Key Vault requires Agent Proxy 1.26 or later. When you enable PNA, your Edge component handles all Key Vault access for this provider.                                              |
 
 ## Supported Credential Providers
-
-[Section titled “Supported Credential Providers”](#supported-credential-providers)
 
 The following Credential Providers support PNA:
 
@@ -73,8 +61,6 @@ The following Credential Providers support PNA:
 
 ## Troubleshooting
 
-[Section titled “Troubleshooting”](#troubleshooting)
-
 If credential retrieval fails with PNA enabled:
 
 * **Check network connectivity:** Confirm the host running the Aembit CLI or Agent Proxy can reach your secrets manager endpoint (check DNS resolution, firewall rules, and VPC peering/endpoints)
@@ -84,8 +70,6 @@ If credential retrieval fails with PNA enabled:
 For provider-specific troubleshooting, see the individual Credential Provider documentation in the preceding section.
 
 ## Related topics
-
-[Section titled “Related topics”](#related-topics)
 
 * [AWS Secrets Manager Credential Provider](aws-secrets-manager.md)
 * [Azure Key Vault Credential Provider](azure-key-vault.md)

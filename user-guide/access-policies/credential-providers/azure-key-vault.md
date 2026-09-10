@@ -4,9 +4,8 @@ title: "Create an Azure Key Vault Credential Provider"
 description: "How to create and use the Azure Key Vault Credential Provider"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/azure-key-vault/
 interface: web-ui
-tags: [credential-provider, access-policy]
-timestamp: 2026-06-26T13:11:59-07:00
-type_inferred: true
+tags: ["credential-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Create an Azure Key Vault Credential Provider
@@ -15,24 +14,20 @@ The *Azure Key Vault Credential Provider* uses the [Azure Entra Federation Crede
 
 ## Supported credential types and workloads
 
-[Section titled “Supported credential types and workloads”](#supported-credential-types-and-workloads)
-
 | Credential Value Type | Supported Workloads & Protocols                       |
 | --------------------- | ----------------------------------------------------- |
 | Single Value          | HTTP (Bearer, Header, Query Parameter)                |
 | Username/Password     | HTTP (Basic Auth), Redshift, PostgreSQL, MySQL, Redis |
 
-Caveats
-
-* Azure Key Vault only allows one value per secret.\
-  For Username/Password credential types, you must create two separate secrets in Azure Key Vault (one for the username and one for the password).
-* Aembit only supports string-based secrets (not certificates or arbitrary data).
-* Doesn’t manage secret lifecycle (creation, rotation, deletion)—only retrieval.
-* Aembit maps each Azure Entra Federation Credential Provider Integration to a single Key Vault instance.
+> **Caveats**
+>
+> * Azure Key Vault only allows one value per secret.\
+>   For Username/Password credential types, you must create two separate secrets in Azure Key Vault (one for the username and one for the password).
+> * Aembit only supports string-based secrets (not certificates or arbitrary data).
+> * Doesn’t manage secret lifecycle (creation, rotation, deletion)—only retrieval.
+> * Aembit maps each Azure Entra Federation Credential Provider Integration to a single Key Vault instance.
 
 ## Prerequisites
-
-[Section titled “Prerequisites”](#prerequisites)
 
 You must have the following to create an Azure Key Vault Credential Provider:
 
@@ -54,19 +49,15 @@ You must have the following to create an Azure Key Vault Credential Provider:
 
 ## Accessing Azure Key Vault on private networks
 
-[Section titled “Accessing Azure Key Vault on private networks”](#accessing-azure-key-vault-on-private-networks)
-
 For Key Vault instances on private networks (such as an Azure Virtual Network), enable **Private Network Access** during configuration to allow your colocated Agent Proxy to handle credential retrieval directly.
 
 For details on when to use Private Network Access, how it works, and troubleshooting, see [Private Network Access for Credential Providers](private-network-access.md).
 
-Version requirement
-
-Private Network Access for Azure Key Vault requires Agent Proxy 1.26 or later.
+> **Version requirement**
+>
+> Private Network Access for Azure Key Vault requires Agent Proxy 1.26 or later.
 
 ## Configure Azure Key Vault for Aembit
-
-[Section titled “Configure Azure Key Vault for Aembit”](#configure-azure-key-vault-for-aembit)
 
 To configure Azure Key Vault for Aembit, follow these steps:
 
@@ -105,13 +96,11 @@ To configure Azure Key Vault for Aembit, follow these steps:
    4. Click **Create**.\
       For username/password, **you must** create two separate secrets.
 
-   Security best practice
-
-   Restrict secret access to only the federated app and only for the required secrets. Use least-privilege principles.
+   > **Security best practice**
+   >
+   > Restrict secret access to only the federated app and only for the required secrets. Use least-privilege principles.
 
 ## Create an Azure Key Vault Credential Provider
-
-[Section titled “Create an Azure Key Vault Credential Provider”](#create-an-azure-key-vault-credential-provider)
 
 To create an Azure Key Vault Credential Provider, follow these steps:
 
@@ -129,13 +118,13 @@ To create an Azure Key Vault Credential Provider, follow these steps:
 
    * **Select CP Integration** - Select the Azure Entra Federation integration you’ve already configured.
 
-     Note
-
-     If the **Select CP Integration** dropdown menu is empty, you either:
-
-     * May not have any Azure Entra Federation integrations configured yet. See [Azure Entra Federation](integrations/azure-entra-federation.md) to create one.
-
-     * May need to change Resource Sets.
+     > **Note**
+     >
+     > If the **Select CP Integration** dropdown menu is empty, you either:
+     >
+     > * May not have any Azure Entra Federation integrations configured yet. See [Azure Entra Federation](integrations/azure-entra-federation.md) to create one.
+     >
+     > * May need to change Resource Sets.
 
    * **Credential Value Type** - Select the type of credential (Single Value or Username/Password).
 
@@ -150,8 +139,6 @@ To create an Azure Key Vault Credential Provider, follow these steps:
    Aembit displays the new Credential Provider in the list of Credential Providers.
 
 ## Configure Azure Key Vault CP using the Aembit Terraform provider
-
-[Section titled “Configure Azure Key Vault CP using the Aembit Terraform provider”](#configure-azure-key-vault-cp-using-the-aembit-terraform-provider)
 
 To configure an Azure Key Vault Credential Provider using the [Aembit Terraform Provider](https://registry.terraform.io/providers/Aembit/aembit/latest), follow the steps in this section.
 
@@ -250,8 +237,6 @@ To configure an Azure Key Vault Credential Provider using the [Aembit Terraform 
 Your Azure Key Vault Credential Provider is now ready to use in your Access Policies!
 
 ## Troubleshooting
-
-[Section titled “Troubleshooting”](#troubleshooting)
 
 * **UI/Integration Errors:** If you encounter errors when creating the integration or credential provider (for example UI logout, 500 errors), verify Azure permissions and configuration details.
 * **Secret Not Found:** Ensure the secret name matches exactly and that the federated app has the correct permissions.

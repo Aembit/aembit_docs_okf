@@ -4,9 +4,8 @@ title: "Salesforce REST"
 description: "How to configure Aembit to work with the Salesforce REST Server Workload"
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/guides/salesforce-rest/
 interface: web-ui
-tags: [crm, guide, server-workload, access-policy]
-timestamp: 2026-04-27T11:40:47-04:00
-type_inferred: true
+tags: ["crm", "guide", "server-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Salesforce REST
@@ -20,19 +19,15 @@ Aembit supports multiple authentication and authorization methods for Salesforce
 * [OAuth 2.0 Authorization Code (3LO)](#oauth-20-authorization-code)
 * [OAuth 2.0 Client Credentials](#oauth-20-client-credentials)
 
-Prerequisites
-
-Before you begin, ensure you have a Salesforce account and a connected app on Salesforce. If you haven’t set up an app yet, follow the steps under the Salesforce App Configuration section in the flow you use.
-
-For detailed information on Salesforce Apps, see the [official Salesforce documentation](https://help.salesforce.com/s/articleView?id=xcloud.external_integrations.htm\&type=5).
+> **Prerequisites**
+>
+> Before you begin, ensure you have a Salesforce account and a connected app on Salesforce. If you haven’t set up an app yet, follow the steps under the Salesforce App Configuration section in the flow you use.
+>
+> For detailed information on Salesforce Apps, see the [official Salesforce documentation](https://help.salesforce.com/s/articleView?id=xcloud.external_integrations.htm\&type=5).
 
 ## OAuth 2.0 authorization code
 
-[Section titled “OAuth 2.0 authorization code”](#oauth-20-authorization-code)
-
 ### Server Workload configuration
-
-[Section titled “Server Workload configuration”](#server-workload-configuration)
 
 To retrieve connection information in Salesforce:
 
@@ -54,8 +49,6 @@ To retrieve connection information in Salesforce:
    * **Authentication scheme** - Bearer
 
 ### Salesforce app configuration
-
-[Section titled “Salesforce app configuration”](#salesforce-app-configuration)
 
 1. Log in to your [Salesforce account](https://login.salesforce.com/).
 
@@ -90,11 +83,9 @@ For detailed information on the OAuth 2.0 Web Server Flow on Salesforce, see the
 
 ### Credential Provider configuration
 
-[Section titled “Credential Provider configuration”](#credential-provider-configuration)
-
-Note
-
-If you are continuing from the previous section, click the **Settings** tab on the opened page and you can skip to step 6.
+> **Note**
+>
+> If you are continuing from the previous section, click the **Settings** tab on the opened page and you can skip to step 6.
 
 1. Log in to your [Salesforce account](https://login.salesforce.com/).
 
@@ -141,17 +132,13 @@ If you are continuing from the previous section, click the **Settings** tab on t
 
 ![Credential Provider - Ready State](https://docs.aembit.io/_astro/credential_providers_auth_code_status_ready.CBPCBiJg_ZBh135.webp)
 
-Caution
-
-Once the set lifetime ends, the retrieved credential expires and is no longer active. Aembit notifies you before this happens. Ensure you reauthorize your credential before it expires.
+> **Caution**
+>
+> Once the set lifetime ends, the retrieved credential expires and is no longer active. Aembit notifies you before this happens. Ensure you reauthorize your credential before it expires.
 
 ## OAuth 2.0 client credentials
 
-[Section titled “OAuth 2.0 client credentials”](#oauth-20-client-credentials)
-
 ### Server Workload configuration
-
-[Section titled “Server Workload configuration”](#server-workload-configuration-1)
 
 To retrieve connection information in Salesforce:
 
@@ -173,8 +160,6 @@ To retrieve connection information in Salesforce:
    * **Authentication scheme** - Bearer
 
 ### Salesforce app configuration
-
-[Section titled “Salesforce app configuration”](#salesforce-app-configuration-1)
 
 1. Log in to your [Salesforce account](https://login.salesforce.com/).
 
@@ -202,9 +187,9 @@ To retrieve connection information in Salesforce:
 
    ![Configure External App CC flow](https://docs.aembit.io/_astro/salesforce_configure_external_app_cc.68XCKWoF_29sQPg.webp)
 
-   Note
-
-   Salesforce requires you to designate an execution user, allowing the platform to generate access tokens for the chosen user.
+   > **Note**
+   >
+   > Salesforce requires you to designate an execution user, allowing the platform to generate access tokens for the chosen user.
 
 6. On the detail page of your newly created app, click **Edit**.
 
@@ -220,11 +205,9 @@ For detailed information on the OAuth 2.0 Client Credentials Flow on Salesforce,
 
 ### Credential Provider configuration
 
-[Section titled “Credential Provider configuration”](#credential-provider-configuration-1)
-
-Note
-
-If you are continuing from the previous section, click the **Settings** tab on the opened page and you can skip to step 6.
+> **Note**
+>
+> If you are continuing from the previous section, click the **Settings** tab on the opened page and you can skip to step 6.
 
 1. Log in to your [Salesforce account](https://login.salesforce.com/).
 
@@ -262,15 +245,11 @@ If you are continuing from the previous section, click the **Settings** tab on t
 
 ## Client workload configuration
 
-[Section titled “Client workload configuration”](#client-workload-configuration)
-
 Aembit now handles the credentials required to access the Server Workload, eliminating the need for you to manage them directly. You can remove any previously used credentials from the Client Workload.
 
 If you access the Server Workload through SDK or library, the SDK or library may still require credentials to be present for initialization purposes. In this scenario, you can provide placeholder credentials. Aembit overwrites these placeholder credentials with the appropriate ones during the access process.
 
 ## Access Policy
-
-[Section titled “Access Policy”](#access-policy)
 
 Create an Access Policy for a Client Workload to access the Salesforce Server Workload. Assign the newly created Credential Provider to this Access Policy.
 

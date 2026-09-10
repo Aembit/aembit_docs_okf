@@ -4,7 +4,7 @@ title: "Configure an AWS STS Federation Credential Provider"
 description: "How to add and use the AWS Security Token Service (STS) Federation Credential Provider with Server Workloads"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/aws-security-token-service-federation/
 interface: web-ui
-tags: [credential-provider, access-policy]
+tags: ["credential-provider", "access-policy"]
 timestamp: 2026-06-30T13:30:29-04:00
 ---
 
@@ -12,36 +12,32 @@ timestamp: 2026-06-30T13:30:29-04:00
 
 AWS offers the AWS Security Token Service (STS), a web service designed to facilitate the request of temporary, restricted-privilege credentials for users.
 
-Aembit’s Credential Provider**Credential Provider**: Credential Providers obtain the specific access credentials—such as API keys, OAuth tokens, or temporary cloud credentials—that Client Workloads need to authenticate to Server Workloads.[Learn more](../../../get-started/concepts/credential-providers.md) for AWS STS broadly supports AWS services that use the SigV4 and SigV4a authentication protocol depending if requests are for regional services or global/multi-region services respectively. See [How Aembit uses AWS SigV4 and SigV4a](aws-sigv4.md) for information about SigV4/4a and how Aembit handles SigV4/4a requests.
+Aembit’s Credential Provider for AWS STS broadly supports AWS services that use the SigV4 and SigV4a authentication protocol depending if requests are for regional services or global/multi-region services respectively. See [How Aembit uses AWS SigV4 and SigV4a](aws-sigv4.md) for information about SigV4/4a and how Aembit handles SigV4/4a requests.
 
-Pre-signed URLs
+> **Pre-signed URLs**
+>
+> Aembit doesn’t support AWS pre-signed URLs. For more information, see [Known limitations](aws-sigv4.md#known-limitations).
 
-Aembit doesn’t support AWS pre-signed URLs. For more information, see [Known limitations](aws-sigv4.md#known-limitations).
-
-Multiple providers
-
-You can configure multiple AWS STS Credential Providers within a single Access Policy**Access Policy**: Access Policies define, enforce, and audit access between Client and Server Workloads by cryptographically verifying workload identity and contextual factors rather than relying on static secrets.[Learn more](../../../get-started/concepts/access-policies.md) to access different AWS resources with different IAM roles. See [Using multiple AWS STS Credential Providers](aws-security-token-service-multiple.md) for details.
+> **Multiple providers**
+>
+> You can configure multiple AWS STS Credential Providers within a single Access Policy to access different AWS resources with different IAM roles. See [Using multiple AWS STS Credential Providers](aws-security-token-service-multiple.md) for details.
 
 ## Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites)
-
 Before configuring an AWS Security Token Service Federation Credential Provider in Aembit, ensure you have the following:
 
-* ([Multiple Credential Providers](aws-security-token-service-multiple.md) only) Aembit Edge Component**Aembit Edge**: Aembit Edge represents components deployed within your operational environments that enforce Access Policies by intercepting traffic, verifying identities, and injecting credentials just-in-time.[Learn more](../../../get-started/concepts/aembit-edge.md) minimum versions:
+* ([Multiple Credential Providers](aws-security-token-service-multiple.md) only) Aembit Edge Component minimum versions:
 
   * Agent Proxy 1.27.3865
   * Agent Controller 1.27.2906
 
-* An active Aembit Tenant**Aembit Tenant**: Aembit Tenants serve as isolated, dedicated environments within Aembit that provide complete separation of administrative domains and security configurations.[Learn more](../../../get-started/concepts/administration.md) with appropriate permissions to create and manage Credential Providers.
+* An active Aembit Tenant with appropriate permissions to create and manage Credential Providers.
 
 * An AWS account with permissions to create IAM roles and Identity Providers.
 
 * A Server Workload configured with **HTTP** Application Protocol and **AWS Signature v4** authentication method. See [AWS Cloud Server Workload](../server-workloads/guides/aws-cloud.md) for configuration details.
 
 ## Credential Provider configuration
-
-[Section titled “Credential Provider configuration”](#credential-provider-configuration)
 
 To configure an AWS Security Token Service Federation Credential Provider, follow these steps:
 
@@ -81,8 +77,6 @@ To configure an AWS Security Token Service Federation Credential Provider, follo
 
 ## AWS Identity Provider configuration
 
-[Section titled “AWS Identity Provider configuration”](#aws-identity-provider-configuration)
-
 To use the AWS STS Credential Provider, you must configure the AWS Identity Provider and assign it with an IAM role:
 
 1. Within the AWS Console, go to **IAM** > **Identity providers** and select **Add provider**.
@@ -105,17 +99,15 @@ To use the AWS STS Credential Provider, you must configure the AWS Identity Prov
 
 ## Configure multiple AWS STS Credential Providers
 
-[Section titled “Configure multiple AWS STS Credential Providers”](#configure-multiple-aws-sts-credential-providers)
-
 To configure multiple AWS STS Credential Providers within a single Access Policy, follow these steps. Each Credential Provider must have a unique Access Key ID that your application uses as a selector.
 
-Access Key ID format
+> **Access Key ID format**
+>
+> Access Key ID selector values must use **uppercase characters only**. For example, use `AKIADUMMYFORROLEA` instead of `akiadummyforrolea`.
 
-Access Key ID selector values must use **uppercase characters only**. For example, use `AKIADUMMYFORROLEA` instead of `akiadummyforrolea`.
-
-How it works
-
-For conceptual information about how Aembit routes requests to the appropriate Credential Provider, see [Using multiple AWS STS Credential Providers](aws-security-token-service-multiple.md).
+> **How it works**
+>
+> For conceptual information about how Aembit routes requests to the appropriate Credential Provider, see [Using multiple AWS STS Credential Providers](aws-security-token-service-multiple.md).
 
 1. Create your first AWS STS Credential Provider by following the [Credential Provider configuration](#credential-provider-configuration) procedure.
 
@@ -137,13 +129,9 @@ For conceptual information about how Aembit routes requests to the appropriate C
 
 ### Application configuration
 
-[Section titled “Application configuration”](#application-configuration)
-
 Configure your application to use the appropriate Access Key ID selector for each AWS service request. Agent Proxy extracts the Access Key ID from the AWS SigV4 Authorization header and routes the request to the matching Credential Provider.
 
 #### AWS CLI example
-
-[Section titled “AWS CLI example”](#aws-cli-example)
 
 To use the AWS CLI with multiple Credential Providers, set these environment variables:
 
@@ -167,8 +155,6 @@ Change `AWS_ACCESS_KEY_ID` to switch between Credential Providers. For example:
 
 ### Verify your configuration
 
-[Section titled “Verify your configuration”](#verify-your-configuration)
-
 To confirm your multiple AWS STS Credential Provider configuration works correctly:
 
 1. Set the environment variables for one of your Credential Providers.
@@ -183,8 +169,6 @@ To confirm your multiple AWS STS Credential Provider configuration works correct
 4. Change `AWS_ACCESS_KEY_ID` to a different selector and repeat to verify the second Credential Provider.
 
 ## Related topics
-
-[Section titled “Related topics”](#related-topics)
 
 * [Using multiple AWS STS Credential Providers](aws-security-token-service-multiple.md) - Learn how Aembit routes requests to multiple AWS STS Credential Providers
 * [How Aembit uses AWS SigV4 and SigV4a](aws-sigv4.md) - Learn about AWS request signing

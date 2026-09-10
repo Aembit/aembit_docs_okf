@@ -4,9 +4,8 @@ title: "Find your Edge SDK Client ID"
 description: "How to find your Edge SDK Client ID"
 resource: https://docs.aembit.io/user-guide/access-policies/trust-providers/get-edge-sdk-client-id/
 interface: web-ui
-tags: [trust-provider, access-policy]
-timestamp: 2025-07-29T16:36:29-07:00
-type_inferred: true
+tags: ["trust-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Find your Edge SDK Client ID

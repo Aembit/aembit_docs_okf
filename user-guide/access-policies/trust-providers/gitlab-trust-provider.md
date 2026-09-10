@@ -1,27 +1,24 @@
 ---
-type: how-to
+type: reference
 title: "Gitlab Trust Provider"
 description: "This page outlines the steps required to configure the Gitlab Trust Provider."
 resource: https://docs.aembit.io/user-guide/access-policies/trust-providers/gitlab-trust-provider/
 interface: web-ui
-tags: [trust-provider, access-policy]
-timestamp: 2025-09-05T06:12:10-07:00
-type_inferred: true
+tags: ["trust-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Gitlab Trust Provider
 
 The Gitlab Trust Provider supports attestation of Client Workloads identities in a [Gitlab Jobs](https://docs.gitlab.com/ee/ci/jobs/) environment.
 
-Enterprise Support
-
-Aembit supports GitLab Cloud but doesn’t support self-hosted GitLab instances.
+> **Enterprise Support**
+>
+> Aembit supports GitLab Cloud but doesn’t support self-hosted GitLab instances.
 
 The GitLab Trust Provider relies OIDC (OpenID Connect) tokens issued by GitLab. These tokens contain verifiable information about the job, its origin within the project, and the associated pipeline.
 
 ## Match rules
-
-[Section titled “Match rules”](#match-rules)
 
 The following match rules are available for this Trust Provider type:
 
@@ -36,9 +33,9 @@ The following match rules are available for this Trust Provider type:
 
 For additional information about GitLab ID Token claims, please refer to [GitLab Token Payload](https://docs.gitlab.com/ee/ci/secrets/id_token_authentication.html#token-payload).
 
-Note
-
-When using GitLab Dedicated, ensure the OIDC Endpoint is properly configured; otherwise use `https://gitlab.com`.
+> **Note**
+>
+> When using GitLab Dedicated, ensure the OIDC Endpoint is properly configured; otherwise use `https://gitlab.com`.
 
 ## Related
 

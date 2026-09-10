@@ -4,9 +4,8 @@ title: "Managing Global Policy Compliance"
 description: "How to configure Aembit's Global Policy Compliance"
 resource: https://docs.aembit.io/user-guide/administration/global-policy/manage-global-policy/
 interface: web-ui
-tags: [global-policy, administration]
-timestamp: 2025-06-03T16:56:07-07:00
-type_inferred: true
+tags: ["global-policy", "administration"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Managing Global Policy Compliance
@@ -15,8 +14,6 @@ This topic details how you can manage Global Policy Compliance in your Aembit Te
 
 ## Permission requirements
 
-[Section titled “Permission requirements”](#permission-requirements)
-
 To configure Global Policy Compliance settings, your users must have the **Global Policy Compliance** permission with write access. You can set this permission in the [Users page](../users/overview.md) to any of the following:
 
 * **No Access** - Can’t view or modify settings
@@ -24,8 +21,6 @@ To configure Global Policy Compliance settings, your users must have the **Globa
 * **Read/Write** - Can view and modify settings
 
 ## Configure Global Policy Compliance settings
-
-[Section titled “Configure Global Policy Compliance settings”](#configure-global-policy-compliance-settings)
 
 1. Log into your Aembit Tenant.
 
@@ -45,8 +40,6 @@ The Global Policy Compliance page contains the settings that you can enforce spe
 
 ### Access Policy settings
 
-[Section titled “Access Policy settings”](#access-policy-settings)
-
 You can configure the following Access Policy enforcement levels:
 
 * **Trust Provider Requirement** - Set to Required, Recommended, or Optional
@@ -54,16 +47,12 @@ You can configure the following Access Policy enforcement levels:
 
 ### Agent Controller settings
 
-[Section titled “Agent Controller settings”](#agent-controller-settings)
-
 You can configure the following Agent Controller enforcement levels:
 
 * **Trust Provider Requirement** - Set to Required, Recommended, or Optional
 * **TLS Hostname Requirement** - Set to Required, Recommended, or Optional
 
 ## Identify non-compliant Access Policies
-
-[Section titled “Identify non-compliant Access Policies”](#identify-non-compliant-access-policies)
 
 After configuring your [Global Policy Compliance settings](#configure-global-policy-compliance-settings):
 
@@ -74,8 +63,6 @@ After configuring your [Global Policy Compliance settings](#configure-global-pol
 Alternatively, you can review the compliance status of all Access Policies in your Aembit Tenant through the [Global Policy Compliance report dashboard](../../audit-report/global-policy.md).
 
 ## Edit non-compliant Access Policies
-
-[Section titled “Edit non-compliant Access Policies”](#edit-non-compliant-access-policies)
 
 When editing Access Policies under Global Policy Compliance:
 

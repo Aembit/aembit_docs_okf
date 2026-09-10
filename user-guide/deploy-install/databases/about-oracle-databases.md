@@ -3,7 +3,7 @@ type: explanation
 title: "About the Oracle Database protocol"
 description: "Understand how Aembit connects to Oracle databases, what versions Aembit supports, and how TLS connections work"
 resource: https://docs.aembit.io/user-guide/deploy-install/databases/about-oracle-databases/
-tags: [database, deploy-install]
+tags: ["database", "deploy-install"]
 timestamp: 2026-05-01T09:18:39-07:00
 ---
 
@@ -17,17 +17,13 @@ For step-by-step setup instructions, see [Create an Oracle Database Server Workl
 
 ## How Aembit connects to Oracle databases
 
-[Section titled “How Aembit connects to Oracle databases”](#how-aembit-connects-to-oracle-databases)
-
-When your application opens a connection to an Oracle database, the Aembit Agent Proxy on the same Linux VM intercepts the TNS connection through [transparent steering](../advanced-options/agent-proxy/selective-transparent-steering.md). Agent Proxy identifies the connection as an Oracle TNS protocol request, retrieves credentials from a Credential Provider**Credential Provider**: Credential Providers obtain the specific access credentials—such as API keys, OAuth tokens, or temporary cloud credentials—that Client Workloads need to authenticate to Server Workloads.[Learn more](../../../get-started/concepts/credential-providers.md), and injects them into the TNS authentication packets before forwarding the connection to the Oracle database.
+When your application opens a connection to an Oracle database, the Aembit Agent Proxy on the same Linux VM intercepts the TNS connection through [transparent steering](../advanced-options/agent-proxy/selective-transparent-steering.md). Agent Proxy identifies the connection as an Oracle TNS protocol request, retrieves credentials from a Credential Provider, and injects them into the TNS authentication packets before forwarding the connection to the Oracle database.
 
 The credential injection happens during the Oracle authentication handshake (O5LOGON flow). Aembit supports passwords stored by Oracle in the 12C password verifier format. Older password verifier formats (11G, 10G) aren’t supported. The only change to your client configuration is using `aembit` as the password. Your application doesn’t require driver modifications.
 
 ![How Aembit Agent Proxy intercepts and authenticates Oracle TNS connections](https://docs.aembit.io/d2/docs/user-guide/deploy-install/databases/about-oracle-databases-0.svg)
 
 ## Supported versions
-
-[Section titled “Supported versions”](#supported-versions)
 
 Aembit supports Oracle Database **19c** and **21c**. Oracle 19c is the most widely deployed version in enterprise environments due to its long-term support status, and Oracle 21c covers organizations using innovation releases. Both versions support the same O5LOGON authentication flow and 12C password version, so Aembit’s credential injection works identically for both.
 
@@ -43,8 +39,6 @@ Aembit supports Oracle Database **19c** and **21c**. Oracle 19c is the most wide
 Oracle 23ai isn’t supported.
 
 ## Supported environments
-
-[Section titled “Supported environments”](#supported-environments)
 
 All environments require Agent Proxy deployed on a Linux VM with [transparent steering](../advanced-options/agent-proxy/selective-transparent-steering.md) configured. Aembit has tested Oracle Database protocol support in the following environments.
 
@@ -62,15 +56,11 @@ For the complete list of supported deployment models, see the [support matrix](.
 
 ## Thin vs thick clients
 
-[Section titled “Thin vs thick clients”](#thin-vs-thick-clients)
-
 Oracle database drivers come in two variants: **thin** (pure language implementation) and **thick** (using Oracle Client libraries). Aembit supports thin clients. Aembit doesn’t support thick clients (Oracle Client / OCI).
 
 ![Thin client connection path through Aembit Agent Proxy](https://docs.aembit.io/d2/docs/user-guide/deploy-install/databases/about-oracle-databases-1.svg)
 
 ### Driver packages by language
-
-[Section titled “Driver packages by language”](#driver-packages-by-language)
 
 Aembit supports Java, Python, Go, and Node.js thin drivers.
 
@@ -85,8 +75,6 @@ For guidance on thin and thick mode configuration, see [Oracle’s driver docume
 
 ## TLS connections
 
-[Section titled “TLS connections”](#tls-connections)
-
 Aembit supports TLS for Oracle database connections using Oracle’s TCPS (TCP/IP with TLS) protocol. TLS protects both sides of the proxy connection:
 
 * **Client to proxy**: Your application connects to Agent Proxy over TCPS.
@@ -96,13 +84,9 @@ You enable TLS per Server Workload by checking the **TLS** checkbox on the **Por
 
 ### How Oracle TLS works
 
-[Section titled “How Oracle TLS works”](#how-oracle-tls-works)
-
 TLS is established before the TNS handshake, when the client connects to the Oracle TNS listener. When the TNS listener directs the connection to the database instance, Agent Proxy renegotiates TLS mid-TNS-handshake. Agent Proxy handles both the initial TLS setup and renegotiation transparently, without customer configuration.
 
 ### System trust store requirement
-
-[Section titled “System trust store requirement”](#system-trust-store-requirement)
 
 For the proxy-to-database TLS connection, Agent Proxy validates the Oracle database’s TLS certificate using the Linux VM’s system trust store.
 
@@ -122,13 +106,11 @@ sudo cp your-oracle-ca.crt /etc/pki/ca-trust/source/anchors/
 sudo update-ca-trust
 ```
 
-AWS RDS certificates
-
-AWS RDS for Oracle uses certificates from Amazon’s certificate authority. Download and install the RDS CA bundle from the [Amazon RDS SSL/TLS documentation](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.SSL.html) into your system trust store if not already present.
+> **AWS RDS certificates**
+>
+> AWS RDS for Oracle uses certificates from Amazon’s certificate authority. Download and install the RDS CA bundle from the [Amazon RDS SSL/TLS documentation](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.SSL.html) into your system trust store if not already present.
 
 ## Authentication
-
-[Section titled “Authentication”](#authentication)
 
 Aembit supports **username/password authentication** only.
 
@@ -137,8 +119,6 @@ Agent Proxy intercepts the Oracle TNS authentication handshake and replaces plac
 Your applications must use `aembit` as the password in their connection configuration. Agent Proxy uses this value to derive a shared key for the Oracle authentication handshake. It then replaces the credentials with the real username and password from the Credential Provider. The username can be any value—Agent Proxy replaces it during credential injection.
 
 ## Limitations
-
-[Section titled “Limitations”](#limitations)
 
 The following limitations apply to Oracle Database protocol support:
 
@@ -158,17 +138,11 @@ For the latest supported capabilities, see the [support matrix](../../../referen
 
 ## Related resources
 
-[Section titled “Related resources”](#related-resources)
-
 ### How-to guide
-
-[Section titled “How-to guide”](#how-to-guide)
 
 * [Create an Oracle Database Server Workload](../../access-policies/server-workloads/guides/oracle-database.md): Step-by-step setup instructions, including TLS configuration
 
 ### Reference
-
-[Section titled “Reference”](#reference)
 
 * [Support matrix](../../../reference/support-matrix.md): Supported deployment models for Oracle Database
 * [Transparent steering](../advanced-options/agent-proxy/selective-transparent-steering.md): Steering mode configuration

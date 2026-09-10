@@ -1,11 +1,11 @@
 ---
-type: explanation
+type: reference
 title: "Roles overview"
 description: "Description of Aembit roles and how they work"
 resource: https://docs.aembit.io/user-guide/administration/roles/
-tags: [role, administration]
-timestamp: 2025-05-29T11:26:12-07:00
-type_inferred: true
+interface: web-ui
+tags: ["role", "administration"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Roles overview

@@ -1,20 +1,54 @@
 # Aembit Documentation — OKF Bundle
 
-Aembit's public documentation published as an [Open Knowledge Format](https://openknowledgeformat.org) (OKF) bundle, for AI agents to consume by cloning and navigating locally with filesystem tools.
+The Aembit product documentation, packaged for AI agents.
 
-> **Generated artifact — do not edit by hand.** This repository is force-synced from [aembit_docs_astro](https://github.com/aembit/aembit_docs_astro) on every documentation deploy. Manual changes are overwritten on the next release.
+[Aembit](https://aembit.io) is a workload identity and access management platform: it issues credentials to workloads, AI agents, and MCP clients under access policies instead of leaving secrets in code and config. The docs at <https://docs.aembit.io> explain how to set that up. This repository holds the same documentation as an [Open Knowledge Format](https://openknowledgeformat.org) (OKF v0.1) bundle: a tree of small Markdown files with frontmatter and folder indexes that an agent clones once and navigates with file tools, reading only the files each question needs.
+
+## Who this is for
+
+- **AI coding agents and assistants with file tools** (Claude Code, Cursor, Copilot agents) that are configuring, integrating with, or troubleshooting Aembit.
+- **Developers who run those agents** and want them working from Aembit's documentation instead of guessing or searching the web.
+
+It is not meant to be read in a browser. For the human-readable documentation, go to <https://docs.aembit.io>. For a one-shot context paste instead of a file tree, use the `llms.txt` files listed at <https://docs.aembit.io/llm-resources/>.
+
+## How to use it
+
+**1. Get the bundle** into your project or workspace:
+
+```bash
+git clone https://github.com/Aembit/aembit_docs_okf aembit-docs
+# no git? download and extract the tarball instead:
+# curl -fsSL "https://docs.aembit.io/okf.tar.gz" | tar -xz
+```
+
+**2. Tell your agent it exists.** Add a note to your project's `CLAUDE.md`, `AGENTS.md`, or equivalent that says to consult `aembit-docs/` for Aembit questions and to read `aembit-docs/index.md` first. A ready-to-paste snippet is at <https://docs.aembit.io/llm-resources/>.
+
+**3. Let the agent navigate.** The bundle is built for this pattern:
+
+1. Read `index.md` at the root. It explains the layout and maps the guides.
+2. Open a folder's `index.md` before the files in it, and filter by each file's `type` (`how-to`, `reference`, `explanation`, `tutorial`, `troubleshooting`, `definition`), `interface` (`web-ui`, `cli`, `api`, `mcp`, `sdk`), and `tags` frontmatter.
+3. Follow the bundle-relative links between files, including each file's `## Related` section.
+
+A typical question resolves in the root index, one folder index, and two or three files.
+
+## What is in it
+
+| Path | Contents |
+|---|---|
+| `index.md` | Navigation guide and guide map. Start here. |
+| `get-started/` | What Aembit is, core concepts, quickstarts, tutorials, and use cases. |
+| `user-guide/` | Configuring Aembit in the web UI: access policies, workloads, trust and credential providers, Edge deployment, administration, audit, discovery, and troubleshooting. |
+| `dev-guide/` | Integrating with Aembit from code: the CLI, the Cloud and Edge APIs, the SDKs, and integration patterns. |
+| `ai-guide/` | Aembit for AI: blended identities, the MCP Identity Gateway, Authorization Server, and MCP Server, and a prompt library. |
+| `reference/` | The identifier reference, the support matrix, and Edge Component compatibility. |
+| `glossary/` | One file per term. |
+| `log.md` | The documentation changelog. |
+
+## Keeping it current
+
+This repository is a generated artifact. Every documentation release rebuilds the bundle from the source docs and force-syncs it here, so **manual edits are overwritten on the next release**. Do not open pull requests against this repository. To report a problem with the documentation itself, use the support channels listed at <https://docs.aembit.io/support-overview/>.
 
 ## Provenance
 
-- **Source:** `aembit/aembit_docs_astro` @ [`0381f195f8ca711c5d8384f0d45cbc87c8f57e88`](https://github.com/aembit/aembit_docs_astro/commit/0381f195f8ca711c5d8384f0d45cbc87c8f57e88)
-- **Synced:** 2026-07-09
-
-## Using this bundle
-
-Clone this repo — or download the tarball at <https://docs.aembit.io/okf.tar.gz> — into your workspace, then point your agent at it:
-
-1. Read `index.md` first for the navigation guide and guide map.
-2. Read a folder's `index.md` before its files; filter by `type`, `interface`, and `tags`.
-3. Follow the bundle-relative links between concept files.
-
-For the live, human-readable documentation, see <https://docs.aembit.io>.
+- **Source:** `aembit/aembit_docs_astro` @ [`1ff7ad14bfa3d68c7e21190878113b4f4c03353a`](https://github.com/aembit/aembit_docs_astro/commit/1ff7ad14bfa3d68c7e21190878113b4f4c03353a)
+- **Synced:** 2026-09-09

@@ -4,9 +4,8 @@ title: "Configure an Azure Entra WIF Credential Provider"
 description: "This page describes the Azure Entra Workload Identity Federation (WIF) Credential Provider and its usage with Server Workloads."
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/azure-entra-workload-identity-federation/
 interface: web-ui
-tags: [credential-provider, access-policy]
-timestamp: 2026-06-26T15:17:49-07:00
-type_inferred: true
+tags: ["credential-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Configure an Azure Entra WIF Credential Provider
@@ -16,8 +15,6 @@ Aembit’s Credential Provider for Microsoft Azure Entra Workload Identity Feder
 You can configure the Azure Entra Credential Provider using the [Aembit web UI](#configure-a-credential-provider-for-azure-entra) or through the [Aembit Terraform provider](#configure-azure-entra-using-the-aembit-terraform-provider).
 
 ## Prerequisites
-
-[Section titled “Prerequisites”](#prerequisites)
 
 To configure an Azure Entra Credential Provider, you must have and do the following:
 
@@ -59,19 +56,15 @@ To configure an Azure Entra Credential Provider, you must have and do the follow
 
 ## Configure a Credential Provider for Azure Entra
 
-[Section titled “Configure a Credential Provider for Azure Entra”](#configure-a-credential-provider-for-azure-entra)
-
 This section explains how to configure an Azure Entra Credential Provider in the Aembit web UI that requests a single Azure Entra resource. These steps assume you already have a Microsoft Entra registered application (see [Prerequisites](#prerequisites)).
 
 You must configure the Aembit Credential Provider at the same time as the Azure Entra registered application credential.
 
-Tip
-
-It’s best to have your Azure Entra registered application open in the Azure Entra Portal in a different browser window. Keep it open alongside the Aembit web UI while configuring the Credential Provider.
+> **Tip**
+>
+> It’s best to have your Azure Entra registered application open in the Azure Entra Portal in a different browser window. Keep it open alongside the Aembit web UI while configuring the Credential Provider.
 
 ## Create a Credential Provider
-
-[Section titled “Create a Credential Provider”](#create-a-credential-provider)
 
 1. Log in to your Aembit Tenant, and in the left sidebar menu, go to **Credential Providers**.
 
@@ -88,8 +81,6 @@ It’s best to have your Azure Entra registered application open in the Azure En
    Keep the Aembit web UI open while you work on the next section.
 
 ## Add a credential for your Azure Entra registered app
-
-[Section titled “Add a credential for your Azure Entra registered app”](#add-a-credential-for-your-azure-entra-registered-app)
 
 In the Azure Entra Portal, create a new credential for your registered application:
 
@@ -127,8 +118,6 @@ In the Azure Entra Portal, create a new credential for your registered applicati
 
 ## Complete the Credential Provider in the Aembit web UI
 
-[Section titled “Complete the Credential Provider in the Aembit web UI”](#complete-the-credential-provider-in-the-aembit-web-ui)
-
 Go back to the Aembit web UI, and complete the **Credential Provider** page:
 
 1. For **JWT Token Scope**, enter the scope of the resource you want to request.
@@ -149,8 +138,6 @@ Go back to the Aembit web UI, and complete the **Credential Provider** page:
 
 ## Verify the connection
 
-[Section titled “Verify the connection”](#verify-the-connection)
-
 To verify the connection between your Aembit Credential Provider and your Azure Entra registered application:
 
 1. On the **Credential Providers** page, select the Credential Provider you just created.
@@ -165,15 +152,13 @@ You’re now ready to use your Credential Provider for Azure Entra Workload Iden
 
 ## Configure Azure Entra using the Aembit Terraform provider
 
-[Section titled “Configure Azure Entra using the Aembit Terraform provider”](#configure-azure-entra-using-the-aembit-terraform-provider)
-
 To configure an Azure Entra Credential Provider using the [Aembit Terraform Provider](https://registry.terraform.io/providers/Aembit/aembit/latest), follow the steps in this section.
 
-OIDC Issuer URL
-
-When using the Aembit Terraform Provider, you won’t have the OIDC Issuer URL the Azure credential requires until *after* you apply the Terraform configuration successfully.
-
-Make sure you leave the Azure Entra **Add a credential** page open until after you have successfully applied the Terraform configuration. Then copy the value for `oidc_issuer` from the applied Terraform configuration to the **Issuer** field in the **Add a credential** page.
+> **OIDC Issuer URL**
+>
+> When using the Aembit Terraform Provider, you won’t have the OIDC Issuer URL the Azure credential requires until *after* you apply the Terraform configuration successfully.
+>
+> Make sure you leave the Azure Entra **Add a credential** page open until after you have successfully applied the Terraform configuration. Then copy the value for `oidc_issuer` from the applied Terraform configuration to the **Issuer** field in the **Add a credential** page.
 
 1. Follow the steps to [Add a credential for your Azure Entra registered app](#add-a-credential-for-your-azure-entra-registered-app).
 
@@ -244,8 +229,6 @@ Make sure you leave the Azure Entra **Add a credential** page open until after y
 You’re now ready to use your Credential Provider for Azure Entra Workload Identity Federation with your Server Workloads in an Aembit Access Policy!
 
 ## Azure Entra and Credential Provider UI value mappings
-
-[Section titled “Azure Entra and Credential Provider UI value mappings”](#azure-entra-and-credential-provider-ui-value-mappings)
 
 The following table shows how the different value in Azure Entra from your registered application map to the required values to the Aembit Credential Provider web UI and Terraform provider:
 

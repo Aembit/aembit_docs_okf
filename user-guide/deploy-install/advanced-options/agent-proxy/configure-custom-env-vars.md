@@ -4,7 +4,7 @@ title: "Configure custom environment variables for Agent Proxy"
 description: "How to inject custom environment variables into Agent Proxy and Aembit CLI process so OIDC and JWT-SVID dynamic claims can read them."
 resource: https://docs.aembit.io/user-guide/deploy-install/advanced-options/agent-proxy/configure-custom-env-vars/
 interface: web-ui
-tags: [agent-proxy, advanced-option, deploy-install]
+tags: ["agent-proxy", "advanced-option", "deploy-install"]
 timestamp: 2026-06-05T14:13:51-07:00
 ---
 
@@ -16,8 +16,6 @@ This page describes how to inject custom variables and configure the allowlist o
 
 ## How capture works
 
-[Section titled “How capture works”](#how-capture-works)
-
 A custom environment variable becomes available to dynamic claims only when both of the following are true:
 
 1. The variable is present in the **Agent Proxy** or **Aembit CLI** process environment.
@@ -28,8 +26,6 @@ If a Credential Provider references a missing variable (absent from the process 
 A small set of always-available variables (such as `K8S_POD_NAME` and `AEMBIT_RESOURCE_SET_ID`) bypass the allowlist requirement. See [Always-available variables](#always-available-variables).
 
 ## Set the allowlist
-
-[Section titled “Set the allowlist”](#set-the-allowlist)
 
 Set [`AEMBIT_ENV_VAR_ALLOWLIST`](../../../../reference/edge-components/edge-component-env-vars.md#aembit_env_var_allowlist) to a comma-separated list of variable names that you want Aembit to capture.
 
@@ -48,13 +44,11 @@ For the exact commands on each platform, see the following [Configure by deploym
 
 Aembit matches variable names exactly and treats them as case-sensitive.
 
-Windows
-
-Windows resolves OS-level environment variables case-insensitively, so a process may receive `my_var` from a system-level `MY_VAR`. Aembit’s allowlist match itself is still case-sensitive, so the name in `AEMBIT_ENV_VAR_ALLOWLIST` must match the exact case Agent Proxy process sees.
+> **Windows**
+>
+> Windows resolves OS-level environment variables case-insensitively, so a process may receive `my_var` from a system-level `MY_VAR`. Aembit’s allowlist match itself is still case-sensitive, so the name in `AEMBIT_ENV_VAR_ALLOWLIST` must match the exact case Agent Proxy process sees.
 
 ## Configure by deployment
-
-[Section titled “Configure by deployment”](#configure-by-deployment)
 
 Choose the tab for your deployment platform.
 
@@ -65,8 +59,6 @@ Choose the tab for your deployment platform.
   You have three options for getting your custom variables and the allowlist into the service environment. The first option is the recommended path for most deployments.
 
   #### Option 1: `systemctl edit` drop-in Recommended
-
-  [Section titled “Option 1: systemctl edit drop-in ”](#option-1-systemctl-edit-drop-in-)
 
   Use `systemctl edit` to create a drop-in override that `systemd` applies on top of the shipped unit file.
 
@@ -107,8 +99,6 @@ Choose the tab for your deployment platform.
 
   #### Option 2: manually managed drop-in file
 
-  [Section titled “Option 2: manually managed drop-in file”](#option-2-manually-managed-drop-in-file)
-
   If you provision VMs with Ansible, Chef, Puppet, or another configuration-management tool, write a drop-in file directly so the tool can manage it as a regular file resource.
 
   1. Create the drop-in directory:
@@ -119,7 +109,7 @@ Choose the tab for your deployment platform.
 
   2. Write a drop-in file (any `.conf` filename works) containing your `[Service]` overrides:
 
-     /etc/systemd/system/aembit\_agent\_proxy.service.d/aembit-env.conf
+     **/etc/systemd/system/aembit\_agent\_proxy.service.d/aembit-env.conf**
 
      ```ini
      [Service]
@@ -136,8 +126,6 @@ Choose the tab for your deployment platform.
      ```
 
   #### Option 3: pass the allowlist at install time, set custom variables in a drop-in
-
-  [Section titled “Option 3: pass the allowlist at install time, set custom variables in a drop-in”](#option-3-pass-the-allowlist-at-install-time-set-custom-variables-in-a-drop-in)
 
   Agent Proxy installer accepts `AEMBIT_ENV_VAR_ALLOWLIST` as an installer environment variable, so you can configure the allowlist at install time and put your custom variables in a drop-in afterward.
 
@@ -248,8 +236,6 @@ Choose the tab for your deployment platform.
 
 ## Verify Aembit captures a custom variable
 
-[Section titled “Verify Aembit captures a custom variable”](#verify-aembit-captures-a-custom-variable)
-
 After you configure a custom variable, verify that a dynamic claim can read it:
 
 1. Add a temporary Custom Claim to an existing OIDC ID Token Credential Provider, for example:
@@ -267,13 +253,9 @@ If the claim is empty, see [Troubleshooting](#troubleshooting).
 
 ## Always-available variables
 
-[Section titled “Always-available variables”](#always-available-variables)
-
 Dynamic claims can read the following variables regardless of `AEMBIT_ENV_VAR_ALLOWLIST`, provided each one exists in the process environment. Reference them in dynamic claims with `${os.environment.<NAME>}`, for example `${os.environment.CLIENT_WORKLOAD_ID}`.
 
 ### Kubernetes-only
-
-[Section titled “Kubernetes-only”](#kubernetes-only)
 
 Aembit populates these variables only on Kubernetes deployments:
 
@@ -285,8 +267,6 @@ Aembit populates these variables only on Kubernetes deployments:
 
 ### All deployments
 
-[Section titled “All deployments”](#all-deployments)
-
 Aembit populates these variables on Linux Virtual Machines, Windows Virtual Machines, and Kubernetes:
 
 | Variable                                                                                              | Typical source                       |
@@ -296,17 +276,11 @@ Aembit populates these variables on Linux Virtual Machines, Windows Virtual Mach
 
 ## Behavior and scope
 
-[Section titled “Behavior and scope”](#behavior-and-scope)
-
 ### Process boundary
-
-[Section titled “Process boundary”](#process-boundary)
 
 Aembit reads environment variables only from the Agent Proxy or Aembit CLI process environment. Variables set only in the Client Workload process aren’t visible to dynamic claims. Agent Proxy and Aembit CLI act as the boundary.
 
 ### Supported platforms
-
-[Section titled “Supported platforms”](#supported-platforms)
 
 Aembit captures custom environment variables on:
 
@@ -315,8 +289,6 @@ Aembit captures custom environment variables on:
 
 ## Troubleshooting
 
-[Section titled “Troubleshooting”](#troubleshooting)
-
 | Symptom                                                                                        | Likely cause                                                | Resolution                                                                                                                                |
 | ---------------------------------------------------------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
 | Claim value is empty                                                                           | Variable missing from the process environment               | Confirm with `systemctl show` (Linux), `[Environment]::GetEnvironmentVariable(..., 'Machine')` (Windows), or `kubectl exec ... env` (K8s) |
@@ -324,8 +296,6 @@ Aembit captures custom environment variables on:
 | Variable visible in shell but not in claim                                                     | Set in Client Workload process, not Agent Proxy/CLI process | Move the variable definition to Agent Proxy or Aembit CLI process environment                                                             |
 
 ## Related docs
-
-[Section titled “Related docs”](#related-docs)
 
 * [OIDC and JWT-SVID dynamic claims](../../../access-policies/credential-providers/advanced-options/dynamic-claims-oidc.md)
 * [Edge Component environment variables reference](../../../../reference/edge-components/edge-component-env-vars.md)

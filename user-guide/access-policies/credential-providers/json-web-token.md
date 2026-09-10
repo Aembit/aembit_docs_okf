@@ -4,7 +4,7 @@ title: "Configure a JSON Web Token (JWT) Credential Provider"
 description: "How to create and use a JSON Web Token (JWT) Credential Provider"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/json-web-token/
 interface: web-ui
-tags: [credential-provider, access-policy]
+tags: ["credential-provider", "access-policy"]
 timestamp: 2026-06-30T13:30:29-04:00
 ---
 
@@ -12,24 +12,20 @@ timestamp: 2026-06-30T13:30:29-04:00
 
 A JSON Web Token (JWT), defined by the open standard [RFC 7519](https://datatracker.ietf.org/doc/html/rfc7519), is a compact and self-contained method for securely transmitting information as a JSON object between parties.
 
-Aembit’s JWT Credential Provider**Credential Provider**: Credential Providers obtain the specific access credentials—such as API keys, OAuth tokens, or temporary cloud credentials—that Client Workloads need to authenticate to Server Workloads.[Learn more](../../../get-started/concepts/credential-providers.md) currently supports Snowflake Key Pair Authentication for connecting to Snowflake Server Workloads**Server Workload**: Server Workloads represent target services, APIs, databases, or applications that receive and respond to access requests from Client Workloads.[Learn more](../../../get-started/concepts/server-workloads.md).
+Aembit’s JWT Credential Provider currently supports Snowflake Key Pair Authentication for connecting to Snowflake Server Workloads.
 
-Multiple providers
-
-You can configure multiple JWT Credential Providers within a single Access Policy**Access Policy**: Access Policies define, enforce, and audit access between Client and Server Workloads by cryptographically verifying workload identity and contextual factors rather than relying on static secrets.[Learn more](../../../get-started/concepts/access-policies.md) to support different users or services accessing the same Server Workload. See [Configure multiple JWT Credential Providers](#configure-multiple-jwt-credential-providers) for the procedure, or [Using multiple JWT Credential Providers](json-web-token-multiple.md) for conceptual details.
+> **Multiple providers**
+>
+> You can configure multiple JWT Credential Providers within a single Access Policy to support different users or services accessing the same Server Workload. See [Configure multiple JWT Credential Providers](#configure-multiple-jwt-credential-providers) for the procedure, or [Using multiple JWT Credential Providers](json-web-token-multiple.md) for conceptual details.
 
 ## Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites)
-
 Before configuring a JWT Credential Provider in Aembit, ensure you have the following:
 
-* An active Aembit Tenant**Aembit Tenant**: Aembit Tenants serve as isolated, dedicated environments within Aembit that provide complete separation of administrative domains and security configurations.[Learn more](../../../get-started/concepts/administration.md) with appropriate permissions to create and manage Credential Providers.
+* An active Aembit Tenant with appropriate permissions to create and manage Credential Providers.
 * A Snowflake account with permissions to configure key pair authentication.
 
 ## Credential Provider configuration
-
-[Section titled “Credential Provider configuration”](#credential-provider-configuration)
 
 To configure a JSON Web Token (JWT) Credential Provider, follow these steps:
 
@@ -67,27 +63,21 @@ To configure a JSON Web Token (JWT) Credential Provider, follow these steps:
 
 ## Configure multiple JWT Credential Providers
 
-[Section titled “Configure multiple JWT Credential Providers”](#configure-multiple-jwt-credential-providers)
-
 To configure multiple JWT Credential Providers within a single Access Policy, follow these steps. Each Credential Provider must have a unique mapping value (username for Snowflake, or HTTP header/body value for HTTP workloads).
 
-How it works
-
-For conceptual information about how Aembit routes requests to the appropriate Credential Provider, see [Using multiple JWT Credential Providers](json-web-token-multiple.md).
+> **How it works**
+>
+> For conceptual information about how Aembit routes requests to the appropriate Credential Provider, see [Using multiple JWT Credential Providers](json-web-token-multiple.md).
 
 ### Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites-1)
-
 Before configuring multiple JWT Credential Providers, ensure you have:
 
-* An existing Access Policy with a Client Workload**Client Workload**: Client Workloads represent software applications, scripts, or automated processes that initiate access requests to Server Workloads, operating autonomously without direct user interaction.[Learn more](../../../get-started/concepts/client-workloads.md) and Server Workload configured
+* An existing Access Policy with a Client Workload and Server Workload configured
 * Server Workload Application Protocol set to **Snowflake** or **HTTP**
 * At least two JWT Credential Providers created (or ready to create)
 
 ### Add multiple JWT Credential Providers to an Access Policy
-
-[Section titled “Add multiple JWT Credential Providers to an Access Policy”](#add-multiple-jwt-credential-providers-to-an-access-policy)
 
 1. Create your first JWT Credential Provider by following the [Credential Provider configuration](#credential-provider-configuration) procedure.
 
@@ -101,15 +91,13 @@ Before configuring multiple JWT Credential Providers, ensure you have:
 
 6. To add each additional JWT Credential Provider, click **+ Add Another** on the Credential Provider card. In the **Credential Mapping** dialog, click **Continue**, then add the Credential Provider on the **Add New** or **Select Existing** tab.
 
-   Caution
-
-   When you add additional Credential Providers to an Access Policy, you must also map each Credential Provider so Aembit can route requests correctly.
+   > **Caution**
+   >
+   > When you add additional Credential Providers to an Access Policy, you must also map each Credential Provider so Aembit can route requests correctly.
 
 7. Map each Credential Provider to its selector value, as described in [Map JWT Credential Providers](#map-jwt-credential-providers).
 
 ### Map JWT Credential Providers
-
-[Section titled “Map JWT Credential Providers”](#map-jwt-credential-providers)
 
 After adding multiple JWT Credential Providers to an Access Policy, map each Credential Provider to its selector value.
 
@@ -149,8 +137,6 @@ After adding multiple JWT Credential Providers to an Access Policy, map each Cre
 
 ### Verify your configuration
 
-[Section titled “Verify your configuration”](#verify-your-configuration)
-
 To confirm your multiple JWT Credential Provider configuration works correctly:
 
 1. Make a request using one of your mapped values (Snowflake username or HTTP header/body value).
@@ -163,8 +149,6 @@ To confirm your multiple JWT Credential Provider configuration works correctly:
 3. Make a request using a different mapped value and repeat to verify the second Credential Provider.
 
 ## Related topics
-
-[Section titled “Related topics”](#related-topics)
 
 * [Using multiple JWT Credential Providers](json-web-token-multiple.md) - Learn how Aembit routes requests to multiple JWT Credential Providers
 * [Configure multiple Credential Providers](multiple-credential-providers.md) - Overview of multiple Credential Provider support

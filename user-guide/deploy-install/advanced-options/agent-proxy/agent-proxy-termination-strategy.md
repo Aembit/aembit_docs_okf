@@ -1,12 +1,11 @@
 ---
-type: how-to
+type: reference
 title: "Agent Proxy termination strategy"
 description: "Learn about Agent Proxy's termination strategies across different environments and how to configure the AEMBIT_SIGTERM_STRATEGY variable"
 resource: https://docs.aembit.io/user-guide/deploy-install/advanced-options/agent-proxy/agent-proxy-termination-strategy/
 interface: web-ui
-tags: [agent-proxy, advanced-option, deploy-install]
-timestamp: 2025-05-22T22:52:17-07:00
-type_inferred: true
+tags: ["agent-proxy", "advanced-option", "deploy-install"]
+timestamp: 2026-09-09T15:44:57-07:00
 ---
 
 # Agent Proxy termination strategy
@@ -17,8 +16,6 @@ Agent Proxy runs in distinct environments, such as Virtual Machines, Kubernetes,
 
 ## Configuration
 
-[Section titled “Configuration”](#configuration)
-
 You can configure the termination strategy by setting the `AEMBIT_SIGTERM_STRATEGY` environment variable.
 
 The supported values are:
@@ -27,8 +24,6 @@ The supported values are:
 * `sigkill` – Ignores the `SIGTERM` signal and waits for a `SIGKILL`.
 
 ## Default termination strategies
-
-[Section titled “Default termination strategies”](#default-termination-strategies)
 
 The following table lists the default termination strategy for each environment. You can override the default behavior using the `AEMBIT_SIGTERM_STRATEGY` environment variable.
 
@@ -41,4 +36,3 @@ The following table lists the default termination strategy for each environment.
 | Kubernetes                | `sigkill`                    |
 | Virtual Machine (Linux)   | `immediate`                  |
 | Virtual Machine (Windows) | N/A                          |
-| Virtual Appliance         | `immediate`                  |

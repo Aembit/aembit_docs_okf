@@ -4,9 +4,8 @@ title: "Configure a Managed GitLab Account Credential Provider"
 description: "How to create and use a Managed GitLab Account Credential Provider"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/managed-gitlab-account/
 interface: web-ui
-tags: [credential-provider, access-policy]
-timestamp: 2025-10-08T09:42:10-07:00
-type_inferred: true
+tags: ["credential-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Configure a Managed GitLab Account Credential Provider
@@ -15,15 +14,11 @@ The Manage GitLab Account Credential Provider uses the [GitLab Service Account C
 
 ## Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites)
-
 You must have the following to create a Managed GitLab Account Credential Provider:
 
 * A completed [GitLab Service Account Credential Provider Integration](integrations/gitlab.md)
 
 ## Create a Managed GitLab account Credential Provider
-
-[Section titled “Create a Managed GitLab account Credential Provider”](#create-a-managed-gitlab-account-credential-provider)
 
 To create a Managed GitLab Account Credential Provider, follow these steps:
 
@@ -41,13 +36,13 @@ To create a Managed GitLab Account Credential Provider, follow these steps:
 
    1. **Select GitLab Integration** - Select a GitLab Service Account integration you’ve already configured.
 
-      Note
-
-      If the **Select GitLab Integration** dropdown menu is empty, you either:
-
-      * May not have any GitLab Service Account integrations configured yet. See [GitLab Service Account](integrations/gitlab.md) to create one.
-
-      * May need to change Resource Sets.
+      > **Note**
+      >
+      > If the **Select GitLab Integration** dropdown menu is empty, you either:
+      >
+      > * May not have any GitLab Service Account integrations configured yet. See [GitLab Service Account](integrations/gitlab.md) to create one.
+      >
+      > * May need to change Resource Sets.
 
    2. **GitLab Group IDs or Paths** - Enter the [group ID](https://docs.gitlab.com/user/group/#access-a-group-by-using-the-group-id) or [group path](https://docs.gitlab.com/user/namespace/#determine-which-type-of-namespace-youre-in). If entering more than one, separate them with commas (for example: `parent-group/subgroup,34,56`).
 
@@ -69,8 +64,6 @@ To create a Managed GitLab Account Credential Provider, follow these steps:
 
 ## Verify the Credential Provider
 
-[Section titled “Verify the Credential Provider”](#verify-the-credential-provider)
-
 To verify that you successfully created the Managed GitLab Account Credential Provider and it’s communicating with GitLab:
 
 1. In your Aembit Tenant, go to **Credential Providers**.
@@ -86,8 +79,6 @@ To verify that you successfully created the Managed GitLab Account Credential Pr
    ![Completed Managed GitLab Account Credential Provider with 'Ready' badge](https://docs.aembit.io/_astro/cp-integration-gitlab-sa-ready.dTYtBe-t_Z1gfD7F.webp)
 
 ### (Optional) Verify in the GitLab Admin area
-
-[Section titled “(Optional) Verify in the GitLab Admin area”](#optional-verify-in-the-gitlab-admin-area)
 
 To verify that the Managed GitLab Account Credential Provider successfully creates service account in GitLab:
 

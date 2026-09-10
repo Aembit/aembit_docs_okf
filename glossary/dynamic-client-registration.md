@@ -2,7 +2,7 @@
 type: definition
 title: "Dynamic Client Registration"
 description: "An OAuth mechanism that allows MCP clients to register with the Authorization Server at runtime without pre-configuration, receiving unique credentials for subsequent authorization requests."
-tags: [authentication]
+tags: ["authentication"]
 timestamp: 2026-06-30T15:16:59-04:00
 ---
 

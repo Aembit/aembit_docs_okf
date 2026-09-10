@@ -4,9 +4,8 @@ title: "Kubernetes Service Account Name"
 description: "How to identify Kubernetes workloads using the Kubernetes Service Account Name within Aembit"
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/kubernetes-service-account-name/
 interface: web-ui
-tags: [kubernetes, identification, client-workload, access-policy]
-timestamp: 2025-06-17T17:07:06-07:00
-type_inferred: true
+tags: ["kubernetes", "identification", "client-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Kubernetes Service Account Name
@@ -15,21 +14,15 @@ This page explains how to use the **Kubernetes Service Account Name** identifier
 
 ## Understanding the Kubernetes service account name identifier
 
-[Section titled “Understanding the Kubernetes service account name identifier”](#understanding-the-kubernetes-service-account-name-identifier)
-
 In Kubernetes, service accounts provide an identity for processes that run in a pod. You can assign each pod a service account, and the pod uses this account when it interacts with the Kubernetes API or other services.
 
 Using the **service account name** as an identifier is useful when you want to manage Access Policies tied to the identity of workloads, rather than their namespace or pod name.
 
 ## Applicable deployment type
 
-[Section titled “Applicable deployment type”](#applicable-deployment-type)
-
 Aembit supports the Kubernetes Service Account Name identification method for Edge-based deployments on [Kubernetes](../../../deploy-install/kubernetes/kubernetes.md).
 
 ## Create a Client Workload with a Kubernetes service account name identifier
-
-[Section titled “Create a Client Workload with a Kubernetes service account name identifier”](#create-a-client-workload-with-a-kubernetes-service-account-name-identifier)
 
 To configure a Client Workload with a Kubernetes Service Account Name identifier, follow these steps:
 
@@ -53,25 +46,23 @@ To configure a Client Workload with a Kubernetes Service Account Name identifier
 
    Aembit displays the new Client Workload on the **Client Workloads** page.
 
-Client Workload identifier uniqueness
-
-When you identify a Client Workload using a single identifier such as this one in a complex environment, this identifier may not always provide sufficient uniqueness.
-
-To avoid Aembit unintentionally matching something beyond what it’s intended to match, Aembit recommends that you set additional identifiers to compliment this one, creating a Client Workload identity that’s unique across your environment.
-
-See [Using multiple Client Workload identifiers](client-workload-multiple-ids.md) for guidance on combining this identifier with more specific identifiers such as those on the [Client Workload Identifiers overview](overview.md) page, which includes vendor- and technology-specific identifiers.
+> **Client Workload identifier uniqueness**
+>
+> When you identify a Client Workload using a single identifier such as this one in a complex environment, this identifier may not always provide sufficient uniqueness.
+>
+> To avoid Aembit unintentionally matching something beyond what it’s intended to match, Aembit recommends that you set additional identifiers to compliment this one, creating a Client Workload identity that’s unique across your environment.
+>
+> See [Using multiple Client Workload identifiers](client-workload-multiple-ids.md) for guidance on combining this identifier with more specific identifiers such as those on the [Client Workload Identifiers overview](overview.md) page, which includes vendor- and technology-specific identifiers.
 
 ## Find Kubernetes service account name
 
-[Section titled “Find Kubernetes service account name”](#find-kubernetes-service-account-name)
-
 To find the Kubernetes Service Account Name used by a workload, follow these steps:
 
-Note
-
-You can also find the service account name in the Kubernetes deployment YAML files, Helm chart values, or other IaC configurations.
-
-Be sure to enter the service account name exactly as it appears in your Kubernetes cluster.
+> **Note**
+>
+> You can also find the service account name in the Kubernetes deployment YAML files, Helm chart values, or other IaC configurations.
+>
+> Be sure to enter the service account name exactly as it appears in your Kubernetes cluster.
 
 1. Use the command: `kubectl get serviceaccount -n <namespace>`
 

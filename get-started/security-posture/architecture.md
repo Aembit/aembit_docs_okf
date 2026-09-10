@@ -3,18 +3,15 @@ type: explanation
 title: "Aembit software architecture"
 description: "Explanation and illustration of Aembit's software architecture"
 resource: https://docs.aembit.io/get-started/security-posture/architecture/
-tags: [security-posture]
-timestamp: 2026-06-26T15:17:49-07:00
-type_inferred: true
+tags: ["security-posture"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Aembit software architecture
 
-Aembit is a cloud-native, multi-tenant SaaS Workload IAM**Workload IAM**: Identity and Access Management for non-human entities (services, applications, automated workloads) rather than human users. Unlike traditional IAM that manages user access, Workload IAM manages machine-to-machine authentication and authorization.[Learn more](../how-aembit-works.md) platform for federated workloads that provides credential brokering**Credential brokering**: The process of mediating credential issuance between a requesting workload and a target resource. The broker verifies identity, evaluates policy, and issues short-lived credentials so that workloads never manage static secrets directly.[Learn more](../how-aembit-works.md) and access policy enforcement across diverse infrastructure environments.
+Aembit is a cloud-native, multi-tenant SaaS Workload IAM platform for federated workloads that provides credential brokering and access policy enforcement across diverse infrastructure environments.
 
 ## High-level architecture overview
-
-[Section titled “High-level architecture overview”](#high-level-architecture-overview)
 
 Aembit’s architecture consists of two primary systems:
 
@@ -25,8 +22,6 @@ Aembit’s architecture consists of two primary systems:
 
 ### Key components
 
-[Section titled “Key components”](#key-components)
-
 * **Workloads**: Applications or services (clients and servers) that require access to resources.
 * **Access Policies**: Declarative rules that define which workloads can access which resources, under what conditions.
 * **Trust Providers**: Integrations with identity providers (AWS, Azure, Google Cloud) to verify workload identities.
@@ -35,8 +30,6 @@ Aembit’s architecture consists of two primary systems:
 
 ## Architecture diagram
 
-[Section titled “Architecture diagram”](#architecture-diagram)
-
 Below is a high-level D2 diagram representing Aembit’s architecture:
 
 ![High-level architecture showing Client Workloads requesting access through Aembit Edge, policy evaluation in Aembit Cloud, identity verification via Trust Providers, and credential issuance to access Server Workloads](https://docs.aembit.io/d2/docs/get-started/security-posture/architecture-0.svg)
@@ -44,8 +37,6 @@ Below is a high-level D2 diagram representing Aembit’s architecture:
 Aembit’s deployment model shows three zones: Aembit Cloud (SaaS, managed by Aembit), Your Infrastructure (where you deploy Edge components), and External Systems (existing identity providers and target workloads). Numbered arrows show a typical access flow from workload request through policy evaluation to credential delivery.
 
 ## Security design principles
-
-[Section titled “Security design principles”](#security-design-principles)
 
 Aembit’s architecture follows modern security principles:
 
@@ -59,7 +50,7 @@ Aembit’s architecture follows modern security principles:
 
   Technical example
 
-  When your application requests database access, Aembit issues credentials scoped to only that database. Each credential has a configurable TTL**TTL (Time to Live)**: The configured duration for which a credential, token, or cached value remains valid before expiring. Shorter TTLs reduce the window of exposure if a credential is compromised.. The credential never exists in your container’s environment variables or configuration files. It’s delivered just-in-time via the Aembit Edge proxy. If an attacker dumps your container’s memory or environment, they won’t find static database passwords.
+  When your application requests database access, Aembit issues credentials scoped to only that database. Each credential has a configurable TTL. The credential never exists in your container’s environment variables or configuration files. It’s delivered just-in-time via the Aembit Edge proxy. If an attacker dumps your container’s memory or environment, they won’t find static database passwords.
 
 * **Defense in Depth**: Multiple security layers protect credential access: identity attestation at Edge, policy evaluation in Cloud, credential generation by providers, and audit logging at all stages. Compromise of any single layer doesn’t expose credentials.
 
@@ -74,8 +65,6 @@ Aembit’s architecture follows modern security principles:
   AWS validates workload identity via IAM roles (Trust Provider), Aembit Cloud evaluates Access Policies based on that identity, and then AWS STS issues temporary credentials (Credential Provider). No single component can unilaterally grant access. The Trust Provider can’t issue credentials, and the Credential Provider can’t override policy decisions. This separation limits the blast radius of any individual component compromise.
 
 ## Next steps
-
-[Section titled “Next steps”](#next-steps)
 
 **To validate how this architecture addresses specific security scenarios:**
 

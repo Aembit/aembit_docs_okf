@@ -1,12 +1,10 @@
 ---
-type: how-to
+type: explanation
 title: "Selective Transparent Steering"
 description: "This page describes the selective transparent steering feature."
 resource: https://docs.aembit.io/user-guide/deploy-install/advanced-options/agent-proxy/selective-transparent-steering/
-interface: web-ui
-tags: [agent-proxy, advanced-option, deploy-install]
-timestamp: 2026-06-05T14:13:51-07:00
-type_inferred: true
+tags: ["agent-proxy", "advanced-option", "deploy-install"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Selective Transparent Steering
@@ -17,13 +15,11 @@ By default, Agent Proxy proxies all egress traffic from a host where you install
 
 ### Usage
 
-[Section titled “Usage”](#usage)
-
 Selective transparent steering is **off** by default. To enable this feature, add the environment variable `AEMBIT_STEERING_ALLOWED_HOSTS` when installing Agent Proxy. Set the variable’s value to a comma-separated list of hostnames that Agent Proxy should proxy.
 
-Note
-
-This setting applies to VM deployments only. Kubernetes, AWS Lambda, and ECS Fargate deployments don’t support it.
+> **Note**
+>
+> This setting applies to VM deployments only. Kubernetes, AWS Lambda, and ECS Fargate deployments don’t support it.
 
 ```shell
 AEMBIT_STEERING_ALLOWED_HOSTS=graph.microsoft.com,vault.mydomain [...] ./install

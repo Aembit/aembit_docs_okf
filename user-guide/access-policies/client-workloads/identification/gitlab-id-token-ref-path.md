@@ -4,9 +4,8 @@ title: "GitLab ID Token Ref Path"
 description: "This page describes how the GitLab ID Token Ref Path method identifies Client Workloads in Aembit."
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/gitlab-id-token-ref-path/
 interface: web-ui
-tags: [cicd, identification, client-workload, access-policy]
-timestamp: 2025-08-18T17:47:46-07:00
-type_inferred: true
+tags: ["cicd", "identification", "client-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # GitLab ID Token Ref Path
@@ -20,17 +19,11 @@ Combine this method with additional Client Workload identification methods, such
 
 ## Applicable Deployment Type
 
-[Section titled “Applicable Deployment Type”](#applicable-deployment-type)
-
 This method is suitable for GitLab-based CI/CD Workflow deployments.
 
 ## Configuration
 
-[Section titled “Configuration”](#configuration)
-
 ### Aembit Cloud
-
-[Section titled “Aembit Cloud”](#aembit-cloud)
 
 1. Create a new Client Workload.
 2. Choose **GitLab ID Token Ref Path** for client identification.
@@ -40,8 +33,6 @@ This method is suitable for GitLab-based CI/CD Workflow deployments.
 * **Example** - refs/heads/feature-branch-1
 
 ### Finding the GitLab ID Token Ref Path:
-
-[Section titled “Finding the GitLab ID Token Ref Path:”](#finding-the-gitlab-id-token-ref-path)
 
 You can reconstruct ref path claim as follows:
 

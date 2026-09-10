@@ -4,14 +4,13 @@ title: "CIMD Client ID"
 description: "How to identify MCP client workloads using a Client ID Metadata Document (CIMD) URL in Aembit"
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/cimd-client-id/
 interface: web-ui
-tags: [identification, client-workload, access-policy]
-timestamp: 2026-06-30T15:16:59-04:00
-type_inferred: true
+tags: ["identification", "client-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # CIMD Client ID
 
-A Client ID Metadata Document (CIMD)**Client ID Metadata Document**: A JSON document that an MCP client hosts at an HTTPS URL, containing its client\_id, client\_name, and redirect\_uris. When a client presents that URL as its OAuth client\_id, the Authorization Server fetches and validates the document, so the client can authenticate without Dynamic Client Registration (DCR).[Learn more(opens in new tab)](https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization#client-id-metadata-documents) is a JSON file that an MCP client hosts at a public HTTPS URL. The document describes the client’s name and its allowed redirect URIs. The URL itself serves as the client’s identity. When the client presents the URL-formatted `client_id`, Aembit fetches the document from that URL and validates the client’s metadata.
+A Client ID Metadata Document (CIMD) is a JSON file that an MCP client hosts at a public HTTPS URL. The document describes the client’s name and its allowed redirect URIs. The URL itself serves as the client’s identity. When the client presents the URL-formatted `client_id`, Aembit fetches the document from that URL and validates the client’s metadata.
 
 Aembit fetches and processes a metadata document only when an administrator has explicitly added its URL to a Client Workload’s identity configuration. This ensures only MCP clients you register can obtain access tokens through your MCP Authorization Server.
 
@@ -19,17 +18,13 @@ For more about how MCP authorization flows work, see [MCP Authorization Server c
 
 ## Applicable deployment type
 
-[Section titled “Applicable deployment type”](#applicable-deployment-type)
-
 This method is for [MCP Authorization Server](../../../../ai-guide/mcp/authorization-server/overview.md) deployments. It identifies MCP clients that connect to MCP servers protected by Aembit’s MCP Authorization Server.
 
-Authentication scope
-
-For CIMD Client Workloads, Aembit identifies the client by its metadata document URL. Aembit doesn’t perform JWKS validation or `private_key_jwt` token authentication.
+> **Authentication scope**
+>
+> For CIMD Client Workloads, Aembit identifies the client by its metadata document URL. Aembit doesn’t perform JWKS validation or `private_key_jwt` token authentication.
 
 ## CIMD document requirements
-
-[Section titled “CIMD document requirements”](#cimd-document-requirements)
 
 Aembit fetches the metadata document when you save the Client Workload and again during each authorization flow. The document and its URL must meet the following requirements, or Aembit rejects the fetch:
 
@@ -44,7 +39,7 @@ Aembit fetches the metadata document when you save the Client Workload and again
 
 The following example shows a CIMD metadata document:
 
-client-metadata.json
+**client-metadata.json**
 
 ```json
 {
@@ -65,8 +60,6 @@ client-metadata.json
 ```
 
 ## Create a Client Workload with a CIMD Client ID identifier
-
-[Section titled “Create a Client Workload with a CIMD Client ID identifier”](#create-a-client-workload-with-a-cimd-client-id-identifier)
 
 To configure a Client Workload using the CIMD Client ID identifier, follow these steps:
 
@@ -89,8 +82,6 @@ To configure a Client Workload using the CIMD Client ID identifier, follow these
    Aembit displays the new Client Workload on the **Client Workloads** page.
 
 ## Configure a CIMD Client ID Client Workload using the Aembit Terraform provider
-
-[Section titled “Configure a CIMD Client ID Client Workload using the Aembit Terraform provider”](#configure-a-cimd-client-id-client-workload-using-the-aembit-terraform-provider)
 
 To configure this Client Workload with the [Aembit Terraform Provider](https://registry.terraform.io/providers/Aembit/aembit/latest), set the `cimdClientId` identity type on the `aembit_client_workload` resource.
 

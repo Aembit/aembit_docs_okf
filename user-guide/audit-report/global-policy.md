@@ -4,9 +4,8 @@ title: "How to review Global Policy Compliance"
 description: "How to review Global Policy Compliance information in the Reporting dashboard"
 resource: https://docs.aembit.io/user-guide/audit-report/global-policy/
 interface: web-ui
-tags: [audit-report]
-timestamp: 2025-06-03T16:56:07-07:00
-type_inferred: true
+tags: ["audit-report"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # How to review Global Policy Compliance
@@ -16,8 +15,6 @@ Global Policy Compliance is a feature in Aembit that allows you to enforce secur
 On the Global Policy Compliance page, you can review the compliance status of your Aembit Tenant’s global policies.
 
 ## About Global Policy Compliance status
-
-[Section titled “About Global Policy Compliance status”](#about-global-policy-compliance-status)
 
 Aembit uses color-coded status icons and labels to indicate the compliance status of Access Policies in relation to Global Policy Compliance:
 
@@ -29,8 +26,6 @@ Aembit uses color-coded status icons and labels to indicate the compliance statu
 When you edit an Access Policy, Aembit displays the current compliance status and prevents you from saving non-compliant Access Policies based on your configured enforcement level. This ensures that all policies meet the required security standards before they can be saved or activated.
 
 ## Reviewing Global Policy Compliance data
-
-[Section titled “Reviewing Global Policy Compliance data”](#reviewing-global-policy-compliance-data)
 
 To review Global Policy compliance data, perform the following steps:
 

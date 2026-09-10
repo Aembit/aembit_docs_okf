@@ -4,28 +4,25 @@ title: "Configure a custom PKI-based Agent Controller TLS"
 description: "How to configure a custom PKI-based Agent Controller TLS in Kubernetes and Virtual Machine deployments"
 resource: https://docs.aembit.io/user-guide/deploy-install/advanced-options/agent-controller/configure-customer-pki-agent-controller-tls/
 interface: web-ui
-tags: [agent-controller, advanced-option, deploy-install]
-timestamp: 2026-05-19T10:29:14-07:00
-type_inferred: true
+tags: ["agent-controller", "advanced-option", "deploy-install"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Configure a custom PKI-based Agent Controller TLS
 
 Aembit provides the ability for you to use your own PKI-based TLS for secure Agent Proxy to Agent Controller communication in Kubernetes environments, and on Virtual Machine deployments.
 
-Note
-
-When you enable TLS on Agent Controller version 1.24.xxxx or later, Agent Controller automatically:
-
-* opens port 443 (5443 on VM) for HTTPS traffic
-
-* doesn’t open port 80 (5000 on VM) for HTTP traffic
-
-As of Agent Controller version 1.29.xxxx, on Kubernetes deployments, Agent Controller exposes Prometheus metrics over HTTP on port 9090 regardless of TLS state. On Virtual Machine deployments, enabling TLS continues to switch Prometheus metrics from HTTP port 9090 to HTTPS port 9091.
+> **Note**
+>
+> When you enable TLS on Agent Controller version 1.24.xxxx or later, Agent Controller automatically:
+>
+> * opens port 443 (5443 on VM) for HTTPS traffic
+>
+> * doesn’t open port 80 (5000 on VM) for HTTP traffic
+>
+> As of Agent Controller version 1.29.xxxx, on Kubernetes deployments, Agent Controller exposes Prometheus metrics over HTTP on port 9090 regardless of TLS state. On Virtual Machine deployments, enabling TLS continues to switch Prometheus metrics from HTTP port 9090 to HTTPS port 9091.
 
 ## Prerequisites
-
-[Section titled “Prerequisites”](#prerequisites)
 
 * Access to a Certificate Authority such as HashiCorp Vault or Microsoft Active Directory Certification Authority.
 
@@ -40,8 +37,6 @@ As of Agent Controller version 1.29.xxxx, on Kubernetes deployments, Agent Contr
 
 ## Kubernetes environment configuration
 
-[Section titled “Kubernetes environment configuration”](#kubernetes-environment-configuration)
-
 The Aembit Agent Controller requires that the TLS certificate and key be available in a [Kubernetes TLS Secret](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_create/kubectl_create_secret_tls/). Therefore, there are 2 steps to completing this configuration.
 
 1. Create a Kubernetes TLS Secret using the `kubectl create secret tls` command or similar method. For example:
@@ -52,15 +47,13 @@ The Aembit Agent Controller requires that the TLS certificate and key be availab
 
 2. In the Aembit Helm chart installation file, set the `agentController.tls.secretName` value equal to the name of the secret created in step #1.
 
-   Note
-
-   Both prior steps assume that the TLS Secret and Aembit Helm chart are installed into the same namespace.
+   > **Note**
+   >
+   > Both prior steps assume that the TLS Secret and Aembit Helm chart are installed into the same namespace.
 
 If you don’t have your own CA, you may consider [Kubernetes cert-manager](https://github.com/cert-manager/cert-manager) to create and maintain certificates and keys in your Kubernetes environment.
 
 ## Virtual machine environment configuration
-
-[Section titled “Virtual machine environment configuration”](#virtual-machine-environment-configuration)
 
 When installing the Agent Controller on a Virtual Machine, there are two installation parameters that must be specified:
 
@@ -75,15 +68,11 @@ sudo TLS_PEM_PATH=/path/to/tls.crt TLS_KEY_PATH=/path/to/tls.key AEMBIT_TENANT_I
 
 ## Rotating custom PKI Agent Controller TLS certificates
 
-[Section titled “Rotating custom PKI Agent Controller TLS certificates”](#rotating-custom-pki-agent-controller-tls-certificates)
-
 Regular certificate rotation is essential to ensure that certificates remain valid and only expire when you expect them to. By routinely updating certificates before their expiration, you prevent service disruptions and maintain secure communication.
 
 In the Aembit environment, Agent Controller stores TLS certificate and key files in the `/opt/aembit/edge/agent_controller` directory.
 
 ### Update TLS certificate
-
-[Section titled “Update TLS certificate”](#update-tls-certificate)
 
 To update your TLS certificate and key, perform these steps:
 

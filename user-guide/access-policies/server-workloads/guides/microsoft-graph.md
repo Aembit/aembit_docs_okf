@@ -4,9 +4,8 @@ title: "Microsoft Graph"
 description: "This page describes how to configure Aembit to work with the Microsoft Graph Server Workload."
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/guides/microsoft-graph/
 interface: web-ui
-tags: [cloud, guide, server-workload, access-policy]
-timestamp: 2025-05-29T11:26:12-07:00
-type_inferred: true
+tags: ["cloud", "guide", "server-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Microsoft Graph
@@ -18,16 +17,12 @@ Below you can find the Aembit configuration required to work with the Microsoft 
 
 ## Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites)
-
 Before proceeding with the configuration, ensure you have the following:
 
 * Microsoft Azure tenant.
 * A registered and consent-granted application on Microsoft Entra ID (previously Azure Active Directory). If you haven’t set up an app yet, follow the steps in the next section.
 
 ### Microsoft Entra ID (Azure Active Directory) App Registration
-
-[Section titled “Microsoft Entra ID (Azure Active Directory) App Registration”](#microsoft-entra-id-azure-active-directory-app-registration)
 
 1. Log in to the [Microsoft Azure Portal](https://portal.azure.com/#home).
 
@@ -41,9 +36,9 @@ Before proceeding with the configuration, ensure you have the following:
 
 5. To set API Permissions, on the left panel, click on **API Permissions**, and then on the right part, click on **Add a permission**. In the opened dialog, click on **Microsoft Graph** and then click **Application permissions**.
 
-Note
-
-The current configuration with Microsoft Graph ***only*** works for the Application permission type. For more details on permissions and types, please refer to the [official Microsoft article](https://learn.microsoft.com/en-us/graph/permissions-overview?tabs=http).
+> **Note**
+>
+> The current configuration with Microsoft Graph ***only*** works for the Application permission type. For more details on permissions and types, please refer to the [official Microsoft article](https://learn.microsoft.com/en-us/graph/permissions-overview?tabs=http).
 
 ![Set API Permissions](https://docs.aembit.io/_astro/microsoft_set_permission.B2RHoWDa_1I9eH6.webp)
 
@@ -59,8 +54,6 @@ If the button is disabled for you, please contact your Administrator. Note that 
 
 ## Server Workload Configuration
 
-[Section titled “Server Workload Configuration”](#server-workload-configuration)
-
 1. Create a new Server Workload.
 
 * **Name** - Choose a user-friendly name.
@@ -75,8 +68,6 @@ If the button is disabled for you, please contact your Administrator. Note that 
 * **Authentication scheme** - Bearer
 
 ## Credential Provider Configuration
-
-[Section titled “Credential Provider Configuration”](#credential-provider-configuration)
 
 1. Log in to the [Microsoft Azure Portal](https://portal.azure.com/#home).
 
@@ -103,15 +94,11 @@ If the button is disabled for you, please contact your Administrator. Note that 
 
 ## Client Workload Configuration
 
-[Section titled “Client Workload Configuration”](#client-workload-configuration)
-
 Aembit now handles the credentials required to access the Server Workload, eliminating the need for you to manage them directly. You can safely remove any previously used credentials from the Client Workload.
 
 If you access the Server Workload through an SDK or library, it is possible that the SDK/library may still require credentials to be present for initialization purposes. In this scenario, you can provide placeholder credentials. Aembit will overwrite these placeholder credentials with the appropriate ones during the access process.
 
 ## Access Policy
-
-[Section titled “Access Policy”](#access-policy)
 
 * Create an Access Policy for a Client Workload to access the Microsoft Server Workload. Assign the newly created Credential Provider to this Access Policy.
 

@@ -4,24 +4,19 @@ title: "Aembit Time Condition"
 description: "This page describes how to create an Access Condition for a specific Time Condition."
 resource: https://docs.aembit.io/user-guide/access-policies/access-conditions/aembit-time-condition/
 interface: web-ui
-tags: [access-condition, access-policy]
-timestamp: 2025-05-22T22:55:26-07:00
-type_inferred: true
+tags: ["access-condition", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Aembit Time Condition
 
 ## Introduction
 
-[Section titled “Introduction”](#introduction)
-
 One type of Access Condition you may create in your Aembit Tenant is a Time Condition. This is especially useful if you would like to only grant access to Client Workloads during specific periods of time (days/hours).
 
 The section below describes the required steps to setup and configure a Time Condition Access Condition.
 
 ## Creating a Time Condition Access Condition
-
-[Section titled “Creating a Time Condition Access Condition”](#creating-a-time-condition-access-condition)
 
 To create a Time Condition Access Condition, perform the steps below.
 
@@ -47,9 +42,9 @@ To create a Time Condition Access Condition, perform the steps below.
 
 6. Click on the **+** icon next to each day you would like to use in your Time Condition configuration.
 
-Note
-
-At least one time condition is required.
+> **Note**
+>
+> At least one time condition is required.
 
 ![Access Condition Dialog Window - Time Condition Completed](https://docs.aembit.io/_astro/access-condition-dialog-window-time-condition-completed.cbh53B2M_POv0j.webp)
 

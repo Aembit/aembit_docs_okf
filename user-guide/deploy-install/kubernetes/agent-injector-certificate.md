@@ -4,9 +4,8 @@ title: "Managing the Agent Injector TLS certificate"
 description: "How to configure the TLS certificate used by Aembit Agent Injector."
 resource: https://docs.aembit.io/user-guide/deploy-install/kubernetes/agent-injector-certificate/
 interface: web-ui
-tags: [kubernetes, deploy-install]
-timestamp: 2026-06-26T15:17:49-07:00
-type_inferred: true
+tags: ["kubernetes", "deploy-install"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Managing the Agent Injector TLS certificate
@@ -25,8 +24,6 @@ This document explains how to manage the Agent Injector TLS certificate to avoid
 
 ## Agent Proxy container injection process
 
-[Section titled “Agent Proxy container injection process”](#agent-proxy-container-injection-process)
-
 When you deploy a Client Workload Pod, the Agent Injector mutates your PodSpec to inject the Agent Proxy container definitions. The [Kubernetes admission control process](https://kubernetes.io/blog/2019/03/21/a-guide-to-kubernetes-admission-controllers/) orchestrates the injection. The following diagram shows the sequence of operations affecting your Client Workload PodSpec as it undergoes the admission control process.
 
 The red animated line shows where the Agent Injector TLS certificate can disrupt the process.
@@ -39,8 +36,6 @@ Continue reading to learn how to keep this communication working and manage the 
 
 ## Kubernetes resources related to the Agent Injector
 
-[Section titled “Kubernetes resources related to the Agent Injector”](#kubernetes-resources-related-to-the-agent-injector)
-
 The Agent Injector TLS certificate is a Kubernetes `Secret` resource. The `Secret` resource provides the TLS certificate and private key to the Agent Injector pod. It also provides the Certificate Authority certificate to the `MutatingWebhookConfiguration`. The injection process fails when these components disagree on which TLS certificate the Agent Injector is using.
 
 The following diagram shows the Aembit Edge components and Kubernetes resources involved in the Agent Injector TLS certificate management:
@@ -48,8 +43,6 @@ The following diagram shows the Aembit Edge components and Kubernetes resources 
 ![Agent Injector TLS Certificate Management](https://docs.aembit.io/d2/docs/user-guide/deploy-install/kubernetes/agent-injector-certificate-1.svg)
 
 ## Managing the Agent Injector TLS certificate
-
-[Section titled “Managing the Agent Injector TLS certificate”](#managing-the-agent-injector-tls-certificate)
 
 You have multiple options for how to manage this secret:
 
@@ -59,29 +52,25 @@ You have multiple options for how to manage this secret:
 
 ### Generate a self-signed certificate with the Helm chart
 
-[Section titled “Generate a self-signed certificate with the Helm chart”](#generate-a-self-signed-certificate-with-the-helm-chart)
-
 The Aembit Helm chart generates a self-signed certificate by default. The Helm chart simultaneously configures the `MutatingWebhookConfiguration` to expect this self-signed certificate. In other contexts, a TLS configuration requires an independent Certificate Authority to provide the authenticity guarantee of TLS. In this context, the user or service account deploying the Helm chart configures both sides of the TLS connection. This symmetric configuration provides the authenticity guarantee of TLS.
 
 The self-signed certificate presents two challenges:
 
 1. You must re-apply the Aembit Helm chart to generate a new self-signed certificate before the certificate expires. The certificate is valid for one year.
 
-   Tip
-
-   Aembit recommends adding this to your certificate rotation management schedule.
+   > **Tip**
+   >
+   > Aembit recommends adding this to your certificate rotation management schedule.
 
 2. The Aembit Helm Chart generates a new self-signed certificate each time it’s applied. When used with ArgoCD’s automatic synchronization feature, the dynamic nature of the certificate causes the ArgoCD diff detection to consider the Agent Injector configuration out-of-sync as soon as the synchronization completes.
 
    See the [ArgoCD Diffing Customization guide](https://argo-cd.readthedocs.io/en/stable/user-guide/diffing/) for guidance to squelch these differences.
 
-   Note
-
-   Exempting the self-signed certificate requires you to manually re-apply the Aembit Helm Chart **once per year.**
+   > **Note**
+   >
+   > Exempting the self-signed certificate requires you to manually re-apply the Aembit Helm Chart **once per year.**
 
 ### Create a cert-manager Certificate resource
-
-[Section titled “Create a cert-manager Certificate resource”](#create-a-cert-manager-certificate-resource)
 
 This is likely your best option if you already use cert-manager to manage other certificates within your cluster. Using a cert-manager certificate with the Aembit Helm chart is straightforward.
 
@@ -147,9 +136,9 @@ To configure the Agent Injector to use a cert-manager `Certificate` resource, fo
        --set agentInjector.certificate.commonName=<certificate secret name>\
    ```
 
-   Note
-
-   Make sure to leave the backslashes in `cert-manager\.io` and `<namespace>\/<certificate name>`, as they’re important.
+   > **Note**
+   >
+   > Make sure to leave the backslashes in `cert-manager\.io` and `<namespace>\/<certificate name>`, as they’re important.
 
 5. Verify the certificate configuration of the `MutatingWebhookConfiguration`.
 
@@ -185,8 +174,6 @@ Now that you’ve configured Agent Injector to use a `Certificate` resource that
 
 ### Manually create a TLS Secret resource
 
-[Section titled “Manually create a TLS Secret resource”](#manually-create-a-tls-secret-resource)
-
 Using a manually created TLS `Secret` resource is also straight forward. It works similar to the
 
 1. Create a TLS `Secret` resource with the private key, certificate, and CA certificate.
@@ -214,8 +201,6 @@ Using a manually created TLS `Secret` resource is also straight forward. It work
    ```
 
 ## Troubleshooting the Agent Injector TLS certificate
-
-[Section titled “Troubleshooting the Agent Injector TLS certificate”](#troubleshooting-the-agent-injector-tls-certificate)
 
 When your cluster receives an unexpected TLS certificate from the Agent Injector, the cluster drops the connection and, in effect, refuses to inject the Agent Proxy container definitions. Without credential injection Server Workloads will either reject requests from Client Workloads or provide unexpected responses.
 

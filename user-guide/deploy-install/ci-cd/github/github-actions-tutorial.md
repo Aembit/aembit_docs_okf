@@ -4,9 +4,8 @@ title: "Tutorial: Secure your GitHub Actions workflow with Aembit"
 description: "Learn to configure Aembit to deliver credentials to a GitHub Actions workflow"
 resource: https://docs.aembit.io/user-guide/deploy-install/ci-cd/github/github-actions-tutorial/
 interface: web-ui
-tags: [github, ci-cd, deploy-install]
-timestamp: 2026-06-30T13:30:29-04:00
-type_inferred: true
+tags: ["github", "ci-cd", "deploy-install"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Tutorial: Secure your GitHub Actions workflow with Aembit
@@ -19,8 +18,6 @@ This tutorial uses placeholder values and doesn’t require you to connect to a 
 
 ## How the integration works
 
-[Section titled “How the integration works”](#how-the-integration-works)
-
 The following diagram shows the credential delivery flow when your GitHub Actions workflow runs:
 
 ![Credential delivery flow from GitHub Actions through Aembit to a target API](https://docs.aembit.io/d2/docs/user-guide/deploy-install/ci-cd/github/github-actions-tutorial-0.svg)
@@ -28,8 +25,6 @@ The following diagram shows the credential delivery flow when your GitHub Action
 Your workflow authenticates using GitHub’s built-in OIDC provider, and Aembit validates this identity before delivering the requested credential. The credential exists only during that workflow job.
 
 ## Prerequisites
-
-[Section titled “Prerequisites”](#prerequisites)
 
 Before starting, ensure you have:
 
@@ -43,11 +38,9 @@ Before starting, ensure you have:
 
 ## Step 1: Create an Access Policy
 
-[Section titled “Step 1: Create an Access Policy”](#step-1-create-an-access-policy)
+The Access Policy defines who can access what and how credentials are delivered. You’ll create all the required components within the Access Policy Builder.
 
-The Access Policy**Access Policy**: Access Policies define, enforce, and audit access between Client and Server Workloads by cryptographically verifying workload identity and contextual factors rather than relying on static secrets.[Learn more](../../../../get-started/concepts/access-policies.md) defines who can access what and how credentials are delivered. You’ll create all the required components within the Access Policy Builder.
-
-1. In your Aembit Tenant**Aembit Tenant**: Aembit Tenants serve as isolated, dedicated environments within Aembit that provide complete separation of administrative domains and security configurations.[Learn more](../../../../get-started/concepts/administration.md), go to **Access Policies** and select **+ New**.
+1. In your Aembit Tenant, go to **Access Policies** and select **+ New**.
 
    The Access Policy Builder opens with component cards in the right panel and the **Access Policy** panel open by default.
 
@@ -57,9 +50,7 @@ The Access Policy**Access Policy**: Access Policies define, enforce, and audit a
 
 ### Add a Client Workload
 
-[Section titled “Add a Client Workload”](#add-a-client-workload)
-
-The Client Workload**Client Workload**: Client Workloads represent software applications, scripts, or automated processes that initiate access requests to Server Workloads, operating autonomously without direct user interaction.[Learn more](../../../../get-started/concepts/client-workloads.md) identifies your GitHub repository as an authorized client.
+The Client Workload identifies your GitHub repository as an authorized client.
 
 1. In the **Client Workload** card in the right panel, click **+ Configure**.
 
@@ -73,9 +64,7 @@ The Client Workload**Client Workload**: Client Workloads represent software appl
 
 ### Add a Server Workload
 
-[Section titled “Add a Server Workload”](#add-a-server-workload)
-
-The Server Workload**Server Workload**: Server Workloads represent target services, APIs, databases, or applications that receive and respond to access requests from Client Workloads.[Learn more](../../../../get-started/concepts/server-workloads.md) identifies the API endpoint your workflow accesses.
+The Server Workload identifies the API endpoint your workflow accesses.
 
 1. In the **Server Workload** card in the right panel, click **+ Configure**.
 
@@ -92,9 +81,7 @@ The Server Workload**Server Workload**: Server Workloads represent target servic
 
 ### Add a Trust Provider
 
-[Section titled “Add a Trust Provider”](#add-a-trust-provider)
-
-The Trust Provider**Trust Provider**: Trust Providers validate Client Workload identities through workload attestation, verifying identity claims from the workload's runtime environment rather than relying on pre-shared secrets.[Learn more](../../../../get-started/concepts/trust-providers.md) validates GitHub’s OIDC tokens and provides the Client ID for your workflow.
+The Trust Provider validates GitHub’s OIDC tokens and provides the Client ID for your workflow.
 
 1. In the **Trust Provider** card in the right panel, click **+ Configure**.
 
@@ -110,15 +97,13 @@ The Trust Provider**Trust Provider**: Trust Providers validate Client Workload i
 
 6. After saving, copy the **Edge SDK Client ID** value displayed. You need this for your workflow file.
 
-Remember to save your Edge SDK Client ID
-
-Copy the Edge SDK Client ID now. You need it for your GitHub workflow configuration.
+> **Remember to save your Edge SDK Client ID**
+>
+> Copy the Edge SDK Client ID now. You need it for your GitHub workflow configuration.
 
 ### Add a Credential Provider
 
-[Section titled “Add a Credential Provider”](#add-a-credential-provider)
-
-The Credential Provider**Credential Provider**: Credential Providers obtain the specific access credentials—such as API keys, OAuth tokens, or temporary cloud credentials—that Client Workloads need to authenticate to Server Workloads.[Learn more](../../../../get-started/concepts/credential-providers.md) stores the credential that Aembit delivers to your workflow.
+The Credential Provider stores the credential that Aembit delivers to your workflow.
 
 1. In the **Credential Provider** card in the right panel, click **+ Configure**.
 
@@ -132,27 +117,23 @@ The Credential Provider**Credential Provider**: Credential Providers obtain the 
 
 ### Save and activate the policy
 
-[Section titled “Save and activate the policy”](#save-and-activate-the-policy)
-
 1. In the **Access Policy** status card on the left, verify each required component shows a green **Configured** status.
 
 2. Click **Save Policy & Activate** in the header bar.
 
 ## Step 2: Configure your GitHub workflow
 
-[Section titled “Step 2: Configure your GitHub workflow”](#step-2-configure-your-github-workflow)
-
 Create a workflow file that uses the Aembit GitHub Action to retrieve credentials.
 
-Required permissions
-
-GitHub requires the `id-token: write` permission to issue the OIDC token that Aembit validates. Without this permission, the action fails.
+> **Required permissions**
+>
+> GitHub requires the `id-token: write` permission to issue the OIDC token that Aembit validates. Without this permission, the action fails.
 
 1. In your GitHub repository, create a new file `.github/workflows/aembit-demo.yml`.
 
 2. Add the following content:
 
-   .github/workflows/aembit-demo.yml
+   **.github/workflows/aembit-demo.yml**
 
    ```yaml
    name: Aembit Demo
@@ -192,13 +173,13 @@ GitHub requires the `id-token: write` permission to issue the OIDC token that Ae
              echo -n "$API_KEY" | sed 's/./& /g'
    ```
 
-   Demo only
+   > **Demo only**
+   >
+   > The verification step above displays the credential in workflow logs. **Never use this in production workflows.** Remove this step before using the workflow with real credentials.
 
-   The verification step above displays the credential in workflow logs. **Never use this in production workflows.** Remove this step before using the workflow with real credentials.
-
-   Output names vary by credential type
-
-   This example uses `api-key` because the credential type is `ApiKey`. Other credential types use different output names (for example, `token` for OAuth). See the [Action output reference](github-actions-reference.md) for the complete list.
+   > **Output names vary by credential type**
+   >
+   > This example uses `api-key` because the credential type is `ApiKey`. Other credential types use different output names (for example, `token` for OAuth). See the [Action output reference](github-actions-reference.md) for the complete list.
 
 3. Replace the highlighted placeholder values:
 
@@ -208,8 +189,6 @@ GitHub requires the `id-token: write` permission to issue the OIDC token that Ae
 4. Commit and push the workflow file.
 
 ## Step 3: Run and verify
-
-[Section titled “Step 3: Run and verify”](#step-3-run-and-verify)
 
 1. Go to your repository’s **Actions** tab in GitHub.
 
@@ -228,11 +207,9 @@ GitHub requires the `id-token: write` permission to issue the OIDC token that Ae
 
 ### Expected output
 
-[Section titled “Expected output”](#expected-output)
-
 A successful workflow run shows output similar to:
 
-GitHub Actions log
+**GitHub Actions log**
 
 ```text
 Run Aembit/get-credentials@v1
@@ -245,7 +222,7 @@ Fetch Credential (url): https://xxxxxx.ec.aembit.io/edge/v1/credentials
 Response status: 200
 ```
 
-Verification step output
+**Verification step output**
 
 ```text
 Credential verification:
@@ -265,11 +242,7 @@ The highlighted lines confirm:
 
 ## Troubleshooting
 
-[Section titled “Troubleshooting”](#troubleshooting)
-
 ### JSON parsing error
-
-[Section titled “JSON parsing error”](#json-parsing-error)
 
 **Full error:**
 
@@ -296,8 +269,6 @@ Your domain is visible in your Aembit Tenant URL. For example, if your tenant UR
 
 ### Error: Authorization failed
 
-[Section titled “Error: Authorization failed”](#error-authorization-failed)
-
 **Cause:** The Access Policy configuration doesn’t match your workflow.
 
 **Solution:** Verify these components match:
@@ -309,13 +280,9 @@ Your domain is visible in your Aembit Tenant URL. For example, if your tenant UR
 
 ## Congratulations!
 
-[Section titled “Congratulations!”](#congratulations)
-
 Your GitHub Actions workflow now retrieves credentials from Aembit at runtime. GitHub stores no secrets, and Aembit logs every credential request for auditing.
 
 ## What’s next?
-
-[Section titled “What’s next?”](#whats-next)
 
 Now that you’ve completed the basic setup:
 

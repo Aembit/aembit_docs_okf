@@ -4,18 +4,17 @@ title: "AWS Relational Database Service (RDS) Certificates"
 description: "How to install AWS RDS Certificate to Agent Proxy to make it trust the AWS RDS Certificate"
 resource: https://docs.aembit.io/user-guide/deploy-install/databases/aws-rds/
 interface: web-ui
-tags: [database, deploy-install]
-timestamp: 2026-02-26T15:41:06-08:00
-type_inferred: true
+tags: ["database", "deploy-install"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # AWS Relational Database Service (RDS) Certificates
 
-Note
-
-MySQL, PostgreSQL, and Redshift in AWS uses a TLS certificate issued from an AWS root certificate authority that’s not publicly trusted.
-
-You must follow the steps on this page when attempting to connect to MySQL, PostgreSQL, and Redshift in AWS.
+> **Note**
+>
+> MySQL, PostgreSQL, and Redshift in AWS uses a TLS certificate issued from an AWS root certificate authority that’s not publicly trusted.
+>
+> You must follow the steps on this page when attempting to connect to MySQL, PostgreSQL, and Redshift in AWS.
 
 To install all the possible CA Certificates for AWS RDS databases, follow the instructions and use the following commands:
 
@@ -49,6 +48,6 @@ Updating certificates in /etc/ssl/certs...
 exit
 ```
 
-Note
-
-Make sure to follow the preceding instructions for each virtual machine running Client Workloads that needs access to AWS MySQL, PostgreSQL, or Redshift.
+> **Note**
+>
+> Make sure to follow the preceding instructions for each virtual machine running Client Workloads that needs access to AWS MySQL, PostgreSQL, or Redshift.

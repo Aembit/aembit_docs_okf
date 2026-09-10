@@ -3,25 +3,23 @@ type: explanation
 title: "Securing microservices"
 description: "How Aembit secures workload access between microservices"
 resource: https://docs.aembit.io/get-started/use-cases/microservices-security/
-tags: [use-case]
+tags: ["use-case"]
 timestamp: 2026-04-13T13:05:24-07:00
 ---
 
 # Securing microservices
 
-In microservices setups (Kubernetes, Elastic Container Service (ECS), VMs), services need to authenticate to each other. Teams often rely on shared secrets, static API keys, or network controls. This creates lateral movement**Lateral movement**: An attack technique where an adversary moves through a network after initial compromise, using stolen credentials or exploited trust relationships to access additional systems and escalate privileges. risks, stale credentials, and limited visibility into service-to-service communication.
+In microservices setups (Kubernetes, Elastic Container Service (ECS), VMs), services need to authenticate to each other. Teams often rely on shared secrets, static API keys, or network controls. This creates lateral movement risks, stale credentials, and limited visibility into service-to-service communication.
 
 ## What Aembit solves
-
-[Section titled “What Aembit solves”](#what-aembit-solves)
 
 Aembit issues unique, verifiable identities to each microservice using [Trust Providers](../concepts/trust-providers.md). When Service A calls Service B, Aembit issues a signed authentication token. This can be an [OpenID Connect (OIDC) ID Token](../../user-guide/access-policies/credential-providers/oidc-id-token.md). Alternatively, it can issue a [JWT-SVID Token](../../user-guide/access-policies/credential-providers/spiffe-jwt-svid.md). JWT-SVID stands for Secure Production Identity Framework For Everyone (SPIFFE) JSON Web Token. Service B validates this token using standard cryptographic libraries. Your [Access Policies](../concepts/access-policies.md) control which services can communicate with each other, and Aembit logs every interaction for audit visibility.
 
 With this approach, you can:
 
 * Remove shared secrets and static API keys from your microservices configurations
-* Use SPIFFE JWT-SVID for service mesh**Service mesh**: A dedicated infrastructure layer that manages service-to-service communication in a microservices architecture, typically through sidecar proxies. Handles concerns like load balancing, encryption, authentication, and observability.[Learn more(opens in new tab)](https://glossary.cncf.io/service-mesh/) environments (for example, Istio, Consul, Kuma)
-* Use OIDC**OpenID Connect (OIDC)**: An identity layer built on top of OAuth 2.0 that lets applications verify the identity of a user or workload and obtain basic profile information using JSON Web Tokens (JWTs).[Learn more(opens in new tab)](https://openid.net/developers/how-connect-works/) tokens for custom or legacy services that support standard JWT validation
+* Use SPIFFE JWT-SVID for service mesh environments (for example, Istio, Consul, Kuma)
+* Use OIDC tokens for custom or legacy services that support standard JWT validation
 
 Choosing between JWT-SVID and OIDC tokens
 
@@ -35,9 +33,7 @@ You can use both in the same environment. Use JWT-SVID for service mesh traffic 
 
 ## Real example: SPIFFE JWT-SVID in service mesh
 
-[Section titled “Real example: SPIFFE JWT-SVID in service mesh”](#real-example-spiffe-jwt-svid-in-service-mesh)
-
-Consider an Istio-on-Amazon-EKS environment where microservices need to authenticate with each other. Without Aembit, you would typically run separate SPIRE**SPIRE**: Secure Production Identity Runtime Environment — the reference implementation of the SPIFFE specification. SPIRE issues and manages cryptographic identities for workloads in distributed systems.[Learn more(opens in new tab)](https://spiffe.io/docs/latest/spire-about/) (Secure Production Identity Runtime Environment) infrastructure just to issue certificates to your services. That adds another cluster component to manage, patch, and monitor.
+Consider an Istio-on-Amazon-EKS environment where microservices need to authenticate with each other. Without Aembit, you would typically run separate SPIRE (Secure Production Identity Runtime Environment) infrastructure just to issue certificates to your services. That adds another cluster component to manage, patch, and monitor.
 
 What running separate SPIRE infrastructure involves
 
@@ -61,23 +57,17 @@ You deploy Aembit as a sidecar in your [Kubernetes cluster](../../user-guide/dep
 
 ### Why this matters for microservices
 
-[Section titled “Why this matters for microservices”](#why-this-matters-for-microservices)
-
 Shared secrets and static API keys between services create lateral movement risk. If an attacker compromises one service, those credentials give access to every service that shares them.
 
 With per-workload identity, each service authenticates individually. Compromising Service A doesn’t grant access to Service B because there are no shared credentials to steal. Access Policies define exactly which services can communicate, and Aembit logs every interaction for audit visibility.
 
 ## Supported platforms
 
-[Section titled “Supported platforms”](#supported-platforms)
-
 * Kubernetes (EKS, Azure Kubernetes Service (AKS), Google Kubernetes Engine (GKE))
 * Istio, Consul, Kuma (via SPIFFE JWT-SVID)
 * Any service supporting OIDC or JWT validation
 
 ## Next steps
-
-[Section titled “Next steps”](#next-steps)
 
 * [Deploy Aembit in Kubernetes](../../user-guide/deploy-install/kubernetes/overview.md) to get started with service-to-service identity
 * [Configure JWT-SVID Credential Providers](../../user-guide/access-policies/credential-providers/spiffe-jwt-svid.md) for SPIFFE-based service mesh environments

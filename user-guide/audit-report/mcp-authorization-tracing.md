@@ -4,26 +4,23 @@ title: "How to review MCP Authorization Tracing"
 description: "How to review MCP Authorization Tracing information in the Reporting dashboard"
 resource: https://docs.aembit.io/user-guide/audit-report/mcp-authorization-tracing/
 interface: web-ui
-tags: [audit-report]
-timestamp: 2026-05-19T19:12:05-07:00
-type_inferred: true
+tags: ["audit-report"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # How to review MCP Authorization Tracing
 
-**MCP Authorization Tracing** is a live diagnostic view that surfaces each inbound authorization request as Aembit’s MCP**Model Context Protocol**: A standard protocol for AI agent and server interactions that defines how AI assistants communicate with external tools and data sources.[Learn more(opens in new tab)](https://modelcontextprotocol.io/) Identity Gateway receives it. Unlike Access Authorization Events and Workload Events, which are near-real-time, MCP Authorization Tracing shows requests in real time. Use it to reproduce a failing flow and watch what Identity Gateway processes.
+**MCP Authorization Tracing** is a live diagnostic view that surfaces each inbound authorization request as Aembit’s MCP Identity Gateway receives it. Unlike Access Authorization Events and Workload Events, which are near-real-time, MCP Authorization Tracing shows requests in real time. Use it to reproduce a failing flow and watch what Identity Gateway processes.
 
 ## When to use MCP Authorization Tracing
 
-[Section titled “When to use MCP Authorization Tracing”](#when-to-use-mcp-authorization-tracing)
+Use MCP Authorization Tracing when an MCP error doesn’t appear in a static event record. Use it to confirm which Client Workload and
 
-Use MCP Authorization Tracing when an MCP error doesn’t appear in a static event record. Use it to confirm which Client Workload**Client Workload**: Client Workloads represent software applications, scripts, or automated processes that initiate access requests to Server Workloads, operating autonomously without direct user interaction.[Learn more](../../get-started/concepts/client-workloads.md) and Server Workload**Server Workload**: Server Workloads represent target services, APIs, databases, or applications that receive and respond to access requests from Client Workloads.[Learn more](../../get-started/concepts/server-workloads.md) matched a specific request. It also gives immediate feedback while you verify a new Access Policy**Access Policy**: Access Policies define, enforce, and audit access between Client and Server Workloads by cryptographically verifying workload identity and contextual factors rather than relying on static secrets.[Learn more](../../get-started/concepts/access-policies.md) or workload configuration.
+Server Workload matched a specific request. It also gives immediate feedback while you verify a new Access Policy or workload configuration.
 
-For root-cause investigation of past failures, use [Access Authorization Events](access-authorization-events.md) and [Workload Events](workload-events.md) instead. For end-to-end investigation of an MCP failure that spans both the Authorization Server and the Identity Gateway, see [Troubleshoot MCP and AI IAM access](../troubleshooting/mcp-ai-iam.md).
+For root-cause investigation of past failures, use [Access Authorization Events](access-authorization-events.md) and [Workload Events](workload-events/overview.md) instead. For end-to-end investigation of an MCP failure that spans both the Authorization Server and the Identity Gateway, see [Troubleshoot MCP and AI IAM access](../troubleshooting/mcp-ai-iam.md).
 
 ## What MCP Authorization Tracing displays
-
-[Section titled “What MCP Authorization Tracing displays”](#what-mcp-authorization-tracing-displays)
 
 For each inbound authorization request handled by MCP Identity Gateway, MCP Authorization Tracing displays:
 
@@ -41,8 +38,6 @@ When the Client Workload and Server Workload both match but no active Access Pol
 When no Client Workload or Server Workload matches, the entry indicates that explicitly so you can map the symptom back to the workload or policy configuration that needs to change.
 
 ## Reviewing MCP Authorization Tracing data
-
-[Section titled “Reviewing MCP Authorization Tracing data”](#reviewing-mcp-authorization-tracing-data)
 
 To review MCP Authorization Tracing data, do the following:
 
@@ -73,16 +68,12 @@ To review MCP Authorization Tracing data, do the following:
 
 ## Limitations
 
-[Section titled “Limitations”](#limitations)
-
-* Tracing shows authorization requests inbound to the MCP Identity Gateway. It doesn’t show the outbound proxied request to the upstream MCP server. For that, use [Workload Events](workload-events.md).
+* Tracing shows authorization requests inbound to the MCP Identity Gateway. It doesn’t show the outbound proxied request to the upstream MCP server. For that, use [Workload Events](workload-events/overview.md).
 * Tracing is a live view. Entries aren’t retained as durable records—use Access Authorization Events for historical investigation, audit, and SIEM forwarding.
 
 ## Related pages
 
-[Section titled “Related pages”](#related-pages)
-
 * [Access Authorization Events](access-authorization-events.md)
-* [Workload Events](workload-events.md)
+* [Workload Events](workload-events/overview.md)
 * [Troubleshoot MCP and AI IAM access](../troubleshooting/mcp-ai-iam.md)
 * [MCP Identity Gateway](../../ai-guide/mcp/identity-gateway/overview.md)

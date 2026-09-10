@@ -4,16 +4,15 @@ title: "Aembit Edge Discovery Source"
 description: "How Aembit discovers workloads using the Aembit Edge Discovery Source"
 resource: https://docs.aembit.io/user-guide/discovery/sources/aembit-edge/
 interface: web-ui
-tags: [source, discovery]
-timestamp: 2025-06-17T17:22:04-07:00
-type_inferred: true
+tags: ["source", "discovery"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Aembit Edge Discovery Source
 
-Note
-
-This is a beta feature and may be subject to changes.
+> **Note**
+>
+> This is a beta feature and may be subject to changes.
 
 This page explains how Aembit Edge discovers workloads. Aembit Edge enables efficient workload discovery within your environments, helping you maintain visibility and manage access across your infrastructure.
 
@@ -26,8 +25,6 @@ The process makes sure that Aembit tracks and manages workloads meeting these cr
 Aembit Edge helps simplify the management of workloads by automatically identifying which workloads are active and how they’re interacting, providing a comprehensive view of your infrastructure.
 
 ### How to perform Edge Discovery
-
-[Section titled “How to perform Edge Discovery”](#how-to-perform-edge-discovery)
 
 1. **Deploy Aembit Edge** to your environment.
 

@@ -4,41 +4,36 @@ title: "Create an Access Policy"
 description: "How to create an Access Policy using the Access Policy Builder interface"
 resource: https://docs.aembit.io/user-guide/access-policies/create-access-policy/
 interface: web-ui
-tags: [access-policy]
-timestamp: 2026-06-30T13:30:29-04:00
-type_inferred: true
+tags: ["access-policy"]
+timestamp: 2026-09-09T08:20:13-07:00
 ---
 
 # Create an Access Policy
 
-This guide walks you through creating an Access Policy**Access Policy**: Access Policies define, enforce, and audit access between Client and Server Workloads by cryptographically verifying workload identity and contextual factors rather than relying on static secrets.[Learn more](../../get-started/concepts/access-policies.md) using the Access Policy Builder. The example creates an AWS cloud-native policy that allows EC2 instances in Washington State to access AWS S3 buckets.
+This guide walks you through creating an Access Policy using the Access Policy Builder. The example creates an AWS cloud-native policy that allows EC2 instances in Washington State to access AWS S3 buckets.
 
 ## Prerequisites
-
-[Section titled “Prerequisites”](#prerequisites)
 
 * Access to the Aembit Admin UI
 * Appropriate permissions to create Access Policies and their components
 
-Feature flag
-
-To use the Access Policy Builder described in this guide, enable **Use new access policy** in your user preferences.
-
-How to enable the feature flag
-
-1. In the Aembit Admin UI, click your username in the bottom of the left sidebar.
-
-2. Select **Profile** from the dropdown menu.
-
-3. Select **Preferences** section, toggle on **Use new access policy**.
-
-4. Enable **Access Policy: Use new access policy** in the **User Interface** section.
-
-   ![User Profile Preferences tab with Access Policy enabled](https://docs.aembit.io/_astro/feature-flag-access-policy-builder.BXlhOeck_ZIFpEe.webp)
+> **Feature flag**
+>
+> To use the Access Policy Builder described in this guide, enable **Use new access policy** in your user preferences.
+>
+> How to enable the feature flag
+>
+> 1. In the Aembit Admin UI, click your username in the bottom of the left sidebar.
+>
+> 2. Select **Profile** from the dropdown menu.
+>
+> 3. Select **Preferences** section, toggle on **Use new access policy**.
+>
+> 4. Enable **Access Policy: Use new access policy** in the **User Interface** section.
+>
+>    ![User Profile Preferences tab with Access Policy enabled](https://docs.aembit.io/_astro/feature-flag-access-policy-builder.BXlhOeck_ZIFpEe.webp)
 
 ## Open the Access Policy Builder
-
-[Section titled “Open the Access Policy Builder”](#open-the-access-policy-builder)
 
 1. In the Aembit Admin UI, select **Access Policies** from the left sidebar.
 
@@ -46,21 +41,20 @@ How to enable the feature flag
 
 2. Click **+ New** to open the Access Policy Builder.
 
-   ![Access Policy Builder initial view with card-based navigation and configuration panel](https://docs.aembit.io/_astro/apb-builder-initial.C90bKxHU_Z2ske4d.webp)
+   ![Access Policy Builder initial view with card-based navigation and configuration panel](https://docs.aembit.io/_astro/apb-builder-initial.CgaoPd8J_Z2htAhi.webp)
 
 The Access Policy Builder displays a component card for each part of the policy in the right panel. An **Access Policy** status card on the left summarizes the policy and tracks each component’s configuration status. Configure each component from its card in the right panel:
 
-* **Client Workload**Client Workload**: Client Workloads represent software applications, scripts, or automated processes that initiate access requests to Server Workloads, operating autonomously without direct user interaction.[Learn more](../../get-started/concepts/client-workloads.md)** (Required) - The application requesting access
-* **Server Workload**Server Workload**: Server Workloads represent target services, APIs, databases, or applications that receive and respond to access requests from Client Workloads.[Learn more](../../get-started/concepts/server-workloads.md)** (Required) - The service being accessed
-* **Trust Providers**Trust Provider**: Trust Providers validate Client Workload identities through workload attestation, verifying identity claims from the workload's runtime environment rather than relying on pre-shared secrets.[Learn more](../../get-started/concepts/trust-providers.md)** (Recommended) - Identity verification method
-* **Access Conditions**Access Condition**: Access Conditions add dynamic, context-aware constraints to authorization by evaluating circumstances like time, location, or security posture to determine whether to grant access.[Learn more](../../get-started/concepts/access-conditions.md)** (Recommended) - Additional access constraints
-* **Credential Provider**Credential Provider**: Credential Providers obtain the specific access credentials—such as API keys, OAuth tokens, or temporary cloud credentials—that Client Workloads need to authenticate to Server Workloads.[Learn more](../../get-started/concepts/credential-providers.md)** - How credentials are obtained
+* **Client Workload** (Required) - The application requesting access
+* **Server Workload** (Required) - The service being accessed
+* **Trust Providers** (Recommended) - Identity verification method
+* **Access Conditions** (Recommended) - Additional access constraints
+* **Content Security** (Optional) - Governs MCP tool traffic through the MCP Identity Gateway
+* **Credential Provider** - How credentials are obtained
 
 Change the requirement of each Access Policy component based on your organization’s compliance needs, using [Global Policy Compliance](../administration/global-policy/overview.md).
 
 ## Configure the Access Policy details
-
-[Section titled “Configure the Access Policy details”](#configure-the-access-policy-details)
 
 The **Access Policy** panel displays by default when you open the builder, so you can name and save the policy first.
 
@@ -73,8 +67,6 @@ The **Access Policy** panel displays by default when you open the builder, so yo
    ![Access Policy details panel with name, description, and tags fields](https://docs.aembit.io/_astro/apb-policy-details-filled.CDsJDrLy_2uY2A2.webp)
 
 ## Add a Client Workload
-
-[Section titled “Add a Client Workload”](#add-a-client-workload)
 
 In the **Client Workload** card in the right panel, click **+ Configure** to configure the client application.
 
@@ -125,8 +117,6 @@ For detailed information about Client Workload configuration options and identif
 
 ## Add a Server Workload
 
-[Section titled “Add a Server Workload”](#add-a-server-workload)
-
 In the **Server Workload** card in the right panel, click **+ Configure** to configure the target service.
 
 For detailed information about Server Workload configuration options, protocols, and authentication methods, see [Server Workloads](server-workloads/overview.md).
@@ -175,8 +165,6 @@ For detailed information about Server Workload configuration options, protocols,
   4. Click **Use Selected** to add it to the policy.
 
 ## Add a Trust Provider
-
-[Section titled “Add a Trust Provider”](#add-a-trust-provider)
 
 In the **Trust Provider** card in the right panel, click **+ Configure** to configure identity verification.
 
@@ -235,8 +223,6 @@ For detailed information about Trust Provider types and match rule configuration
 
 ## Add Access Conditions (optional)
 
-[Section titled “Add Access Conditions (optional)”](#add-access-conditions-optional)
-
 In the **Access Conditions** card in the right panel, click **+ Configure** to add optional access constraints. Access Conditions provide additional security by restricting access based on factors like geographic location or time of day.
 
 For detailed information about Access Condition types and integration options, see [Access Conditions](access-conditions/overview.md).
@@ -266,8 +252,6 @@ Unlike the other components, the Access Conditions panel has no **Add New** or *
    ![Access Condition configured with geographic restrictions](https://docs.aembit.io/_astro/apb-access-condition-add-new-configured.BUgDBqvO_1hlrzg.webp)
 
 ## Add a Credential Provider
-
-[Section titled “Add a Credential Provider”](#add-a-credential-provider)
 
 In the **Credential Provider** card in the right panel, click **+ Configure** to configure how the policy obtains credentials for accessing the Server Workload.
 
@@ -325,8 +309,6 @@ For detailed information about Credential Provider types and configuration optio
 
 ## Save the Access Policy
 
-[Section titled “Save the Access Policy”](#save-the-access-policy)
-
 After configuring all required components, you can save the Access Policy.
 
 1. In the **Access Policy** status card on the left, confirm each required component shows a green **Configured** status. Click a component in the status card to jump to its details on the right:
@@ -336,7 +318,7 @@ After configuring all required components, you can save the Access Policy.
    * Trust Provider
    * Credential Provider
 
-   ![All components configured with green checkmarks](https://docs.aembit.io/_astro/apb-all-components-configured.Dv-e6kt__Z2osngJ.webp)
+   ![All components configured with green checkmarks](https://docs.aembit.io/_astro/apb-all-components-configured.CilABrzM_1fTI30.webp)
 
 2. In the header, click **Save Policy** to save the policy without activating it, or click **Save Policy & Activate** to save and activate it in one step.
 
@@ -344,6 +326,6 @@ After configuring all required components, you can save the Access Policy.
 
 The Access Policy now governs access from the configured Client Workload to the Server Workload based on the Trust Provider verification, Access Conditions, and Credential Provider settings.
 
-Allow time for changes to take effect
-
-Access Policy changes apply in near-real-time, but not instantly. After you create, edit, or activate a policy, allow a short time for the change to take effect.
+> **Allow time for changes to take effect**
+>
+> Access Policy changes apply in near-real-time, but not instantly. After you create, edit, or activate a policy, allow a short time for the change to take effect.

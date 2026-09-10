@@ -4,9 +4,8 @@ title: "AWS ECS Task Family"
 description: "How to identify AWS ECS Fargate workloads using the task family identifier within Aembit"
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/aws-ecs-task-family/
 interface: web-ui
-tags: [aws, identification, client-workload, access-policy]
-timestamp: 2025-05-29T11:26:12-07:00
-type_inferred: true
+tags: ["aws", "identification", "client-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # AWS ECS Task Family
@@ -15,19 +14,13 @@ This page explains how to use the **AWS ECS task family** identifier to uniquely
 
 ## Understanding the AWS ECS task family identifier
 
-[Section titled “Understanding the AWS ECS task family identifier”](#understanding-the-aws-ecs-task-family-identifier)
-
 When deploying applications to AWS ECS Fargate, the task family provides a logical grouping and versioning mechanism. Each ECS task definition belongs to a specific task family. Refer to the [official AWS documentation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ecs-taskdefinition.html?utm_source=chatgpt.com) for additional details.
 
 ## Applicable deployment type
 
-[Section titled “Applicable deployment type”](#applicable-deployment-type)
-
 Aembit specifically designed the ECS Task Family identification method for Edge-based deployments on [AWS ECS Fargate](../../../deploy-install/serverless/aws-ecs-fargate.md).
 
 ## Create a Client Workload with an AWS ECS task family identifier
-
-[Section titled “Create a Client Workload with an AWS ECS task family identifier”](#create-a-client-workload-with-an-aws-ecs-task-family-identifier)
 
 To configure a Client Workload with an AWS ECS task family identifier, follow these steps:
 
@@ -53,15 +46,13 @@ To configure a Client Workload with an AWS ECS task family identifier, follow th
 
 ## Find task family name in AWS ECS
 
-[Section titled “Find task family name in AWS ECS”](#find-task-family-name-in-aws-ecs)
-
 To find the task family name in the AWS ECS Console, follow these steps:
 
-Note
-
-You may see the same task family in other locations within the AWS Console.
-
-Keep in mind that a full task definition includes both the task family name and the task definition revision (for example, `my-fargate-app:1`). In your Client Workload configuration in your Aembit Tenant, use only the task family name (for example, `my-fargate-app`).
+> **Note**
+>
+> You may see the same task family in other locations within the AWS Console.
+>
+> Keep in mind that a full task definition includes both the task family name and the task definition revision (for example, `my-fargate-app:1`). In your Client Workload configuration in your Aembit Tenant, use only the task family name (for example, `my-fargate-app`).
 
 1. **Open your AWS ECS Console**
 

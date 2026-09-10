@@ -4,9 +4,8 @@ title: "Configure an AWS Secrets Manager Value Credential Provider"
 description: "How to add and use the AWS Secrets Manager Credential Provider with Server Workloads"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/aws-secrets-manager/
 interface: web-ui
-tags: [credential-provider, access-policy]
-timestamp: 2026-06-18T13:15:52-04:00
-type_inferred: true
+tags: ["credential-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Configure an AWS Secrets Manager Value Credential Provider
@@ -15,8 +14,6 @@ The AWS Secrets Manager Credential Provider uses the [AWS Secrets Manager Creden
 
 ## Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites)
-
 You must have the following to create an AWS Secrets Manager Credential Provider:
 
 * A completed [AWS Secrets Manager Credential Provider Integration](integrations/aws-iam-role.md)
@@ -24,8 +21,6 @@ You must have the following to create an AWS Secrets Manager Credential Provider
 * An AWS Secrets Manager secret that you want to use with this Credential Provider
 
 ### Compatible Server Workloads
-
-[Section titled “Compatible Server Workloads”](#compatible-server-workloads)
 
 This credential provider supports secrets stored in either plain text or JSON formats.
 
@@ -38,31 +33,27 @@ This credential provider supports secrets stored in either plain text or JSON fo
 
 When you configure a Server Workload to use the AWS Secrets Manager Credential Provider, you must select the appropriate **Credential Type** based on the secret format.
 
-Note
-
-While Secrets Manager can store any type of data (text, JSON, XML, etc.), this Credential Provider retrieves and passes along whatever value Secrets Manager has stored in it. For **Single** and **Username/Password** types, the Credential Provider expects valid JSON format so it can parse and extract specific values using the configured keys.
+> **Note**
+>
+> While Secrets Manager can store any type of data (text, JSON, XML, etc.), this Credential Provider retrieves and passes along whatever value Secrets Manager has stored in it. For **Single** and **Username/Password** types, the Credential Provider expects valid JSON format so it can parse and extract specific values using the configured keys.
 
 ### Accessing AWS Secrets Manager on private networks
-
-[Section titled “Accessing AWS Secrets Manager on private networks”](#accessing-aws-secrets-manager-on-private-networks)
 
 If your AWS Secrets Manager is only accessible from a private network (such as an AWS Virtual Private Cloud (VPC)), enable **Private Network Access** to retrieve secrets through your Aembit Edge component instead of Aembit Cloud.
 
 For details on when to use Private Network Access, how it works, and troubleshooting, see [Private Network Access for Credential Providers](private-network-access.md).
 
-Version requirement
+> **Version requirement**
+>
+> Private Network Access for AWS Secrets Manager requires Agent Proxy 1.25 or later. Use Agent Proxy 1.28.4063+ for full support, where your Edge component handles all AWS access for this Credential Provider.
 
-Private Network Access for AWS Secrets Manager requires Agent Proxy 1.25 or later. Use Agent Proxy 1.28.4063+ for full support, where your Edge component handles all AWS access for this Credential Provider.
-
-Username/Password limitation
-
-When you enable Private Network Access, the **Username/Password** Credential Value Type isn’t supported for **HTTP Basic Auth** server workloads.
-
-Database protocols (MySQL, PostgreSQL, Redis) work correctly with Private Network Access and Username/Password credentials.
+> **Username/Password limitation**
+>
+> When you enable Private Network Access, the **Username/Password** Credential Value Type isn’t supported for **HTTP Basic Auth** server workloads.
+>
+> Database protocols (MySQL, PostgreSQL, Redis) work correctly with Private Network Access and Username/Password credentials.
 
 ## Credential Provider configuration
-
-[Section titled “Credential Provider configuration”](#credential-provider-configuration)
 
 To configure an AWS Secrets Manager Value Credential Provider, follow these steps:
 
@@ -92,9 +83,9 @@ To configure an AWS Secrets Manager Value Credential Provider, follow these step
 
    * With **Populate Secrets ARNs** - Select or search for an existing secret from the dropdown list. Aembit populates this list with the secrets available in your AWS account that match the integration you selected.
 
-   AWS Secrets Manager Secret ARN location
-
-   You can find the ARN of an AWS Secrets Manager secret in the AWS Management Console under **Secrets Manager -> Secrets**, then select the secret you want to use. AWS displays the secret ARN at the top of the secret’s **Details** page.
+   > **AWS Secrets Manager Secret ARN location**
+   >
+   > You can find the ARN of an AWS Secrets Manager secret in the AWS Management Console under **Secrets Manager -> Secrets**, then select the secret you want to use. AWS displays the secret ARN at the top of the secret’s **Details** page.
 
 8. For **Credential Value Type**, select the type of credential you want to retrieve from AWS Secrets Manager.
 

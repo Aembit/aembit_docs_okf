@@ -4,9 +4,8 @@ title: "How to change Edge Component log levels"
 description: "How to change the log levels of Aembit's Edge Components"
 resource: https://docs.aembit.io/user-guide/deploy-install/advanced-options/changing-agent-log-levels/
 interface: web-ui
-tags: [advanced-option, deploy-install]
-timestamp: 2026-06-18T13:15:52-04:00
-type_inferred: true
+tags: ["advanced-option", "deploy-install"]
+timestamp: 2026-09-09T15:44:57-07:00
 ---
 
 # How to change Edge Component log levels
@@ -19,15 +18,13 @@ The following sections detail how to change the log level of your:
 
 * [Agent Proxy](#change-agent-proxy-log-level)
 
-Note
-
-The process to change your Agent Controller’s or Agent Proxy’s log level does differ depending on your chosen deployment type. Make sure to use the correct tab in the sections to change your log levels.
+> **Note**
+>
+> The process to change your Agent Controller’s or Agent Proxy’s log level does differ depending on your chosen deployment type. Make sure to use the correct tab in the sections to change your log levels.
 
 See [Log level reference](../../../reference/edge-components/agent-log-level-reference.md) for complete details about each agent’s log levels.
 
 ## Change Agent Controller log level
-
-[Section titled “Change Agent Controller log level”](#change-agent-controller-log-level)
 
 Use the following tabs to set change your Agent Controller’s log level using the `AEMBIT_LOG_LEVEL` environment variable:
 
@@ -41,7 +38,7 @@ Use the following tabs to set change your Agent Controller’s log level using t
 
   3. Under `[Service]`, update or add `Environment=AEMBIT_LOG_LEVEL=<log_level>`, and set the log level you want. For example:
 
-     /etc/systemd/system/aembit\_agent\_controller.service
+     **/etc/systemd/system/aembit\_agent\_controller.service**
 
      ```shell
      [Service]
@@ -74,9 +71,9 @@ Use the following tabs to set change your Agent Controller’s log level using t
 
   On Windows, you set the log level by passing `AEMBIT_LOG_LEVEL` as an MSI property when you install or upgrade Agent Controller.
 
-  Note
-
-  Changing the log level requires reinstalling or upgrading Agent Controller because `AEMBIT_LOG_LEVEL` is an MSI property set at install time, not a runtime configuration.
+  > **Note**
+  >
+  > Changing the log level requires reinstalling or upgrading Agent Controller because `AEMBIT_LOG_LEVEL` is an MSI property set at install time, not a runtime configuration.
 
   1. Run `msiexec` to install or upgrade Agent Controller with `AEMBIT_LOG_LEVEL` set to your desired log level:
 
@@ -95,8 +92,6 @@ Use the following tabs to set change your Agent Controller’s log level using t
      ```
 
 ## Change Agent Proxy log level
-
-[Section titled “Change Agent Proxy log level”](#change-agent-proxy-log-level)
 
 Use the following tabs to set change your Agent Proxy’s log level using the `AEMBIT_LOG_LEVEL` environment variable:
 
@@ -147,9 +142,9 @@ Use the following tabs to set change your Agent Proxy’s log level using the `A
 
   On Windows, you set the log level by passing `AEMBIT_LOG_LEVEL` as an MSI property when you install or upgrade Agent Proxy.
 
-  Note
-
-  Changing the log level requires reinstalling or upgrading Agent Proxy because `AEMBIT_LOG_LEVEL` is an MSI property set at install time, not a runtime configuration.
+  > **Note**
+  >
+  > Changing the log level requires reinstalling or upgrading Agent Proxy because `AEMBIT_LOG_LEVEL` is an MSI property set at install time, not a runtime configuration.
 
   1. Run `msiexec` to install or upgrade Agent Proxy with `AEMBIT_LOG_LEVEL` set to your desired log level:
 
@@ -165,6 +160,6 @@ Use the following tabs to set change your Agent Proxy’s log level using the `A
      C:\ProgramData\Aembit\AgentProxy\Logs
      ```
 
-     Tip
-
-     The `ProgramData` folder is hidden by default. To access it, open File Explorer, select **View**, and enable **Hidden items**.
+     > **Tip**
+     >
+     > The `ProgramData` folder is hidden by default. To access it, open File Explorer, select **View**, and enable **Hidden items**.

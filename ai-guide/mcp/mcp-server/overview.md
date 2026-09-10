@@ -1,26 +1,25 @@
 ---
-type: explanation
+type: reference
 title: "Aembit MCP Server"
 description: "Use the Aembit Model Context Protocol (MCP) Server to enable AI agents and users to query Aembit event logs"
 resource: https://docs.aembit.io/ai-guide/mcp/mcp-server/
-tags: [mcp-server, mcp]
-timestamp: 2026-02-24T15:57:13-08:00
+interface: mcp
+tags: ["mcp-server", "mcp"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Aembit MCP Server
 
 The Aembit Model Context Protocol (MCP) Server is a secure, read-only API layer that enables AI agents and users to query Aembit event logs using structured commands. Built on the [Model Context Protocol specification](https://modelcontextprotocol.io/specification/2025-06-18), this service enables agentic observability and auditability for organizations using Aembit.
 
-You can query audit logs, authorization events, and workload**Workload**: Any non-human entity (application, service, automation, AI agent, etc.) that needs to access resources.[Learn more](https://docs.aembit.io/get-started/concepts/how-aembit-works/#introducing-workload-iam) events through integrations with tools like MCP Inspector, Claude Code, GitHub Copilot, and Visual Studio. See [Audit and report on Workload activity](../../../user-guide/audit-report/overview.md) to learn more about Aembit event logs.
+You can query audit logs, authorization events, and workload events through integrations with tools like MCP Inspector, Claude Code, GitHub Copilot, and Visual Studio. See [Audit and report on Workload activity](../../../user-guide/audit-report/overview.md) to learn more about Aembit event logs.
 
 ## Security model
-
-[Section titled “Security model”](#security-model)
 
 The MCP Server enforces multiple layers of access control:
 
 * **Authentication** - API Token authentication via the `Authorization: Bearer` header. Generate tokens from the Aembit Admin UI Profile page.
-* **Authorization** - Resource Set**Resource Set**: Resource Sets are organizational containers that group Access Policy components together, enabling you to manage configurations across different environments, regions, or use cases.[Learn more](../../../user-guide/administration/resource-sets/overview.md)-based scoping restricts queries to resources in the assigned set, enforcing least-privilege access.
+* **Authorization** - Resource Set-based scoping restricts queries to resources in the assigned set, enforcing least-privilege access.
 * **Read-only access** - The MCP Server supports only read operations. You can’t create, update, or delete data.
 * **Audit trail** - Aembit logs all MCP Server queries, including the identity of the requesting agent.
 
@@ -29,8 +28,6 @@ The MCP Server provides access to operational event metadata such as timestamps,
 For more detail on how these mechanisms work, see [About the MCP Server](about-mcp-server.md).
 
 ## Pages in this section
-
-[Section titled “Pages in this section”](#pages-in-this-section)
 
 The following pages provide information about the Aembit MCP Server:
 

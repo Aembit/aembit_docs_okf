@@ -4,9 +4,8 @@ title: "Connect with Visual Studio"
 description: "Configure Visual Studio to query Aembit event logs through the MCP Server."
 resource: https://docs.aembit.io/ai-guide/mcp/mcp-server/connect/visual-studio/
 interface: mcp
-tags: [connect, mcp-server, mcp]
-timestamp: 2026-02-24T15:57:13-08:00
-type_inferred: true
+tags: ["connect", "mcp-server", "mcp"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Connect with Visual Studio
@@ -15,18 +14,14 @@ Connect Visual Studio’s MCP support to the Aembit MCP Server to query audit lo
 
 ## Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites)
-
 * Visual Studio 2022 or later with MCP support
 * Aembit API Token and MCP Service URL (see [Connect to the MCP Server](overview.md))
 
 ## Configure the MCP connection
 
-[Section titled “Configure the MCP connection”](#configure-the-mcp-connection)
-
-Protect your API Token
-
-Avoid committing API tokens to version control. Store tokens in environment variables or a secrets manager, and reference them in your configuration file.
+> **Protect your API Token**
+>
+> Avoid committing API tokens to version control. Store tokens in environment variables or a secrets manager, and reference them in your configuration file.
 
 1. Create the configuration file.
 
@@ -74,15 +69,11 @@ Avoid committing API tokens to version control. Store tokens in environment vari
 
 ## Verify the connection
 
-[Section titled “Verify the connection”](#verify-the-connection)
-
 Visual Studio may prompt for permission when MCP tools are first invoked. Select **Allow** to enable Aembit queries.
 
 Test the connection by asking about available tools or requesting recent audit logs.
 
 ## Usage notes
-
-[Section titled “Usage notes”](#usage-notes)
 
 Keep these points in mind when using Visual Studio’s MCP support with the Aembit MCP Server.
 
@@ -92,13 +83,9 @@ Keep these points in mind when using Visual Studio’s MCP support with the Aemb
 
 ## Next steps
 
-[Section titled “Next steps”](#next-steps)
-
 * See the [Prompt Library](../../../prompt-library/overview.md) for example prompts and best practices.
 * If you have connection issues, see [Troubleshooting](overview.md#troubleshooting).
 
 ## Learn more
-
-[Section titled “Learn more”](#learn-more)
 
 * [Visual Studio MCP documentation](https://learn.microsoft.com/en-us/visualstudio/ide/mcp-servers)

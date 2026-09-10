@@ -4,9 +4,8 @@ title: "GitHub ID Token Repository"
 description: "This page describes how the GitHub ID Token Repository method identifies Client Workloads in Aembit."
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/github-id-token-repository/
 interface: web-ui
-tags: [cicd, identification, client-workload, access-policy]
-timestamp: 2026-01-12T11:05:32-08:00
-type_inferred: true
+tags: ["cicd", "identification", "client-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # GitHub ID Token Repository
@@ -17,17 +16,11 @@ This Client Workload identification method is specifically designed for [GitHub 
 
 ## Applicable Deployment Type
 
-[Section titled “Applicable Deployment Type”](#applicable-deployment-type)
-
 This method is suitable for GitHub-based CI/CD Workflow deployments.
 
 ## Configuration
 
-[Section titled “Configuration”](#configuration)
-
 ### Aembit Cloud
-
-[Section titled “Aembit Cloud”](#aembit-cloud)
 
 1. Create a new Client Workload.
 2. Choose **GitHub ID Token Repository** for client identification.
@@ -37,8 +30,6 @@ This method is suitable for GitHub-based CI/CD Workflow deployments.
 * **Example** - user123/another-project
 
 ### Finding the GitHub ID Token Repository:
-
-[Section titled “Finding the GitHub ID Token Repository:”](#finding-the-github-id-token-repository)
 
 * Navigate to your project on GitHub.
 * Locate the repository name displayed at the top left corner of the page, in the format mentioned above.

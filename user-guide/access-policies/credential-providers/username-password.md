@@ -4,9 +4,8 @@ title: "Configure a Username & Password Credential Provider"
 description: "How to create and use a Username & Password Credential Provider"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/username-password/
 interface: web-ui
-tags: [credential-provider, access-policy]
-timestamp: 2025-05-22T22:55:26-07:00
-type_inferred: true
+tags: ["credential-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Configure a Username & Password Credential Provider
@@ -14,8 +13,6 @@ type_inferred: true
 The Username & Password credential provider is tailored for Server Workloads requiring username and password authentication, such as databases and Server Workloads utilizing HTTP Basic authentication.
 
 ## Credential Provider configuration
-
-[Section titled “Credential Provider configuration”](#credential-provider-configuration)
 
 To configure a Username & Password Credential Provider, follow the steps outlined below.
 

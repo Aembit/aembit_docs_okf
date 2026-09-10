@@ -4,14 +4,13 @@ title: "Set up Secrets Operator"
 description: "Install and configure Aembit Secrets Operator in your Kubernetes cluster"
 resource: https://docs.aembit.io/user-guide/deploy-install/kubernetes/aso/setup/
 interface: web-ui
-tags: [aso, kubernetes, deploy-install]
-timestamp: 2026-06-18T13:15:52-04:00
-type_inferred: true
+tags: ["aso", "kubernetes", "deploy-install"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Set up Secrets Operator
 
-This page walks you through installing Aembit Secrets Operator**Aembit Secrets Operator**: Aembit Secrets Operator is a Kubernetes operator that authenticates to the Aembit platform and synchronizes credentials into Kubernetes Secrets for applications to consume directly.[Learn more](overview.md) in your Kubernetes cluster and configuring it to retrieve credentials from the Aembit platform.
+This page walks you through installing Aembit Secrets Operator in your Kubernetes cluster and configuring it to retrieve credentials from the Aembit platform.
 
 Secrets Operator supports two authentication paths to the Aembit platform:
 
@@ -20,24 +19,20 @@ Secrets Operator supports two authentication paths to the Aembit platform:
 
 ## Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites)
-
 Before you begin, ensure you have:
 
 * A Kubernetes cluster (verified on Amazon EKS and K3s)
 * `kubectl` configured for your target cluster
 * Helm v3.x installed
 
-If you plan to use CrowdStrike Access Conditions**Access Condition**: Access Conditions add dynamic, context-aware constraints to authorization by evaluating circumstances like time, location, or security posture to determine whether to grant access.[Learn more](../../../../get-started/concepts/access-conditions.md), you also need:
+If you plan to use CrowdStrike Access Conditions, you also need:
 
 * CrowdStrike Falcon agent installed on cluster nodes
 * CrowdStrike Agent ID written to `/etc/aembit/crowdstrike-aid` on each node
 
 ## Create the OIDC signing key
 
-[Section titled “Create the OIDC signing key”](#create-the-oidc-signing-key)
-
-Secrets Operator authenticates to Aembit using OIDC**OpenID Connect (OIDC)**: An identity layer built on top of OAuth 2.0 that lets applications verify the identity of a user or workload and obtain basic profile information using JSON Web Tokens (JWTs).[Learn more(opens in new tab)](https://openid.net/developers/how-connect-works/) tokens signed with a symmetric key. Generate a cryptographically random key and store it as a Kubernetes Secret. You need the base64-encoded value from this Secret when you configure the Trust Provider**Trust Provider**: Trust Providers validate Client Workload identities through workload attestation, verifying identity claims from the workload's runtime environment rather than relying on pre-shared secrets.[Learn more](../../../../get-started/concepts/trust-providers.md) in your Aembit tenant.
+Secrets Operator authenticates to Aembit using OIDC tokens signed with a symmetric key. Generate a cryptographically random key and store it as a Kubernetes Secret. You need the base64-encoded value from this Secret when you configure the Trust Provider in your Aembit tenant.
 
 1. Generate the key and create the Secret:
 
@@ -58,21 +53,19 @@ Secrets Operator authenticates to Aembit using OIDC**OpenID Connect (OIDC)**: An
 
    Copy this value—you paste it into the Trust Provider’s symmetric key field in the next section.
 
-Avoid double base64 encoding
+> **Avoid double base64 encoding**
+>
+> Kubernetes automatically base64-encodes Secret data. When you configure the Trust Provider, paste the base64-encoded value from the preceding command directly into the symmetric key field. Don’t base64-encode the value yourself before pasting—doing so results in a double-encoded key that causes authentication failures.
 
-Kubernetes automatically base64-encodes Secret data. When you configure the Trust Provider, paste the base64-encoded value from the preceding command directly into the symmetric key field. Don’t base64-encode the value yourself before pasting—doing so results in a double-encoded key that causes authentication failures.
+> **Key requirements**
+>
+> The signing key must be at least 32 bytes of cryptographically random data. Secrets Operator rejects keys shorter than 32 bytes (per RFC 7518 §3.2) when generating tokens.
 
-Key requirements
-
-The signing key must be at least 32 bytes of cryptographically random data. Secrets Operator rejects keys shorter than 32 bytes (per RFC 7518 §3.2) when generating tokens.
-
-Note
-
-If you change the OIDC signing key Secret after Secrets Operator is running, you must restart the Secrets Operator pod for Secrets Operator to pick up the new key.
+> **Note**
+>
+> If you change the OIDC signing key Secret after Secrets Operator is running, you must restart the Secrets Operator pod for Secrets Operator to pick up the new key.
 
 ## Create the claims ConfigMap
-
-[Section titled “Create the claims ConfigMap”](#create-the-claims-configmap)
 
 Create a ConfigMap that defines the OIDC claims included in Secrets Operator’s identity tokens. The `iss` (issuer) and `sub` (subject) claims control how the Trust Provider identifies Secrets Operator. You can also add claims for per-cluster access policies.
 
@@ -83,17 +76,15 @@ kubectl create configmap aembit-oidc-claims \
   --from-literal=sub=aembit-secrets-operator
 ```
 
-Why create this ConfigMap
-
-Without a claims ConfigMap, Secrets Operator infers a default `iss` claim that’s specific to the cluster and difficult to obtain. To find it, you would need to install the Helm chart and check Secrets Operator logs. Creating the ConfigMap upfront gives you explicit control over the `iss` and `sub` values, which makes configuring Trust Provider match rules straightforward.
+> **Why create this ConfigMap**
+>
+> Without a claims ConfigMap, Secrets Operator infers a default `iss` claim that’s specific to the cluster and difficult to obtain. To find it, you would need to install the Helm chart and check Secrets Operator logs. Creating the ConfigMap upfront gives you explicit control over the `iss` and `sub` values, which makes configuring Trust Provider match rules straightforward.
 
 You reference this ConfigMap in the `AembitEdgeApiClient` custom resource when you [create custom resources](#create-custom-resources).
 
 ## Configure your Aembit tenant
 
-[Section titled “Configure your Aembit tenant”](#configure-your-aembit-tenant)
-
-Set up the required Aembit resources to define the access policy for Secrets Operator. Secrets Operator authenticates using OIDC tokens signed with a symmetric key, so the Trust Provider and Client Workload**Client Workload**: Client Workloads represent software applications, scripts, or automated processes that initiate access requests to Server Workloads, operating autonomously without direct user interaction.[Learn more](../../../../get-started/concepts/client-workloads.md) both use the **OIDC ID Token** type.
+Set up the required Aembit resources to define the access policy for Secrets Operator. Secrets Operator authenticates using OIDC tokens signed with a symmetric key, so the Trust Provider and Client Workload both use the **OIDC ID Token** type.
 
 1. Log in to your [Aembit tenant](https://app.aembit.io) and create a **Client Workload**:
 
@@ -108,11 +99,11 @@ Set up the required Aembit resources to define the access policy for Secrets Ope
    * Configure match rules for `iss` (issuer) and `sub` (subject) to match the values you set in the [claims ConfigMap](#create-the-claims-configmap).
    * Note the **Edge SDK Client ID**—you need this for the `clientId` field in the `AembitEdgeApiClient` Custom Resource Definition (CRD).
 
-3. Create a **Server Workload**Server Workload**: Server Workloads represent target services, APIs, databases, or applications that receive and respond to access requests from Client Workloads.[Learn more](../../../../get-started/concepts/server-workloads.md)** pointing to your HashiCorp Vault instance:
+3. Create a **Server Workload** pointing to your HashiCorp Vault instance:
 
    * Configure the host and port to match the values you plan to set in the `AembitSecretRefreshSchedule` CRD (`server.host` and `server.port`).
 
-4. Create a **Credential Provider**Credential Provider**: Credential Providers obtain the specific access credentials—such as API keys, OAuth tokens, or temporary cloud credentials—that Client Workloads need to authenticate to Server Workloads.[Learn more](../../../../get-started/concepts/credential-providers.md)**:
+4. Create a **Credential Provider**:
 
    * Select **Vault Client Token** as the credential type.
    * Configure the JWT subject, custom claims, and Vault authentication details.
@@ -120,7 +111,7 @@ Set up the required Aembit resources to define the access policy for Secrets Ope
 
 5. (Optional) Create an **Access Condition** for [CrowdStrike](../../../access-policies/access-conditions/crowdstrike.md) device posture validation. If enabled, Secrets Operator passes host attestation data (hostname, serial number, CrowdStrike Agent ID) with every authentication request. See [Prepare host attestations](#prepare-host-attestations-optional) to configure the host attestation file.
 
-6. Create an **Access Policy**Access Policy**: Access Policies define, enforce, and audit access between Client and Server Workloads by cryptographically verifying workload identity and contextual factors rather than relying on static secrets.[Learn more](../../../../get-started/concepts/access-policies.md)** linking the Client Workload, Trust Provider, Server Workload, Credential Provider, and any Access Conditions.
+6. Create an **Access Policy** linking the Client Workload, Trust Provider, Server Workload, Credential Provider, and any Access Conditions.
 
 7. Note the following values from your tenant configuration. You need these for the CRD configuration:
 
@@ -133,15 +124,13 @@ Set up the required Aembit resources to define the access policy for Secrets Ope
 
 ## Prepare host attestations (optional)
 
-[Section titled “Prepare host attestations (optional)”](#prepare-host-attestations-optional)
-
 If your Access Policy includes Access Conditions that validate device posture (for example, CrowdStrike device identity), prepare a host attestations file on each cluster node before deploying Secrets Operator.
 
 Secrets Operator reads host attestation data from a file mounted into the pod via a `hostPath` volume. The file must be available at the configured path (default: `/run/aembit/host_attestations.json`) on each node.
 
-The file must contain a JSON object that satisfies the `host` field of the [Edge API authentication schema](../../../../api-guide/edge/overview.md#visual-tree-diagram). For example:
+The file must contain a JSON object that satisfies the `host` field of the [Edge API authentication schema](../../../../dev-guide/api/edge/overview.md#visual-tree-diagram). For example:
 
-/run/aembit/host\_attestations.json
+**/run/aembit/host\_attestations.json**
 
 ```json
 {
@@ -160,15 +149,13 @@ For more details on configuring host attestations, see the [host attestations re
 
 ## Install the Helm chart
 
-[Section titled “Install the Helm chart”](#install-the-helm-chart)
-
-Use a dedicated namespace
-
-Install Secrets Operator in its own namespace. The Helm chart creates a ServiceAccount with access to all Secrets in the namespace, and the OIDC signing key is readable by any ServiceAccount in the same namespace. A dedicated namespace limits the blast radius of these permissions.
-
-If you install the chart more than once in a cluster, install each instance into its own namespace. The chart creates one `ClusterRole` and `ClusterRoleBinding` per installation; these names include the install namespace, so the same Helm release name works across multiple namespaces without conflicts.
-
-For details, see [Security model](overview.md#security-model).
+> **Use a dedicated namespace**
+>
+> Install Secrets Operator in its own namespace. The Helm chart creates a ServiceAccount with access to all Secrets in the namespace, and the OIDC signing key is readable by any ServiceAccount in the same namespace. A dedicated namespace limits the blast radius of these permissions.
+>
+> If you install the chart more than once in a cluster, install each instance into its own namespace. The chart creates one `ClusterRole` and `ClusterRoleBinding` per installation; these names include the install namespace, so the same Helm release name works across multiple namespaces without conflicts.
+>
+> For details, see [Security model](overview.md#security-model).
 
 1. Add the Aembit Helm repository:
 
@@ -177,15 +164,15 @@ For details, see [Security model](overview.md#security-model).
    helm repo update
    ```
 
-   Repo name conflict
-
-   If you see this error:
-
-   ```plaintext
-   Error: repository name (aembit) already exists, please specify a different name
-   ```
-
-   You already have a local Helm repo registered under that name. Run `helm repo list` to see your existing repos and choose a different alias for this command.
+   > **Repo name conflict**
+   >
+   > If you see this error:
+   >
+   > ```plaintext
+   > Error: repository name (aembit) already exists, please specify a different name
+   > ```
+   >
+   > You already have a local Helm repo registered under that name. Run `helm repo list` to see your existing repos and choose a different alias for this command.
 
 2. (Optional) Create a `values.yaml` file to override default chart values. For the complete list of configurable values, see the [Helm chart values reference](helm-values.md).
 
@@ -214,17 +201,15 @@ For details, see [Security model](overview.md#security-model).
 
 ## Create custom resources
 
-[Section titled “Create custom resources”](#create-custom-resources)
-
 Create the custom resources that tell Secrets Operator what credentials to manage.
 
-Installation order
-
-Installing the Helm chart and creating custom resources are independent operations—you can do either first. This guide recommends installing the Helm chart first because it registers the Custom Resource Definitions (CRDs) that Kubernetes needs to accept the custom resources below.
+> **Installation order**
+>
+> Installing the Helm chart and creating custom resources are independent operations—you can do either first. This guide recommends installing the Helm chart first because it registers the Custom Resource Definitions (CRDs) that Kubernetes needs to accept the custom resources below.
 
 1. Save the following manifest as `aembit-connection.yaml`, replacing the placeholder values with the tenant ID and Edge SDK Client ID from your Aembit tenant:
 
-   aembit-connection.yaml
+   **aembit-connection.yaml**
 
    ```yaml
    apiVersion: aembit.io/v1
@@ -254,7 +239,7 @@ Installing the Helm chart and creating custom resources are independent operatio
 
 3. Save the following manifest as `vault-token-schedule.yaml`, replacing the `server.host` and `server.port` values with your Vault instance details. Create one `AembitSecretRefreshSchedule` for each credential you need managed:
 
-   vault-token-schedule.yaml
+   **vault-token-schedule.yaml**
 
    ```yaml
    apiVersion: aembit.io/v1
@@ -279,13 +264,13 @@ Installing the Helm chart and creating custom resources are independent operatio
    kubectl apply -f vault-token-schedule.yaml
    ```
 
-Retrieving a non-Vault credential
-
-This walkthrough retrieves a HashiCorp Vault client token, which uses the default `credentialType` (`OAuthToken`). To retrieve an API key, username/password, AWS STS, or Google federation credential instead, set `spec.credentialType` to match your Credential Provider. See [Credential types and Secret data keys](reference.md#credential-types-and-secret-data-keys) for the full list and the Secret data keys each type produces.
+> **Retrieving a non-Vault credential**
+>
+> This walkthrough retrieves a HashiCorp Vault client token, which uses the default `credentialType` (`OAuthToken`). To retrieve an API key, username/password, AWS STS, or Google federation credential instead, set `spec.credentialType` to match your Credential Provider. See [Credential types and Secret data keys](reference.md#credential-types-and-secret-data-keys) for the full list and the Secret data keys each type produces.
+>
+> To deliver an X.509-SVID certificate instead of a fetched credential, see [Deliver X.509-SVID certificates with Secrets Operator](x509-svid.md), which covers in-cluster key generation and the TLS Secret workflow.
 
 ## Verify the installation
-
-[Section titled “Verify the installation”](#verify-the-installation)
 
 Confirm Secrets Operator is managing credentials successfully.
 
@@ -314,15 +299,11 @@ Confirm Secrets Operator is managing credentials successfully.
 
 ## Kubernetes Service Account authentication
 
-[Section titled “Kubernetes Service Account authentication”](#kubernetes-service-account-authentication)
-
 Kubernetes Service Account authentication is an alternative to the OIDC symmetric key path above. Secrets Operator authenticates using its in-cluster ServiceAccount token — no signing key or claims ConfigMap required.
 
 Skip the [Create the OIDC signing key](#create-the-oidc-signing-key) and [Create the claims ConfigMap](#create-the-claims-configmap) sections. All other steps (install the Helm chart, create custom resources, verify) are the same.
 
 ### Configure your Aembit tenant for Kubernetes Service Account authentication
-
-[Section titled “Configure your Aembit tenant for Kubernetes Service Account authentication”](#configure-your-aembit-tenant-for-kubernetes-service-account-authentication)
 
 In the [Configure your Aembit tenant](#configure-your-aembit-tenant) steps, make these changes:
 
@@ -342,11 +323,9 @@ In the [Configure your Aembit tenant](#configure-your-aembit-tenant) steps, make
 
 ### Create the AembitEdgeApiClient for Kubernetes Service Account authentication
 
-[Section titled “Create the AembitEdgeApiClient for Kubernetes Service Account authentication”](#create-the-aembitedgeapiclient-for-kubernetes-service-account-authentication)
-
 Use `kubernetesServiceAccount: {}` instead of `oidc:` in the `attestations` field:
 
-aembit-connection.yaml
+**aembit-connection.yaml**
 
 ```yaml
 apiVersion: aembit.io/v1
@@ -366,8 +345,6 @@ spec:
 Apply the manifest and then create the `AembitSecretRefreshSchedule` as described in [Create custom resources](#create-custom-resources). The credential retrieval flow is identical regardless of auth path.
 
 ## Next steps
-
-[Section titled “Next steps”](#next-steps)
 
 * [Configuration Reference](reference.md): CRD specifications, environment variables, and host attestations.
 * [Helm chart values](helm-values.md): All configurable Helm chart values.

@@ -4,20 +4,19 @@ title: "How to add a resource to a Resource Set"
 description: "How to add resources to a Resource Set"
 resource: https://docs.aembit.io/user-guide/administration/resource-sets/adding-resources-to-resource-set/
 interface: web-ui
-tags: [resource-set, administration]
-timestamp: 2025-05-29T11:26:12-07:00
-type_inferred: true
+tags: ["resource-set", "administration"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # How to add a resource to a Resource Set
 
 To add resources to a Resource Set, perform the following steps:
 
-Note
-
-When you log into your Aembit Tenant, by default, Aembit displays the **Default** Resource Set.
-
-If you want to add resources to a different Resource Set, you must select that Resource Set from the **Resource Selector** drop-down menu in the top right corner of the Aembit web UI. The **Resource Selector** drop-down menu is available on *most* pages in the Aembit web UI.
+> **Note**
+>
+> When you log into your Aembit Tenant, by default, Aembit displays the **Default** Resource Set.
+>
+> If you want to add resources to a different Resource Set, you must select that Resource Set from the **Resource Selector** drop-down menu in the top right corner of the Aembit web UI. The **Resource Selector** drop-down menu is available on *most* pages in the Aembit web UI.
 
 1. Log into your Aembit Tenant.
 
@@ -40,8 +39,6 @@ If you want to add resources to a different Resource Set, you must select that R
 7. Repeat these steps for any other resources you would like to add to the Resource Set.
 
 ## Additional resources
-
-[Section titled “Additional resources”](#additional-resources)
 
 * [Create a Resource Set](create-resource-set.md)
 * [Assign roles to a Resource Set](assign-roles.md)

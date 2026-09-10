@@ -1,19 +1,18 @@
 ---
-type: explanation
+type: reference
 title: "MCP Identity Gateway"
 description: "Identity federation for MCP clients connecting to MCP servers through Aembit."
 resource: https://docs.aembit.io/ai-guide/mcp/identity-gateway/
-tags: [identity-gateway, mcp]
-timestamp: 2026-06-30T15:07:47-04:00
+interface: mcp
+tags: ["identity-gateway", "mcp"]
+timestamp: 2026-09-09T08:20:13-07:00
 ---
 
 # MCP Identity Gateway
 
-The **Aembit Model Context Protocol**Model Context Protocol**: A standard protocol for AI agent and server interactions that defines how AI assistants communicate with external tools and data sources.[Learn more(opens in new tab)](https://modelcontextprotocol.io/) (MCP) Identity Gateway** is a data-plane gateway that sits between AI agents and MCP servers. It centralizes how AI agents connect to MCP servers by enforcing Access Policies**Access Policy**: Access Policies define, enforce, and audit access between Client and Server Workloads by cryptographically verifying workload identity and contextual factors rather than relying on static secrets.[Learn more](../../../get-started/concepts/access-policies.md), performing secure token exchange, and providing visibility into MCP activity.
+The **Aembit Model Context Protocol (MCP) Identity Gateway** is a data-plane gateway that sits between AI agents and MCP servers. It centralizes how AI agents connect to MCP servers by enforcing Access Policies, performing secure token exchange, and providing visibility into MCP activity.
 
 ## What it does
-
-[Section titled “What it does”](#what-it-does)
 
 * **Proxies MCP traffic** - AI agents connect to the MCP Identity Gateway as if it were an MCP server. The Gateway connects to downstream MCP servers and relays requests and responses, including both tool invocations and resource access.
 
@@ -21,13 +20,13 @@ The **Aembit Model Context Protocol**Model Context Protocol**: A standard protoc
 
 * **Performs secure token exchange** - The Gateway obtains and manages credentials for MCP servers so that AI agents never hold direct credentials for enterprise systems. Supported credential types include OAuth 2.0 tokens (via Authorization Code flow) and API keys. The Gateway obtains credentials per-request and caches them for 60 seconds—it never persists them to disk. For details on the token exchange flow, see [MCP Identity Gateway concepts](concepts-mcp-gateway.md).
 
+* **Governs MCP tool traffic** - When the Gateway-to-Server Access Policy includes a Content Security Provider, the Gateway applies that provider’s decision to each MCP tool message the policy matches. See [Content Security in the MCP Identity Gateway](content-security-mcp-gateway.md).
+
 * **Centralizes MCP routing** - AI agents connect to the Gateway endpoint instead of connecting directly to MCP servers. The Gateway routes requests to the configured MCP server based on policy.
 
 * **Provides auditability** - The Gateway produces structured logs that capture agent identity, user identity, target MCP server, and policy decisions. These logs integrate with [Log Streams](../../../user-guide/administration/log-streams/overview.md) for centralized observability.
 
 ## When to use it
-
-[Section titled “When to use it”](#when-to-use-it)
 
 Use the MCP Identity Gateway when you need:
 
@@ -39,16 +38,12 @@ The MCP Identity Gateway targets those who need to secure, control, and audit ac
 
 ## Deployment options
 
-[Section titled “Deployment options”](#deployment-options)
-
 Aembit offers the MCP Identity Gateway in two deployment models:
 
 * **Aembit-managed (recommended)** - Aembit operates the Gateway for your Tenant at `https://<tenantId>.mcpgateway.aembit.io`, handling provisioning, TLS termination, certificate renewal, and runtime operations. Aembit runs the managed service on Kubernetes on your behalf. To request an endpoint, contact your Aembit representative, then see [Set up the MCP Identity Gateway](setup-mcp-gateway.md).
 * **Self-hosted (secondary)** - You run the Gateway as a service on a Linux host you provision and maintain, for cases where it must stay in your own infrastructure. See [Self-host the MCP Identity Gateway](self-host-mcp-gateway.md).
 
 ## How it works
-
-[Section titled “How it works”](#how-it-works)
 
 The following diagram shows the request flow from a user through the MCP Identity Gateway:
 
@@ -66,13 +61,9 @@ For architecture details, see [MCP Identity Gateway concepts](concepts-mcp-gatew
 
 ## Identity validation
 
-[Section titled “Identity validation”](#identity-validation)
-
 The MCP Identity Gateway validates identity through three distinct processes: initial authentication (one-time setup), per-request token validation, and per-request access policy evaluation.
 
 ### Initial authentication (one-time setup)
-
-[Section titled “Initial authentication (one-time setup)”](#initial-authentication-one-time-setup)
 
 Before an AI agent can make MCP requests, it must obtain credentials through a one-time authentication flow:
 
@@ -84,8 +75,6 @@ Before an AI agent can make MCP requests, it must obtain credentials through a o
 This authentication process happens once during MCP client configuration. The AI agent reuses the stored token for all subsequent requests until it expires.
 
 ### Token validation (per request)
-
-[Section titled “Token validation (per request)”](#token-validation-per-request)
 
 On every MCP request, the Gateway validates the token before processing:
 
@@ -99,8 +88,6 @@ If token validation fails, the Gateway rejects the request immediately.
 
 ### Access policy evaluation (per request)
 
-[Section titled “Access policy evaluation (per request)”](#access-policy-evaluation-per-request)
-
 After token validation succeeds, the Gateway requests policy evaluation from Aembit Cloud:
 
 1. **Client-to-Gateway policy** - Validates which MCP client is connecting and which user it represents.
@@ -112,8 +99,6 @@ If policy evaluation fails, the Gateway rejects the request and logs the decisio
 For details on the security model, see [MCP Identity Gateway concepts](concepts-mcp-gateway.md).
 
 ## Security properties
-
-[Section titled “Security properties”](#security-properties)
 
 The MCP Identity Gateway provides the following security guarantees:
 
@@ -128,18 +113,15 @@ The MCP Identity Gateway provides the following security guarantees:
 
 ## Troubleshooting and observability
 
-[Section titled “Troubleshooting and observability”](#troubleshooting-and-observability)
-
 * [Troubleshoot MCP and AI IAM access](../../../user-guide/troubleshooting/mcp-ai-iam.md) - End-to-end investigation guide for MCP authorization and Gateway failures
 * [MCP Authorization Tracing](../../../user-guide/audit-report/mcp-authorization-tracing.md) - Live view of inbound MCP authorization requests at the Gateway
 * [Access Authorization Events](../../../user-guide/audit-report/access-authorization-events.md) - Authorization decisions made by Aembit Cloud, including the `access.discovery` event type
-* [Workload Events](../../../user-guide/audit-report/workload-events.md) - Request and response traffic that flowed through the Gateway, including MCP-specific fields
+* [Workload Events](../../../user-guide/audit-report/workload-events/overview.md) - Request and response traffic that flowed through the Gateway, including MCP-specific fields
 
 ## In this section
 
-[Section titled “In this section”](#in-this-section)
-
 * [Concepts](concepts-mcp-gateway.md) - Architecture, security model, token handling, access policies, deployment patterns, and operational considerations
+* [Content Security](content-security-mcp-gateway.md) - How Content Security inspects MCP traffic in the Gateway request path
 * [Client workload identification](client-workload-identification.md) - How the Gateway identifies users in multi-user deployments
 * [Setup](setup-mcp-gateway.md) - Configure your Aembit Tenant for the managed Gateway, with validation steps
 * [Connect Microsoft Copilot Studio](connect-copilot-studio.md) - Connect Copilot Studio agents to enterprise MCP servers through the Gateway

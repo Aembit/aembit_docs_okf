@@ -4,9 +4,8 @@ title: "How to create an OIDC 1.0 Identity Provider"
 description: "How to create an OIDC 1.0 Identity Provider for Single Sign-On"
 resource: https://docs.aembit.io/user-guide/administration/identity-providers/create-idp-oidc/
 interface: web-ui
-tags: [identity-provider, administration]
-timestamp: 2026-04-07T10:38:56-07:00
-type_inferred: true
+tags: ["identity-provider", "administration"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # How to create an OIDC 1.0 Identity Provider
@@ -16,8 +15,6 @@ Configuring an OIDC 1.0 (OpenID Connect) Identity Provider (IdP) allows you to o
 When you configure an OIDC-capable IdP in your Aembit Tenant, Aembit provides a redirect URL that you must configure in your third-party IdP.
 
 ## Before you start
-
-[Section titled “Before you start”](#before-you-start)
 
 Before you configure an OIDC 1.0 Identity Provider, ensure:
 
@@ -31,19 +28,17 @@ Before you configure an OIDC 1.0 Identity Provider, ensure:
 
 * You have a Teams or Enterprise subscription plan. The Identity Providers feature isn’t available on the Starter plan.
 
-Deciding on an authentication method
-
-When configuring the **Authentication Method** for your OIDC IdP, you have two options:
-
-**Client Secret**: Simpler to set up. Your IdP provides a secret string that Aembit stores securely.
-
-**Public Private Keypair**: More secure. Aembit manages a set of dynamic key pairs and provides a JWKS URL that your IdP can use to fetch the public keys dynamically. Aembit rotates these keys for enhanced security.
-
-Aembit recommends using Public Private Keypair when your IdP supports it.
+> **Deciding on an authentication method**
+>
+> When configuring the **Authentication Method** for your OIDC IdP, you have two options:
+>
+> **Client Secret**: Simpler to set up. Your IdP provides a secret string that Aembit stores securely.
+>
+> **Public Private Keypair**: More secure. Aembit manages a set of dynamic key pairs and provides a JWKS URL that your IdP can use to fetch the public keys dynamically. Aembit rotates these keys for enhanced security.
+>
+> Aembit recommends using Public Private Keypair when your IdP supports it.
 
 ## Configure an OIDC 1.0 Identity Provider
-
-[Section titled “Configure an OIDC 1.0 Identity Provider”](#configure-an-oidc-10-identity-provider)
 
 To configure an OIDC 1.0 IdP to work with Aembit, follow these steps:
 
@@ -102,8 +97,6 @@ To configure an OIDC 1.0 IdP to work with Aembit, follow these steps:
    Aembit displays the newly created OIDC IdP on the **Identity Provider** page. Now, when users log in to your Aembit Tenant, the login UI displays the available OIDC SSO option.
 
 ## Provider-specific examples
-
-[Section titled “Provider-specific examples”](#provider-specific-examples)
 
 * Okta
 
@@ -173,8 +166,6 @@ To configure an OIDC 1.0 IdP to work with Aembit, follow these steps:
 
 ## Testing your OIDC SSO setup
 
-[Section titled “Testing your OIDC SSO setup”](#testing-your-oidc-sso-setup)
-
 Before enabling “Require Single Sign On” for your entire organization, test your OIDC SSO configuration:
 
 1. Open an incognito or private browser window.
@@ -191,49 +182,35 @@ Before enabling “Require Single Sign On” for your entire organization, test 
 
 7. Don’t enable “Require Single Sign On” in your Sign-On Policy until you have successfully tested SSO login with at least one user.
 
-Caution
-
-Don’t enable “Require Single Sign On” in your [Sign-On Policy](../sign-on-policy/overview.md) until you’ve successfully tested SSO login with at least one user. Otherwise, Aembit may lock out users who encounter issues.
+> **Caution**
+>
+> Don’t enable “Require Single Sign On” in your [Sign-On Policy](../sign-on-policy/overview.md) until you’ve successfully tested SSO login with at least one user. Otherwise, Aembit may lock out users who encounter issues.
 
 ## Troubleshooting
-
-[Section titled “Troubleshooting”](#troubleshooting)
 
 The following sections describe common issues you may encounter when setting up OIDC SSO and how to resolve them.
 
 ### SSO button doesn’t appear on login page
 
-[Section titled “SSO button doesn’t appear on login page”](#sso-button-doesnt-appear-on-login-page)
-
 **Solution**: Wait a few moments and refresh the page. If the button still doesn’t appear, verify that you clicked **Save** in the Identity Provider configuration.
 
 ### Error after IdP login
-
-[Section titled “Error after IdP login”](#error-after-idp-login)
 
 **Solution**: Verify that the Redirect URL in your IdP exactly matches the Redirect URL provided by Aembit.
 
 ### Can’t complete OIDC setup
 
-[Section titled “Can’t complete OIDC setup”](#cant-complete-oidc-setup)
-
 **Solution**: Ensure you have a Teams or Enterprise subscription plan. The Identity Providers feature isn’t available on the Starter plan. Contact Aembit by completing the [Contact Us form](https://aembit.io/contact/) to upgrade your plan.
 
 ### Authentication fails with PKCE error
-
-[Section titled “Authentication fails with PKCE error”](#authentication-fails-with-pkce-error)
 
 **Solution**: Ensure that you enable PKCE in both Aembit (PKCE Required checkbox) and your IdP’s OIDC application settings.
 
 ### Invalid or expired tokens
 
-[Section titled “Invalid or expired tokens”](#invalid-or-expired-tokens)
-
 **Solution**: If using Public Private Keypair authentication, verify that your IdP can access the JWKS URL provided by Aembit. Check for any firewall or network restrictions that might block this URL.
 
 ## See also
-
-[Section titled “See also”](#see-also)
 
 * [Identity Providers overview](overview.md) - Understand how Identity Providers work with Aembit
 * [Automatic User Creation](automatic-user-creation.md) - Configure automatic user creation with Identity Providers

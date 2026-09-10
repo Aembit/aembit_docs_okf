@@ -4,9 +4,8 @@ title: "Create Access Conditions for CrowdStrike"
 description: "How to create an Access Condition for a CrowdStrike integration"
 resource: https://docs.aembit.io/user-guide/access-policies/access-conditions/crowdstrike/
 interface: web-ui
-tags: [access-condition, access-policy]
-timestamp: 2025-08-19T16:35:12-07:00
-type_inferred: true
+tags: ["access-condition", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Create Access Conditions for CrowdStrike

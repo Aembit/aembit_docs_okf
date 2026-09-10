@@ -2,7 +2,7 @@
 type: definition
 title: "Resource Set"
 description: "Resource Sets are organizational containers that group Access Policy components together, enabling you to manage configurations across different environments, regions, or use cases."
-tags: [core-concepts]
+tags: ["core-concepts"]
 timestamp: 2026-01-30T00:27:24-08:00
 ---
 

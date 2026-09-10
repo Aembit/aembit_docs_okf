@@ -4,24 +4,19 @@ title: "Access Condition for Wiz"
 description: "This page describes how to create an Access Condition for a Wiz integration."
 resource: https://docs.aembit.io/user-guide/access-policies/access-conditions/wiz/
 interface: web-ui
-tags: [access-condition, access-policy]
-timestamp: 2025-05-22T22:55:26-07:00
-type_inferred: true
+tags: ["access-condition", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Access Condition for Wiz
 
 ## Introduction
 
-[Section titled “Introduction”](#introduction)
-
 If you have an existing Wiz integration and would like to create an Access Condition for this integration, you may create this Access Condition using your Aembit Tenant.
 
 The section below describes the required steps to set up and configure an Access Condition for a Wiz integration.
 
 ## Creating an Access Condition for a Wiz Integration
-
-[Section titled “Creating an Access Condition for a Wiz Integration”](#creating-an-access-condition-for-a-wiz-integration)
 
 To create an Access Condition for a Wiz integration, perform the steps listed below.
 
@@ -45,9 +40,9 @@ To create an Access Condition for a Wiz integration, perform the steps listed be
 
 6. In the **Conditions - Time** section, enter the duration of time you would like to use for restricting Client Workloads in Kubernetes Clusters that have not been seen recently.
 
-Note
-
-If you would like to have a full day as the time duration, Aembit recommends using 26 hours to handle the different system synchronizations.
+> **Note**
+>
+> If you would like to have a full day as the time duration, Aembit recommends using 26 hours to handle the different system synchronizations.
 
 ![Access Conditions Dialog Window - Filled Out](https://docs.aembit.io/_astro/access_conditions_wiz_dialog_window_wiz_selected_filled_out.B3fvejsF_jYGPH.webp)
 

@@ -9,5 +9,4 @@
 * [Database protocol support](databases/index.md) - Deployment requirements and configuration for database protocols supported by Aembit Agent Proxy
 * [Aembit Edge on Kubernetes](kubernetes/index.md) - Guides and topics about deploying Aembit Edge Components on Kubernetes
 * [Aembit Edge on serverless services](serverless/index.md) - Guides and topics about deploying Aembit Edge Components on serverless services functions
-* [Aembit Edge on virtual appliances](virtual-appliances/index.md) - Guides and topics about deploying Aembit Edge Components on virtual appliances
 * [Deploying Aembit Edge on VMs](virtual-machine/index.md) - Guides and topics about deploying Aembit Edge Components on virtual machines (VMs)

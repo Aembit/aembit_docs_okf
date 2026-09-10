@@ -4,9 +4,8 @@ title: "Kerberos Trust Provider"
 description: "How to configure a Kerberos Trust Provider"
 resource: https://docs.aembit.io/user-guide/access-policies/trust-providers/kerberos-trust-provider/
 interface: web-ui
-tags: [trust-provider, access-policy]
-timestamp: 2026-02-23T07:23:16-08:00
-type_inferred: true
+tags: ["trust-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Kerberos Trust Provider
@@ -19,23 +18,17 @@ This Trust Provider is unique because it relies on attestation provided by an Ae
 
 ## Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites)
-
 Many prerequisites are necessary, particularly regarding domain users and principals. This page outlines Aembit’s current recommendations for a secure and scalable deployment.
 
 Kerberos based attestation is available only for [Virtual Machine Deployments](../../deploy-install/virtual-machine/overview.md).
 
 ### Join your Edge Components to AD domain
 
-[Section titled “Join your Edge Components to AD domain”](#join-your-edge-components-to-ad-domain)
-
 * You must join Agent Controller VMs to AD before you install Agent Controller on them.
 
 * You must join Client Workload VMs to AD before installing Agent Proxy.
 
 ### Domain users and service principals
-
-[Section titled “Domain users and service principals”](#domain-users-and-service-principals)
 
 * You must create a user in AD named `aembit_ac` for Agent Controllers. This user doesn’t need any specific permissions in AD.
 
@@ -49,15 +42,11 @@ Kerberos based attestation is available only for [Virtual Machine Deployments](.
 
 ### Network access
 
-[Section titled “Network access”](#network-access)
-
 * Agent Controller VMs don’t need access to the Domain Controller.
 
 * Client Workload VMs must have access to the Domain Controller to acquire tickets.
 
 ### Keytabs
-
-[Section titled “Keytabs”](#keytabs)
 
 * Agent Controller
 
@@ -81,8 +70,6 @@ Kerberos based attestation is available only for [Virtual Machine Deployments](.
 
 ## Kerberos Trust Provider match rules
 
-[Section titled “Kerberos Trust Provider match rules”](#kerberos-trust-provider-match-rules)
-
 The Kerberos Trust Provider supports the following match rules:
 
 * Principal
@@ -91,9 +78,9 @@ The Kerberos Trust Provider supports the following match rules:
 
 * Source IP
 
-  Important
-
-  When matching on Principal or Realm/Domain, see [Kerberos Principal formatting](#kerberos-principal-formatting) for guidance.
+  > **Important**
+  >
+  > When matching on Principal or Realm/Domain, see [Kerberos Principal formatting](#kerberos-principal-formatting) for guidance.
 
 | Data      | Description                                            | Example                        |
 | --------- | ------------------------------------------------------ | ------------------------------ |
@@ -104,13 +91,9 @@ The Kerberos Trust Provider supports the following match rules:
 
 ### Associated Agent Controllers
 
-[Section titled “Associated Agent Controllers”](#associated-agent-controllers)
-
 During the configuration of the Kerberos Trust Provider, you must specify the list of Agent Controllers responsible for providing attestation. Aembit trusts only the attestation information signed by specified Agent Controllers by a Kerberos Trust Provider entry.
 
 ### Kerberos Principal formatting
-
-[Section titled “Kerberos Principal formatting”](#kerberos-principal-formatting)
 
 Aembit supports Agent Controller on Windows VMs to improve management of the Aembit Edge Components. This is especially true for [Agent Controller high availability configurations](../../deploy-install/advanced-options/agent-controller/agent-controller-high-availability.md) that use Windows [Group Managed Service Accounts (gMSA)](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/group-managed-service-accounts/group-managed-service-accounts/group-managed-service-accounts-overview) to manage multiple Agent Controllers.
 
@@ -129,15 +112,11 @@ As part of the Kerberos Trust Provider attestation process and to address this c
 
 ## Enable Kerberos attestation
 
-[Section titled “Enable Kerberos attestation”](#enable-kerberos-attestation)
-
 By default, Aembit disables Kerberos attestation on both Agent Controller and Agent Proxy.
 
 Follow the applicable sections to enable Kerberos attestation on Aembit Edge Components:
 
 ### Agent Controller on Windows Server
-
-[Section titled “Agent Controller on Windows Server”](#agent-controller-on-windows-server)
 
 To enable Kerberos attestation for [Agent Controller on a Windows Server VM](../../deploy-install/virtual-machine/windows/agent-controller-install-windows.md), you must set the following environment variables:
 
@@ -148,8 +127,6 @@ SERVICE_LOGON_ACCOUNT=<DOMAIN>\<sAMAccountName>$
 
 ### Agent Controller on Linux
 
-[Section titled “Agent Controller on Linux”](#agent-controller-on-linux)
-
 To enable Kerberos attestation for [Agent Controller on a Linux VM](../../deploy-install/virtual-machine/linux/agent-controller-install-linux.md), you must set the following environment variables:
 
 ```shell
@@ -158,8 +135,6 @@ KRB5_KTNAME=<Agent Controller keytab file location>
 ```
 
 ### Agent Proxy
-
-[Section titled “Agent Proxy”](#agent-proxy)
 
 Similarly, the Agent Proxy installer requires the following environment variable (in addition to the standard variables provided during [installation](../../deploy-install/virtual-machine/linux/agent-proxy-install-linux.md)):
 
@@ -170,8 +145,6 @@ AEMBIT_PRIVILEGED_KEYTAB=true
 
 ## TLS
 
-[Section titled “TLS”](#tls)
-
 The contents of the communication between Agent Proxy and Agent Controller is sensitive. In a production deployment, you may configure Agent Controller TLS to secure communication between these two components using either a Customer’s PKI or Aembit’s PKI. Please see the following pages for more information on using a PKI in your configuration:
 
 * [Configure a Customer’s PKI Agent Controller TLS](../../deploy-install/advanced-options/agent-controller/configure-customer-pki-agent-controller-tls.md)
@@ -179,8 +152,6 @@ The contents of the communication between Agent Proxy and Agent Controller is se
 * [Configure Aembit’s PKI Agent Controller TLS](../../deploy-install/advanced-options/agent-controller/configure-aembit-pki-agent-controller-tls.md)
 
 ## High availability
-
-[Section titled “High availability”](#high-availability)
 
 Given the critical role of attestation in evaluating an Access Policy, Aembit strongly encourages configuring multiple Agent Controllers in a high availability architecture.
 
@@ -199,8 +170,6 @@ The following are the additional steps you must perform for Kerberos attestation
 * If you operate multiple Agent Controller clusters running behind one or more load balancers, you must add each load balancer FQDN as the service principal under Agent Controller AD account.
 
 ## Agent Controller keytab rotation for high availability deployment
-
-[Section titled “Agent Controller keytab rotation for high availability deployment”](#agent-controller-keytab-rotation-for-high-availability-deployment)
 
 Standard best practice recommends the periodic rotation of all keytabs.
 

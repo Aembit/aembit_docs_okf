@@ -1,4 +1,5 @@
 * [Trust Providers](overview.md) - This document provides a high-level description of Trust Providers
+* [AWS Application Load Balancer JWT Trust Provider](aws-alb-jwt-trust-provider.md) - How to configure an AWS Application Load Balancer JWT Trust Provider to validate signed tokens forwarded by an AWS Application Load Balancer
 * [AWS Metadata Service trust provider](aws-metadata-service-trust-provider.md) - This page describes the steps required to configure an AWS Metadata Service Trust Provider.
 * [AWS Role Trust Provider](aws-role-trust-provider.md) - This page describes the steps needed to configure the AWS Role Trust Provider.
 * [Azure Instance Metadata Service trust provider](azure-metadata-service-trust-provider.md) - This page describes the steps required to configure the Azure Instance Metadata Service Trust Provider.
@@ -7,6 +8,7 @@
 * [GCP Identity Token Trust Provider](gcp-identity-token-trust-provider.md) - This page describes the steps required to configure the GCP Identity Token Trust Provider.
 * [GitHub Trust Provider](github-trust-provider.md) - This page outlines the steps required to configure the GitHub Trust Provider.
 * [Gitlab Trust Provider](gitlab-trust-provider.md) - This page outlines the steps required to configure the Gitlab Trust Provider.
+* [Google Cloud Identity-Aware Proxy (IAP) JWT Trust Provider](gcp-iap-jwt-trust-provider.md) - How to configure a Google Cloud Identity-Aware Proxy (IAP) JWT Trust Provider to validate signed tokens forwarded by IAP
 * [How to add a Trust Provider](add-trust-provider.md) - How to configure a Trust Provider for Client Workload identity attestation
 * [Kerberos Trust Provider](kerberos-trust-provider.md) - How to configure a Kerberos Trust Provider
 * [Kubernetes Service Account trust provider](kubernetes-service-account-trust-provider.md) - This page describes the steps required to configure the Kubernetes Service Account Trust Provider.

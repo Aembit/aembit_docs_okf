@@ -4,9 +4,8 @@ title: "Aembit Client ID"
 description: "This document outlines the Aembit Client ID method for identifying Client Workloads."
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/aembit-client-id/
 interface: web-ui
-tags: [generic, identification, client-workload, access-policy]
-timestamp: 2025-04-14T12:09:34-07:00
-type_inferred: true
+tags: ["generic", "identification", "client-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Aembit Client ID
@@ -14,35 +13,33 @@ type_inferred: true
 
 The Aembit Client ID method serves as a fallback for Client Workload identification when other suitable methods are unavailable. This method entails generating a unique ID by the Aembit Cloud, which is then provisioned to the Client Workload.
 
-## Applicable Deployment Type
+> **The Aembit Client ID isn’t the Client Workload’s resource ID**
+>
+> Every Client Workload also has its own resource ID, which Aembit assigns automatically and exposes as `externalId` in the API. That resource ID isn’t the Aembit Client ID, and no flag, variable, or annotation accepts it.
+>
+> Whenever you provision this identifier—through the [`--client-workload-id`](../../../../dev-guide/cli/reference/credentials-get.md#--client-workload-id) flag, the [`CLIENT_WORKLOAD_ID`](../../../../reference/edge-components/edge-component-env-vars.md#client_workload_id) environment variable, or the [`aembit.io/client-id`](../../../../reference/edge-components/cw-annotations.md#aembitioclient-id) annotation—use the value Aembit generates in the following step. Both values use the same UUID format, so confirm you copied the generated one.
+>
+> For a side-by-side comparison of all three identifiers, see the [Aembit identifier reference](../../../../reference/identifiers.md).
 
-[Section titled “Applicable Deployment Type”](#applicable-deployment-type)
+## Applicable deployment type
 
 This method is suitable for Aembit Edge-based deployments.
 
 ## Configuration
 
-[Section titled “Configuration”](#configuration)
-
 ### Aembit Cloud
-
-[Section titled “Aembit Cloud”](#aembit-cloud)
 
 1. Create a new Client Workload.
 2. Choose “Aembit Client ID” for client identification.
 3. Complete the remaining fields.
-4. Copy the newly generated ID.
+4. Copy the newly generated ID that Aembit displays for the **Aembit Client ID** identifier.
 5. Save the Client Workload.
 
 ![Aembit Client ID](https://docs.aembit.io/_astro/client_identification_aembit_client_id.CiS18YKw_Zwx03R.webp)
 
 ### Client Workload
 
-[Section titled “Client Workload”](#client-workload)
-
-#### Virtual Machine Deployment
-
-[Section titled “Virtual Machine Deployment”](#virtual-machine-deployment)
+#### Virtual machine deployment
 
 During Agent Proxy installation, specify the `CLIENT_WORKLOAD_ID` environment variable.
 
@@ -52,11 +49,9 @@ CLIENT_WORKLOAD_ID=<ClientWorkloadID> AEMBIT_TENANT_ID=<TenantID> AEMBIT_AGENT_C
 
 #### Kubernetes
 
-[Section titled “Kubernetes”](#kubernetes)
-
 Add the `aembit.io/agent-inject` annotation to your Client Workload.
 
-See the example below:
+See the following example:
 
 ```yaml
 apiVersion: apps/v1

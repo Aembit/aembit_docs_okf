@@ -4,9 +4,8 @@ title: "Configure a HashiCorp Vault Client Token Credential Provider"
 description: "How to configure a Credential Provider for HashiCorp Vault Client Token"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/vault-client-token/
 interface: web-ui
-tags: [credential-provider, access-policy]
-timestamp: 2026-01-13T20:25:37-08:00
-type_inferred: true
+tags: ["credential-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Configure a HashiCorp Vault Client Token Credential Provider
@@ -19,19 +18,15 @@ This Credential Provider allows your Client Workloads to securely authenticate w
 
 ## Accessing Vault on private networks
 
-[Section titled “Accessing Vault on private networks”](#accessing-vault-on-private-networks)
-
 For Vault instances on private networks, enable **Private Network Access** during configuration to allow your colocated Agent Proxy to handle authentication directly.
 
 For details on when to use Private Network Access, how it works, and troubleshooting, see [Private Network Access for Credential Providers](private-network-access.md).
 
-Version requirement
-
-Private Network Access for HashiCorp Vault requires Agent Proxy 1.20 or later.
+> **Version requirement**
+>
+> Private Network Access for HashiCorp Vault requires Agent Proxy 1.20 or later.
 
 ## Configure a Vault Credential Provider
-
-[Section titled “Configure a Vault Credential Provider”](#configure-a-vault-credential-provider)
 
 To configure a Vault Credential Provider, follow these steps:
 

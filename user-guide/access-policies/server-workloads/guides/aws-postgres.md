@@ -4,9 +4,8 @@ title: "Amazon RDS for PostgreSQL"
 description: "This page describes how to configure Aembit to work with the Amazon RDS for PostgreSQL Server Workload."
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/guides/aws-postgres/
 interface: web-ui
-tags: [databases, guide, server-workload, access-policy]
-timestamp: 2026-07-07T18:22:50-07:00
-type_inferred: true
+tags: ["databases", "guide", "server-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Amazon RDS for PostgreSQL
@@ -18,13 +17,9 @@ Below you can find the Aembit configuration required to work with AWS RDS for Po
 
 ## Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites)
-
 Before proceeding with the configuration, ensure you have an AWS tenant (or [sign up](https://portal.aws.amazon.com/billing/signup#/start/email) for one) and an Amazon RDS for PostgreSQL database. If you haven’t created a database before, you can follow the steps in the next section. For more information on creating an Amazon RDS DB instance, please refer to the [official Amazon documentation](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Tutorials.WebServerDB.CreateDBInstance.html).
 
 ### Create Amazon RDS PostgreSQL database
-
-[Section titled “Create Amazon RDS PostgreSQL database”](#create-amazon-rds-postgresql-database)
 
 1. Sign in to the AWS Management Console and navigate to the [Amazon RDS console](https://console.aws.amazon.com/rds/).
 
@@ -42,9 +37,9 @@ Before proceeding with the configuration, ensure you have an AWS tenant (or [sig
 
 * In **Settings**, expand the **Credentials Settings** section. Use the **Master username** and **master password** as Credential Provider details. You can either auto-generate a password or type your own. Save this information for future use.
 
-  Note
-
-  In this example, this guide uses the master username and password for demonstration purposes; however, it’s advisable to create a dedicated user with appropriate privileges for enhanced security.
+  > **Note**
+  >
+  > In this example, this guide uses the master username and password for demonstration purposes; however, it’s advisable to create a dedicated user with appropriate privileges for enhanced security.
 
 * In **Connectivity**, find the **Publicly Accessible** option and set it to **Yes**.
 
@@ -58,8 +53,6 @@ Before proceeding with the configuration, ensure you have an AWS tenant (or [sig
 4. After making all your selections, click **Create Database**.
 
 ## Server Workload configuration
-
-[Section titled “Server Workload configuration”](#server-workload-configuration)
 
 To retrieve the connection information for a DB instance in the AWS Management Console:
 
@@ -89,8 +82,6 @@ To retrieve the connection information for a DB instance in the AWS Management C
 
 ## Credential Provider configuration
 
-[Section titled “Credential Provider configuration”](#credential-provider-configuration)
-
 1. Create a new Credential Provider.
 
 * **Name** - Choose a user-friendly name.
@@ -100,15 +91,11 @@ To retrieve the connection information for a DB instance in the AWS Management C
 
 ## Client Workload configuration
 
-[Section titled “Client Workload configuration”](#client-workload-configuration)
-
 Aembit now handles the credentials required to access the Server Workload, eliminating the need for you to manage them directly. You can remove any previously used credentials from the Client Workload.
 
 If you access the Server Workload through an SDK or library, it’s possible that the SDK/library may still require credentials to be present for initialization purposes. In this scenario, you can provide placeholder credentials. Aembit overwrites these placeholder credentials with the appropriate ones during the access process.
 
 ## Access Policy
-
-[Section titled “Access Policy”](#access-policy)
 
 * Create an access policy for a Client Workload to access the Amazon RDS for PostgreSQL Server Workload and assign the newly created Credential Provider to it.
 

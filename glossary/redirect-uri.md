@@ -2,7 +2,7 @@
 type: definition
 title: "Redirect URI"
 description: "The callback URL where the Authorization Server redirects users after authentication. For MCP clients, the redirect URI serves as a Client Workload identifier in Aembit Access Policies."
-tags: [configuration]
+tags: ["configuration"]
 timestamp: 2026-01-13T14:54:59-08:00
 ---
 

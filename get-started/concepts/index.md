@@ -6,7 +6,9 @@
 * [About Aembit Edge](aembit-edge.md) - Understanding Aembit Edge and its role as the distributed enforcement layer within your environments
 * [About Auditing and reporting](audit-report.md) - Understanding Aembit's auditing and reporting capabilities for workload access monitoring and compliance
 * [About Client Workloads](client-workloads.md) - Understanding Client Workloads and their role as access requesters in Aembit
+* [About Content Security](content-security.md) - Understanding Content Security Providers and their role in governing MCP tool traffic in Access Policies.
 * [About Credential Providers](credential-providers.md) - Understanding Credential Providers and their role in secure access credential management
 * [About Server Workloads](server-workloads.md) - Understanding Server Workloads and their role as access targets in Aembit
 * [About Trust Providers](trust-providers.md) - Understanding Trust Providers and their role in verifying workload identities in Aembit
+* [Planes and responsibilities](planes-and-responsibilities.md) - What the management plane and control plane each do, who works in each, and how they interact when a workload requests access
 * [Scaling Aembit with Terraform](scaling-terraform.md) - Description of how to scale with the Aembit Terraform provider

@@ -3,9 +3,8 @@ type: explanation
 title: "About Auditing and reporting"
 description: "Understanding Aembit's auditing and reporting capabilities for workload access monitoring and compliance"
 resource: https://docs.aembit.io/get-started/concepts/audit-report/
-tags: [concept]
-timestamp: 2026-04-13T13:05:24-07:00
-type_inferred: true
+tags: ["concept"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # About Auditing and reporting
@@ -18,13 +17,11 @@ Aembit’s auditing capabilities serve multiple critical functions: operational 
 
 ![](https://docs.aembit.io/aembit-icons/gears-light.svg)
 
-[Start exploring audit and reporting ](../../user-guide/audit-report/overview.md)See Audit & Report in the User Guide
+[Start exploring audit and reporting](../../user-guide/audit-report/overview.md)See Audit & Report in the User Guide
 
 →
 
 ## How auditing and reporting works
-
-[Section titled “How auditing and reporting works”](#how-auditing-and-reporting-works)
 
 The following steps outline how Aembit captures and processes audit information throughout the access control lifecycle:
 
@@ -50,8 +47,6 @@ The following diagram illustrates this process:
 
 ## Supported event types and analysis tools
 
-[Section titled “Supported event types and analysis tools”](#supported-event-types-and-analysis-tools)
-
 Aembit provides multiple event types and analysis interfaces tailored for different monitoring and investigation needs:
 
 **Event Types**
@@ -72,8 +67,6 @@ Aembit provides multiple event types and analysis interfaces tailored for differ
 * [SIEM integrations](../../user-guide/administration/log-streams/overview.md) - Configuration guidance for Splunk, Microsoft Sentinel, and other security platforms
 
 ## Benefits of using auditing and reporting
-
-[Section titled “Benefits of using auditing and reporting”](#benefits-of-using-auditing-and-reporting)
 
 * **Identity-Centric Attribution** - Links all events to verified workload or administrator identities rather than network artifacts, providing clear accountability in dynamic environments with ephemeral workloads.
 * **Comprehensive Visibility** - Captures both operational workload interactions and administrative governance activities through a unified logging framework across heterogeneous environments.

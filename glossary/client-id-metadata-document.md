@@ -2,7 +2,7 @@
 type: definition
 title: "Client ID Metadata Document"
 description: "A JSON document that an MCP client hosts at an HTTPS URL, containing its client_id, client_name, and redirect_uris. When a client presents that URL as its OAuth client_id, the Authorization Server fetches and validates the document, so the client can authenticate without Dynamic Client Registration (DCR)."
-tags: [authentication]
+tags: ["authentication"]
 timestamp: 2026-06-30T15:16:59-04:00
 ---
 

@@ -4,24 +4,21 @@ title: "Aembit Edge GitLab CI/CD Component"
 description: "How to deploy Aembit Edge Components with GitLab Jobs using the Aembit Edge GitLab CI/CD Component"
 resource: https://docs.aembit.io/user-guide/deploy-install/ci-cd/gitlab/gitlab-jobs-component/
 interface: web-ui
-tags: [gitlab, ci-cd, deploy-install]
-timestamp: 2026-06-30T13:30:29-04:00
-type_inferred: true
+tags: ["gitlab", "ci-cd", "deploy-install"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Aembit Edge GitLab CI/CD Component
 
 This page describes how to use the [Aembit Edge GitLab CI/CD Component](https://gitlab.com/explore/catalog/aembit/aembit-edge) in [GitLab Jobs](https://docs.gitlab.com/ee/ci/jobs/).
 
-Enterprise Support
-
-Aembit supports GitLab Cloud but doesn’t support self-hosted GitLab instances.
+> **Enterprise Support**
+>
+> Aembit supports GitLab Cloud but doesn’t support self-hosted GitLab instances.
 
 The Aembit Edge GitLab CI/CD Component is a pre-built component that you can use in your GitLab pipeline configuration file to retrieve credentials from your Aembit Tenant. It simplifies the process of integrating Aembit Edge with GitLab Jobs by providing a ready-to-use component that handles the authentication and credential retrieval process.
 
 ## Configure an Access Policy
-
-[Section titled “Configure an Access Policy”](#configure-an-access-policy)
 
 To configure your Aembit Tenant to support GitLab Jobs using the Aembit Edge GitLab CI/CD as a Client Workload:
 
@@ -48,8 +45,6 @@ To configure your Aembit Tenant to support GitLab Jobs using the Aembit Edge Git
 
 ## Using the Aembit Edge GitLab CI/CD component
 
-[Section titled “Using the Aembit Edge GitLab CI/CD component”](#using-the-aembit-edge-gitlab-cicd-component)
-
 When you have configured your Aembit Tenant to support GitLab Jobs, you can use the Aembit Edge GitLab CI/CD component in your GitLab pipeline configuration file.
 
 You must provide the following required [GitLab CI/CD component input variables](#gitlab-cicd-component-input-variables):
@@ -61,7 +56,7 @@ You must provide the following required [GitLab CI/CD component input variables]
 
 1. To use the component, specify the `<component-version>` you want to use in the [include section](https://docs.gitlab.com/ci/components/#use-a-component) of your GitLab pipeline configuration file.
 
-   GitLab pipeline config
+   **GitLab pipeline config**
 
    ```yaml
       ...
@@ -88,8 +83,6 @@ You must provide the following required [GitLab CI/CD component input variables]
    ```
 
 ## GitLab CI/CD component input variables
-
-[Section titled “GitLab CI/CD component input variables”](#gitlab-cicd-component-input-variables)
 
 Please review the input variables for the Aembit Edge GitLab CI/CD component in the [GitLab CI/CD catalog entry](https://gitlab.com/explore/catalog/aembit/aembit-edge).
 

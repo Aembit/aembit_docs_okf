@@ -1,12 +1,10 @@
 ---
-type: how-to
+type: explanation
 title: "About the JWT-SVID Token Credential Provider"
 description: "This page describes the JWT-SVID Token Credential Provider and how it works"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/about-spiffe-jwt-svid/
-interface: web-ui
-tags: [credential-provider, access-policy]
-timestamp: 2025-08-26T11:29:07-07:00
-type_inferred: true
+tags: ["credential-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # About the JWT-SVID Token Credential Provider
@@ -28,16 +26,12 @@ See [Create a JWT-SVID Token Credential Provider](spiffe-jwt-svid.md) to create 
 
 ## Common use cases
 
-[Section titled “Common use cases”](#common-use-cases)
-
 * **Service Mesh Authentication** - Securely authenticate workloads in SPIFFE-compliant service meshes like Istio, Consul, or Kuma.
 * **Zero Trust Architecture** - Implement Zero Trust identity standards for workload-to-workload communication.
 * **SPIFFE-Aware Systems** - Integrate with any system that validates SPIFFE JWT-SVIDs using standard SPIFFE libraries.
 * **Managed Identity** - Replace self-managed SPIRE deployments with Aembit’s managed identity issuance.
 
 ## How the JWT-SVID Token Credential Provider works
-
-[Section titled “How the JWT-SVID Token Credential Provider works”](#how-the-jwt-svid-token-credential-provider-works)
 
 1. **Token Generation** - Aembit generates SPIFFE-compliant JWT-SVID tokens and signs them using your Aembit Tenant-specific keys. The tokens follow the SPIFFE JWT-SVID specification and include standard claims (`exp`, `iat`, `jti`) along with any configured custom claims.
 
@@ -52,13 +46,9 @@ See [Create a JWT-SVID Token Credential Provider](spiffe-jwt-svid.md) to create 
 
 ## Configuration options
 
-[Section titled “Configuration options”](#configuration-options)
-
 The following sections detail the configuration options you have for the JWT-SVID Token Credential Provider:
 
 ### SPIFFE ID configuration
-
-[Section titled “SPIFFE ID configuration”](#spiffe-id-configuration)
 
 SPIFFE IDs uniquely identify workloads within a trust domain and follow this format:
 
@@ -78,8 +68,6 @@ Aembit supports multiple strategies for SPIFFE ID generation:
 
 ### Issuer configuration
 
-[Section titled “Issuer configuration”](#issuer-configuration)
-
 The issuer URL identifies the entity that created and signed the JWT-SVID:
 
 * Automatically generated based on your Aembit tenant configuration
@@ -87,8 +75,6 @@ The issuer URL identifies the entity that created and signed the JWT-SVID:
 * Used by relying parties to verify the token’s origin
 
 ### Claims configuration
-
-[Section titled “Claims configuration”](#claims-configuration)
 
 Configure standard and custom claims in your JWT-SVIDs:
 
@@ -112,8 +98,6 @@ For detailed syntax and examples of dynamic claims, see [Dynamic Claims for OIDC
 
 ### Signing configuration
 
-[Section titled “Signing configuration”](#signing-configuration)
-
 Aembit manages signing keys and algorithms according to SPIFFE standards:
 
 * **Algorithm support:**
@@ -129,8 +113,6 @@ Aembit manages signing keys and algorithms according to SPIFFE standards:
 
 ### JWKS endpoint
 
-[Section titled “JWKS endpoint”](#jwks-endpoint)
-
 Aembit exposes a public JWKS endpoint for JWT-SVID verification:
 
 * Standards-compliant formatting compatible with SPIFFE libraries
@@ -140,15 +122,11 @@ Aembit exposes a public JWKS endpoint for JWT-SVID verification:
 
 ## Implementation notes
 
-[Section titled “Implementation notes”](#implementation-notes)
-
 * The Credential Provider generates SPIFFE-compliant JWT-SVID tokens without requiring separate SPIRE infrastructure.
 * Current implementation supports ES256 and RS256 signing algorithms as specified by the SPIFFE standard.
 * Aembit recommends testing JWT-SVID validation with SPIFFE SDK libraries before production deployment.
 
 ## Common SPIFFE JWT-SVID claims
-
-[Section titled “Common SPIFFE JWT-SVID claims”](#common-spiffe-jwt-svid-claims)
 
 The following table describes standard SPIFFE JWT-SVID claims and their configuration:
 
@@ -169,8 +147,6 @@ For more information on using dynamic expressions in these claims, see [Dynamic 
 
 ## Additional resources
 
-[Section titled “Additional resources”](#additional-resources)
-
 * [SPIFFE JWT-SVID Specification](https://spiffe.io/docs/latest/keyless/)
-* [How to Construct SPIFFE IDs](https://www.spirl.com/blog/how-to-construct-spiffe-ids)
+* [How to Construct SPIFFE IDs](https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md)
 * [SPIFFE Standards Documentation](https://spiffe.io/docs/latest/spiffe-about/spiffe-concepts/)

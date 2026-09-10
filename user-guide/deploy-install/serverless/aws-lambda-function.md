@@ -4,9 +4,8 @@ title: "Deploy Aembit Edge to AWS Lambda function"
 description: "How to deploy Aembit Edge Components in an AWS Lambda function environment"
 resource: https://docs.aembit.io/user-guide/deploy-install/serverless/aws-lambda-function/
 interface: web-ui
-tags: [serverless, deploy-install]
-timestamp: 2026-06-05T14:13:51-07:00
-type_inferred: true
+tags: ["serverless", "deploy-install"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Deploy Aembit Edge to AWS Lambda function
@@ -15,23 +14,17 @@ Aembit provides many different deployment options which you can use to deploy Ae
 
 This page describes the process to deploy Aembit Edge Components in zip-based (vs container-based) AWS Lambda functions using an [AWS Lambda layer](https://docs.aws.amazon.com/lambda/latest/dg/chapter-layers.html).
 
-Note
-
-For information on deploying Aembit Edge Components in AWS Lambda container environment, see [AWS Lambda Containers](aws-lambda-container.md).
+> **Note**
+>
+> For information on deploying Aembit Edge Components in AWS Lambda container environment, see [AWS Lambda Containers](aws-lambda-container.md).
 
 ## Deploy Aembit Edge Components
 
-[Section titled “Deploy Aembit Edge Components”](#deploy-aembit-edge-components)
-
 ### Topology
-
-[Section titled “Topology”](#topology)
 
 Aembit deploys Agent Proxies for AWS Lambda functions as [AWS Lambda Layers](https://docs.aws.amazon.com/lambda/latest/dg/chapter-layers.html) which are automatically launched by the AWS Lambda Runtime.
 
 ### VPC
-
-[Section titled “VPC”](#vpc)
 
 For each AWS region hosting your Lambda functions, you must create a Virtual Private Cloud (VPC) (or use an existing one). All Lambda functions in each AWS account or region that include Aembit components must connect to a corresponding VPC in the same region.
 
@@ -46,26 +39,20 @@ AWS Lambda functions using zip-based packaging must explicitly connect to a VPC 
 
 #### Ensuring internet access
 
-[Section titled “Ensuring internet access”](#ensuring-internet-access)
-
 Agent Proxy requires outbound internet access to communicate with Aembit Cloud. When you configure your Lambda function within a VPC, you must set up specific networking for internet access.
 
 Place your Lambda function in a private subnet and route outbound traffic from this subnet through a NAT Gateway (Network Address Translation Gateway) located in a public subnet.
 
-Note
-
-* AWS assigns private IP addresses to Lambda functions in a VPC. An Internet Gateway (IGW) in a public subnet can’t directly route traffic from these private IPs to the public internet.
-* The NAT Gateway translates the necessary public IP addresses for your Lambda’s private IP traffic.
+> **Note**
+>
+> * AWS assigns private IP addresses to Lambda functions in a VPC. An Internet Gateway (IGW) in a public subnet can’t directly route traffic from these private IPs to the public internet.
+> * The NAT Gateway translates the necessary public IP addresses for your Lambda’s private IP traffic.
 
 ### Agent Controller
-
-[Section titled “Agent Controller”](#agent-controller)
 
 Deploy Agent Controller either on a [virtual machine](../virtual-machine/overview.md) or within your [Kubernetes cluster](../kubernetes/kubernetes.md).
 
 ### Lambda layer packaging
-
-[Section titled “Lambda layer packaging”](#lambda-layer-packaging)
 
 Aembit publishes the Aembit AWS Lambda Layer to the [AWS Serverless Application Repository (SAR)](https://serverlessrepo.aws.amazon.com/applications) which you can deploy into your AWS account.
 
@@ -87,8 +74,6 @@ To deploy the Aembit Lambda layer:
 
 ### Lambda function configuration
 
-[Section titled “Lambda function configuration”](#lambda-function-configuration)
-
 To use the Aembit Lambda Layer in your Lambda functions:
 
 * Specify additional environment variables for your Lambda function.
@@ -99,9 +84,9 @@ To use the Aembit Lambda Layer in your Lambda functions:
   AEMBIT_AGENT_CONTROLLER=https://<AGENT_CONTROLLER_HOST>:5443
   ```
 
-  Caution
-
-  To configure TLS Decrypt on your Agent Controller, see [Configuring TLS Decrypt](#configuring-tls-decrypt).
+  > **Caution**
+  >
+  > To configure TLS Decrypt on your Agent Controller, see [Configuring TLS Decrypt](#configuring-tls-decrypt).
 
   For Agent Controllers without TLS:
 
@@ -120,19 +105,15 @@ You can configure additional environment variables to set the Agent Proxy log le
 
 ## Client Workload identification
 
-[Section titled “Client Workload identification”](#client-workload-identification)
-
 The most convenient way to identify Lambda function Client Workloads is to use the [AWS Lambda ARN Client Workload identification method](../../access-policies/client-workloads/identification/aws-lambda-arn.md).
 
-Note
-
-If you plan to work with a specific version of Lambda functions or aliases (as opposed to the latest version), you must use Qualified ARNs. For more details, see the Client Workload Identification article linked above.
+> **Note**
+>
+> If you plan to work with a specific version of Lambda functions or aliases (as opposed to the latest version), you must use Qualified ARNs. For more details, see the Client Workload Identification article linked above.
 
 Alternatively, you can use [Aembit Client ID](../../access-policies/client-workloads/identification/aembit-client-id.md) by setting the `CLIENT_WORKLOAD_ID` environment variable.
 
 ## Trust Providers
-
-[Section titled “Trust Providers”](#trust-providers)
 
 The only Trust Provider available for Lambda function Client Workloads is [AWS Role Trust Provider](../../access-policies/trust-providers/aws-role-trust-provider.md).
 
@@ -140,13 +121,9 @@ See [Lambda Support](../../access-policies/trust-providers/aws-role-trust-provid
 
 ## Resource Set Deployment
 
-[Section titled “Resource Set Deployment”](#resource-set-deployment)
-
 To deploy a Resource Set using an AWS Lambda function, you must specify the `AEMBIT_RESOURCE_SET_ID` environment variable in your Client Workload. Configuring this environment variable enables Agent Proxy to support Client Workloads in the Resource Set you specify.
 
 ## Lambda lifecycle and Workload Events
-
-[Section titled “Lambda lifecycle and Workload Events”](#lambda-lifecycle-and-workload-events)
 
 Lambda functions that use zip-based packaging don’t support long-lived container instances in the same way as Lambda containers. As a result, workload events that Agent Proxy generates may not transmit immediately.
 
@@ -158,8 +135,6 @@ Agent Proxy buffers these events in memory and attempts to transmit them either:
 If the Lambda is frequently cold-started, it’s possible that it may delay or drop some events. In practice, AWS reuses Lambda instances under normal load conditions, so buffering is often sufficient.
 
 ## Configuring TLS Decrypt
-
-[Section titled “Configuring TLS Decrypt”](#configuring-tls-decrypt)
 
 To enable TLS decryption, download the Aembit Tenant certificate from the Aembit UI and add it to either a Lambda Layer attached to your function or directly to your function package.
 
@@ -188,13 +163,9 @@ To configure TLS Decrypt, see [Configure TLS Decrypt](../advanced-options/tls-de
 
 ## Performance
 
-[Section titled “Performance”](#performance)
-
 The startup and shutdown times for Agent Proxy normally take several seconds, which results in an increase in the execution time of your Lambda function by several seconds.
 
 ## Limitations
-
-[Section titled “Limitations”](#limitations)
 
 Aembit supports only the following protocols in AWS Lambda function environments:
 
@@ -204,12 +175,10 @@ Aembit supports only the following protocols in AWS Lambda function environments
 
 ## Supported phases
 
-[Section titled “Supported phases”](#supported-phases)
-
 The Aembit AWS Lambda layer supports credential injection during the following Lambda lifecycle phase:
 
 [INIT phase](https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtime-environment.html#runtimes-lifecycle-invoke): Fully supported.
 
-Note
-
-Unlike Lambda Containers, zip-based Lambda functions don’t have an INIT phase that the Lambda function exposes separately for external extensions. The Aembit Layer relies on the Lambda function’s runtime execution to launch Agent Proxy during the invocation phase.
+> **Note**
+>
+> Unlike Lambda Containers, zip-based Lambda functions don’t have an INIT phase that the Lambda function exposes separately for external extensions. The Aembit Layer relies on the Lambda function’s runtime execution to launch Agent Proxy during the invocation phase.

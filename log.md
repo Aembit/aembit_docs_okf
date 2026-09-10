@@ -1,6 +1,231 @@
 # Aembit Changelog
 
+## 2026-08-27
+
+### Developer Guide combines the API, CLI, and SDK documentation
+
+The [Developer Guide](dev-guide/overview.md) is now the single home for every way you integrate with Aembit from code, commands, or infrastructure. It replaces the separate API Guide and CLI Guide, which each covered one surface and left you to work out which one fit your workload. The new Edge SDK section lands inside it rather than beside it.
+
+The guide opens by separating the two decisions an integration involves. First, choose how your workload gets a credential at runtime, through Agent Proxy, the Edge SDK, the Aembit CLI, or the Edge API. Second, choose how you manage the Aembit configuration behind that path, in the Aembit Tenant UI, through the Cloud API, or as Terraform code.
+
+**What’s new:**
+
+* **One guide for every developer surface**: [Aembit SDKs](dev-guide/sdk/edge/overview.md), [Aembit APIs](dev-guide/api/overview.md), [Aembit CLI](dev-guide/cli/overview.md), [Agent Proxy](dev-guide/integration/agent-proxy.md), and the local development and testing pages all sit under `/dev-guide/`.
+* **A comparison of every credential path**: The [overview](dev-guide/overview.md#get-credentials-into-your-workload-at-runtime) compares Agent Proxy, the Edge SDK, the Aembit CLI, and the Edge API side by side, so you can pick one before you read its section.
+* **Shared local development and testing pages**: One page covers [local development](dev-guide/integration/local-development.md) and one covers [testing and debugging](dev-guide/integration/testing.md) across every integration path.
+
+Every URL under the old `/api-guide/` and `/cli-guide/` paths redirects to its new location, so existing bookmarks and links keep working.
+
+### Aembit Edge SDKs for TypeScript and Python now available
+
+The Aembit Edge SDKs are language libraries that wrap the [Aembit Edge API](dev-guide/api/edge/overview.md). Your application authenticates a workload and retrieves credentials through a few method calls, so you write no HTTP requests and manage no token lifecycles. The SDK runs inside your application process, so there’s nothing extra to deploy or operate alongside it.
+
+Use an SDK when you can change the application’s source and you want credential retrieval to be explicit in your code. It suits environments where running a proxy next to the workload isn’t practical, such as serverless functions, ephemeral CI containers, and platforms where you don’t control the runtime.
+
+**What’s new:**
+
+* **TypeScript and Python libraries**: Install the SDK from its language package registry and call it from your application. The [SDK repository](https://github.com/Aembit/edge-sdks) carries the installation steps, the developer reference, and runnable examples.
+* **Workload attestation, token lifecycle, and credential retrieval**: The SDK collects identity evidence from the environment it runs in, caches the resulting access token in memory, refreshes that token before it expires, and requests the credential your application needs.
+* **Seven supported Trust Providers**: Attest with AWS Metadata Service, AWS Role, Azure Instance Metadata Service, GCP Identity Token, GitHub, GitLab, or OIDC ID Token. For per-language coverage, see [Edge SDK Trust Providers](reference/support-matrix.md#edge-sdk-trust-providers).
+* **Integration guides for four platforms**: Follow a worked setup for [AWS EC2](dev-guide/sdk/edge/integrations/aws-ec2.md), [AWS Lambda](dev-guide/sdk/edge/integrations/aws-lambda.md), [GCP Cloud Run](dev-guide/sdk/edge/integrations/gcp-cloud-run.md), or [Vercel OIDC](dev-guide/sdk/edge/integrations/vercel-oidc.md).
+
+The console-side configuration matches every other Aembit access path. You configure a Trust Provider to verify the workload’s identity and a Credential Provider to supply the credential. An Access Policy then authorizes a specific Client Workload to reach a specific Server Workload.
+
+To retrieve your first credential, see the [Edge SDK quickstart](dev-guide/sdk/edge/quickstart.md). For the full overview, see [Aembit Edge SDKs](dev-guide/sdk/edge/overview.md).
+
+### Aembit CLI now available as a glibc-linked Linux binary
+
+Aembit CLI 1.34.5772 adds a second Linux amd64 archive, `aembit_agent_cli_linux_amd64_glibc_<version>.tar.gz`, that links dynamically against glibc 2.28 or newer. The default archive still links statically against musl, runs on amd64 and arm64 with no dependency on the host C library, and remains the recommended download.
+
+If the default build has worked for you, keep using it. The glibc build is for organizations whose policy requires glibc, and for working around rare bugs in the default build. For example, the default build reports `failed to lookup address information` on some hosts where `dig` and `curl` resolve the same name, because musl rejects a DNS resolver response that glibc tolerates. See [DNS lookup fails with `failed to lookup address information`](dev-guide/cli/troubleshooting.md#dns-lookup-fails-with-failed-to-lookup-address-information) for that case. The glibc build is amd64 only, and it doesn’t run on Alpine Linux or in distroless images. See [Choose a Linux build](dev-guide/cli/usage/setup.md#choose-a-linux-build) for the full comparison.
+
+### Edge components dependency security updates
+
+Agent Proxy 1.34.5755 and Aembit CLI 1.34.5772 fix two published Rust advisories in bundled third-party libraries: [RUSTSEC-2026-0190](https://rustsec.org/advisories/RUSTSEC-2026-0190.html) in `anyhow` and [RUSTSEC-2026-0204](https://rustsec.org/advisories/RUSTSEC-2026-0204.html) in `crossbeam-epoch`. The same build upgrades the `quinn`, AWS SDK, `pcap`, and `postgres-protocol` dependencies. Agent Injector 1.34.433 fixes [RUSTSEC-2026-0185](https://rustsec.org/advisories/RUSTSEC-2026-0185.html) in `quinn-proto`.
+
+These updates shipped in the same build as the [Edge components release with Agent Proxy fixes and expanded workload events](https://docs.aembit.io/changelog/entry/2026-08-27-edge-components-release-with-agent-proxy-fixes-and-expanded-workload-events).
+
+### Edge components release with Agent Proxy fixes and expanded workload events
+
+Aembit has released new versions of the following components and packages:
+
+* Agent Proxy 1.34.5755
+* AWS Lambda Extension 1.34.175
+* Agent Injector 1.34.433
+* Sidecar Init 1.34.138
+* Helm Chart 1.34.566
+* AWS ECS Terraform 1.34.1
+* Aembit CLI 1.34.5772
+
+For the latest available versions of these components, see the [Edge Components Supported Versions](reference/edge-components/edge-component-supported-versions.md) page.
+
+Key Updates:
+
+* **Workload events carry the authorization chain**: Agent Proxy events now include the [`authorizationChain`](user-guide/audit-report/workload-events/reference.md#top-level-fields) field, an ordered list of the context IDs of the authorization events behind the request, so you can trace an event back to the directive and credential retrievals that authorized it.
+* **Aembit-generated responses keep their outcome fields**: When Aembit answers a request in place of the Server Workload, the response event now reports the generated response’s `severity`, `outcome.result`, and `outcome.reason`. Earlier versions cleared those fields between the request and the response, so the event recorded an incomplete outcome.
+* **Windows installer honors the gRPC keep-alive properties**: The MSI now applies `AEMBIT_TENANT_GRPC_PING_INTERVAL_SECS` and `AEMBIT_TENANT_GRPC_PING_TIMEOUT_SECS` when you pass them as install-time properties. See [Configuring gRPC keep-alives](user-guide/deploy-install/virtual-machine/windows/agent-proxy-install-windows.md#configuring-grpc-keep-alives).
+* **Linux installer validates Agent Proxy arguments**: The Linux installer script now checks Agent Proxy arguments before it installs, so an invalid value in a numeric environment variable such as `AEMBIT_HTTP_IDLE_TIMEOUT_SECS` is reported at install time.
+* **Container image updates**: Agent Injector and Sidecar Init move to a newer Debian base image, and AWS Lambda Extension updates its Go version.
+
+Dependency security fixes also shipped in this build. See [Edge components dependency security updates](https://docs.aembit.io/changelog/entry/2026-08-27-edge-components-dependency-security-updates).
+
+## 2026-08-19
+
+### Google Cloud Identity-Aware Proxy (IAP) JWT Trust Provider now available
+
+Aembit now offers a Google Cloud Identity-Aware Proxy (IAP) JWT Trust Provider. It validates the signed `x-goog-iap-jwt-assertion` token that IAP forwards to your workloads on Google Kubernetes Engine (GKE), Cloud Run, and App Engine after IAP authenticates a user.
+
+Use this Trust Provider instead of the OIDC ID Token Trust Provider when IAP authenticates users in front of your workloads. IAP issues signed JWTs, but they aren’t standard OpenID Connect (OIDC) ID tokens. Google publishes the IAP signing keys at a static JWKS endpoint with no discovery document, and the audience identifies a Google Cloud resource rather than an OIDC client ID.
+
+Aembit resolves Google’s signing key at validation time rather than from a preconfigured key set. It reads the key ID from the token, then retrieves the matching public key from Google’s IAP key endpoint. Aembit caches that key in memory, so your workload only forwards the token.
+
+**What’s new:**
+
+* **GCP IAP JWT Trust Provider type**: Supply the IAP audience that identifies the Google Cloud resource IAP protects. Aembit pins the issuer and resolves the signing keys, so you don’t upload a key or enter a discovery URL.
+* **Match rules on IAP token claims**: Authorize on `aud`, `iss`, `sub`, and `email`, or on any additional claim IAP signs using `custom_claim`. The `aud` attribute supports wildcards, so one rule can cover more than one backend service in the same project.
+* **Terraform support**: Manage the Trust Provider through the Aembit Terraform provider with the `aembit_trust_provider` resource.
+
+This Trust Provider validates the user identity that IAP asserts. To validate the identity of a workload running in Google Cloud, use the [GCP Identity Token Trust Provider](user-guide/access-policies/trust-providers/gcp-identity-token-trust-provider.md) instead.
+
+For the audience formats, match rule attributes, and configuration steps, see [Google Cloud Identity-Aware Proxy (IAP) JWT Trust Provider](user-guide/access-policies/trust-providers/gcp-iap-jwt-trust-provider.md).
+
+## 2026-08-18
+
+### MCP Identity Gateway 1.34.5733 release
+
+Aembit has released [MCP Identity Gateway](ai-guide/mcp/identity-gateway/overview.md) version 1.34.5733.
+
+For the latest available versions of these components, see the [Edge Components Supported Versions](reference/edge-components/edge-component-supported-versions.md) page.
+
+Key Updates:
+
+* **Higher fanout timeout defaults**: The Gateway now waits longer for your assigned MCP servers on most of the MCP methods it fans out, which gives a server that is still starting up, or one answering from a cold cache, room to respond. A self-hosted Gateway can override any of these timeouts as a last resort; see [MCP Identity Gateway raises fanout timeout defaults](https://docs.aembit.io/changelog/entry/2026-08-18-mcp-identity-gateway-raises-fanout-timeout-defaults).
+* **Nine new Prometheus metrics**: The Gateway’s metrics endpoint reports on upstream fanout behavior, authentication failures, JWKS refreshes, session cleanup, and readiness probe stability.
+* **Every Gateway metric documented**: The metrics reference now lists all 20 MCP-specific metrics the Gateway exposes, with the type and labels for each and the values each label takes. See [Prometheus metrics](ai-guide/mcp/identity-gateway/reference-mcp-gateway.md#prometheus-metrics).
+
+### MCP Identity Gateway raises fanout timeout defaults
+
+[MCP Identity Gateway](ai-guide/mcp/identity-gateway/overview.md) 1.34.5733 raises how long the Gateway waits for your assigned MCP servers when it fans a request out to them. The earlier defaults were short enough that a server still starting up, or one answering from a cold cache, could run past them.
+
+| Timeout                            | 1.33.5654 | 1.34.5733 |
+| ---------------------------------- | --------- | --------- |
+| `initialize`                       | `3s`      | `10s`     |
+| `notifications_initialized`        | `500ms`   | `1s`      |
+| `tools_list`                       | `1s`      | `3s`      |
+| `proactive_tools_list`             | `3s`      | `5s`      |
+| `resources_list`                   | `1s`      | `3s`      |
+| `reinit_initialize`                | `10s`     | `10s`     |
+| `reinit_notifications_initialized` | `500ms`   | `1s`      |
+| `reinit_tools_list`                | `1s`      | `5s`      |
+
+`reinit_initialize` is the one timeout this build leaves unchanged.
+
+The new defaults require no configuration and apply to both deployment models as soon as you upgrade. They are high enough that an AI client usually reaches its own timeout before the Gateway reaches one of these, so most deployments never need to change them.
+
+A self-hosted Gateway can override any of these timeouts as a last resort, using the `AEMBIT_MCP_GATEWAY_TIMEOUT` environment variable. The installer doesn’t forward this variable to the running service, so setting it takes a systemd drop-in. For the accepted names, the value format, and the drop-in, see [MCP Identity Gateway environment variables](ai-guide/mcp/identity-gateway/env-vars-mcp-gateway.md#aembit_mcp_gateway_timeout). Aembit sets these values for you on the Aembit-managed service.
+
+These updates shipped in the same build as the [MCP Identity Gateway 1.34.5733 release](https://docs.aembit.io/changelog/entry/2026-08-18-mcp-identity-gateway-1-34-5733-release).
+
+## 2026-08-11
+
+### Aembit Access Token lifetime has a 300 second minimum
+
+The **Lifetime** field on an Aembit Access Token Credential Provider now accepts a minimum of 300 seconds (5 minutes). The Admin UI, the Aembit API, and the Aembit Terraform provider all enforce the same minimum, so any shorter value fails validation wherever you set it.
+
+The default lifetime stays at 900 seconds (15 minutes).
+
+See [Aembit Access Token](user-guide/access-policies/credential-providers/aembit-access-token.md).
+
+### Certificates replaces TLS Decrypt in Edge Components
+
+The Aembit Admin UI page for managing your Aembit Tenant Root CA and your Standalone Certificate Authorities is now named **Certificates**, replacing the earlier name **TLS Decrypt**. Find it under **Edge Components** in the top ribbon menu.
+
+The page keeps all its existing fields, and the TLS Decrypt capability keeps its name. Only the page label changed, so the **TLS** checkbox on a Server Workload and every other TLS Decrypt setting keep their current locations.
+
+See [Configure TLS Decrypt](user-guide/deploy-install/advanced-options/tls-decrypt/configure-tls-decrypt.md) and [How to configure a Standalone CA](user-guide/deploy-install/advanced-options/tls-decrypt/configure-tls-decrypt-standalone-ca.md).
+
+## 2026-08-07
+
+### Content Security now available
+
+Aembit now offers [Content Security](user-guide/access-policies/content-security/overview.md), an Access Policy component that inspects content and enforces the verdict an inspection service returns. Content Security inspects Model Context Protocol (MCP) traffic that flows through the Aembit [MCP Identity Gateway](ai-guide/mcp/identity-gateway/overview.md).
+
+In the Access Policy Builder, Content Security is an optional component positioned between Access Conditions and Credential Providers. It adds inspection to the request path without changing how the policy’s other components authorize access.
+
+**What’s new:**
+
+* **Content Security Access Policy component**: Add Content Security to a policy to inspect the MCP traffic that policy governs. Inspection applies only to the policies you add it to.
+* **CrowdStrike AIDR integration**: [CrowdStrike AI Detection and Response (AIDR)](user-guide/access-policies/content-security/crowdstrike-aidr/overview.md) inspects tool listings, tool call inputs, and tool call outputs, and returns an allow, block, or transform verdict that Aembit enforces. AIDR requires an active CrowdStrike AIDR for Agents subscription.
+* **Inspection decisions in your events**: Access Authorization Events record the Content Security component a policy identified, and MCP Workload Events record the decision AIDR returned, including CrowdStrike’s request ID for correlating an event with the CrowdStrike console.
+
+CrowdStrike AIDR Content Security is separate from the [CrowdStrike Access Condition](user-guide/access-policies/access-conditions/crowdstrike.md), which evaluates endpoint posture. Configuring one doesn’t enable the other.
+
+To add the component to a policy, see [Add CrowdStrike AIDR to a policy](user-guide/access-policies/content-security/crowdstrike-aidr/add-to-policy.md).
+
+### MCP Identity Gateway 1.33.5654 release
+
+Aembit has released [MCP Identity Gateway](ai-guide/mcp/identity-gateway/overview.md) version 1.33.5654.
+
+For the latest available versions of these components, see the [Edge Components Supported Versions](reference/edge-components/edge-component-supported-versions.md) page.
+
+For each [Content Security](user-guide/access-policies/content-security/overview.md) decision, the Gateway records a single MCP Workload Event carrying the severity, outcome result, and outcome reason.
+
+This build also broadens the MCP traffic that Content Security inspects; see [MCP Identity Gateway content inspection coverage](https://docs.aembit.io/changelog/entry/2026-08-07-mcp-identity-gateway-content-inspection-coverage). For Content Security inspection of MCP traffic, use MCP Identity Gateway version 1.33.5654 or later.
+
+### MCP Identity Gateway content inspection coverage
+
+A security update for the MCP Identity Gateway broadens the MCP traffic that [Content Security](user-guide/access-policies/content-security/overview.md) inspects.
+
+The Gateway normalizes responses that MCP servers stream as server-sent events before inspection, so Content Security inspects those responses along with the rest of the session. The Gateway also applies the policy’s **Fail Open on Error** setting to requests it can’t read and to protocol errors. A policy set to fail closed blocks those requests.
+
+These updates shipped in the same build as the [MCP Identity Gateway 1.33.5654 release](https://docs.aembit.io/changelog/entry/2026-08-07-mcp-identity-gateway-1-33-5654-release).
+
+## 2026-08-05
+
+### AWS Application Load Balancer JWT Trust Provider now available
+
+Aembit now offers an AWS Application Load Balancer JWT Trust Provider. It validates the signed `x-amzn-oidc-data` token that an AWS Application Load Balancer (ALB) forwards to your workloads after the ALB authenticates a user session with OpenID Connect (OIDC).
+
+Use this Trust Provider instead of the OIDC ID Token Trust Provider when your workloads sit behind an ALB that authenticates users. ALB tokens require the AWS Application Load Balancer JWT Trust Provider.
+
+Aembit resolves the signing key at validation time rather than from a preconfigured key set. It reads the AWS region and key ID from the token, validates the region before it contacts AWS, then retrieves and caches the matching regional public key. Aembit rotates those keys for you, so your workload only forwards the token.
+
+**What’s new:**
+
+* **AWS Application Load Balancer JWT Trust Provider type**: Select the type and add your match rules. The type has no configuration fields of its own, so you don’t set a region or upload a signing key.
+* **Match rules on ALB token claims**: Authorize on `aud`, `iss`, `sub`, and `email`, or on any additional claim your identity provider forwards through the ALB using `custom_claim`. You can add more than one `custom_claim` rule to a single Trust Provider.
+* **Terraform support**: Manage the Trust Provider through the Aembit Terraform Provider with the `aembit_trust_provider` resource.
+
+This Trust Provider works with Aembit Edge. Agent Controller support isn’t available yet.
+
+For the match rule attributes, configuration steps, and troubleshooting, see [AWS Application Load Balancer JWT Trust Provider](user-guide/access-policies/trust-providers/aws-alb-jwt-trust-provider.md).
+
+## 2026-07-28
+
+### MCP Identity Gateway 1.33.5547 release
+
+Aembit has released [MCP Identity Gateway](ai-guide/mcp/identity-gateway/overview.md) version 1.33.5547.
+
+For the latest available versions of these components, see the [Edge Components Supported Versions](reference/edge-components/edge-component-supported-versions.md) page.
+
+Key Updates:
+
+* **More reliable upstream reconnection**: When the Gateway reestablishes a connection to an MCP server, it now refreshes the available tools as part of that reconnection, and reports a clear error if the reconnection doesn’t succeed.
+* **Deployment modes documented**: The MCP Identity Gateway concepts page now describes the two ways to run the Gateway: self-hosted on your own host, or managed by Aembit at your per-Tenant endpoint. The traffic flow and policy model are identical in both. See [MCP Identity Gateway concepts](ai-guide/mcp/identity-gateway/concepts-mcp-gateway.md).
+
+Dependency security updates also shipped in this build; see [MCP Identity Gateway dependency security updates](https://docs.aembit.io/changelog/entry/2026-07-28-mcp-identity-gateway-dependency-security-updates).
+
+### MCP Identity Gateway dependency security updates
+
+A security update for the MCP Identity Gateway advances two bundled third-party libraries to their latest patched releases, keeping the Gateway current with published advisories.
+
+These updates shipped in the same build as the [MCP Identity Gateway 1.33.5547 release](https://docs.aembit.io/changelog/entry/2026-07-28-mcp-identity-gateway-1-33-5547-release).
+
 ## 2026-07-08
+
+### Agent Controller container security hardening
+
+Agent Controller 1.32.3541 includes security hardening for the container image that reduces its attack surface and strengthens supply chain integrity. The image now ships with a bundled software bill of materials for greater transparency into its contents.
 
 ### OpenAI WIF Credential Provider now available
 
@@ -17,6 +242,16 @@ Aembit acts as a trusted OIDC issuer. You register Aembit as a Workload Identity
 For setup instructions, see [Configure an OpenAI WIF Credential Provider](user-guide/access-policies/credential-providers/openai-workload-identity-federation.md).
 
 ## 2026-06-30
+
+### MCP Identity Gateway sessions can persist across restarts
+
+A self-hosted [MCP Identity Gateway](ai-guide/mcp/identity-gateway/overview.md) can now keep its MCP sessions in Valkey instead of in process memory. Persisted sessions survive a service restart or an upgrade, and more than one Gateway instance can share them.
+
+Set `AEMBIT_VALKEY_URL` on the install command to enable it. The Gateway keeps sessions in memory when you leave that variable unset, which remains the default. An in-memory store ends every open session on restart. `AEMBIT_MCP_SESSION_IDLE_TTL_SECS` sets how long an unused session lives, and it defaults to 12 hours for both store types.
+
+Sessions hold MCP protocol state, not authentication state. The Gateway still validates every request’s token and evaluates Access Policies per request, so persistence doesn’t extend anyone’s access.
+
+This change requires no configuration if you use the Aembit-managed service or want the in-memory default. It ships in MCP Identity Gateway 1.32.5098, alongside the session ID binding in this build; see the [session IDs bound to the authenticated user](https://docs.aembit.io/changelog/entry/2026-06-30-mcp-identity-gateway-session-ids-are-now-bound-to-the-authenticated-user) entry. For configuration and operational detail, see [Session persistence](ai-guide/mcp/identity-gateway/session-persistence-mcp-gateway.md).
 
 ### Client ID Metadata Document (CIMD) identification now available
 
@@ -42,7 +277,7 @@ For the latest available versions of these components, see the [Edge Components 
 
 Key Updates:
 
-* **Workload event correlation**: MCP Identity Gateway [workload events](user-guide/audit-report/workload-events.md) now carry the client and server workload identity (name and id), so you can tie an event to a specific workload in the Cloud UI without mapping it by hand.
+* **Workload event correlation**: MCP Identity Gateway [workload events](user-guide/audit-report/workload-events/overview.md) now carry the client and server workload identity (name and id), so you can tie an event to a specific workload in the Cloud UI without mapping it by hand.
 * **Azure OAuth Credential Provider verification**: Resolved an issue that caused Azure OAuth Credential Provider verification to fail after a recent build, so these providers verify successfully again.
 * **Access Condition URL validation**: The Endpoint and Token Endpoint URL fields for Access Condition integrations now show the correct “Invalid Value” message instead of a “Required” message.
 * **Concurrent policy edits**: Deleting an Access Policy at the same time as a patch request no longer produces errors, preserving data integrity during high-volume policy updates.
@@ -51,11 +286,26 @@ Key Updates:
 
 Session IDs are now bound to the authenticated user in this build, closing a privilege-escalation gap; see the [Security entry](https://docs.aembit.io/changelog/entry/2026-06-30-mcp-identity-gateway-session-ids-are-now-bound-to-the-authenticated-user). Client ID Metadata Document (CIMD) identification also reached general availability in this update; see the [announcement](https://docs.aembit.io/changelog/entry/2026-06-30-client-id-metadata-document-cimd-identification-now-available).
 
+## 2026-06-26
+
+### MCP User-Based Access Token callback URL format
+
+MCP User-Based Access Token Credential Providers now generate their read-only callback URL in the form `https://<tenantId>.id.<region>.aembit.io/mcp-auth/userauth/<cp-id>/callback`.
+
+**What this means for you:**
+
+* **Existing Credential Providers** - Providers created before this change keep their original callback URL, which takes the form `https://<tenantId>.mcp.<region>.aembit.io/userauth/<cp-id>/callback`. Updating a provider doesn’t regenerate its callback URL. Both formats remain valid, so you don’t need to take any action or re-register anything with your MCP server vendor.
+* **New Credential Providers** - Aembit assigns the callback URL when you save the Credential Provider. Save the provider first, then copy the read-only value and register it with the MCP server vendor.
+
+Always copy the exact value shown in the Credential Provider rather than constructing the URL yourself.
+
+For details, see [Configure MCP User-Based Access Token Credential Provider](user-guide/access-policies/credential-providers/mcp-user-based-access-token.md).
+
 ## 2026-06-23
 
 ### Resource Set deletion now available
 
-You can now delete a custom Resource Set**Resource Set**: Resource Sets are organizational containers that group Access Policy components together, enabling you to manage configurations across different environments, regions, or use cases.[Learn more](user-guide/administration/resource-sets/overview.md) when you no longer need it. Deletion is a cascading, all-or-nothing operation: Aembit removes the Resource Set and every entity it contains in a single action that either completes fully or rolls back.
+You can now delete a custom Resource Set when you no longer need it. Deletion is a cascading, all-or-nothing operation: Aembit removes the Resource Set and every entity it contains in a single action that either completes fully or rolls back.
 
 **What’s new:**
 
@@ -93,7 +343,7 @@ For the latest available versions of these components, see the [Edge Components 
 
 Key Updates:
 
-* **AWS and Kubernetes Trust Provider attestation in Aembit CLI**: The `aembit credentials get` command now supports the AWS Metadata Service, AWS Role, and Kubernetes Service Account Trust Providers. Aembit CLI gathers attestation data from the local environment—instance metadata, an STS `GetCallerIdentity` request, or the projected service account token—so an externally supplied [`--id-token`](cli-guide/reference/credentials-get.md#--id-token) isn’t needed for these Trust Providers. The [`--deployment-model`](cli-guide/reference/credentials-get.md#--deployment-model) option now accepts `vm`, `kubernetes`, `ecs_fargate`, and `lambda_container`. The AWS Role Trust Provider requires this option.
+* **AWS and Kubernetes Trust Provider attestation in Aembit CLI**: The `aembit credentials get` command now supports the AWS Metadata Service, AWS Role, and Kubernetes Service Account Trust Providers. Aembit CLI gathers attestation data from the local environment—instance metadata, an STS `GetCallerIdentity` request, or the projected service account token—so an externally supplied [`--id-token`](dev-guide/cli/reference/credentials-get.md#--id-token) isn’t needed for these Trust Providers. The [`--deployment-model`](dev-guide/cli/reference/credentials-get.md#--deployment-model) option now accepts `vm`, `kubernetes`, `ecs_fargate`, and `lambda_container`. The AWS Role Trust Provider requires this option.
 * **Aembit Secrets Operator credential type support**: Secrets Operator 1.32.322 now retrieves any credential type your Access Policy issues, not just HashiCorp Vault tokens. See [Aembit Secrets Operator now supports more credential types](https://docs.aembit.io/changelog/entry/2026-06-04-aembit-secrets-operator-now-supports-more-credential-types).
 
 ## 2026-06-04
@@ -132,7 +382,7 @@ For the latest available versions of these components, see the [Edge Components 
 
 Key Updates:
 
-* **X.509-SVID retrieval through Aembit CLI**: The `aembit credentials get` command now accepts [`--client-tls-private-key`](cli-guide/reference/credentials-get.md#--client-tls-private-key) to retrieve a SPIFFE-compliant X.509-SVID certificate from the existing [X.509-SVID Credential Provider](user-guide/access-policies/credential-providers/about-spiffe-x509-svid.md). You supply a PEM-encoded private key; Aembit CLI generates the certificate signing request locally and returns the signed chain in `CLIENT_CERT_CHAIN`, and the private key never leaves the local machine.
+* **X.509-SVID retrieval through Aembit CLI**: The `aembit credentials get` command now accepts [`--client-tls-private-key`](dev-guide/cli/reference/credentials-get.md#--client-tls-private-key) to retrieve a SPIFFE-compliant X.509-SVID certificate from the existing [X.509-SVID Credential Provider](user-guide/access-policies/credential-providers/about-spiffe-x509-svid.md). You supply a PEM-encoded private key; Aembit CLI generates the certificate signing request locally and returns the signed chain in `CLIENT_CERT_CHAIN`, and the private key never leaves the local machine.
 * **Configurable gRPC keep-alives**: Two optional environment variables, [`AEMBIT_TENANT_GRPC_PING_INTERVAL_SECS` and `AEMBIT_TENANT_GRPC_PING_TIMEOUT_SECS`](reference/edge-components/edge-component-env-vars.md#agent-proxy-environment-variables), let Agent Proxy send keep-alives on its connection to your Tenant so it detects a dead connection and reconnects faster. They’re off by default and useful for networks, such as a Secure Web Gateway, that stall idle connections.
 * **CA certificate configuration for the Cloud connection**: [`AGENT_TRUST_PATH`](reference/edge-components/edge-component-env-vars.md#agent_trust_path) again lets you supply a custom CA certificate for the Agent Proxy’s connection to the Aembit Cloud, which is useful when an inspecting proxy terminates TLS on outbound traffic.
 * **Configurable HTTP idle timeout on Windows**: The Windows installer now exposes [`AEMBIT_HTTP_IDLE_TIMEOUT_SECS`](reference/edge-components/edge-component-env-vars.md#aembit_http_idle_timeout_secs), letting you tune the idle timeout for HTTP/1.1 connections handled by the Agent Proxy.
@@ -168,7 +418,7 @@ For the latest available versions of these components, see the [Edge Components 
 
 Key Updates:
 
-* **X.509-SVID retrieval through Aembit CLI**: The `aembit credentials get` command now accepts [`--client-tls-private-key`](cli-guide/reference/credentials-get.md#--client-tls-private-key) to retrieve a SPIFFE-compliant X.509-SVID certificate from the existing [X.509-SVID Credential Provider](user-guide/access-policies/credential-providers/about-spiffe-x509-svid.md). You supply a PEM-encoded private key; Aembit CLI generates the CSR locally, submits it through the credential retrieval flow, and returns the signed certificate chain in `CLIENT_CERT_CHAIN`. The private key never leaves the local machine.
+* **X.509-SVID retrieval through Aembit CLI**: The `aembit credentials get` command now accepts [`--client-tls-private-key`](dev-guide/cli/reference/credentials-get.md#--client-tls-private-key) to retrieve a SPIFFE-compliant X.509-SVID certificate from the existing [X.509-SVID Credential Provider](user-guide/access-policies/credential-providers/about-spiffe-x509-svid.md). You supply a PEM-encoded private key. Aembit CLI generates the Certificate Signing Request (CSR) locally, submits it through the credential retrieval flow, and returns the signed certificate chain in `CLIENT_CERT_CHAIN`. The private key never leaves the local machine.
 
 ## 2026-05-21
 
@@ -313,7 +563,7 @@ Key Updates:
 * **S3 upload size restriction removed**: Large file uploads to [AWS S3 Log Streams](user-guide/administration/log-streams/aws-s3.md) are now supported via streaming AWS chunked signing, removing the previous upload size limit. See [How Aembit uses AWS SigV4 and SigV4a](user-guide/access-policies/credential-providers/aws-sigv4.md) for more details.
 * **Expanded credential resolver capabilities**: Enhanced support for credential provider resolution across deployment types.
 * **Dynamic claims from environment variables**: Agent Proxy and Aembit CLI can now gather [dynamic claims from environment variables](user-guide/deploy-install/advanced-options/agent-proxy/configure-custom-env-vars.md), controlled by the `AEMBIT_ENV_VAR_ALLOWLIST`.
-* **CLI enhancements**: Aembit CLI adds the [`--client-workload-id`](cli-guide/reference/credentials-get.md) flag and OIDC token expiration validation.
+* **CLI enhancements**: Aembit CLI adds the [`--client-workload-id`](dev-guide/cli/reference/credentials-get.md) flag and OIDC token expiration validation.
 * **General improvements**: Numerous stability reliability improvements across edge components.
 * **Security upgrades**: Security dependency upgrades across edge components.
 * **Improved logging and observability**: Improved request logging and enhanced error reporting for common failure conditions.
@@ -749,7 +999,7 @@ Aembit has expanded the Server Workload documentation with new guides covering a
 
 * [Architecture patterns](user-guide/access-policies/server-workloads/architecture-patterns.md) - OAuth flows, trust boundaries, and deployment models
 * [Credential lifecycle](user-guide/access-policies/server-workloads/credential-lifecycle.md) - How Aembit manages credential rotation and security
-* [Developer integration](user-guide/access-policies/server-workloads/developer-integration.md) - SDK integration patterns and placeholder credentials for local development
+* [Developer integration](dev-guide/integration/agent-proxy.md) - SDK integration patterns and placeholder credentials for local development
 * [Troubleshooting](user-guide/access-policies/server-workloads/troubleshooting.md) - Diagnostic steps for common configuration issues
 
 **New and updated Server Workload guides:**
@@ -937,7 +1187,7 @@ See [AWS IAM Role Credential Provider Integration](user-guide/access-policies/cr
 
 Aembit has released the **Aembit CLI**, a command-line interface that allows you to inject credentials into your CI/CD pipelines. Compatible with GitLab, GitHub, and now Jenkins.
 
-Check out the [Aembit CLI Guide](cli-guide/overview.md) to get started with the Aembit CLI!\
+Check out the [Aembit CLI Guide](dev-guide/cli/overview.md) to get started with the Aembit CLI!\
 Also, see [Aembit Edge on CI/CD services](user-guide/deploy-install/ci-cd/overview.md) for more information on how to use Aembit CLI with your CI/CD pipelines.
 
 ***
@@ -1033,10 +1283,10 @@ With Aembit Edge API you can:
 
 * **Retrieve credentials on-demand** for any configured service from your CI/CD pipelines.
 * **Authenticate workloads** using platform-native identity tokens (GitHub Actions, GitLab CI, AWS Lambda, etc.).
-* **Eliminate hardcoded secrets** by fetching credentials just-in-time.
+* **Remove hardcoded secrets** by fetching credentials just-in-time.
 * **Support multiple credential types** including API keys, username/password, and CI/CD provider tokens.
 
-Check out the [Edge API get started page](api-guide/edge/overview.md) to learn more or start using it right away with the [Aembit Edge quickstart guide](api-guide/edge/quickstart-edge.md).
+Check out the [Edge API get started page](dev-guide/api/edge/overview.md) to learn more or start using it right away with the [Aembit Edge quickstart guide](dev-guide/api/edge/quickstart-edge.md).
 
 ***
 
@@ -1321,7 +1571,7 @@ Introducing **Standalone CAs** for more granular control over TLS Decrypt manage
 
 With Standalone CAs, you can assign CAs directly to specific Client Workloads or Resource Sets, creating isolated trust boundaries and enabling precise management of TLS traffic across different environments. Aembit intelligently selects the appropriate CA using a clear hierarchy: Client Workload level -> Resource Set level -> Tenant level.
 
-To learn more about Standalone CAs, see [About Standalone CA for TLS Decrypt](user-guide/deploy-install/advanced-options/tls-decrypt/configure-tls-decrypt.md).
+To learn more about Standalone CAs, see [About Standalone CA for TLS Decrypt](user-guide/deploy-install/advanced-options/tls-decrypt/about-tls-decrypt-standalone-ca.md).
 
 ***
 
@@ -1478,14 +1728,6 @@ For more information, please see the [SignOn Policy](user-guide/administration/s
 Aembit has released an updated AWS Lambda Extension, enhancing support for Client Workload identification earlier in the Lambda container lifecycle.
 
 For more information, please refer to the [AWS Lambda Container Supported Phases](user-guide/deploy-install/serverless/aws-lambda-container.md#supported-phases).
-
-## 2024-11-14
-
-### Aembit Virtual Appliance now available for Edge components
-
-Aembit has released a new, pre-packaged deployment model that enables you to use a Virtual Appliance configuration and setup for deploying Aembit Edge Components in your environment. This virtual appliance image includes both Agent Controller and Agent Proxy bundled together in a single OVA file.
-
-For more detailed information on how to deploy the Aembit Virtual Appliance, please see the [Virtual Appliance](user-guide/deploy-install/virtual-appliances/virtual-appliance.md) technical documentation.
 
 ## 2024-10-29
 

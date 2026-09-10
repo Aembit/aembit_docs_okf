@@ -4,16 +4,13 @@ title: "Agent Controller Health"
 description: "This page describes steps for troubleshooting issues with Agent Controller health."
 resource: https://docs.aembit.io/user-guide/troubleshooting/agent-controller-health/
 interface: web-ui
-tags: [troubleshooting]
-timestamp: 2025-05-29T11:26:12-07:00
-type_inferred: true
+tags: ["troubleshooting"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Agent Controller Health
 
 ### Potential culprit
-
-[Section titled “Potential culprit”](#potential-culprit)
 
 The Agent Controller is a critical Aembit Edge Component that facilitates Agent Proxy registration. For any production deployment, it’s essential to install and configure the [Agent Controller in a high availability configuration](../deploy-install/advanced-options/agent-controller/agent-controller-high-availability.md) and enable health monitoring.
 
@@ -28,11 +25,7 @@ In both scenarios, the Agent Controller will be unable to register, leading to t
 
 ### Troubleshooting Steps
 
-[Section titled “Troubleshooting Steps”](#troubleshooting-steps)
-
 #### Agent Controller Deployed on Virtual Machine
-
-[Section titled “Agent Controller Deployed on Virtual Machine”](#agent-controller-deployed-on-virtual-machine)
 
 To check the health of the Agent Controller, query the [Agent Controller Health endpoint](../deploy-install/advanced-options/agent-controller/agent-controller-high-availability.md#agent-controller-health-endpoint-swagger-documentation).
 
@@ -44,8 +37,6 @@ curl http://<AgentControllerHost>:5000/health
 
 #### Agent Controller Deployed on Kubernetes
 
-[Section titled “Agent Controller Deployed on Kubernetes”](#agent-controller-deployed-on-kubernetes)
-
 Execute the following command to assess the health of the Agent Controller:
 
 ```shell
@@ -53,8 +44,6 @@ kubectl get pods -n aembit -l aembit.io/component=agent-controller
 ```
 
 #### Resolving issues
-
-[Section titled “Resolving issues”](#resolving-issues)
 
 If the Agent Controller is not healthy:
 

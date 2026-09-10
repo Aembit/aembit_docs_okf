@@ -4,9 +4,8 @@ title: "Configure an OAuth 2.0 Client Credentials Credential Provider"
 description: "How to create and use an OAuth 2.0 Client Credentials Credential Provider"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/oauth-client-credentials/
 interface: web-ui
-tags: [credential-provider, access-policy]
-timestamp: 2025-05-22T22:55:26-07:00
-type_inferred: true
+tags: ["credential-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Configure an OAuth 2.0 Client Credentials Credential Provider
@@ -16,8 +15,6 @@ The OAuth 2.0 Client Credentials Flow, described in [OAuth 2.0 RFC 6749 (section
 This process is typically used when an application needs to authenticate itself, without requiring user input, to access protected resources.
 
 ## Credential Provider configuration
-
-[Section titled “Credential Provider configuration”](#credential-provider-configuration)
 
 To configure an OAuth 2.0 Client Credentials Credential Provider, follow the steps outlined below.
 

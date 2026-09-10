@@ -4,9 +4,8 @@ title: "Databricks"
 description: "This page describes how to configure Aembit to work with the Databricks Server Workload."
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/guides/databricks/
 interface: web-ui
-tags: [data-analytics, guide, server-workload, access-policy]
-timestamp: 2026-04-27T11:40:47-04:00
-type_inferred: true
+tags: ["data-analytics", "guide", "server-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Databricks
@@ -20,20 +19,18 @@ Below you can find the Aembit configuration required to work with the Databricks
 * [OAuth 2.0 Client Credentials](databricks.md#oauth-20-client-credentials)
 * [API Key](databricks.md#api-key)
 
-Prerequisites
-
-Before proceeding with the configuration, ensure you have the following:
-
-* Databricks tenant.
-* Workspace in the Databricks tenant. If you have not created a workspace before, you can follow the steps outlined in the subsequent sections or refer to the [official Databricks documentation](https://docs.databricks.com/en/getting-started/onboarding-account.html) for more detailed instructions.
+> **Prerequisites**
+>
+> Before proceeding with the configuration, ensure you have the following:
+>
+> * Databricks tenant.
+> * Workspace in the Databricks tenant. If you have not created a workspace before, you can follow the steps outlined in the subsequent sections or refer to the [official Databricks documentation](https://docs.databricks.com/en/getting-started/onboarding-account.html) for more detailed instructions.
 
 ## Create a Workspace in Databricks
 
-[Section titled “Create a Workspace in Databricks”](#create-a-workspace-in-databricks)
-
-Note
-
-The following steps outline the process for creating a workspace in Databricks on AWS. If you are using Google Cloud Platform (GCP) or Microsoft Azure, you can find the corresponding steps by changing the platform option in the top right corner of the Databricks documentation.
+> **Note**
+>
+> The following steps outline the process for creating a workspace in Databricks on AWS. If you are using Google Cloud Platform (GCP) or Microsoft Azure, you can find the corresponding steps by changing the platform option in the top right corner of the Databricks documentation.
 
 1. Sign in to the [Databricks Console](https://accounts.cloud.databricks.com/) and navigate to the **Workspaces** page.
 
@@ -53,11 +50,7 @@ The following steps outline the process for creating a workspace in Databricks o
 
 ## OAuth 2.0 Authorization Code
 
-[Section titled “OAuth 2.0 Authorization Code”](#oauth-20-authorization-code)
-
 ### Server Workload Configuration
-
-[Section titled “Server Workload Configuration”](#server-workload-configuration)
 
 1. Create a new Server Workload.
 
@@ -73,8 +66,6 @@ The following steps outline the process for creating a workspace in Databricks o
 * **Authentication scheme** - Bearer
 
 ### Credential Provider Configuration
-
-[Section titled “Credential Provider Configuration”](#credential-provider-configuration)
 
 1. In your Databricks account console, select **Settings** from the left-hand menu.
 
@@ -92,9 +83,9 @@ The following steps outline the process for creating a workspace in Databricks o
 
 7. Select the scopes for your application based on your specific needs.
 
-Note
-
-To avoid potential issues, do **not** to set the **Access Token TTL** to less than 10 minutes.
+> **Note**
+>
+> To avoid potential issues, do **not** to set the **Access Token TTL** to less than 10 minutes.
 
 8. Once all selections are made, click **Add**.
 
@@ -122,14 +113,14 @@ To avoid potential issues, do **not** to set the **Access Token TTL** to less th
   * For an **account-level** OAuth URL, use: `https://accounts.cloud.databricks.com/oidc/accounts/<account-id>`
     * In your Databricks account, click on your username in the upper right corner, and in the dropdown menu,copy the part next to Account ID and use it in the previous link. ![Databricks Account ID](https://docs.aembit.io/_astro/databricks_account_id.DIt8ah4V_ZQqfKC.webp)
 
-Tip
-
-These two URLs correspond to different levels of OAuth authorization. The level determines the scope of the authorization code:
-
-* **Account-Level** - Use this URL if you need to call both account-level and workspace-level REST APIs across all accounts and workspaces that your Databricks user account has access to.
-* **Workspace-Level** - Use this URL if you only need to call REST APIs within a single workspace that your user account has access to.
-
-For more detailed information about these two different levels, please refer to the [official Databricks documentation](https://docs.databricks.com/en/dev-tools/auth/oauth-u2m.html#step-2-generate-an-authorization-code).
+> **Tip**
+>
+> These two URLs correspond to different levels of OAuth authorization. The level determines the scope of the authorization code:
+>
+> * **Account-Level** - Use this URL if you need to call both account-level and workspace-level REST APIs across all accounts and workspaces that your Databricks user account has access to.
+> * **Workspace-Level** - Use this URL if you only need to call REST APIs within a single workspace that your user account has access to.
+>
+> For more detailed information about these two different levels, please refer to the [official Databricks documentation](https://docs.databricks.com/en/dev-tools/auth/oauth-u2m.html#step-2-generate-an-authorization-code).
 
 Click on **URL Discovery** to populate the Authorization and Token URL fields, which can be left as populated.
 
@@ -142,17 +133,13 @@ Click on **URL Discovery** to populate the Authorization and Token URL fields, w
 
 ![Credential Provider - Ready State](https://docs.aembit.io/_astro/credential_providers_auth_code_status_ready.CBPCBiJg_ZBh135.webp)
 
-Caution
-
-Once the set lifetime ends, the retrieved credential expires and will not work anymore. Aembit will notify you before this happens. Please ensure you reauthorize the credential before it expires.
+> **Caution**
+>
+> Once the set lifetime ends, the retrieved credential expires and will not work anymore. Aembit will notify you before this happens. Please ensure you reauthorize the credential before it expires.
 
 ## OAuth 2.0 Client Credentials
 
-[Section titled “OAuth 2.0 Client Credentials”](#oauth-20-client-credentials)
-
 ### Server Workload Configuration
-
-[Section titled “Server Workload Configuration”](#server-workload-configuration-1)
 
 1. Create a new Server Workload.
 
@@ -168,8 +155,6 @@ Once the set lifetime ends, the retrieved credential expires and will not work a
 * **Authentication scheme** - Bearer
 
 ### Credential Provider Configuration
-
-[Section titled “Credential Provider Configuration”](#credential-provider-configuration-1)
 
 1. In your Databricks workspace, click your username in the top right corner, and select **Settings** from the dropdown menu.
 
@@ -204,17 +189,20 @@ Once the set lifetime ends, the retrieved credential expires and will not work a
 * **Token endpoint** -
 
   * For a **workspace-level** endpoint URL, use: `https://<databricks-instance>/oidc/v1/token` (Use the Databricks instance name copied in step 5 of the workspace creation process)
+
   * For an **account-level** endpoint URL, use: `https://accounts.cloud.databricks.com/oidc/accounts/<my-account-id>/v1/token`
+
     * In your Databricks account, click on your username in the upper right corner, and in the dropdown menu,copy the part next to Account ID and use it in the previous link. ![Databricks Account ID](https://docs.aembit.io/_astro/databricks_account_id.DIt8ah4V_ZQqfKC.webp)
 
-Tip
-
-These two URLs correspond to different levels of OAuth authorization. The level determines the scope of the authorization code:
+      > **Tip**
+      >
+      > These two URLs correspond to different levels of OAuth authorization. The level determines the scope of the authorization code:
 
 * **Account-Level** - Use this URL if you need to call both account-level and workspace-level REST APIs across all accounts and workspaces that your Databricks user account has access to.
+
 * **Workspace-Level** - Use this URL if you only need to call REST APIs within a single workspace that your user account has access to.
 
-For more detailed information about these two different levels, please refer to the [official Databricks documentation](https://docs.databricks.com/en/dev-tools/auth/oauth-m2m.html#manually-generate-and-use-access-tokens-for-oauth-m2m-authentication).
+For more detailed information about these two different levels, please refer to the [official Databricks documentation](https://docs.databricks.com/en/dev-tools/auth/oauth-m2m.html#manually-generate-and-use-access-tokens-for-oauth-m2m-authentication). :::
 
 * **Client ID** - Provide the client ID copied from Databricks.
 * **Client Secret** - Provide the client secret copied from Databricks.
@@ -223,11 +211,7 @@ For more detailed information about these two different levels, please refer to 
 
 ## API Key
 
-[Section titled “API Key”](#api-key)
-
 ### Server Workload Configuration
-
-[Section titled “Server Workload Configuration”](#server-workload-configuration-2)
 
 1. Create a new Server Workload.
 
@@ -243,8 +227,6 @@ For more detailed information about these two different levels, please refer to 
 * **Authentication scheme** - Bearer
 
 ### Credential Provider Configuration
-
-[Section titled “Credential Provider Configuration”](#credential-provider-configuration-2)
 
 1. In your Databricks workspace, click on your username in the top right corner, and select **Settings** from the dropdown menu.
 
@@ -270,21 +252,15 @@ For more detailed information about these two different levels, please refer to 
 
 ## Client Workload Configuration
 
-[Section titled “Client Workload Configuration”](#client-workload-configuration)
-
 Aembit now handles the credentials required to access the Server Workload, eliminating the need for you to manage them directly. You can safely remove any previously used credentials from the Client Workload.
 
 If you access the Server Workload through an SDK or library, it is possible that the SDK/library may still require credentials to be present for initialization purposes. In this scenario, you can provide placeholder credentials. Aembit will overwrite these placeholder credentials with the appropriate ones during the access process.
 
 ## Access Policy
 
-[Section titled “Access Policy”](#access-policy)
-
 * Create an Access Policy for a Client Workload to access the Databricks Server Workload. Assign the newly created Credential Provider to this Access Policy.
 
 ## Required Features
-
-[Section titled “Required Features”](#required-features)
 
 * You will need to configure the [TLS Decrypt](../../../deploy-install/advanced-options/tls-decrypt/configure-tls-decrypt.md) feature to work with the Databricks Server Workload.
 

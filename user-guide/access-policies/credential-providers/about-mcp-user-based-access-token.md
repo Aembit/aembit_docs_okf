@@ -1,12 +1,10 @@
 ---
-type: how-to
+type: explanation
 title: "About the MCP User-Based Access Token Credential Provider"
 description: "How the MCP User-Based Access Token Credential Provider manages per-user OAuth credentials for MCP server access"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/about-mcp-user-based-access-token/
-interface: web-ui
-tags: [credential-provider, access-policy]
-timestamp: 2026-02-24T16:10:14-08:00
-type_inferred: true
+tags: ["credential-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # About the MCP User-Based Access Token Credential Provider
@@ -19,8 +17,6 @@ See [Configure MCP User-Based Access Token](mcp-user-based-access-token.md) to c
 
 ## How it works
 
-[Section titled “How it works”](#how-it-works)
-
 When a user first accesses an MCP server through the MCP Identity Gateway:
 
 1. Aembit detects that no credentials exist for that user and MCP server.
@@ -31,8 +27,6 @@ When a user first accesses an MCP server through the MCP Identity Gateway:
 Unlike the standard OAuth 2.0 Authorization Code Credential Provider, this type doesn’t require an administrator to click **Authorize** during setup. Instead, each user completes their own OAuth consent flow the first time they access the MCP server through the Gateway.
 
 ## When to use this type
-
-[Section titled “When to use this type”](#when-to-use-this-type)
 
 **Required** — Use **MCP User-Based Access Token** when:
 
@@ -50,16 +44,12 @@ This is the standard Credential Provider type for Gateway-to-Server policies. Mo
 
 ## Role in MCP Identity Gateway
 
-[Section titled “Role in MCP Identity Gateway”](#role-in-mcp-identity-gateway)
-
 The [MCP Identity Gateway](../../../ai-guide/mcp/identity-gateway/overview.md) requires a Credential Provider for its Gateway-to-Server Access Policy. Which type you use depends on whether the MCP server issues credentials per user or accepts a shared credential:
 
 * **Per-user credentials (most SaaS MCP servers)** — Use MCP User-Based Access Token. The MCP server issues OAuth tokens scoped to individual users, so each person must complete their own authorization flow. This is the standard configuration for most Gateway deployments.
 * **Shared credentials** — Use [OAuth 2.0 Authorization Code](oauth-authorization-code.md) or [Aembit Access Token](aembit-access-token.md). An administrator authorizes the integration once, and all users share those credentials. This works when the MCP server accepts a single service account or shared token.
 
 ### Why per-user credentials matter
-
-[Section titled “Why per-user credentials matter”](#why-per-user-credentials-matter)
 
 The MCP Identity Gateway enforces a separation between the credentials AI agents use and the credentials for MCP servers:
 
@@ -71,8 +61,6 @@ MCP traffic carries two identities: the MCP client (workload) identity and the u
 For the full architectural explanation, see [MCP Identity Gateway concepts](../../../ai-guide/mcp/identity-gateway/concepts-mcp-gateway.md).
 
 ## Related topics
-
-[Section titled “Related topics”](#related-topics)
 
 * [Configure MCP User-Based Access Token](mcp-user-based-access-token.md) - Step-by-step configuration guide
 * [MCP Identity Gateway setup](../../../ai-guide/mcp/identity-gateway/setup-mcp-gateway.md) - How to configure Gateway-to-Server Access Policies that use this Credential Provider

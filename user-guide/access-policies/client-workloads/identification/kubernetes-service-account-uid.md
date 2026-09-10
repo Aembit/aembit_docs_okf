@@ -4,9 +4,8 @@ title: "Kubernetes Service Account UID"
 description: "How to identify Kubernetes workloads using the Kubernetes Service Account UID within Aembit"
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/kubernetes-service-account-uid/
 interface: web-ui
-tags: [kubernetes, identification, client-workload, access-policy]
-timestamp: 2025-06-17T17:07:06-07:00
-type_inferred: true
+tags: ["kubernetes", "identification", "client-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Kubernetes Service Account UID
@@ -15,21 +14,15 @@ This page explains how to use the **Kubernetes Service Account UID** identifier 
 
 ## Understanding the Kubernetes service account UID identifier
 
-[Section titled “Understanding the Kubernetes service account UID identifier”](#understanding-the-kubernetes-service-account-uid-identifier)
-
 In Kubernetes, service accounts provide an identity for processes that run in a pod. You can assign each pod a service account, and the pod uses this account when it interacts with the Kubernetes API or other services.
 
 Using the **service account UID** as an identifier is useful when you want to manage Access Policies tied to the unique identity of workloads, rather than their namespace, pod name.
 
 ## Applicable deployment type
 
-[Section titled “Applicable deployment type”](#applicable-deployment-type)
-
 Aembit supports the Kubernetes Service Account UID identification method for Edge-based deployments on [Kubernetes](../../../deploy-install/kubernetes/kubernetes.md).
 
 ## Create a Client Workload with a Kubernetes service account UID identifier
-
-[Section titled “Create a Client Workload with a Kubernetes service account UID identifier”](#create-a-client-workload-with-a-kubernetes-service-account-uid-identifier)
 
 To configure a Client Workload with a Kubernetes Service Account UID identifier, follow these steps:
 
@@ -54,8 +47,6 @@ To configure a Client Workload with a Kubernetes Service Account UID identifier,
    Aembit displays the new Client Workload on the **Client Workloads** page.
 
 ## Find Kubernetes service account UID
-
-[Section titled “Find Kubernetes service account UID”](#find-kubernetes-service-account-uid)
 
 To find the Kubernetes Service Account UID used by a workload, follow these steps:
 

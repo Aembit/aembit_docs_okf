@@ -1,12 +1,10 @@
 ---
-type: how-to
+type: explanation
 title: "Using multiple Client Workload identifiers"
 description: "How to use multiple Client Workload identifiers to increase uniqueness across Client Workloads"
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/client-workload-multiple-ids/
-interface: web-ui
-tags: [identification, client-workload, access-policy]
-timestamp: 2025-06-06T13:01:11-04:00
-type_inferred: true
+tags: ["identification", "client-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Using multiple Client Workload identifiers
@@ -25,13 +23,9 @@ Aembit highly recommends that you leverage multiple identifiers where a single m
 
 ## How multiple identifiers work
 
-[Section titled “How multiple identifiers work”](#how-multiple-identifiers-work)
-
 When you configure multiple identifiers for a *single* Client Workload, Aembit uses the conditional operators `AND` and `OR`. You can use one or the other or both at the same time.
 
 ### The `OR` condition
-
-[Section titled “The OR condition”](#the-or-condition)
 
 When Aembit uses the `OR` condition, it requires only one of the identifiers, providing you extra flexibility. You can have multiple `OR` condition groups for a single Client Workload. This means that Aembit must match *only one* of the identification methods you’ve configured on your Client Workload to the evidence it collected from your runtime environment.
 
@@ -39,15 +33,11 @@ For example, combining a **AWS Account ID** identifier with a **Process Name** i
 
 ### The `AND` condition
 
-[Section titled “The AND condition”](#the-and-condition)
-
 When Aembit uses the `AND` condition, it requires both identifiers, providing you extra security. You can have multiple `AND` condition groups for a single Client Workload. This means that Aembit must match *all* the identification methods you’ve configured on your Client Workload to the evidence it collected from your runtime environment.
 
 For example, combining a **Hostname** identifier with a **Process Name** identifier for a Virtual Machine workload. In this scenario, Aembit would require *both* the Hostname *and* the Process Name of the requesting Client Workload to match the values you’ve configured in the Client Workload definition for Aembit to consider that definition a match.
 
 ### Both conditions
-
-[Section titled “Both conditions”](#both-conditions)
 
 When Aembit uses both the `OR` and the `AND` conditions together, you can create sophisticated identification logic that provides both *security and flexibility* for your Client Workload definitions. You can combine multiple `OR` and `AND` condition groups within a single Client Workload configuration. This allows you to define complex matching criteria where some identifiers must all be present (`AND` groups) while providing alternative identification paths (`OR` groups).
 
@@ -70,8 +60,6 @@ In this scenario, Aembit would consider the Client Workload definition a match w
 This approach enables you to accommodate different deployment scenarios while maintaining strong identity verification.
 
 ## Add additional identifiers to a Client Workload
-
-[Section titled “Add additional identifiers to a Client Workload”](#add-additional-identifiers-to-a-client-workload)
 
 To add additional identifiers to a Client Workload, follow these steps:
 

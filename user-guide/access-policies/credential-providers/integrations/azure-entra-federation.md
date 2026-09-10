@@ -4,9 +4,8 @@ title: "Create an Azure Entra Federation Credential Provider Integration"
 description: "How to create a Azure Entra Federation Credential Provider Integration using Azure Key Vault"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/integrations/azure-entra-federation/
 interface: web-ui
-tags: [integration, credential-provider, access-policy]
-timestamp: 2026-06-26T15:17:49-07:00
-type_inferred: true
+tags: ["integration", "credential-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Create an Azure Entra Federation Credential Provider Integration
@@ -15,15 +14,13 @@ The Azure Entra Federation Credential Provider Integration allows you to create 
 
 See [How the Azure Entra Federation integration works](overview.md#azure-entra-federation-integration) for more details.
 
-Using multiple Azure Key Vaults
-
-**For a single Key Vault instance**: Use one integration per Key Vault, regardless of the number of secrets you need to access in that Key Vault.
-
-**For multiple Key Vault instances**: Create a separate Azure Entra Federation integration and Credential Provider for each Key Vault.
+> **Using multiple Azure Key Vaults**
+>
+> **For a single Key Vault instance**: Use one integration per Key Vault, regardless of the number of secrets you need to access in that Key Vault.
+>
+> **For multiple Key Vault instances**: Create a separate Azure Entra Federation integration and Credential Provider for each Key Vault.
 
 ## Prerequisites
-
-[Section titled “Prerequisites”](#prerequisites)
 
 To configure an Azure Entra Federation integration, you must have and do the following:
 
@@ -41,15 +38,13 @@ To configure an Azure Entra Federation integration, you must have and do the fol
 
 ## Create an integration
 
-[Section titled “Create an integration”](#create-an-integration)
-
 This section explains how to configure an Azure Entra Federation integration in the Aembit web UI. These steps assume you already have a Microsoft Entra registered application (see [Prerequisites](#prerequisites)).
 
 You must configure the Aembit integration at the same time as the Azure Entra registered application credential.
 
-Tip
-
-It’s best to have your Azure Entra registered application open in the Azure Entra Portal in a different browser window alongside the Aembit web UI while configuring the integration.
+> **Tip**
+>
+> It’s best to have your Azure Entra registered application open in the Azure Entra Portal in a different browser window alongside the Aembit web UI while configuring the integration.
 
 1. Log into your Aembit Tenant, and in the left sidebar menu, go to **Credential Providers → Integrations**.
 
@@ -68,8 +63,6 @@ It’s best to have your Azure Entra registered application open in the Azure En
    Keep the Aembit web UI open while you work on the next section.
 
 ## Add a credential for your Azure Entra registered app
-
-[Section titled “Add a credential for your Azure Entra registered app”](#add-a-credential-for-your-azure-entra-registered-app)
 
 In the Azure Entra Portal, create a new credential for your registered application:
 
@@ -107,8 +100,6 @@ In the Azure Entra Portal, create a new credential for your registered applicati
 
 ## Complete the integration in the Aembit web UI
 
-[Section titled “Complete the integration in the Aembit web UI”](#complete-the-integration-in-the-aembit-web-ui)
-
 Go back to the Aembit web UI, and complete the **Integration** form:
 
 1. Use the info from your Azure Entra registered application’s **Overview** page to complete the following fields for the Aembit Integration (for quick reference, see the [mappings](#azure-entra-and-integration-value-mappings) section):
@@ -131,15 +122,13 @@ You’re now ready to use your Azure Entra Federation integration to create an [
 
 ## Configure Azure Entra Federation using the Aembit Terraform provider
 
-[Section titled “Configure Azure Entra Federation using the Aembit Terraform provider”](#configure-azure-entra-federation-using-the-aembit-terraform-provider)
-
 To configure an Azure Entra Federation integration using the [Aembit Terraform Provider](https://registry.terraform.io/providers/Aembit/aembit/latest), follow the steps in this section.
 
-OIDC Issuer URL
-
-When using the Aembit Terraform Provider, you won’t have the OIDC Issuer URL the Azure credential requires until *after* you apply the Terraform configuration successfully.
-
-Make sure you leave the Azure Entra **Add a credential** page open until after you have successfully applied the Terraform configuration. Then copy the value for `oidc_issuer_url` from the applied Terraform configuration to the **Issuer** field in the **Add a credential** page.
+> **OIDC Issuer URL**
+>
+> When using the Aembit Terraform Provider, you won’t have the OIDC Issuer URL the Azure credential requires until *after* you apply the Terraform configuration successfully.
+>
+> Make sure you leave the Azure Entra **Add a credential** page open until after you have successfully applied the Terraform configuration. Then copy the value for `oidc_issuer_url` from the applied Terraform configuration to the **Issuer** field in the **Add a credential** page.
 
 1. Follow the steps to [Add a credential for your Azure Entra registered app](#add-a-credential-for-your-azure-entra-registered-app).
 
@@ -213,8 +202,6 @@ You’re now ready to use your Azure Entra Federation integration to create an [
 
 ## Azure Entra and Integration value mappings
 
-[Section titled “Azure Entra and Integration value mappings”](#azure-entra-and-integration-value-mappings)
-
 The following table shows how the different values in Azure Entra from your registered application map to the required values in the Aembit Integration and Terraform provider:
 
 | Aembit Integration value | Azure Entra credential value | Azure UI location         | Terraform value      |
@@ -228,7 +215,5 @@ The following table shows how the different values in Azure Entra from your regi
 | Fetch Secret Names       | N/A                          | Integration form          | `fetch_secret_names` |
 
 ## Additional resources
-
-[Section titled “Additional resources”](#additional-resources)
 
 * [Credential Provider Integrations overview](overview.md)

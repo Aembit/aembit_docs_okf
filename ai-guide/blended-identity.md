@@ -8,18 +8,16 @@ timestamp: 2026-03-11T16:17:54-07:00
 
 # Understanding Blended Identities
 
-Traditional IAM answers one of two questions: “who is this user?” (user identity) or “what is this workload?” (workload identity**Workload Identity**: A unique, verifiable identity assigned to a workload by Aembit.[Learn more](https://docs.aembit.io/get-started/concepts/how-aembit-works/#introducing-workload-iam)). AI agents require both answers at the same time.
+Traditional IAM answers one of two questions: “who is this user?” (user identity) or “what is this workload?” (workload identity). AI agents require both answers at the same time.
 
 When an employee uses Claude Desktop to query Jira, two identities are in play:
 
 * **User identity** - the human, authenticated through your Identity Provider (Okta, Entra ID, Google). This determines *who* is responsible for the agent’s actions.
 * **Workload identity** - the AI agent application itself, identified by properties like its OAuth redirect URL. This determines *which* agent is making the request.
 
-Blended identity is an access model where Aembit evaluates both identities together in a single Access Policy**Access Policy**: Access Policies define, enforce, and audit access between Client and Server Workloads by cryptographically verifying workload identity and contextual factors rather than relying on static secrets.[Learn more](../get-started/concepts/access-policies.md). Instead of asking “is this a trusted workload?” or “is this an authorized user?” separately, Aembit asks: “is this specific user, using this specific agent, authorized to access this specific resource right now?”
+Blended identity is an access model where Aembit evaluates both identities together in a single Access Policy. Instead of asking “is this a trusted workload?” or “is this an authorized user?” separately, Aembit asks: “is this specific user, using this specific agent, authorized to access this specific resource right now?”
 
 ## Why blended identity matters
-
-[Section titled “Why blended identity matters”](#why-blended-identity-matters)
 
 Without blended identity, organizations face a binary choice:
 
@@ -34,36 +32,28 @@ Blended identity eliminates this trade-off. Access policies can express rules li
 
 ## How Aembit implements blended identity
 
-[Section titled “How Aembit implements blended identity”](#how-aembit-implements-blended-identity)
-
 Aembit implements blended identity through its Access Policy model, where policies evaluate user attributes and workload attributes simultaneously.
 
 ### MCP Authorization Server
 
-[Section titled “MCP Authorization Server”](#mcp-authorization-server)
-
 The [MCP Authorization Server](mcp/authorization-server/overview.md) implements blended identity in a single access policy:
 
 * The **Client Workload** identifies the AI agent by its OAuth redirect URL
-* The **Trust Provider**Trust Provider**: Trust Providers validate Client Workload identities through workload attestation, verifying identity claims from the workload's runtime environment rather than relying on pre-shared secrets.[Learn more](../get-started/concepts/trust-providers.md)** validates the user’s identity through your IdP (OIDC or SAML claims)
-* The **Credential Provider**Credential Provider**: Credential Providers obtain the specific access credentials—such as API keys, OAuth tokens, or temporary cloud credentials—that Client Workloads need to authenticate to Server Workloads.[Learn more](../get-started/concepts/credential-providers.md)** issues a short-lived token scoped to both the user and the agent
+* The **Trust Provider** validates the user’s identity through your IdP (OIDC or SAML claims)
+* The **Credential Provider** issues a short-lived token scoped to both the user and the agent
 
 The user authenticates through your IdP, the redirect URL identifies the agent, and the policy evaluates both before issuing a token.
 
 ### MCP Identity Gateway
 
-[Section titled “MCP Identity Gateway”](#mcp-identity-gateway)
-
 The [MCP Identity Gateway](mcp/identity-gateway/overview.md) extends blended identity across two policy hops:
 
-* **Client-to-Gateway policy** - Validates the AI agent’s identity (redirect URL) *and* the user’s identity (IdP claims) together. The Credential Provider**Credential Provider**: Credential Providers obtain the specific access credentials—such as API keys, OAuth tokens, or temporary cloud credentials—that Client Workloads need to authenticate to Server Workloads.[Learn more](../get-started/concepts/credential-providers.md) embeds the user’s identity into the access token using dynamic claim expressions like `${oidc.identityToken.decode.payload.email}`.
+* **Client-to-Gateway policy** - Validates the AI agent’s identity (redirect URL) *and* the user’s identity (IdP claims) together. The Credential Provider embeds the user’s identity into the access token using dynamic claim expressions like `${oidc.identityToken.decode.payload.email}`.
 * **Gateway-to-Server policy** - Uses the Gateway’s workload identity plus the embedded user context to obtain per-user credentials for each downstream MCP server.
 
 This architecture enables per-user credential isolation: each user’s AI agent receives different downstream credentials based on their identity, even though all users connect through the same Gateway.
 
 ### Per-user credential isolation
-
-[Section titled “Per-user credential isolation”](#per-user-credential-isolation)
 
 A key benefit of blended identity is that Aembit scopes credentials to individual users, not shared across an agent type. When the MCP Identity Gateway connects to a downstream MCP server on behalf of a user:
 
@@ -75,8 +65,6 @@ This means User A’s Claude Desktop session accesses Jira with User A’s permi
 
 ## Blended identity and audit
 
-[Section titled “Blended identity and audit”](#blended-identity-and-audit)
-
 Every access event logged by Aembit includes both identity dimensions:
 
 * **Who** - The authenticated user (for example, `user@example.com`)
@@ -87,8 +75,6 @@ Every access event logged by Aembit includes both identity dimensions:
 This dual attribution satisfies compliance requirements (SOC 2, HIPAA, PCI) that need clear accountability for every action - something that workload-only or user-only identity models can’t provide for AI agent access.
 
 ## Next steps
-
-[Section titled “Next steps”](#next-steps)
 
 * [Securing AI agent access](../get-started/use-cases/ai-agents.md) - How blended identity fits into the broader AI agent security use case
 * [MCP Authorization Server](mcp/authorization-server/overview.md) - Blended identity in the authorization-only model

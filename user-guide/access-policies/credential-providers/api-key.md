@@ -4,9 +4,8 @@ title: "Configure an API Key Credential Provider"
 description: "How to create and use an API Key Credential Provider"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/api-key/
 interface: web-ui
-tags: [credential-provider, access-policy]
-timestamp: 2025-05-22T22:55:26-07:00
-type_inferred: true
+tags: ["credential-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Configure an API Key Credential Provider
@@ -16,8 +15,6 @@ The Application Programming Interface (API) Key credential provider is designed 
 An API Key is a secret used by workloads to identify themselves when making calls to an API. This API key acts as a security mechanism for controlling access to APIs.
 
 ## Credential Provider configuration
-
-[Section titled “Credential Provider configuration”](#credential-provider-configuration)
 
 To configure an API Key Credential Provider, follow the steps outlined below.
 

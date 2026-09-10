@@ -1,11 +1,11 @@
 ---
-type: explanation
+type: reference
 title: "Users overview"
 description: "This page provides a high-level description of users"
 resource: https://docs.aembit.io/user-guide/administration/users/
-tags: [user, administration]
-timestamp: 2025-05-29T11:26:12-07:00
-type_inferred: true
+interface: web-ui
+tags: ["user", "administration"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Users overview

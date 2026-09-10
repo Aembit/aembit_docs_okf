@@ -4,9 +4,8 @@ title: "GCP Identity Token"
 description: "How to identify GCP workloads using the service account email from a GCP Identity Token in Aembit"
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/gcp-identity-token/
 interface: web-ui
-tags: [gcp, identification, client-workload, access-policy]
-timestamp: 2025-06-26T14:10:42-07:00
-type_inferred: true
+tags: ["gcp", "identification", "client-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # GCP Identity Token
@@ -15,23 +14,17 @@ This page explains how to use the **GCP Identity Token** identifier to uniquely 
 
 ## Understanding the GCP identity token identifier
 
-[Section titled “Understanding the GCP identity token identifier”](#understanding-the-gcp-identity-token-identifier)
-
 When you run workloads as a GCP Function or Cloud Run job, the platform issues a [GCP Identity Token](https://cloud.google.com/docs/authentication/token-types#id) that includes an `email` claim. This email corresponds to the service account the workload runs under.
 
 For example, a service account might look like: `123456789012-compute@developer.gserviceaccount.com`
 
-Aembit identifies the workload using this email claim. Aembit supports this approach **only in the Edge CLI** at this time and isn’t available **for Edge Proxy**.
+Aembit identifies the workload using this email claim. Aembit supports this approach **only in the Aembit CLI** at this time and isn’t available **for Edge Proxy**.
 
 ## Applicable deployment type
 
-[Section titled “Applicable deployment type”](#applicable-deployment-type)
-
-Aembit supports the GCP Identity Token identifier for Edge-based deployments running the Edge CLI on GCP Function or GCP Cloud Run job.
+Aembit supports the GCP Identity Token identifier for Edge-based deployments running the Aembit CLI on GCP Function or GCP Cloud Run job.
 
 ## Create a Client Workload with a GCP identity token identifier
-
-[Section titled “Create a Client Workload with a GCP identity token identifier”](#create-a-client-workload-with-a-gcp-identity-token-identifier)
 
 To configure a Client Workload using the GCP Identity Token identifier, follow these steps:
 
@@ -54,8 +47,6 @@ To configure a Client Workload using the GCP Identity Token identifier, follow t
    Aembit displays the new Client Workload on the **Client Workloads** page.
 
 ## Find the service account email
-
-[Section titled “Find the service account email”](#find-the-service-account-email)
 
 The service account email identifies your workload and its format depends on the specific GCP service you’re using. Common patterns include:
 

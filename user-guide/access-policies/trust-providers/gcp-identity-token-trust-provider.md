@@ -1,22 +1,20 @@
 ---
-type: how-to
+type: reference
 title: "GCP Identity Token Trust Provider"
 description: "This page describes the steps required to configure the GCP Identity Token Trust Provider."
 resource: https://docs.aembit.io/user-guide/access-policies/trust-providers/gcp-identity-token-trust-provider/
 interface: web-ui
-tags: [trust-provider, access-policy]
-timestamp: 2025-04-14T12:09:34-07:00
-type_inferred: true
+tags: ["trust-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # GCP Identity Token Trust Provider
 
-
 The GCP Identity Token Trust Provider verifies the identities of workloads running within Google Cloud Platform (GCP) by validating identity tokens issued by GCP. These tokens carry metadata, such as the email associated with the service account or user executing the operation, ensuring secure and authenticated access to GCP resources.
 
-## Match rules
+To validate the user identity that Google Cloud Identity-Aware Proxy (IAP) asserts for workloads behind IAP, see [GCP IAP JWT Trust Provider](gcp-iap-jwt-trust-provider.md).
 
-[Section titled “Match rules”](#match-rules)
+## Match rules
 
 The following match rule is available for this Trust Provider type:
 
@@ -24,7 +22,7 @@ The following match rule is available for this Trust Provider type:
 | ----- | --------------------------------------------------------- | ------------------ |
 | email | The email associated with the GCP service account or user | <user@example.com> |
 
-For additional information about GCP Identity Tokens, please refer to [Google Cloud Identity](https://cloud.google.com/docs/authentication/get-id-token) technical documentation.
+For additional information about GCP Identity Tokens, see [Google Cloud Identity](https://cloud.google.com/docs/authentication/get-id-token).
 
 ## Related
 

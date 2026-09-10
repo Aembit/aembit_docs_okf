@@ -2,7 +2,7 @@
 type: definition
 title: "Managed GitLab Account Credential Provider"
 description: "An Aembit component that generates and manages Personal Access Tokens for GitLab on behalf of workloads."
-tags: [credential-providers]
+tags: ["credential-providers"]
 timestamp: 2025-11-25T07:38:51-08:00
 ---
 

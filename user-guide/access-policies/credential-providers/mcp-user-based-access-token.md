@@ -4,8 +4,8 @@ title: "Configure MCP User-Based Access Token Credential Provider"
 description: "How to create and use an MCP User-Based Access Token Credential Provider for user-scoped OAuth credentials with MCP servers"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/mcp-user-based-access-token/
 interface: web-ui
-tags: [credential-provider, access-policy]
-timestamp: 2026-02-24T16:10:14-08:00
+tags: ["credential-provider", "access-policy"]
+timestamp: 2026-08-19T10:25:24-07:00
 ---
 
 # Configure MCP User-Based Access Token Credential Provider
@@ -17,8 +17,6 @@ Use this Credential Provider with the [MCP Identity Gateway](../../../ai-guide/m
 For background on how this type works and when to use it, see [About MCP User-Based Access Tokens](about-mcp-user-based-access-token.md).
 
 ## Create an MCP user-based access token Credential Provider
-
-[Section titled “Create an MCP user-based access token Credential Provider”](#create-an-mcp-user-based-access-token-credential-provider)
 
 To create an MCP User-Based Access Token Credential Provider, follow these steps:
 
@@ -36,7 +34,7 @@ To create an MCP User-Based Access Token Credential Provider, follow these steps
 
    1. **MCP Server URL** - The base URL of the target MCP server (for example, `https://dbc-a1044c90-95d9.cloud.databricks.com/api/2.0/mcp`). Click **Discover** to auto-populate the Authorization URL and Token URL from the server’s metadata.
 
-   2. **Callback URL** - Auto-generated and read-only. This is the URL Aembit uses to receive OAuth authorization codes during the user consent flow. Share this URL with the MCP server vendor if they require callback URL registration.
+   2. **Callback URL** - Auto-generated and read-only. This is the URL Aembit uses to receive OAuth authorization codes during the user consent flow. It takes the form `https://<tenantId>.id.<region>.aembit.io/mcp-auth/userauth/<cp-id>/callback`. Aembit assigns the final value when you click **Save**, so save the Credential Provider before you copy it. Register this URL with the MCP server’s own OAuth authorization server if it requires callback URL registration.
 
    3. **Client ID** - The OAuth client identifier for the MCP server. Obtain this from the MCP server vendor’s configuration or by using a dynamic client registration endpoint.
 
@@ -44,35 +42,39 @@ To create an MCP User-Based Access Token Credential Provider, follow these steps
 
    5. **Scopes** - Space-separated list of OAuth scopes (for example, `all-apis offline_access`). **Discover** may auto-populate this field.
 
-   6. **Authorization URL** - The endpoint where the user authenticates and grants consent. Auto-populated by **Discover** if the MCP server supports metadata discovery.
+   6. **Resource** - (Optional) The resource parameter for the token request. Required only if the MCP server can’t use the auto-generated value. Some providers, such as Microsoft, require this field.
 
-   7. **Token URL** - The endpoint that exchanges authorization codes for access tokens. Auto-populated by **Discover**.
+   7. **Authorization URL** - The endpoint where the user authenticates and grants consent. Auto-populated by **Discover** if the MCP server supports metadata discovery.
 
-   8. **Introspection URL** - (Optional) The token introspection endpoint, if supported by the MCP server.
+   8. **Token URL** - The endpoint that exchanges authorization codes for access tokens. Auto-populated by **Discover**.
 
-   9. **Resource** - (Optional) The resource parameter for the token request. Required only if the MCP server can’t use the auto-generated value. Some providers, such as Microsoft, require this field.
+   9. **Introspection URL** - (Optional) The token introspection endpoint, if supported by the MCP server.
 
    10. **PKCE Required** - Enable this if the MCP server requires Proof Key for Code Exchange (PKCE). Recommended for security.
 
-   11. **Lifetime** - The expected lifetime of the authorization. Aembit uses this value to send notification reminders before the authorization expires. Default is 1 year.
+   11. **Additional Parameters** - (Optional) Key-value pairs for custom parameters to include in the token request.
 
-   12. **Additional Parameters** - (Optional) Key-value pairs for custom parameters to include in the token request.
-
-   The form should look similar to the following screenshot: ![MCP User-Based Access Token Credential Provider form](https://docs.aembit.io/_astro/cp-mcp-user-based-access-token-form.BvSImLtl_2fGSDc.webp)
+   The form should look similar to the following screenshot: ![MCP User-Based Access Token Credential Provider form](https://docs.aembit.io/_astro/cp-mcp-user-based-access-token-form.asZBlF4G_2ogrjC.webp)
 
 7. Click **Save**.
 
    Aembit displays the new Credential Provider in the list of Credential Providers.
 
-Using Discover
+> **Using Discover**
+>
+> After entering the **MCP Server URL**, click **Discover** to auto-populate the Authorization URL, Token URL, and Scopes from the MCP server’s OAuth metadata. This works with MCP servers that publish a standard `/.well-known/oauth-authorization-server` metadata document.
+>
+> If discovery fails, enter the Authorization URL and Token URL manually using values from the MCP server vendor’s documentation.
 
-After entering the **MCP Server URL**, click **Discover** to auto-populate the Authorization URL, Token URL, and Scopes from the MCP server’s OAuth metadata. This works with MCP servers that publish a standard `/.well-known/oauth-authorization-server` metadata document.
-
-If discovery fails, enter the Authorization URL and Token URL manually using values from the MCP server vendor’s documentation.
+> **Existing Credential Providers keep their original callback URL**
+>
+> Aembit changed the callback URL format for MCP User-Based Access Token Credential Providers. Providers created before that change keep their original callback URL, which takes the form `https://<tenantId>.mcp.<region>.aembit.io/userauth/<cp-id>/callback`.
+>
+> Updating a Credential Provider doesn’t regenerate its callback URL, so you may see either format depending on when you created the provider. Both formats remain valid, and you don’t need to take any action for existing providers.
+>
+> Always copy the exact value shown in the Credential Provider rather than constructing the URL yourself, and register that value with the MCP server’s own OAuth authorization server.
 
 ## Related topics
-
-[Section titled “Related topics”](#related-topics)
 
 * [About MCP User-Based Access Tokens](about-mcp-user-based-access-token.md) - How this Credential Provider works and when to use it
 * [MCP Identity Gateway setup](../../../ai-guide/mcp/identity-gateway/setup-mcp-gateway.md) - How to configure Gateway-to-Server Access Policies that use this Credential Provider

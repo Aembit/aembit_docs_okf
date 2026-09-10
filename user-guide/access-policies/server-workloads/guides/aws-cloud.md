@@ -4,48 +4,33 @@ title: "Create an AWS Server Workload"
 description: "How to configure Aembit to work with AWS Cloud services using STS federation and SigV4 authentication"
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/guides/aws-cloud/
 interface: web-ui
-tags: [guide, server-workload, access-policy]
-timestamp: 2026-05-02T11:31:27-07:00
+tags: ["guide", "server-workload", "access-policy"]
+timestamp: 2026-08-27T18:01:41-07:00
 ---
 
 # Create an AWS Server Workload
 
-This guide walks you through creating a Server Workload**Server Workload**: Server Workloads represent target services, APIs, databases, or applications that receive and respond to access requests from Client Workloads.[Learn more](../../../../get-started/concepts/server-workloads.md) in Aembit to securely access AWS services without storing static AWS credentials.
+This guide walks you through creating a Server Workload in Aembit to securely access AWS services without storing static AWS credentials.
 
 **Use this Server Workload** to enable your applications to authenticate to AWS services such as S3, Lambda, EC2, DynamoDB, SQS, and other AWS API endpoints.
 
-Aembit authenticates to AWS using the [AWS Security Token Service (STS)](../../credential-providers/aws-security-token-service-federation.md) Credential Provider**Credential Provider**: Credential Providers obtain the specific access credentials—such as API keys, OAuth tokens, or temporary cloud credentials—that Client Workloads need to authenticate to Server Workloads.[Learn more](../../../../get-started/concepts/credential-providers.md) with [SigV4 and SigV4a](../../credential-providers/aws-sigv4.md) request signing.
+Aembit authenticates to AWS using a Credential Provider that performs [AWS Security Token Service (STS) federation](../../credential-providers/aws-security-token-service-federation.md) with [SigV4 and SigV4a](../../credential-providers/aws-sigv4.md) request signing.
 
 ## Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites)
-
 Before you begin, ensure you have the following:
 
-**Account access**
+* **Account access** - Access to your Aembit Tenant (role: Workload Administrator or higher), and access to the AWS Console with permissions to create IAM Roles and Identity Providers
 
-* Access to your Aembit Tenant**Aembit Tenant**: Aembit Tenants serve as isolated, dedicated environments within Aembit that provide complete separation of administrative domains and security configurations.[Learn more](../../../../get-started/concepts/administration.md) (role: Workload Administrator or higher)
-* Access to AWS Console with permissions to create IAM Roles and Identity Providers
+* **Infrastructure** - Aembit Edge Components deployed in your environment:
 
-**Infrastructure**
+  * Agent Proxy installed, through the [Linux](../../../deploy-install/virtual-machine/linux/agent-proxy-install-linux.md) or [Windows](../../../deploy-install/virtual-machine/windows/agent-proxy-install-windows.md) installation for VMs, or the [Kubernetes deployment](../../../deploy-install/kubernetes/overview.md)
+  * [TLS Decrypt](../../../deploy-install/advanced-options/tls-decrypt/configure-tls-decrypt.md) configured on your Agent Proxy. AWS API requests require TLS Decrypt because Agent Proxy must inspect HTTPS traffic to inject SigV4 signatures. TLS decryption occurs only on the Agent Proxy running alongside your workload.
+  * Network connectivity from your workload to AWS service endpoints (outbound HTTPS to `*.amazonaws.com`)
 
-* Aembit Edge**Aembit Edge**: Aembit Edge represents components deployed within your operational environments that enforce Access Policies by intercepting traffic, verifying identities, and injecting credentials just-in-time.[Learn more](../../../../get-started/concepts/aembit-edge.md) Components deployed in your environment:
-
-  * Agent Proxy installed
-  * For VMs: [Linux](../../../deploy-install/virtual-machine/linux/agent-proxy-install-linux.md) or [Windows](../../../deploy-install/virtual-machine/windows/agent-proxy-install-windows.md) installation
-  * For Kubernetes: [Kubernetes deployment](../../../deploy-install/kubernetes/overview.md)
-
-* [TLS Decrypt](../../../deploy-install/advanced-options/tls-decrypt/configure-tls-decrypt.md) configured on your Agent Proxy. AWS API requests require TLS Decrypt because Agent Proxy must inspect HTTPS traffic to inject SigV4 signatures. TLS decryption occurs only on the Agent Proxy running alongside your workload.
-
-* Network connectivity from your workload to AWS service endpoints (outbound HTTPS to `*.amazonaws.com`)
-
-**AWS configuration**
-
-* An IAM Role configured in AWS with the necessary permissions to access the desired AWS services
+* **AWS configuration** - An IAM Role configured in AWS with the necessary permissions to access the desired AWS services
 
 ## How Aembit authenticates to AWS
-
-[Section titled “How Aembit authenticates to AWS”](#how-aembit-authenticates-to-aws)
 
 Aembit uses AWS STS federation to obtain temporary credentials, then signs requests using AWS SigV4 or SigV4a.
 
@@ -60,17 +45,15 @@ For details on how Aembit handles AWS request signing, see [How Aembit uses AWS 
 
 ## Server Workload configuration
 
-[Section titled “Server Workload configuration”](#server-workload-configuration)
-
 Select the tab for the AWS service you want to configure:
 
 * Generic
 
   Use this configuration for most AWS services that follow the standard regional endpoint pattern, such as Lambda, SQS, DynamoDB, and Key Management Service (KMS).
 
-  Note
-
-  This generic pattern isn’t directly applicable to Amazon S3, which uses a different endpoint structure with bucket names as subdomains. For S3, use the **S3** tab instead. For more information about AWS service endpoint patterns, see [AWS service endpoints](https://docs.aws.amazon.com/general/latest/gr/rande.html).
+  > **Note**
+  >
+  > This generic pattern isn’t directly applicable to Amazon S3, which uses a different endpoint structure with bucket names as subdomains. For S3, use the **S3** tab instead. For more information about AWS service endpoint patterns, see [AWS service endpoints](https://docs.aws.amazon.com/general/latest/gr/rande.html).
 
   1. Log in to your Aembit Tenant.
 
@@ -86,9 +69,9 @@ Select the tab for the AWS service you want to configure:
      * **Authentication method**: HTTP Authentication
      * **Authentication scheme**: AWS Signature v4
 
-     Scope
-
-     Using `*.amazonaws.com` enables you to reuse this Server Workload across multiple AWS services without having to determine the service or region-specific hostname. If you prefer a granularly scoped Server Workload, specify a specific hostname, for example `kms.us-east-1.amazonaws.com` or `lambda.us-west-2.amazonaws.com`.
+     > **Scope**
+     >
+     > Using `*.amazonaws.com` enables you to reuse this Server Workload across multiple AWS services without having to determine the service or region-specific hostname. If you prefer a granularly scoped Server Workload, specify a specific hostname, for example `kms.us-east-1.amazonaws.com` or `lambda.us-west-2.amazonaws.com`.
 
   4. Click **Save**.
 
@@ -96,11 +79,11 @@ Select the tab for the AWS service you want to configure:
 
   Use this configuration for Amazon S3.
 
-  Known limitation
-
-  **Request compression:** The Agent Proxy doesn’t support streaming payload signing when the HTTP request body uses content encodings. If you have request compression enabled, turn it off by setting `AWS_DISABLE_REQUEST_COMPRESSION=true`.
-
-  For all limitations and workarounds, see [Known limitations](../../credential-providers/aws-sigv4.md#known-limitations).
+  > **Known limitation**
+  >
+  > **Request compression:** The Agent Proxy doesn’t support streaming payload signing when the HTTP request body uses content encodings. If you have request compression enabled, turn it off by setting `AWS_DISABLE_REQUEST_COMPRESSION=true`.
+  >
+  > For all limitations and workarounds, see [Known limitations](../../credential-providers/aws-sigv4.md#known-limitations).
 
   Amazon S3 uses a unique endpoint pattern where bucket names appear as subdomains.
 
@@ -129,9 +112,9 @@ Select the tab for the AWS service you want to configure:
 
      * **Authentication scheme**: AWS Signature v4
 
-     When to use SigV4a
-
-     Aembit automatically selects between AWS Signature v4 (SigV4) and Signature v4a (SigV4a) based on the hostname. Use SigV4a for S3 Multi-Region Access Points or other global S3 services that span multiple regions. For more information, see [How Aembit uses AWS SigV4 and SigV4a](../../credential-providers/aws-sigv4.md).
+     > **When to use SigV4a**
+     >
+     > Aembit automatically selects between AWS Signature v4 (SigV4) and Signature v4a (SigV4a) based on the hostname. Use SigV4a for S3 Multi-Region Access Points or other global S3 services that span multiple regions. For more information, see [How Aembit uses AWS SigV4 and SigV4a](../../credential-providers/aws-sigv4.md).
 
   4. Click **Save**.
 
@@ -164,15 +147,13 @@ Select the tab for the AWS service you want to configure:
 
      * **Authentication scheme**: AWS Signature v4
 
-     Regional endpoints
-
-     AWS EC2 is a regional service. If you specify the global endpoint (`ec2.amazonaws.com`), AWS routes requests to `us-east-1` by default. For other regions, use the regional endpoint format `ec2.<region>.amazonaws.com`.
+     > **Regional endpoints**
+     >
+     > AWS EC2 is a regional service. If you specify the global endpoint (`ec2.amazonaws.com`), AWS routes requests to `us-east-1` by default. For other regions, use the regional endpoint format `ec2.<region>.amazonaws.com`.
 
   4. Click **Save**.
 
 ## Credential Provider configuration
-
-[Section titled “Credential Provider configuration”](#credential-provider-configuration)
 
 1. Create an AWS IAM Role in AWS with the necessary permissions to access the desired AWS services. Then, create an AWS IAM Role Integration in your Aembit Tenant. See [Create an AWS IAM Role Integration](../../credential-providers/integrations/aws-iam-role.md).
 
@@ -180,17 +161,13 @@ Select the tab for the AWS service you want to configure:
 
 ## Access Policy configuration
 
-[Section titled “Access Policy configuration”](#access-policy-configuration)
-
-Create an Access Policy**Access Policy**: Access Policies define, enforce, and audit access between Client and Server Workloads by cryptographically verifying workload identity and contextual factors rather than relying on static secrets.[Learn more](../../../../get-started/concepts/access-policies.md) linking your Client Workload**Client Workload**: Client Workloads represent software applications, scripts, or automated processes that initiate access requests to Server Workloads, operating autonomously without direct user interaction.[Learn more](../../../../get-started/concepts/client-workloads.md), the AWS STS Credential Provider, and the Server Workload. See [Access Policies](../../overview.md) for details.
+Create an Access Policy linking your Client Workload, the AWS STS Credential Provider, and the Server Workload. See [Access Policies](../../overview.md) for details.
 
 ## Client Workload configuration
 
-[Section titled “Client Workload configuration”](#client-workload-configuration)
-
 Aembit handles the credentials required to access AWS services, eliminating the need for you to manage them directly. Remove any previously used AWS credentials (access keys, secret keys) from your Client Workload.
 
-If you access AWS through an SDK or library, the SDK may still require credentials to be present for initialization purposes. In this scenario, provide placeholder credentials. Aembit replaces these placeholder credentials with real temporary credentials during the access request. For more information, see [Understanding placeholder credentials](../developer-integration.md#understanding-placeholder-credentials).
+If you access AWS through an SDK or library, the SDK may still require credentials to be present for initialization purposes. In this scenario, provide placeholder credentials. Aembit replaces these placeholder credentials with real temporary credentials during the access request. For more information, see [Understanding placeholder credentials](../../../../dev-guide/integration/client-library-patterns.md#understanding-placeholder-credentials).
 
 ```shell
 # Placeholder credentials for SDK initialization
@@ -205,8 +182,6 @@ export AWS_CA_BUNDLE=/path/to/aembit-root-ca.pem
 ```
 
 ## Test the integration
-
-[Section titled “Test the integration”](#test-the-integration)
 
 After completing the full configuration (Server Workload, Credential Provider, Client Workload, and Access Policy), verify access using the AWS CLI.
 
@@ -269,11 +244,7 @@ After completing the full configuration (Server Workload, Credential Provider, C
 
 ## Common configuration
 
-[Section titled “Common configuration”](#common-configuration)
-
 ### IAM permissions
-
-[Section titled “IAM permissions”](#iam-permissions)
 
 AWS IAM policies require different Resource ARN formats depending on the operation:
 
@@ -306,8 +277,6 @@ For more on AWS IAM policies, see [Policies and permissions in Amazon S3](https:
 
 ### Regional endpoints
 
-[Section titled “Regional endpoints”](#regional-endpoints)
-
 AWS services use different endpoint patterns:
 
 | Service Type        | Endpoint Pattern                 | Example                                |
@@ -320,21 +289,15 @@ For the complete list of AWS service endpoints, see [AWS service endpoints](http
 
 ### Credential lifecycle
 
-[Section titled “Credential lifecycle”](#credential-lifecycle)
-
 Aembit dynamically generates short-lived AWS STS credentials, eliminating manual credential rotation. For details on credential rotation, compromise response, and audit logging, see [Credential Lifecycle Management](../credential-lifecycle.md).
 
 ## Troubleshooting
-
-[Section titled “Troubleshooting”](#troubleshooting)
 
 For common issues like Agent Proxy connectivity, network problems, or TLS configuration, see the [Troubleshooting Guide](../troubleshooting.md).
 
 ### AWS-specific issues
 
-[Section titled “AWS-specific issues”](#aws-specific-issues)
-
-**AccessDenied errors** -
+#### Access denied errors
 
 If you receive `AccessDenied` errors when accessing AWS services:
 
@@ -342,7 +305,7 @@ If you receive `AccessDenied` errors when accessing AWS services:
 2. Check that bucket-level and object-level permissions use the correct ARN format
 3. Confirm the IAM Role trust policy allows the Aembit OIDC provider
 
-**Signature mismatch errors** -
+#### Signature mismatch errors
 
 If you receive signature mismatch errors:
 
@@ -352,21 +315,19 @@ If you receive signature mismatch errors:
 
 ## Cleanup
 
-[Section titled “Cleanup”](#cleanup)
-
 Remove the AWS Server Workload
 
 If you no longer need this integration, remove components in this order:
 
-Deactivate Access Policies first
-
-You must deactivate any Access Policies that reference the Server Workload or Credential Provider before you can delete those components. Attempting to delete a Server Workload or Credential Provider that’s in use by an Access Policy results in an error.
+> **Deactivate Access Policies first**
+>
+> You must deactivate any Access Policies that reference the Server Workload or Credential Provider before you can delete those components. Attempting to delete a Server Workload or Credential Provider that’s in use by an Access Policy results in an error.
 
 1. **Deactivate associated Access Policies** -
 
    * Go to **Access Policies**
-   * Find policies that use this Server Workload or Credential Provider
-   * Deactivate the policy (toggle off)
+   * Find the Access Policies that use this Server Workload or Credential Provider
+   * Deactivate each Access Policy (toggle off)
 
 2. **Delete the Server Workload in Aembit** -
 
@@ -392,11 +353,9 @@ Deleting the Server Workload immediately stops credential provisioning. Ensure n
 
 ## Related resources
 
-[Section titled “Related resources”](#related-resources)
-
 * [How Aembit uses AWS SigV4 and SigV4a](../../credential-providers/aws-sigv4.md) - Understanding AWS request signing
 * [AWS STS Credential Provider](../../credential-providers/aws-security-token-service-federation.md) - Detailed Credential Provider setup
 * [AWS IAM Role Integration](../../credential-providers/integrations/aws-iam-role.md) - IAM Role configuration
 * [Credential Lifecycle Management](../credential-lifecycle.md) - How Aembit manages credential rotation and security
-* [Developer Integration](../developer-integration.md) - SDK integration and placeholder credentials
+* [Integrate through Agent Proxy](../../../../dev-guide/integration/agent-proxy.md) - Integration patterns and placeholder credentials
 * [TLS Decrypt Configuration](../../../deploy-install/advanced-options/tls-decrypt/configure-tls-decrypt.md) - HTTPS interception setup

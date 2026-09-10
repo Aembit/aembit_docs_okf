@@ -4,9 +4,8 @@ title: "Connect with Claude (Desktop/web)"
 description: "Configure Claude Desktop or Claude on the web to query Aembit event logs through the MCP Server."
 resource: https://docs.aembit.io/ai-guide/mcp/mcp-server/connect/claude-desktop/
 interface: mcp
-tags: [connect, mcp-server, mcp]
-timestamp: 2026-06-26T13:11:59-07:00
-type_inferred: true
+tags: ["connect", "mcp-server", "mcp"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Connect with Claude (Desktop/web)
@@ -14,8 +13,6 @@ type_inferred: true
 Connect Claude Desktop or Claude on the web to the Aembit MCP Server to query audit logs, authorization events, and workload events from your Aembit Tenant.
 
 ## Choose a connection method
-
-[Section titled “Choose a connection method”](#choose-a-connection-method)
 
 This page covers two ways to connect Claude to Aembit’s MCP Server. Pick the method that fits your situation:
 
@@ -28,13 +25,9 @@ The Connectors UI method works in both Claude Desktop and Claude on the web. The
 
 ## Claude Connectors UI (recommended)
 
-[Section titled “Claude Connectors UI (recommended)”](#claude-connectors-ui-recommended)
-
 Aembit’s Access Policy gates the MCP Server. Claude registers as an OAuth client through Aembit, authenticates the user against your IdP, and then receives an Aembit Access Token tied to that user’s identity. Aembit refreshes the token as long as the user stays signed in, so there’s nothing for the user to rotate in Claude.
 
 ### Prerequisites
-
-[Section titled “Prerequisites”](#prerequisites)
 
 * Claude Desktop installed ([download](https://claude.ai/download)), or access to Claude on the web ([claude.ai](https://claude.ai/))
 * **MCP Service URL** from the Aembit Admin UI Profile screen (see [Connect to the MCP Server](overview.md)) in the following format: `<tenantId>.mcp.useast2.aembit.io`
@@ -42,8 +35,6 @@ Aembit’s Access Policy gates the MCP Server. Claude registers as an OAuth clie
 * An IdP configured in your Aembit Tenant under [Administrators > Identity Providers](../../../../user-guide/administration/identity-providers/overview.md)
 
 ### Create an Access Policy for Claude Desktop/web
-
-[Section titled “Create an Access Policy for Claude Desktop/web”](#create-an-access-policy-for-claude-desktopweb)
 
 Follow these steps to create an Access Policy that allows Claude to authenticate and access the Aembit MCP Server:
 
@@ -94,15 +85,13 @@ Follow these steps to create an Access Policy that allows Claude to authenticate
 
 ### Connect Claude to Aembit
 
-[Section titled “Connect Claude to Aembit”](#connect-claude-to-aembit)
-
 1. Open Claude (Desktop or on the web), then in the left sidebar menu, go to **Customize** -> **Connectors**.
 
 2. In the **Connectors** sidebar panel, click **+ Add Connector** and select **… Add custom connector**.
 
-   About permissions
-
-   If the **… Add custom connector** option isn’t available, your account may not have permission to create connectors. Contact your administrator to either have them create the connector for you or grant you the necessary permissions (the `connector.create` permission).
+   > **About permissions**
+   >
+   > If the **… Add custom connector** option isn’t available, your account may not have permission to create connectors. Contact your administrator to either have them create the connector for you or grant you the necessary permissions (the `connector.create` permission).
 
 3. Enter the desired **Name**.
 
@@ -114,31 +103,23 @@ Follow these steps to create an Access Policy that allows Claude to authenticate
 
 ### Verify the connection
 
-[Section titled “Verify the connection”](#verify-the-connection)
-
 1. Expand the Aembit connector under `Settings` > `Connectors`. The list of available tools appears, including `get_audit_logs`, `get_audit_events`, and `get_workload_events`.
 
 2. In a new chat, ask Claude a question such as **“Show me the last 10 audit log entries.”** Claude routes the request through the Aembit MCP Server and returns results.
 
 ## Local configuration with stdio-HTTP bridge (Desktop only)
 
-[Section titled “Local configuration with stdio-HTTP bridge (Desktop only)”](#local-configuration-with-stdio-http-bridge-desktop-only)
-
 Use this method when your Aembit tenant doesn’t have an IdP configured yet, or for a one-off test before you set up the full [Connectors UI method](#claude-connectors-ui-recommended).
 
-About the stdio-HTTP bridge
-
-Claude Desktop’s local configuration only supports stdio-based MCP servers. Anthropic routes remote MCP servers through the [Connectors UI](#claude-connectors-ui-recommended) instead. The stdio-HTTP bridge works around that by relaying Claude Desktop’s stdio traffic through [`mcp-remote`](https://github.com/geelen/mcp-remote), an MIT-licensed community bridge. Neither Anthropic nor the Model Context Protocol project publishes an official equivalent. Aembit doesn’t maintain `mcp-remote`; evaluate it like any other third-party dependency before relying on it in production.
+> **About the stdio-HTTP bridge**
+>
+> Claude Desktop’s local configuration only supports stdio-based MCP servers. Anthropic routes remote MCP servers through the [Connectors UI](#claude-connectors-ui-recommended) instead. The stdio-HTTP bridge works around that by relaying Claude Desktop’s stdio traffic through [`mcp-remote`](https://github.com/geelen/mcp-remote), an MIT-licensed community bridge. Neither Anthropic nor the Model Context Protocol project publishes an official equivalent. Aembit doesn’t maintain `mcp-remote`; evaluate it like any other third-party dependency before relying on it in production.
 
 ### How the stdio-HTTP bridge works
-
-[Section titled “How the stdio-HTTP bridge works”](#how-the-stdio-http-bridge-works)
 
 Claude Desktop launches `mcp-remote` as a local bridge. The `mcp-remote` bridge forwards Claude’s stdio MCP traffic to the Aembit MCP Server over Streamable HTTP and attaches your Aembit API Token to each request as a Bearer credential.
 
 ### Prerequisites
-
-[Section titled “Prerequisites”](#prerequisites-1)
 
 * Claude Desktop app installed ([download](https://claude.ai/download))
 * **Node.js installed on the operating system Claude Desktop runs on** (not inside Windows Subsystem for Linux), with `npx` available on the system PATH. Verify with `where.exe npx` (Windows) or `which npx` (macOS) from a new terminal—both should return a path. See [Troubleshooting](#troubleshooting) if they don’t.
@@ -146,11 +127,9 @@ Claude Desktop launches `mcp-remote` as a local bridge. The `mcp-remote` bridge 
 
 ### Add Aembit’s MCP server to `claude_desktop_config.json`
 
-[Section titled “Add Aembit’s MCP server to claude\_desktop\_config.json”](#add-aembits-mcp-server-to-claude_desktop_configjson)
-
-Protect your API Token
-
-Avoid committing API tokens to version control. Store tokens in environment variables or a secrets manager, and reference them in your configuration file.
+> **Protect your API Token**
+>
+> Avoid committing API tokens to version control. Store tokens in environment variables or a secrets manager, and reference them in your configuration file.
 
 1. Locate the `claude_desktop_config.json` file on your system:
 
@@ -168,7 +147,7 @@ Avoid committing API tokens to version control. Store tokens in environment vari
 
    - macOS
 
-     claude\_desktop\_config.json
+     **claude\_desktop\_config.json**
 
      ```json
      {
@@ -192,7 +171,7 @@ Avoid committing API tokens to version control. Store tokens in environment vari
 
    - Windows
 
-     claude\_desktop\_config.json
+     **claude\_desktop\_config.json**
 
      ```json
      {
@@ -216,9 +195,9 @@ Avoid committing API tokens to version control. Store tokens in environment vari
 
      Notice on Windows that you must use `npx.cmd` instead of `npx` so Claude Desktop’s process spawner resolves the file extension correctly.
 
-   Don’t add a space after `Authorization:`
-
-   Claude Desktop on Windows and Cursor have a known bug where spaces inside `npx` arguments get mangled. Write the header value as `Authorization:Bearer ${AEMBIT_API_TOKEN}` with no space around the colon. Spaces inside `env` values work fine—the bug only affects values inside `args`.
+   > **Don’t add a space after `Authorization:`**
+   >
+   > Claude Desktop on Windows and Cursor have a known bug where spaces inside `npx` arguments get mangled. Write the header value as `Authorization:Bearer ${AEMBIT_API_TOKEN}` with no space around the colon. Spaces inside `env` values work fine—the bug only affects values inside `args`.
 
 3. Fully restart Claude Desktop to load the new configuration.
 
@@ -228,18 +207,16 @@ Avoid committing API tokens to version control. Store tokens in environment vari
 
    * Windows
 
-     Closing the Claude Desktop window isn’t enough
-
-     On Windows, closing the Claude Desktop window sends the app to the system tray, and the process keeps running with the old in-memory configuration. You must **fully quit** the app for `claude_desktop_config.json` changes to take effect.
-
-     1. Find the Claude icon in the system tray (you may need to expand the **Show hidden icons** arrow).
-     2. Right-click the icon and choose `Quit`.
-     3. Open `Task Manager` and confirm no `Claude.exe` processes remain.
-     4. Relaunch Claude Desktop from the Start menu.
+     > **Closing the Claude Desktop window isn’t enough**
+     >
+     > On Windows, closing the Claude Desktop window sends the app to the system tray, and the process keeps running with the old in-memory configuration. You must **fully quit** the app for `claude_desktop_config.json` changes to take effect.
+     >
+     > 1. Find the Claude icon in the system tray (you may need to expand the **Show hidden icons** arrow).
+     > 2. Right-click the icon and choose `Quit`.
+     > 3. Open `Task Manager` and confirm no `Claude.exe` processes remain.
+     > 4. Relaunch Claude Desktop from the Start menu.
 
 ### Verify the connection
-
-[Section titled “Verify the connection”](#verify-the-connection-1)
 
 Verify that Claude Desktop connects to the Aembit MCP Server and can query data.
 
@@ -247,17 +224,15 @@ Verify that Claude Desktop connects to the Aembit MCP Server and can query data.
 
 2. Open `Settings` and locate the Aembit MCP server in the MCP servers list.
 
-   Note
-
-   Locally configured MCP servers don’t appear under `Settings` > `Connectors`, which Claude Desktop reserves for OAuth-based servers. Look under `Developer` > `MCP Servers` or under an `MCP Servers` top-level item, depending on your Claude Desktop version.
+   > **Note**
+   >
+   > Locally configured MCP servers don’t appear under `Settings` > `Connectors`, which Claude Desktop reserves for OAuth-based servers. Look under `Developer` > `MCP Servers` or under an `MCP Servers` top-level item, depending on your Claude Desktop version.
 
 3. Confirm the Aembit server appears in the list and reports as connected. If it shows as failed, see [Troubleshooting](#troubleshooting).
 
 4. In a new chat, try a prompt like: “List the available Aembit MCP tools.”
 
 ## Example prompts
-
-[Section titled “Example prompts”](#example-prompts)
 
 After connecting, you can ask Claude questions like:
 
@@ -269,13 +244,9 @@ Claude translates your questions into structured MCP queries automatically. See 
 
 ## Troubleshooting
 
-[Section titled “Troubleshooting”](#troubleshooting)
-
 The following sections cover failure modes for the **local configuration with stdio-HTTP bridge** method. When this method fails, Claude Desktop writes errors to a per-server log file. Locate the log first, then match the error against the relevant section.
 
 ### Find the log file
-
-[Section titled “Find the log file”](#find-the-log-file)
 
 | Operating System | Path                                          |
 | ---------------- | --------------------------------------------- |
@@ -285,8 +256,6 @@ The following sections cover failure modes for the **local configuration with st
 Claude Desktop creates this file the first time it spawns the `aembit` MCP server. If the file doesn’t exist after you’ve added the configuration and restarted Claude Desktop, see [The Aembit server doesn’t appear in Claude Desktop](#the-aembit-server-doesnt-appear-in-claude-desktop).
 
 ### `spawn npx ENOENT` or `'npx' is not recognized`
-
-[Section titled “spawn npx ENOENT or 'npx' is not recognized”](#spawn-npx-enoent-or-npx-is-not-recognized)
 
 **Symptom:** The log contains one of:
 
@@ -304,8 +273,6 @@ Error: spawn npx ENOENT
 3. Fully quit and relaunch Claude Desktop (see step 3 of [Add Aembit’s MCP server](#add-aembits-mcp-server-to-claude_desktop_configjson)). Claude Desktop inherits PATH at launch; a running instance won’t see the new install.
 
 ### Error: `502 Bad Gateway`
-
-[Section titled “Error: 502 Bad Gateway”](#error-502-bad-gateway)
 
 **Symptom:** The log contains:
 
@@ -327,8 +294,6 @@ Less common 502 causes: the MCP backend is temporarily unhealthy for your tenant
 
 ### Error: `401 Unauthorized`
 
-[Section titled “Error: 401 Unauthorized”](#error-401-unauthorized)
-
 **Symptom:** mcp-remote connects, but every request returns 401.
 
 **Cause:** Your Aembit API Token is invalid or has expired. Profile-screen tokens have a default 1-hour lifetime (extendable) and must still be valid when Claude Desktop spawns mcp-remote and makes its first request.
@@ -337,8 +302,6 @@ Less common 502 causes: the MCP backend is temporarily unhealthy for your tenant
 
 ### The Aembit server doesn’t appear in Claude Desktop
 
-[Section titled “The Aembit server doesn’t appear in Claude Desktop”](#the-aembit-server-doesnt-appear-in-claude-desktop)
-
 If `mcp-server-aembit.log` doesn’t exist after you’ve added the configuration and restarted, Claude Desktop hasn’t attempted to spawn the server. Check each of these:
 
 * **Are you looking in the right section?** Locally configured servers don’t appear under `Settings` > `Connectors` (OAuth-only). Look under `Developer` > `MCP Servers` or under an `MCP Servers` top-level Settings item.
@@ -346,8 +309,6 @@ If `mcp-server-aembit.log` doesn’t exist after you’ve added the configuratio
 * **Is your `claude_desktop_config.json` valid JSON?** A syntax error elsewhere in the file can cause Claude Desktop to skip MCP server initialization. Validate the file with a JSON linter.
 
 ## Next steps
-
-[Section titled “Next steps”](#next-steps)
 
 * See the [Prompt Library](../../../prompt-library/overview.md) for example prompts and best practices.
 * If you have connection issues, see the preceding [Troubleshooting](#troubleshooting) section or the [overview page](overview.md#troubleshooting).

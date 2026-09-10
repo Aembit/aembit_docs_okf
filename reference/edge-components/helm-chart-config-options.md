@@ -3,9 +3,8 @@ type: reference
 title: "Edge Component Helm chart configuration options reference"
 description: "Reference for Helm chart configuration options when deploying Aembit to Kubernetes"
 resource: https://docs.aembit.io/reference/edge-components/helm-chart-config-options/
-tags: [edge-component]
-timestamp: 2026-06-18T13:15:52-04:00
-type_inferred: true
+tags: ["edge-component"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Edge Component Helm chart configuration options reference
@@ -18,11 +17,7 @@ The Aembit Helm Chart includes configuration options that control the behavior o
 
 ## Edge component behavior configuration
 
-[Section titled “Edge component behavior configuration”](#edge-component-behavior-configuration)
-
 ### `tenant` Required
-
-[Section titled “tenant ”](#tenant)
 
 Default - not set
 
@@ -34,8 +29,6 @@ The Aembit Tenant ID that Edge Components use.
 ***
 
 ### `agentController.deviceCode` Required
-
-[Section titled “agentController.deviceCode ”](#agentcontrollerdevicecode)
 
 Default - not set
 
@@ -50,8 +43,6 @@ Aembit uses device codes for code-based registration of Agent Controllers, which
 
 ### `agentController.id` Required
 
-[Section titled “agentController.id ”](#agentcontrollerid)
-
 Default - not set
 
 Required if not using `agentController.deviceCode`.
@@ -65,8 +56,6 @@ Aembit uses this unique ID for attestation-based registration of Agent Controlle
 
 ### `agentController.tls.secretName`
 
-[Section titled “agentController.tls.secretName”](#agentcontrollertlssecretname)
-
 Default - not set
 
 The name of a [Kubernetes TLS secret](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_create/kubectl_create_secret_tls/) containing a private key and certificate used for Agent Controller TLS.
@@ -77,8 +66,6 @@ The name of a [Kubernetes TLS secret](https://kubernetes.io/docs/reference/kubec
 ***
 
 ### `agentInjector.filters.namespaces`
-
-[Section titled “agentInjector.filters.namespaces”](#agentinjectorfiltersnamespaces)
 
 Default - not set
 
@@ -91,8 +78,6 @@ This configuration specifies the Kubernetes namespaces where Aembit injects the 
 
 ### `agentInjector.env`
 
-[Section titled “agentInjector.env”](#agentinjectorenv)
-
 Default - not set
 
 This allows you to specify a list of environment variables for the Agent Injector. You can pass it to Helm using the `-f <filename>` option (to pass a values file) or directly via `--set "agentInjector.env.AEMBIT_SOME_ENV=some_value"`.
@@ -103,8 +88,6 @@ This allows you to specify a list of environment variables for the Agent Injecto
 ***
 
 ### `agentProxy.trustedCertificates`
-
-[Section titled “agentProxy.trustedCertificates”](#agentproxytrustedcertificates)
 
 Default - not set
 
@@ -119,15 +102,13 @@ If you set the `agentProxy.trustedCertificatesVolumeName` parameter, it override
 
 ### `agentProxy.trustedCertificatesVolumeName`
 
-[Section titled “agentProxy.trustedCertificatesVolumeName”](#agentproxytrustedcertificatesvolumename)
-
 Default - not set
 
 Replaces the trusted CA certificates in the Agent Proxy container with the certificates from a volume. This is useful for deployments that don’t permit privilege escalation or that have a read-only filesystem. Since this replaces all existing trusted CA certificates in the container you must provide all certificates necessary to connect to your Server Workloads.
 
 When defining a ConfigMap with your certificate bundle, your key name must be `ca-certificates.crt`.
 
-Example ConfigMap
+**Example ConfigMap**
 
 ```yaml
   ca-certificates.crt: |
@@ -145,8 +126,6 @@ This option overrides `agentProxy.trustedCertificates`.
 
 ### `agentProxy.env`
 
-[Section titled “agentProxy.env”](#agentproxyenv)
-
 Default - not set
 
 This allows you to specify a list of environment variables for the Agent Proxy. You can pass it to Helm using the `-f <filename>` option (to pass a values file) or directly via `--set "agentProxy.env.AEMBIT_SOME_ENV=some_value"`.
@@ -156,15 +135,11 @@ This allows you to specify a list of environment variables for the Agent Proxy. 
 
 ## Edge component resource annotations
 
-[Section titled “Edge component resource annotations”](#edge-component-resource-annotations)
-
 The following options accept any annotation names and values that Kubernetes accepts. The values specified with `--set` use the period (`.`) character to separate nested names. Most [Kubernetes annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) use DNS namespace prefixes and thus also include period characters. Be sure to escape the periods in your annotation names using a backslash (`\`) character. Alternatively, specify these in a YAML file with the `-f <filename>` option. No escaping is necessary in this file.
 
 ***
 
 ### `agentController.deploymentAnnotations`
-
-[Section titled “agentController.deploymentAnnotations”](#agentcontrollerdeploymentannotations)
 
 Default - not set
 
@@ -177,8 +152,6 @@ This affects the annotations applied to the `Deployment` resource for the Agent 
 
 ### `agentController.podAnnotations`
 
-[Section titled “agentController.podAnnotations”](#agentcontrollerpodannotations)
-
 Default - not set
 
 This affects the annotations applied to the `Pod` resource for the Agent Controller.
@@ -189,8 +162,6 @@ This affects the annotations applied to the `Pod` resource for the Agent Control
 ***
 
 ### `agentController.serviceAnnotations`
-
-[Section titled “agentController.serviceAnnotations”](#agentcontrollerserviceannotations)
 
 Default - not set
 
@@ -203,8 +174,6 @@ This affects the annotations applied to the `Service` resource for the Agent Con
 
 ### `agentInjector.deploymentAnnotations`
 
-[Section titled “agentInjector.deploymentAnnotations”](#agentinjectordeploymentannotations)
-
 Default - not set
 
 This affects the annotations applied to the `Deployment` resource for the Agent Injector.
@@ -215,8 +184,6 @@ This affects the annotations applied to the `Deployment` resource for the Agent 
 ***
 
 ### `agentInjector.podAnnotations`
-
-[Section titled “agentInjector.podAnnotations”](#agentinjectorpodannotations)
 
 Default - not set
 
@@ -229,8 +196,6 @@ This affects the annotations applied to the `Pod` resource for the Agent Injecto
 
 ### `agentInjector.serviceAnnotations`
 
-[Section titled “agentInjector.serviceAnnotations”](#agentinjectorserviceannotations)
-
 Default - not set
 
 This affects the annotations applied to the `Service` resource for the Agent Injector.
@@ -241,8 +206,6 @@ This affects the annotations applied to the `Service` resource for the Agent Inj
 ***
 
 ### `agentInjector.tlsSecretAnnotations`
-
-[Section titled “agentInjector.tlsSecretAnnotations”](#agentinjectortlssecretannotations)
 
 Default - not set
 
@@ -255,8 +218,6 @@ This affects the annotations applied to the `Secret` resource that stores the ge
 
 ### `agentInjector.webhookAnnotations`
 
-[Section titled “agentInjector.webhookAnnotations”](#agentinjectorwebhookannotations)
-
 Default - not set
 
 This affects the annotations applied to the `MutatingWebhookConfiguration` resource for the Agent Injector. A common use is to set the [`cert-manager.io/inject-ca-from` annotation](https://cert-manager.io/docs/concepts/ca-injector/) to have cert-manager configure the `caBundle` property of this admission control webhook.
@@ -268,8 +229,6 @@ This affects the annotations applied to the `MutatingWebhookConfiguration` resou
 
 ### `agentProxy.runAsRestricted`
 
-[Section titled “agentProxy.runAsRestricted”](#agentproxyrunasrestricted)
-
 Default - not set
 
 Set this to `true` to make the Agent Proxy container definition drop all its privileges, making it compatible with the OpenShift `restricted-v2` [`SecurityContextConstraint`](https://www.redhat.com/en/blog/managing-sccs-in-openshift) or the standard `restricted` [security standard](https://kubernetes.io/docs/concepts/security/pod-security-standards/).
@@ -277,8 +236,6 @@ Set this to `true` to make the Agent Proxy container definition drop all its pri
 ***
 
 ### `serviceAccount.openshift.scc`
-
-[Section titled “serviceAccount.openshift.scc”](#serviceaccountopenshiftscc)
 
 Default - not set
 

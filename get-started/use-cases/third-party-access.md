@@ -3,7 +3,7 @@ type: explanation
 title: "Securing third-party access"
 description: "How Aembit secures third-party access to your environment"
 resource: https://docs.aembit.io/get-started/use-cases/third-party-access/
-tags: [use-case]
+tags: ["use-case"]
 timestamp: 2026-04-13T13:05:24-07:00
 ---
 
@@ -12,8 +12,6 @@ timestamp: 2026-04-13T13:05:24-07:00
 Workloads often need to access third-party APIs, most commonly SaaS applications like Salesforce, Slack, GitLab, Snowflake, or Microsoft Graph. Managing credentials for these integrations is challenging because different SaaS providers implement different authentication methods: OAuth 2.0 (two-legged or three-legged), certificate-based auth, API keys, and more. When you need to rotate credentials or restrict access to certain workloads, this variety becomes a significant operational burden.
 
 ## What Aembit solves
-
-[Section titled “What Aembit solves”](#what-aembit-solves)
 
 Regardless of your organization’s multicloud posture (all-in on AWS, hybrid Azure/GCP, or still primarily on-premises), you almost certainly have SaaS applications powering your business processes.
 
@@ -27,8 +25,6 @@ Platform teams configure each SaaS provider’s authentication once in Aembit. D
 * For SaaS providers not yet supported as built-in credential providers, Aembit supports custom credential provider configurations. Contact support for guidance on custom integrations.
 
 ## Why SaaS authentication is complex
-
-[Section titled “Why SaaS authentication is complex”](#why-saas-authentication-is-complex)
 
 Every SaaS provider implements authentication differently. Salesforce supports OAuth 2.0 with JWT bearer tokens or client credentials. Snowflake uses key-pair authentication. Datadog expects API keys with application keys. Even providers that nominally use “OAuth” implement different grant types with different token lifetimes and scoping models. For platform teams managing access to dozens of SaaS APIs, this means learning and maintaining a different authentication flow for each one.
 
@@ -50,9 +46,7 @@ Each of these requires different configuration, different rotation logic, and di
 
 ## Real example: GitLab service account tokens
 
-[Section titled “Real example: GitLab service account tokens”](#real-example-gitlab-service-account-tokens)
-
-Your security team requires strict control over which applications can access GitLab’s API. You maintain lists of Personal Access Tokens (PATs)**Personal Access Token (PAT)**: A long-lived authentication token used as an alternative to passwords for API access. PATs are commonly used with services like GitLab, GitHub, and Jira, and are a frequent target for credential theft. manually, and developers store them in environment variables or configuration files. Rotating them requires coordinating with developers, updating multiple places, and hoping nothing breaks in the process. When someone leaves the team, there’s no reliable way to know which PATs to revoke.
+Your security team requires strict control over which applications can access GitLab’s API. You maintain lists of Personal Access Tokens (PATs) manually, and developers store them in environment variables or configuration files. Rotating them requires coordinating with developers, updating multiple places, and hoping nothing breaks in the process. When someone leaves the team, there’s no reliable way to know which PATs to revoke.
 
 With Aembit, this workflow looks different:
 
@@ -72,30 +66,24 @@ Aembit [logs every credential request](../concepts/audit-report.md), making them
 
 ### Why this matters for third-party access
 
-[Section titled “Why this matters for third-party access”](#why-this-matters-for-third-party-access)
-
 Each SaaS provider implements authentication differently, and your platform team has to learn and maintain each one. Aembit abstracts that complexity. Developers authenticate their workload identity, and Aembit handles the OAuth flow, API key injection, or certificate exchange regardless of the target service.
 
 When someone leaves the team, revoking access means updating an Access Policy, not hunting down PATs across dozens of services. Credential rotation happens automatically on a schedule you define, not when someone remembers to do it.
 
-Is this relevant to your environment?
-
-Ask yourself:
-
-* Are the applications you’re building connecting to SaaS APIs and services?
-* How are you handling secrets and authentication for these integrations?
-* Are you aware that AWS IAM, Azure Entra, and other cloud IAM solutions don’t help with SaaS authentication?
-* Are you using a secrets manager? How often do you rotate these credentials?
+> **Is this relevant to your environment?**
+>
+> Ask yourself:
+>
+> * Are the applications you’re building connecting to SaaS APIs and services?
+> * How are you handling secrets and authentication for these integrations?
+> * Are you aware that AWS IAM, Azure Entra, and other cloud IAM solutions don’t help with SaaS authentication?
+> * Are you using a secrets manager? How often do you rotate these credentials?
 
 ## Supported integrations
-
-[Section titled “Supported integrations”](#supported-integrations)
 
 Aembit supports credential management for a wide range of SaaS providers, including Salesforce, Snowflake, Datadog, Slack, Jira, PagerDuty, and GitHub. These cover approximately 80% of common enterprise SaaS integrations. Each integration handles the provider’s specific authentication method (OAuth variants, API keys, certificates) so your application code stays consistent regardless of the target service. See the [authentication methods details](#why-saas-authentication-is-complex) in the preceding section for specifics, or visit the [Credential Providers documentation](../../user-guide/access-policies/server-workloads/overview.md) for the full list of supported integrations and configuration details.
 
 ## Next steps
-
-[Section titled “Next steps”](#next-steps)
 
 * Configure your first SaaS credential provider. See [Credential Providers](../../user-guide/access-policies/server-workloads/overview.md) for setup guides by provider.
 * For securing LLM API connections specifically (OpenAI, Azure OpenAI, Anthropic), see [AI and LLM Access](ai-llm-access.md)

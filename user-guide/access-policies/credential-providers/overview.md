@@ -1,20 +1,20 @@
 ---
-type: explanation
+type: reference
 title: "Credential Providers"
 description: "This document provides a high-level description of Credential Providers"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/
-tags: [credential-provider, access-policy]
-timestamp: 2026-07-07T15:50:08-04:00
-type_inferred: true
+interface: web-ui
+tags: ["credential-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Credential Providers
 
 This section covers Credential Providers in Aembit, which you can use to provide access credentials to Client Workloads so they can access Server Workloads securely.
 
-Reuse this in another Resource Set
-
-You can copy a Credential Provider to another Resource Set. See [About component copying](../../administration/resource-sets/about-component-copying.md) to learn more.
+> **Reuse this in another Resource Set**
+>
+> You can copy a Credential Provider to another Resource Set. See [About component copying](../../administration/resource-sets/about-component-copying.md) to learn more.
 
 The following pages provide information about different Credential Provider types and how to configure them:
 
@@ -41,16 +41,12 @@ The following pages provide information about different Credential Provider type
 
 ### About Credential Providers
 
-[Section titled “About Credential Providers”](#about-credential-providers)
-
 * [About JWT-SVID Tokens](about-spiffe-jwt-svid.md)
 * [About MCP User-Based Access Tokens](about-mcp-user-based-access-token.md)
 * [About OIDC ID Tokens](about-oidc-id-token.md)
 * [About X.509-SVID](about-spiffe-x509-svid.md)
 
 ### Advanced options
-
-[Section titled “Advanced options”](#advanced-options)
 
 * [Private Network Access](private-network-access.md)
 * [Multiple Credential Providers](multiple-credential-providers.md)
@@ -59,8 +55,6 @@ The following pages provide information about different Credential Provider type
 * [Multiple Credential Providers Terraform](advanced-options/multiple-credential-providers-terraform.md)
 
 ### Integrations
-
-[Section titled “Integrations”](#integrations)
 
 * [About Credential Provider Integrations](integrations/overview.md)
 * [AWS IAM Role](integrations/aws-iam-role.md)

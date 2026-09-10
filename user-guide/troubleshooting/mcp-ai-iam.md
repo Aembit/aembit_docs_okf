@@ -4,7 +4,7 @@ title: "Troubleshoot MCP and AI IAM access"
 description: "Investigate MCP and AI IAM failures end-to-end across Aembit's authorization and gateway reporting surfaces."
 resource: https://docs.aembit.io/user-guide/troubleshooting/mcp-ai-iam/
 interface: web-ui
-tags: [troubleshooting]
+tags: ["troubleshooting"]
 timestamp: 2026-06-30T13:21:27-04:00
 ---
 
@@ -12,7 +12,7 @@ timestamp: 2026-06-30T13:21:27-04:00
 
 When an AI agent or MCP client can’t reach an MCP server, the failure can originate in the
 
-MCP Authorization Server**MCP Authorization Server**: The Aembit component that provides OAuth 2.1 authorization for Model Context Protocol (MCP) servers, enabling secure access control for AI agents and MCP clients.[Learn more](https://docs.aembit.io/user-guide/ai/mcp-auth-server/about-mcp-auth-server/) or in MCP Identity Gateway**MCP Identity Gateway**: A component that brokers MCP traffic between MCP clients and target MCP servers, validating authorization and presenting Aembit-managed credentials on each request.[Learn more](../../ai-guide/mcp/identity-gateway/overview.md).
+MCP Authorization Server or in MCP Identity Gateway.
 
 Use this guide to:
 
@@ -20,21 +20,17 @@ Use this guide to:
 * Look up specific failure modes and resolutions
 * Monitor proactively for new failures
 
-Client setup troubleshooting
-
-If your error happens during MCP client setup (redirect URI, OAuth callback issues), see [Troubleshoot the MCP Authorization Server](../../ai-guide/mcp/authorization-server/troubleshooting-mcp-auth-server.md). Come back here when those errors point to a runtime authorization or MCP Identity Gateway issue.
+> **Client setup troubleshooting**
+>
+> If your error happens during MCP client setup (redirect URI, OAuth callback issues), see [Troubleshoot the MCP Authorization Server](../../ai-guide/mcp/authorization-server/troubleshooting-mcp-auth-server.md). Come back here when those errors point to a runtime authorization or MCP Identity Gateway issue.
 
 ## Step-by-step investigation
-
-[Section titled “Step-by-step investigation”](#step-by-step-investigation)
 
 Three reporting surfaces in the Aembit Tenant cover MCP and AI IAM activity. Consult them in this order:
 
 ### Access Authorization Events
 
-[Section titled “Access Authorization Events”](#access-authorization-events)
-
-Use Access Authorization Events**Access Authorization Event**: A structured record that Aembit Cloud emits when an Edge Component requests access to a Server Workload.[Learn more](../audit-report/access-authorization-events.md) to confirm whether the request reached Aembit Cloud and how Access Policy evaluation resolved.
+Use Access Authorization Events to confirm whether the request reached Aembit Cloud and how Access Policy evaluation resolved.
 
 1. In the Aembit Tenant, click **Reporting**. The Access Authorization Events tab is selected by default.
 
@@ -51,31 +47,25 @@ Use Access Authorization Events**Access Authorization Event**: A structured reco
 
 ### Workload Events
 
-[Section titled “Workload Events”](#workload-events)
+Use Workload Events when Access Authorization Events show a successful authorization but the MCP client still received an error. See what the MCP Identity Gateway forwarded, modified, or rejected.
 
-Use Workload Events**Workload Event**: A structured audit record that Aembit generates when application-level traffic flows through Agent Proxy or MCP Identity Gateway.[Learn more](../audit-report/workload-events.md) when Access Authorization Events show a successful authorization but the MCP client still received an error. See what the MCP Identity Gateway forwarded, modified, or rejected.
-
-1. Open [Workload Events](../audit-report/workload-events.md) and filter by the same timespan and `Application Protocol = MCP`.
+1. Open [Workload Events](../audit-report/workload-events/overview.md) and filter by the same timespan and `Application Protocol = MCP`.
 2. If you know which user reported the failure, apply the **User (MCP App Protocol only)** filter. MCP Workload Events record user identity as `application.mcp.userId` for flows that involve a human identity.
 3. Narrow by matched Client Workload, Server Workload, or `mcpSessionId` to isolate a specific session.
-4. Look for [`mcp.response`](../audit-report/workload-events.md#workload-response-events) events where `outcome.result` is `Error`. The `outcome.reason` field describes the failure source.
+4. Look for [`mcp.response`](../audit-report/workload-events/overview.md#workload-response-events) events where `outcome.result` is `Error`. The `outcome.reason` field describes the failure source.
 
-Event delay
-
-Access Authorization Events and Workload Events can take a few minutes to appear in Reporting. If a recent failure doesn’t appear, refresh after a few minutes or use MCP Authorization Tracing for rapid visibility.
+> **Event delay**
+>
+> Access Authorization Events and Workload Events can take a few minutes to appear in Reporting. If a recent failure doesn’t appear, refresh after a few minutes or use MCP Authorization Tracing for rapid visibility.
 
 ### MCP Authorization Tracing
 
-[Section titled “MCP Authorization Tracing”](#mcp-authorization-tracing)
-
-Use MCP Authorization Tracing**MCP Authorization Tracing**: A live view in the Aembit Tenant that surfaces each inbound authorization request as MCP Identity Gateway receives it, including the redirect URI, resource, matched Client Workload, and Access Policy outcome.[Learn more](../audit-report/mcp-authorization-tracing.md) when the static event record is ambiguous and you can reproduce the failure on demand.
+Use MCP Authorization Tracing when the static event record is ambiguous and you can reproduce the failure on demand.
 
 1. Ask the user to retry the failing operation.
 2. Watch [MCP Authorization Tracing](../audit-report/mcp-authorization-tracing.md) for the resource URL, redirect URI, and Access Policy match outcome.
 
 ## Error condition matrix
-
-[Section titled “Error condition matrix”](#error-condition-matrix)
 
 The following matrix maps MCP failure modes to the event that surfaces them and how to remediate.
 
@@ -96,8 +86,6 @@ The following matrix maps MCP failure modes to the event that surfaces them and 
 
 ## Match events across surfaces
 
-[Section titled “Match events across surfaces”](#match-events-across-surfaces)
-
 To match Access Authorization Events with Workload Events for the same activity, use these shared IDs:
 
 * **Context ID** to match Access Authorization Events from the same evaluation.
@@ -116,8 +104,6 @@ To match Access Authorization Events with Workload Events for the same activity,
 
 ### Trace a request with the authorization chain
 
-[Section titled “Trace a request with the authorization chain”](#trace-a-request-with-the-authorization-chain)
-
 When you investigate an MCP request, you need to understand which authorization decisions allowed the request, and what happened at each step. The authorization chain connects those events across both the access and workload surfaces.
 
 MCP events carry an `authorizationChain`, which is an ordered list of the Context IDs for the authorization decisions behind the request. Each authorization event adds its own Context ID to the chain, so the chain grows as the request moves through the flow. A workload event carries the chain as it stood when Aembit recorded the event.
@@ -132,8 +118,6 @@ To trace a request end-to-end:
 
 #### Requests that fan out to multiple servers
 
-[Section titled “Requests that fan out to multiple servers”](#requests-that-fan-out-to-multiple-servers)
-
 A request such as `tools/list` fans out to every assigned MCP server, and the Gateway runs a separate authorization for each upstream server. Each branch carries its own chain. The chains share the opening Context IDs from the Client-to-Gateway request (auth-code issuance and token exchange), then extend differently for each server.
 
 | Event                                         | Chain (`authorizationChain`)                       |
@@ -147,26 +131,18 @@ The Client-to-Gateway `mcp.response` carries only the shared opening Context IDs
 
 #### When an event has no chain
 
-[Section titled “When an event has no chain”](#when-an-event-has-no-chain)
-
 If an event has no `authorizationChain`, either the request ran on a component earlier than version 1.32, or the chain exceeded its limit of 100 Context IDs. In the second case, Aembit Edge dropped the chain to keep request headers small. Aembit still records the events; correlate them using the other identifiers in the preceding table.
 
 ## Monitor for failures
-
-[Section titled “Monitor for failures”](#monitor-for-failures)
 
 Once you know what MCP and AI IAM failures look like, you can monitor for them proactively instead of waiting for a user to report a problem. Forward Aembit events to any destination you already operate—a SIEM, an S3 bucket, or another log store—using [Log Streams](../administration/log-streams/overview.md).
 
 ### What to alert on
 
-[Section titled “What to alert on”](#what-to-alert-on)
-
 * Any Access Authorization Event with severity `Error`. This includes Trust Provider failures, Credential Provider failures, and [`access.discovery`](../audit-report/access-authorization-events.md#access-discovery-events) events that found no match.
-* Any Workload Event with severity `Error` and event type [`mcp.response`](../audit-report/workload-events.md#workload-response-events). This catches Gateway-side rejections, upstream MCP server failures, and tool-call failures.
+* Any Workload Event with severity `Error` and event type [`mcp.response`](../audit-report/workload-events/overview.md#workload-response-events). This catches Gateway-side rejections, upstream MCP server failures, and tool-call failures.
 
 ### Severity levels
-
-[Section titled “Severity levels”](#severity-levels)
 
 * `Info` - Normal authorization or traffic event. No action required.
 * `Warning` - Reserved for non-failure conditions that still merit review.
@@ -174,16 +150,12 @@ Once you know what MCP and AI IAM failures look like, you can monitor for them p
 
 ### Event volume
 
-[Section titled “Event volume”](#event-volume)
-
 The MCP Identity Gateway emits two events per request on the simple path and `2 + (2 × N)` events on fanout requests such as `tools/list` and `initialize`, where N is the number of assigned MCP servers. Plan retention and alerting thresholds accordingly.
 
 ## Related pages
 
-[Section titled “Related pages”](#related-pages)
-
 * [Access Authorization Events](../audit-report/access-authorization-events.md)
-* [Workload Events](../audit-report/workload-events.md)
+* [Workload Events](../audit-report/workload-events/overview.md)
 * [MCP Authorization Tracing](../audit-report/mcp-authorization-tracing.md)
 * [Troubleshoot the MCP Authorization Server](../../ai-guide/mcp/authorization-server/troubleshooting-mcp-auth-server.md)
 * [Log Streams](../administration/log-streams/overview.md)

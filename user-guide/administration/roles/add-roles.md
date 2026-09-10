@@ -4,9 +4,8 @@ title: "How to add a new role"
 description: "How to create a new Role in your Aembit Tenant"
 resource: https://docs.aembit.io/user-guide/administration/roles/add-roles/
 interface: web-ui
-tags: [role, administration]
-timestamp: 2025-05-22T22:55:26-07:00
-type_inferred: true
+tags: ["role", "administration"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # How to add a new role
@@ -23,9 +22,9 @@ To add a role to your Aembit Tenant, perform the following steps:
 
    ![Roles Page](https://docs.aembit.io/_astro/administration_roles_main_page.CTdXHAh8_ZoSmaJ.webp)
 
-   Note
-
-   By default, Aembit Tenants includes both the **SuperAdmin** and **Auditor** roles.
+   > **Note**
+   >
+   > By default, Aembit Tenants includes both the **SuperAdmin** and **Auditor** roles.
 
 4. Click **+ New**, revealing the **Roles** pop out menu.
 

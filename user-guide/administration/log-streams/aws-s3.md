@@ -4,9 +4,8 @@ title: "Create a AWS S3 Log Stream"
 description: "This page describes how to create a new Log Stream to an AWS S3 Bucket"
 resource: https://docs.aembit.io/user-guide/administration/log-streams/aws-s3/
 interface: web-ui
-tags: [log-stream, administration]
-timestamp: 2025-05-22T22:55:26-07:00
-type_inferred: true
+tags: ["log-stream", "administration"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Create a AWS S3 Log Stream

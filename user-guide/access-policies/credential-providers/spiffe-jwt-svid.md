@@ -4,9 +4,8 @@ title: "Create a JWT-SVID Token Credential Provider"
 description: "How to create a JWT-SVID Token Credential Provider"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/spiffe-jwt-svid/
 interface: web-ui
-tags: [credential-provider, access-policy]
-timestamp: 2026-06-26T15:17:49-07:00
-type_inferred: true
+tags: ["credential-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Create a JWT-SVID Token Credential Provider
@@ -26,8 +25,6 @@ You can configure the following options for your JWT-SVID Token Credential Provi
 
 ## Create a JWT-SVID Token Credential Provider
 
-[Section titled “Create a JWT-SVID Token Credential Provider”](#create-a-jwt-svid-token-credential-provider)
-
 To create a JWT-SVID Token Credential Provider, follow these steps:
 
 1. Log into your Aembit Tenant, and go to **Credential Providers** in the left sidebar.
@@ -44,15 +41,15 @@ To create a JWT-SVID Token Credential Provider, follow these steps:
 
    * **Subject** - Enter the SPIFFE ID that you want as the subject claim in the JWT-SVID.
 
-     SPIFFE Format Required
-
-     The subject **must** use SPIFFE formatting:
-
-     ```text
-     spiffe://<trust-domain>/<workload-path>
-     ```
-
-     The subject always starts with `spiffe://` followed by your `<trust-domain>` and `<workload-path>`. For example: `spiffe://example.com/workload/api-service`
+     > **SPIFFE Format Required**
+     >
+     > The subject **must** use SPIFFE formatting:
+     >
+     > ```text
+     > spiffe://<trust-domain>/<workload-path>
+     > ```
+     >
+     > The subject always starts with `spiffe://` followed by your `<trust-domain>` and `<workload-path>`. For example: `spiffe://example.com/workload/api-service`
 
      Choose how to specify the subject:
 
@@ -118,8 +115,6 @@ To create a JWT-SVID Token Credential Provider, follow these steps:
 
 ## Verify your JWT-SVID Token Credential Provider
 
-[Section titled “Verify your JWT-SVID Token Credential Provider”](#verify-your-jwt-svid-token-credential-provider)
-
 To verify a JWT-SVID token is retrievable and formatted correctly, follow these steps:
 
 1. In your Aembit Tenant, go to **Credential Providers** in the left sidebar.
@@ -149,8 +144,6 @@ To verify a JWT-SVID token is retrievable and formatted correctly, follow these 
 
 ## JWKS endpoint for verification
 
-[Section titled “JWKS endpoint for verification”](#jwks-endpoint-for-verification)
-
 SPIFFE-aware systems can verify JWT-SVIDs issued by Aembit using the public JWKS endpoint:
 
 ```shell
@@ -166,8 +159,6 @@ This endpoint provides:
 
 ## Integration with SPIFFE-aware systems
 
-[Section titled “Integration with SPIFFE-aware systems”](#integration-with-spiffe-aware-systems)
-
 Once configured, your JWT-SVID Token Credential Provider can authenticate workloads to:
 
 * **Service Meshes** - Istio, Consul, Linkerd, and other SPIFFE-compliant service meshes
@@ -178,4 +169,4 @@ Once configured, your JWT-SVID Token Credential Provider can authenticate worklo
 For more information about SPIFFE standards and implementation, see:
 
 * [SPIFFE JWT-SVID Specification](https://spiffe.io/docs/latest/keyless/)
-* [How to Construct SPIFFE IDs](https://www.spirl.com/blog/how-to-construct-spiffe-ids/)
+* [How to Construct SPIFFE IDs](https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md)

@@ -4,9 +4,8 @@ title: "Process Command Line"
 description: "How to identify workloads on Virtual Machines using the Process Command Line within Aembit"
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/process-command-line/
 interface: web-ui
-tags: [vm, identification, client-workload, access-policy]
-timestamp: 2026-02-26T15:26:26-08:00
-type_inferred: true
+tags: ["vm", "identification", "client-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Process Command Line
@@ -14,8 +13,6 @@ type_inferred: true
 This page explains how to use the **Process Command Line** identifier to identify workloads deployed on **Virtual Machines**.
 
 ## Understanding the process command line identifier
-
-[Section titled “Understanding the process command line identifier”](#understanding-the-process-command-line-identifier)
 
 The Process Command Line is the full command used to start a Client Workload process on a Virtual Machine, including the executable path and any arguments passed to it. This identifier is useful when multiple applications share the same process name but you can distinguish between them by their command-line arguments.
 
@@ -34,8 +31,6 @@ Command-line arguments may contain sensitive information such as passwords, API 
 
 ## Applicable deployment type
 
-[Section titled “Applicable deployment type”](#applicable-deployment-type)
-
 Aembit supports the Process Command Line identification method for Edge-based deployments on **Linux** [Virtual Machines](../../../deploy-install/virtual-machine/overview.md).
 
 To use this method of client workload identification, you must set the `AEMBIT_CLIENT_WORKLOAD_PROCESS_IDENTIFICATION_ENABLED` environment variable to `true`. By default, its value is `false`.
@@ -43,8 +38,6 @@ To use this method of client workload identification, you must set the `AEMBIT_C
 See [Edge Component environment variables reference](../../../../reference/edge-components/edge-component-env-vars.md) for details.
 
 ## Create a Client Workload with a process command line identifier
-
-[Section titled “Create a Client Workload with a process command line identifier”](#create-a-client-workload-with-a-process-command-line-identifier)
 
 To configure a Client Workload with a Process Command Line identifier, follow these steps:
 
@@ -74,17 +67,15 @@ To configure a Client Workload with a Process Command Line identifier, follow th
 
    Aembit displays the new Client Workload on the **Client Workloads** page.
 
-Client Workload identifier uniqueness
-
-When you identify a Client Workload using a single identifier such as this one in a complex environment, this identifier may not always provide sufficient uniqueness.
-
-To avoid Aembit unintentionally matching something beyond what it’s intended to match, Aembit recommends that you set additional identifiers to compliment this one, creating a Client Workload identity that’s unique across your environment.
-
-See [Using multiple Client Workload identifiers](client-workload-multiple-ids.md) for guidance on combining this identifier with more specific identifiers such as those on the [Client Workload Identifiers overview](overview.md) page, which includes vendor- and technology-specific identifiers.
+> **Client Workload identifier uniqueness**
+>
+> When you identify a Client Workload using a single identifier such as this one in a complex environment, this identifier may not always provide sufficient uniqueness.
+>
+> To avoid Aembit unintentionally matching something beyond what it’s intended to match, Aembit recommends that you set additional identifiers to compliment this one, creating a Client Workload identity that’s unique across your environment.
+>
+> See [Using multiple Client Workload identifiers](client-workload-multiple-ids.md) for guidance on combining this identifier with more specific identifiers such as those on the [Client Workload Identifiers overview](overview.md) page, which includes vendor- and technology-specific identifiers.
 
 ## Find the process command line
-
-[Section titled “Find the process command line”](#find-the-process-command-line)
 
 To find the full command line of a process on a Virtual Machine, follow these steps:
 

@@ -4,9 +4,8 @@ title: "Atlassian"
 description: "This page describes how to configure Aembit to work with the Atlassian Server Workload."
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/guides/atlassian/
 interface: web-ui
-tags: [productivity, guide, server-workload, access-policy]
-timestamp: 2026-04-27T11:40:47-04:00
-type_inferred: true
+tags: ["productivity", "guide", "server-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Atlassian
@@ -24,17 +23,13 @@ Below you can find the Aembit configuration required to work with the Atlassian 
 * [OAuth 2.0 Authorization Code (3LO)](atlassian.md#oauth-20-authorization-code)
 * [API Key](atlassian.md#api-key)
 
-Prerequisites
-
-Before proceeding with the configuration, you will need to have an Atlassian tenant and related Atlassian Developer account.
+> **Prerequisites**
+>
+> Before proceeding with the configuration, you will need to have an Atlassian tenant and related Atlassian Developer account.
 
 ## OAuth 2.0 Authorization Code
 
-[Section titled “OAuth 2.0 Authorization Code”](#oauth-20-authorization-code)
-
 ### Server Workload Configuration
-
-[Section titled “Server Workload Configuration”](#server-workload-configuration)
 
 1. Create a new Server Workload.
 
@@ -50,8 +45,6 @@ Before proceeding with the configuration, you will need to have an Atlassian ten
 * **Authentication scheme** - Bearer
 
 ### Credential Provider Configuration
-
-[Section titled “Credential Provider Configuration”](#credential-provider-configuration)
 
 1. Log into to the [Atlassian Developer Console](https://developer.atlassian.com/console/myapps/).
 
@@ -99,21 +92,17 @@ Click on **URL Discovery** to populate the Authorization and Token URL fields, w
 
 ![Credential Provider - Ready State](https://docs.aembit.io/_astro/credential_providers_auth_code_status_ready.CBPCBiJg_ZBh135.webp)
 
-Caution
-
-Once the set lifetime ends, the retrieved credential will expire and no longer be active. Aembit will notify you before this happens. Please ensure you reauthorize your credential before it expires.
+> **Caution**
+>
+> Once the set lifetime ends, the retrieved credential will expire and no longer be active. Aembit will notify you before this happens. Please ensure you reauthorize your credential before it expires.
 
 ## API Key
 
-[Section titled “API Key”](#api-key)
-
-Note
-
-This section is labeled as API Key because, while it requires a username (your Atlassian email) and password, the password is actually an API key. Atlassian uses HTTP Basic Authentication, and we use the Username & Password Credential Provider in Aembit UI to implement this method.
+> **Note**
+>
+> This section is labeled as API Key because, while it requires a username (your Atlassian email) and password, the password is actually an API key. Atlassian uses HTTP Basic Authentication, and we use the Username & Password Credential Provider in Aembit UI to implement this method.
 
 ### Server Workload Configuration
-
-[Section titled “Server Workload Configuration”](#server-workload-configuration-1)
 
 1. Create a new Server Workload.
 
@@ -129,8 +118,6 @@ This section is labeled as API Key because, while it requires a username (your A
 * **Authentication scheme** - Basic
 
 ### Credential Provider Configuration
-
-[Section titled “Credential Provider Configuration”](#credential-provider-configuration-1)
 
 1. Sign into your Atlassian account.
 
@@ -153,21 +140,15 @@ This section is labeled as API Key because, while it requires a username (your A
 
 ## Client Workload Configuration
 
-[Section titled “Client Workload Configuration”](#client-workload-configuration)
-
 Aembit now handles the credentials required to access the Server Workload, eliminating the need for you to manage them directly. You can safely remove any previously used credentials from the Client Workload.
 
 If you access the Server Workload through an SDK or library, it is possible that the SDK/library may still require credentials to be present for initialization purposes. In this scenario, you can provide placeholder credentials. Aembit will overwrite these placeholder credentials with the appropriate ones during the access process.
 
 ## Access Policy
 
-[Section titled “Access Policy”](#access-policy)
-
 * Create an Access Policy for a Client Workload to access the Atlassian Server Workload. Assign the newly created Credential Provider to this Access Policy.
 
 ## Required Features
-
-[Section titled “Required Features”](#required-features)
 
 * You will need to configure the [TLS Decrypt](../../../deploy-install/advanced-options/tls-decrypt/configure-tls-decrypt.md) feature to work with the Atlassian Server Workload.
 

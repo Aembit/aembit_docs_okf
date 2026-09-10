@@ -1,11 +1,11 @@
 ---
-type: explanation
+type: reference
 title: "Aembit Edge on CI/CD services"
 description: "Guides and topics about deploying Aembit Edge Components on CI/CD services"
 resource: https://docs.aembit.io/user-guide/deploy-install/ci-cd/
-tags: [ci-cd, deploy-install]
-timestamp: 2026-01-12T11:05:32-08:00
-type_inferred: true
+interface: web-ui
+tags: ["ci-cd", "deploy-install"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Aembit Edge on CI/CD services

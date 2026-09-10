@@ -2,7 +2,7 @@
 type: definition
 title: "Authorization Context"
 description: "An evaluation scope that Aembit Cloud uses to tie related Access Authorization Events together."
-tags: [core-concepts]
+tags: ["core-concepts"]
 timestamp: 2026-05-19T19:12:05-07:00
 ---
 

@@ -1,11 +1,11 @@
 ---
-type: explanation
+type: reference
 title: "Resource Sets overview"
 description: "Description of what Resource Sets are and how they work"
 resource: https://docs.aembit.io/user-guide/administration/resource-sets/
-tags: [resource-set, administration]
-timestamp: 2026-06-23T16:24:12-07:00
-type_inferred: true
+interface: web-ui
+tags: ["resource-set", "administration"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Resource Sets overview
@@ -16,8 +16,6 @@ Each Resource Set acts as a mini-environment or sub-tenant, enabling segmentatio
 
 ### Configuration
 
-[Section titled “Configuration”](#configuration)
-
 Resource Sets primarily govern Access Policies and their associated entities. The following list contains all available Access Policy entities:
 
 * Client Workloads
@@ -27,6 +25,8 @@ Resource Sets primarily govern Access Policies and their associated entities. Th
 * Access Conditions
 
 * Integrations
+
+* Content Security
 
 * Credential Providers
 
@@ -40,13 +40,9 @@ Aembit generates Audit Logs for all configuration updates, separates them out in
 
 ### Deployment
 
-[Section titled “Deployment”](#deployment)
-
 You can specify a Resource Set association when deploying an Aembit Agent Proxy or using the Aembit Agent. This enables all operational activity to execute within the bounds of that Resource Set.
 
 ### Reporting
-
-[Section titled “Reporting”](#reporting)
 
 Aembit segments its comprehensive event logging, which includes Audit Logs, Access Authorization, and Workload Events, into the associated Resource Set. Aembit restricts access to these events only to authorized users. This separation ensures that event data is logically isolated but also subject to stringent access controls, restricting visibility to authorized users within each specific Resource Set.
 
@@ -54,23 +50,17 @@ Resource Sets empower you to enforce the principle of least privilege. PoLP make
 
 ### Deleting Resource Sets
 
-[Section titled “Deleting Resource Sets”](#deleting-resource-sets)
+You can delete a custom Resource Set when you no longer need it. Deleting a Resource Set also deletes every entity it contains and can’t be undone, so Aembit restricts deletion to authorized users and requires confirmation. You can’t delete or modify the Default Resource Set. See [Delete a Resource Set](delete-resource-set.md) for the full workflow and its effects.
 
-You can delete a custom Resource Set when you no longer need it. Deleting a Resource Set also deletes every entity it contains and cannot be undone, so Aembit restricts deletion to authorized users and requires confirmation. The Default Resource Set cannot be deleted or modified. See [Delete a Resource Set](delete-resource-set.md) for the full workflow and its effects.
+## About Resource Set roles and permissions
 
-## About Resource Set Roles and Permissions
+A Resource Set is a collection of individual resources grouped together. Within that same Resource Set, you also need to assign users a specific role, and permissions for that role. When configuring Resource Sets, consider the following:
 
-[Section titled “About Resource Set Roles and Permissions”](#about-resource-set-roles-and-permissions)
+* Assign roles to users based on their responsibilities for managing the Resource Set. When thinking of roles and role assignments, consider the role assignment from a resource-first perspective.
 
-While a Resource Set is a collection of individual resources grouped together, within that same Resource Set, you will also need to assign users a specific role, and permissions for that role. When configuring Resource Sets, consider the following:
-
-* Roles should be assigned to users based on their responsibilities for managing the Resource Set. When thinking of roles and role assignments, consider the role assignment from a resource-first perspective.
-
-* Permissions should be granted for each Role to ensure the user can perform their required tasks. Permissions in a role work with the Resource Set association to enable access to specific Resource Set entities as configured.
+* Grant permissions for each Role to ensure the user can perform their required tasks. Permissions in a role work with the Resource Set association to enable access to specific Resource Set entities as configured.
 
 ## Additional resources
-
-[Section titled “Additional resources”](#additional-resources)
 
 The following pages provide more information about working with Resource Sets:
 

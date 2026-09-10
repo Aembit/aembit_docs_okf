@@ -4,9 +4,8 @@ title: "Sauce Labs"
 description: "This page describes how to configure Aembit to work with the Sauce Labs Server Workload."
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/guides/saucelabs/
 interface: web-ui
-tags: [ci-cd, guide, server-workload, access-policy]
-timestamp: 2025-05-29T11:26:12-07:00
-type_inferred: true
+tags: ["ci-cd", "guide", "server-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Sauce Labs
@@ -16,13 +15,11 @@ type_inferred: true
 
 Below you can find the Aembit configuration required to work with the Sauce Labs as a Server Workload using the Sauce REST APIs.
 
-Prerequisites
-
-Before proceeding with the configuration, you will need to have a Sauce Labs tenant.
+> **Prerequisites**
+>
+> Before proceeding with the configuration, you will need to have a Sauce Labs tenant.
 
 ## Server Workload Configuration
-
-[Section titled “Server Workload Configuration”](#server-workload-configuration)
 
 1. Create a new Server Workload.
 
@@ -48,8 +45,6 @@ Before proceeding with the configuration, you will need to have a Sauce Labs ten
 
 ## Credential Provider Configuration
 
-[Section titled “Credential Provider Configuration”](#credential-provider-configuration)
-
 1. Sign into your Sauce Labs account.
 
 2. In the upper-right corner of any page, click the user icon and select **User Settings**.
@@ -69,21 +64,15 @@ Before proceeding with the configuration, you will need to have a Sauce Labs ten
 
 ## Client Workload Configuration
 
-[Section titled “Client Workload Configuration”](#client-workload-configuration)
-
 Aembit now handles the credentials required to access the Server Workload, eliminating the need for you to manage them directly. You can safely remove any previously used credentials from the Client Workload.
 
 If you access the Server Workload through an SDK or library, it is possible that the SDK/library may still require credentials to be present for initialization purposes. In this scenario, you can provide placeholder credentials. Aembit will overwrite these placeholder credentials with the appropriate ones during the access process.
 
 ## Access Policy
 
-[Section titled “Access Policy”](#access-policy)
-
 * Create an Access Policy for a Client Workload to access the Sauce Labs Server Workload. Assign the newly created Credential Provider to this Access Policy.
 
 ## Required Features
-
-[Section titled “Required Features”](#required-features)
 
 * You will need to configure the [TLS Decrypt](../../../deploy-install/advanced-options/tls-decrypt/configure-tls-decrypt.md) feature to work with the Sauce Labs Server Workload.
 

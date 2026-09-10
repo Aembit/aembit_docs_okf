@@ -1,12 +1,10 @@
 ---
-type: troubleshooting
+type: explanation
 title: "Troubleshooting and support"
 description: "This page describes steps for troubleshooting authentication issues from Client Workloads to Server Workloads"
 resource: https://docs.aembit.io/user-guide/troubleshooting/
-interface: web-ui
-tags: [troubleshooting]
-timestamp: 2025-05-29T11:26:12-07:00
-type_inferred: true
+tags: ["troubleshooting"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Troubleshooting and support

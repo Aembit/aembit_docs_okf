@@ -1,12 +1,11 @@
 ---
-type: how-to
+type: reference
 title: "SAMLv2 Response Trust Provider"
 description: "How to configure a SAMLv2 Response Trust Provider"
 resource: https://docs.aembit.io/user-guide/access-policies/trust-providers/saml-response-trust-provider/
 interface: web-ui
-tags: [trust-provider, access-policy]
-timestamp: 2026-03-19T13:39:29-07:00
-type_inferred: true
+tags: ["trust-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # SAMLv2 Response Trust Provider
@@ -14,8 +13,6 @@ type_inferred: true
 Use the SAMLv2 Response Trust Provider to validate SAML 2.0 responses from your identity provider (IdP).
 
 ## Match rules
-
-[Section titled “Match rules”](#match-rules)
 
 The following table describes the match rules available for SAMLv2 Response Trust Providers:
 
@@ -27,13 +24,11 @@ The following table describes the match rules available for SAMLv2 Response Trus
 
 ## Attestation configuration
 
-[Section titled “Attestation configuration”](#attestation-configuration)
-
 The SAMLv2 Response Trust Provider validates SAML 2.0 responses using your IdP’s signing certificate. Aembit retrieves the signing certificate from the IdP’s SAML metadata. You can provide this metadata via a URL or an XML file.
 
-Note
-
-You must use either the Metadata URL method or Metadata XML method, not both.
+> **Note**
+>
+> You must use either the Metadata URL method or Metadata XML method, not both.
 
 | Configuration method | Description                                                                                                                                                                                                                                                                                                                 |
 | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -41,8 +36,6 @@ You must use either the Metadata URL method or Metadata XML method, not both.
 | Metadata XML         | The raw SAML 2.0 metadata XML from your identity provider. Paste the full XML content into this field. Use this when the metadata endpoint isn’t reachable from Aembit Cloud, or when you want explicit control over the metadata content.                                                                                  |
 
 ## How the SAMLv2 Response Trust Provider works
-
-[Section titled “How the SAMLv2 Response Trust Provider works”](#how-the-samlv2-response-trust-provider-works)
 
 The authentication process involves your identity provider, the user’s browser, and Aembit.
 
@@ -54,7 +47,7 @@ The authentication process involves your identity provider, the user’s browser
 
 4. If the signature is valid, Aembit validates the response’s claims. Aembit compares the audience, issuer, and subject values in the SAML 2.0 response against the match rules you configured.
 
-5. If the signature and all claims are valid, Aembit authenticates the user and applies the relevant Access Policies**Access Policy**: Access Policies define, enforce, and audit access between Client and Server Workloads by cryptographically verifying workload identity and contextual factors rather than relying on static secrets.[Learn more](../../../get-started/concepts/access-policies.md). If any check fails, Aembit denies the request.
+5. If the signature and all claims are valid, Aembit authenticates the user and applies the relevant Access Policies. If any check fails, Aembit denies the request.
 
 ## Related
 

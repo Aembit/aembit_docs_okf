@@ -3,9 +3,8 @@ type: reference
 title: "Client Workload annotation reference"
 description: "Reference for Kubernetes annotations you can apply to Client Workload pod specs to configure Agent Proxy behavior"
 resource: https://docs.aembit.io/reference/edge-components/cw-annotations/
-tags: [edge-component]
-timestamp: 2026-06-18T13:15:52-04:00
-type_inferred: true
+tags: ["edge-component"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Client Workload annotation reference
@@ -24,8 +23,6 @@ For deployment steps, see [Deploy Aembit to Kubernetes](../../user-guide/deploy-
 | [`aembit.io/steering-mode`](cw-annotations.md#aembitiosteering-mode)                                 | Sets the steering mode for Agent Proxy. Required on OpenShift. *Example*: `"explicit"`                                                          |
 
 ## `aembit.io/agent-inject` Required
-
-[Section titled “aembit.io/agent-inject ”](#aembitioagent-inject)
 
 Value - `"enabled"`
 
@@ -47,8 +44,6 @@ For detailed deployment steps, see [Annotate Client Workloads](../../user-guide/
 ***
 
 ## `aembit.io/resource-set-id`
-
-[Section titled “aembit.io/resource-set-id”](#aembitioresource-set-id)
 
 Value - Resource Set UUID
 
@@ -72,11 +67,11 @@ For more information, see [Resource Sets overview](../../user-guide/administrati
 
 ## `aembit.io/client-id`
 
-[Section titled “aembit.io/client-id”](#aembitioclient-id)
-
-Value - Client Workload UUID
+Value - Aembit Client ID
 
 Sets the Aembit Client ID for Agent Proxy associated with pods in this deployment. The Aembit Client ID is a fallback identification method for Client Workloads when other identification methods (such as hostname or source IP) are unavailable.
+
+Use the value Aembit generates when you set **Aembit Client ID** as the Client Workload’s Client Identification method. This isn’t the Client Workload’s own resource ID.
 
 *Example*:
 
@@ -93,8 +88,6 @@ For more information, see [Aembit Client ID](../../user-guide/access-policies/cl
 ***
 
 ## `aembit.io/agent-proxy-env-<ENV_VAR_NAME>`
-
-[Section titled “aembit.io/agent-proxy-env-\<ENV\_VAR\_NAME>”](#aembitioagent-proxy-env-env_var_name)
 
 Value - Environment variable value
 
@@ -117,8 +110,6 @@ For available environment variables, see [Edge Component environment variables](
 ***
 
 ## `aembit.io/agent-configmap`
-
-[Section titled “aembit.io/agent-configmap”](#aembitioagent-configmap)
 
 Value - JSON array of `"ConfigMapName:KeyName"` pairs
 
@@ -144,14 +135,12 @@ For more information, see [Vault Dynamic Claims](../../user-guide/access-policie
 
 ## `aembit.io/steering-mode`
 
-[Section titled “aembit.io/steering-mode”](#aembitiosteering-mode)
-
 Value - `"explicit"` | `"transparent"`
 
-Sets the steering mode for Agent Proxy. The default behavior when this annotation is omitted is transparent steering.
+Sets the steering mode for Agent Proxy. If you omit this annotation, Agent Proxy uses transparent steering.
 
 * **`"explicit"`** — Client Workloads must configure themselves to use Agent Proxy as an HTTP or HTTPS proxy. No automatic traffic interception occurs.
-* **`"transparent"`** — Agent Proxy transparently intercepts pod traffic using iptables rules injected by Agent Injector. Client Workloads require no additional configuration or code changes. This is the default behavior when the annotation is omitted.
+* **`"transparent"`** — Agent Proxy transparently intercepts pod traffic using `iptables` rules injected by Agent Injector. Client Workloads require no additional configuration or code changes. Agent Proxy uses this mode by default.
 
 Not all platforms support both steering modes. For a full comparison of steering mode support across deployment models (including Kubernetes, OpenShift, and Fargate), see the [method comparison table](../../user-guide/deploy-install/advanced-options/agent-proxy/steering.md#method-comparison-and-protocol-support).
 

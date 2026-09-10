@@ -1,11 +1,11 @@
 ---
-type: explanation
+type: reference
 title: "Global Policy Compliance Overview"
 description: "What is Aembit Global Policy Compliance and how it works"
 resource: https://docs.aembit.io/user-guide/administration/global-policy/
-tags: [global-policy, administration]
-timestamp: 2025-06-03T16:56:07-07:00
-type_inferred: true
+interface: web-ui
+tags: ["global-policy", "administration"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Global Policy Compliance Overview
@@ -14,27 +14,19 @@ Aembit’s Global Policy Compliance is a security enforcement feature that allow
 
 ## What Global Policy Compliance does
 
-[Section titled “What Global Policy Compliance does”](#what-global-policy-compliance-does)
-
 Global Policy Compliance provides centralized control over the following Aembit administration components:
 
 ### Access Policies
-
-[Section titled “Access Policies”](#access-policies)
 
 * **Trust Provider Requirements** - Ensures all Access Policies include proper identity verification
 * **Access Condition Requirements** - Enforces contextual access rules across all policies
 
 ### Agent Controllers
 
-[Section titled “Agent Controllers”](#agent-controllers)
-
 * **Trust Provider Requirements** - Ensures proper identity verification for all Agent Controllers
 * **TLS Hostname Requirements** - Enforces secure communication standards
 
 ## How Global Policy Compliance works
-
-[Section titled “How Global Policy Compliance works”](#how-global-policy-compliance-works)
 
 You can [configure Global Policy Compliance](manage-global-policy.md) to either require, recommend, or not enforce that Aembit components such as Access Policies have certain configurations. For example, you can set Global Policy Compliance to enforce that all Access Policies have a Trust Provider configured.
 
@@ -46,15 +38,13 @@ Global Policy Compliance operates on a three-tier enforcement model:
 2. **Recommended** (Default) - Flags non-compliant policies but allows their creation after confirmation
 3. **Optional** - No enforcement - allows creation of policies without the specified security elements
 
-Caution
-
-Whenever you set a Global Policy Compliance setting to **Required**, Aembit prevents the creation or modification of Access Policies or Agent Controllers that don’t meet the specified requirements.
-
-Enabling Global Policy Compliance settings to **Required** won’t deactivate existing Access Policies or Agent Controllers that don’t meet the requirements. However, you won’t be able to modify or save them until they become compliant.
+> **Caution**
+>
+> Whenever you set a Global Policy Compliance setting to **Required**, Aembit prevents the creation or modification of Access Policies or Agent Controllers that don’t meet the specified requirements.
+>
+> Enabling Global Policy Compliance settings to **Required** won’t deactivate existing Access Policies or Agent Controllers that don’t meet the requirements. However, you won’t be able to modify or save them until they become compliant.
 
 ## Global Policy Compliance status icons
-
-[Section titled “Global Policy Compliance status icons”](#global-policy-compliance-status-icons)
 
 Aembit visually identifies non-compliant Access Policies through color-coded status icons and labels:
 
@@ -65,13 +55,9 @@ Aembit visually identifies non-compliant Access Policies through color-coded sta
 
 ## Review and audit compliance
 
-[Section titled “Review and audit compliance”](#review-and-audit-compliance)
-
 You can review and audit the compliance status of all Access Policies and Agent Controllers in your Aembit Tenant through the [Global Policy Compliance report dashboard](../../audit-report/global-policy.md).
 
 ## Benefits
-
-[Section titled “Benefits”](#benefits)
 
 * Ensures consistent security standards across your organization
 * Prevents accidental creation of insecure Access Policies
@@ -79,8 +65,6 @@ You can review and audit the compliance status of all Access Policies and Agent 
 * Supports role-based access control for compliance settings management
 
 ## Use cases
-
-[Section titled “Use cases”](#use-cases)
 
 Aembit’s Global Policy Compliance feature applies to many different use cases, such as the following:
 
@@ -93,7 +77,5 @@ Aembit’s Global Policy Compliance feature applies to many different use cases,
 * **Service providers** - Managed Service Providers (MSP) and SaaS providers can enforce strict TLS hostname requirements for Agent Controllers, ensuring secure communication standards across client environments.
 
 ## Additional resources
-
-[Section titled “Additional resources”](#additional-resources)
 
 -[Managing Policy Compliance](manage-global-policy.md)

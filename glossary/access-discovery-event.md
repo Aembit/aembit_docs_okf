@@ -2,7 +2,7 @@
 type: definition
 title: "Access Discovery Event"
 description: "An access.discovery Access Authorization Event that lists the Client Workloads and Server Workloads that Aembit Cloud considered while evaluating an access request."
-tags: [core-concepts]
+tags: ["core-concepts"]
 timestamp: 2026-05-19T19:12:05-07:00
 ---
 

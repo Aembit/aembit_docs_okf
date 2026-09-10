@@ -4,9 +4,8 @@ title: "Amazon RDS for MySQL"
 description: "This page describes how to configure Aembit to work with the Amazon RDS for MySQL Server Workload."
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/guides/aws-mysql/
 interface: web-ui
-tags: [databases, guide, server-workload, access-policy]
-timestamp: 2025-05-29T11:26:12-07:00
-type_inferred: true
+tags: ["databases", "guide", "server-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Amazon RDS for MySQL
@@ -18,13 +17,9 @@ Below you can find the Aembit configuration required to work with AWS RDS for My
 
 ## Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites)
-
 Before proceeding with the configuration, ensure you have an AWS tenant (or [sign up](https://portal.aws.amazon.com/billing/signup#/start/email) for one) and an Amazon RDS for MySQL database. If you have not created a database before, you can follow the steps in the next section. For more information on creating an Amazon RDS DB instance, please refer to the [official Amazon documentation](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Tutorials.WebServerDB.CreateDBInstance.html).
 
 ### Create Amazon RDS MySQL Database
-
-[Section titled “Create Amazon RDS MySQL Database”](#create-amazon-rds-mysql-database)
 
 1. Sign in to the AWS Management Console and navigate to the [Amazon RDS console](https://console.aws.amazon.com/rds/).
 
@@ -35,13 +30,16 @@ Before proceeding with the configuration, ensure you have an AWS tenant (or [sig
 3. Configure the database according to your preferences. Below are key choices:
 
 * Under **Engine options**, choose **MySQL** for the engine type.
+
 * Under **Engine options**, select a version from the **8.0.x** series.
+
 * Under **Settings**, enter a name for the **DB cluster identifier**; this will be used in the endpoint.
+
 * In **Settings**, expand the **Credentials Settings** section. Use the **Master username** and **master password** as Credential Provider details. You can either auto-generate a password or type your own. Save this information for future use.
 
-Note
-
-In this example, we are using the master username and password for demonstration purposes; however, it is advisable to create a dedicated user with appropriate privileges for enhanced security.
+  > **Note**
+  >
+  > In this example, we are using the master username and password for demonstration purposes; however, it is advisable to create a dedicated user with appropriate privileges for enhanced security.
 
 * In **Connectivity**, find the **Publicly Accessible** option and set it to **Yes**.
 
@@ -55,8 +53,6 @@ In this example, we are using the master username and password for demonstration
 4. After making all of your selections, click **Create Database**.
 
 ## Server Workload Configuration
-
-[Section titled “Server Workload Configuration”](#server-workload-configuration)
 
 To retrieve the connection information for a DB instance in the AWS Management Console:
 
@@ -86,8 +82,6 @@ To retrieve the connection information for a DB instance in the AWS Management C
 
 ## Credential Provider Configuration
 
-[Section titled “Credential Provider Configuration”](#credential-provider-configuration)
-
 1. Create a new Credential Provider.
 
 * **Name** - Choose a user-friendly name.
@@ -97,15 +91,11 @@ To retrieve the connection information for a DB instance in the AWS Management C
 
 ## Client Workload Configuration
 
-[Section titled “Client Workload Configuration”](#client-workload-configuration)
-
 Aembit now handles the credentials required to access the Server Workload, eliminating the need for you to manage them directly. You can safely remove any previously used credentials from the Client Workload.
 
 If you access the Server Workload through an SDK or library, it is possible that the SDK/library may still require credentials to be present for initialization purposes. In this scenario, you can provide placeholder credentials. Aembit will overwrite these placeholder credentials with the appropriate ones during the access process.
 
 ## Access Policy
-
-[Section titled “Access Policy”](#access-policy)
 
 * Create an access policy for a Client Workload to access the Amazon RDS for MySQL Server Workload and assign the newly created Credential Provider to it.
 

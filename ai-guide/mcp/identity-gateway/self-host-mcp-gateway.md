@@ -4,27 +4,25 @@ title: "Self-host the MCP Identity Gateway"
 description: "Deploy and operate the Aembit MCP Identity Gateway on your own Linux host."
 resource: https://docs.aembit.io/ai-guide/mcp/identity-gateway/self-host-mcp-gateway/
 interface: mcp
-tags: [identity-gateway, mcp]
-timestamp: 2026-06-23T16:02:22-07:00
+tags: ["identity-gateway", "mcp"]
+timestamp: 2026-08-19T15:11:05-07:00
 ---
 
 # Self-host the MCP Identity Gateway
 
 This guide explains how to deploy and operate the
 
-Model Context Protocol (MCP)**Model Context Protocol**: A standard protocol for AI agent and server interactions that defines how AI assistants communicate with external tools and data sources.[Learn more(opens in new tab)](https://modelcontextprotocol.io/) Identity Gateway on your own Linux host, as a standalone service that you run and maintain.
+Model Context Protocol (MCP) Identity Gateway on your own Linux host, as a standalone service that you run and maintain.
 
-Most teams should use the managed service
-
-Aembit operates the MCP Identity Gateway as a managed service, and that’s the recommended path for most teams. The managed service handles provisioning, TLS termination, certificate renewal, and runtime operations for you. See [Set up the MCP Identity Gateway](setup-mcp-gateway.md) to use it.
-
-Self-host the Gateway only when you must run it in your own infrastructure. For example, you might need to keep MCP traffic inside a network boundary you control, meet data-locality requirements, or integrate with existing host-level tooling.
+> **Most teams should use the managed service**
+>
+> Aembit operates the MCP Identity Gateway as a managed service, and that’s the recommended path for most teams. The managed service handles provisioning, TLS termination, certificate renewal, and runtime operations for you. See [Set up the MCP Identity Gateway](setup-mcp-gateway.md) to use it.
+>
+> Self-host the Gateway only when you must run it in your own infrastructure. For example, you might need to keep MCP traffic inside a network boundary you control, meet data-locality requirements, or integrate with existing host-level tooling.
 
 When you self-host, you run the MCP Identity Gateway as a `systemd` service on a Linux host that you provision and maintain, alongside a colocated [Agent Controller](../../../user-guide/deploy-install/about-agent-controller.md). A bare virtual machine and a cloud instance (such as an AWS EC2 instance) follow the same procedure—an EC2 instance *is* a virtual machine for this purpose.
 
 ## How self-hosting differs from the managed service
-
-[Section titled “How self-hosting differs from the managed service”](#how-self-hosting-differs-from-the-managed-service)
 
 The Aembit Cloud configuration is identical for both deployment models: you create an Identity Provider, two Access Policies, and a Credential Provider for each MCP server. Self-hosting adds the host-side work that Aembit otherwise does for you:
 
@@ -40,25 +38,21 @@ This guide covers the host-side work. Once the Gateway is running, you [configur
 
 ## Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites)
-
 Before you begin, ensure you have:
 
-* An Aembit Tenant**Aembit Tenant**: Aembit Tenants serve as isolated, dedicated environments within Aembit that provide complete separation of administrative domains and security configurations.[Learn more](../../../get-started/concepts/administration.md) with admin access
+* An Aembit Tenant with admin access
 
 * A Linux host (a virtual machine or cloud instance) for the MCP Identity Gateway, with network access to:
 
   * Your Aembit Tenant (`https://<tenantId>.aembit.io`, outbound HTTPS)
-  * Target MCP servers**MCP Server**: A server that implements the Model Context Protocol to provide tools, resources, or data to AI agents and MCP clients.[Learn more(opens in new tab)](https://modelcontextprotocol.io/specification/2025-03-26/server) (outbound HTTPS)
-  * MCP clients**MCP Client**: An application (such as Claude Desktop, Claude Code, or Gemini CLI) that connects to MCP servers to access tools and resources on behalf of users.[Learn more](https://docs.aembit.io/user-guide/ai/mcp-auth-server/setup-mcp-auth-server/) and AI agents (inbound on the listener port, typically 443)
+  * Target MCP servers (outbound HTTPS)
+  * MCP clients and AI agents (inbound on the listener port, typically 443)
 
 * A DNS name you control for the Gateway (for example, `mcp-gateway.example.com`)
 
 * The ability to obtain a TLS certificate for that DNS name (a public certificate authority or your internal public key infrastructure)
 
 ## Provision the host
-
-[Section titled “Provision the host”](#provision-the-host)
 
 Create a Linux host for the MCP Identity Gateway. Aembit supports the Gateway as a `systemd` service on a virtual machine or cloud instance; an Ubuntu host is a common choice.
 
@@ -70,13 +64,11 @@ Size the host’s network access so it can:
 
 For detailed host setup guidance, see [Linux virtual machine deployment](../../../user-guide/deploy-install/virtual-machine/overview.md).
 
-EC2 security groups
-
-On AWS, open inbound **443** (HTTPS) so MCP clients can reach the Gateway. If you use Let’s Encrypt for TLS (described later), also open inbound **80** (HTTP) *temporarily* for the certificate challenge, then close it again once you have the certificate.
+> **EC2 security groups**
+>
+> On AWS, open inbound **443** (HTTPS) so MCP clients can reach the Gateway. If you use Let’s Encrypt for TLS (described later), also open inbound **80** (HTTP) *temporarily* for the certificate challenge, then close it again once you have the certificate.
 
 ## Install Agent Controller
-
-[Section titled “Install Agent Controller”](#install-agent-controller)
 
 The MCP Identity Gateway requires a colocated Agent Controller on the same host. The Agent Controller registers the Gateway with Aembit Cloud and supplies it with the credentials and configuration it needs to operate. Because the two run on the same host and communicate over localhost, credentials never traverse the network.
 
@@ -89,8 +81,6 @@ Create the Agent Controller in your Aembit Tenant, then install it on the Gatewa
 | Port         | 5000 (default)                                                                                 | The MCP Identity Gateway connects to `http://localhost:5000`                             |
 
 ## Set up DNS
-
-[Section titled “Set up DNS”](#set-up-dns)
 
 Point your chosen DNS name at the host so MCP clients can reach the Gateway.
 
@@ -105,8 +95,6 @@ dig +short mcp-gateway.example.com
 Expected: the host’s public IP address.
 
 ## Obtain a TLS certificate
-
-[Section titled “Obtain a TLS certificate”](#obtain-a-tls-certificate)
 
 The MCP Identity Gateway terminates TLS itself, so it needs a certificate and private key for your Gateway hostname.
 
@@ -145,13 +133,11 @@ The following steps use [Let’s Encrypt](https://letsencrypt.org/) with `certbo
 
 6. Close inbound port **80** again—the Gateway only needs inbound 443 for normal operation.
 
-Certificate renewal
-
-Let’s Encrypt certificates expire after 90 days. Because `nginx` is stopped, schedule renewal with a method that doesn’t need port 80 held open continuously (for example, `certbot renew` with the standalone plugin during a brief maintenance window), and reopen port 80 only for the duration of the renewal.
+> **Certificate renewal**
+>
+> Let’s Encrypt certificates expire after 90 days. Because `nginx` is stopped, schedule renewal with a method that doesn’t need port 80 held open continuously (for example, `certbot renew` with the standalone plugin during a brief maintenance window), and reopen port 80 only for the duration of the renewal.
 
 ## Install and start the Gateway
-
-[Section titled “Install and start the Gateway”](#install-and-start-the-gateway)
 
 Download, install, and start the MCP Identity Gateway on the host. On startup, the Gateway registers with Aembit Cloud through the colocated Agent Controller.
 
@@ -163,9 +149,9 @@ Download, install, and start the MCP Identity Gateway on the host. On startup, t
 
 2. Install the Gateway, supplying its configuration as environment variables on the install command:
 
-   Keep configuration out of shell history
-
-   The following command shows configuration values inline for clarity. In production, load them from an environment file with restricted permissions (`chmod 600`) or a secrets manager so they don’t appear in shell history or process listings.
+   > **Keep configuration out of shell history**
+   >
+   > The following command shows configuration values inline for clarity. In production, load them from an environment file with restricted permissions (`chmod 600`) or a secrets manager so they don’t appear in shell history or process listings.
 
    ```shell
    sudo AEMBIT_AUTHORIZATION_SERVER=https://<tenantId>.mcp.useast2.aembit.io/ \
@@ -180,8 +166,6 @@ Download, install, and start the MCP Identity Gateway on the host. On startup, t
    Replace `<tenantId>` with your Aembit Tenant ID (visible in your Aembit Tenant URL—for example, `abc123` in `https://abc123.aembit.io`), and replace `mcp-gateway.example.com` with your own Gateway hostname. For a full description of every variable, see [MCP Identity Gateway environment variables](env-vars-mcp-gateway.md).
 
 ## Verify the Gateway service
-
-[Section titled “Verify the Gateway service”](#verify-the-gateway-service)
 
 Confirm the Gateway is running before you configure Aembit Cloud.
 
@@ -207,23 +191,40 @@ Confirm the Gateway is running before you configure Aembit Cloud.
    sudo journalctl --namespace aembit_mcp_gateway -n 50
    ```
 
-## Configure Aembit Cloud
+## Allow MCP client traffic through your WAF
 
-[Section titled “Configure Aembit Cloud”](#configure-aembit-cloud)
+If you put a Web Application Firewall (WAF) or reverse proxy in front of the Gateway, its default rules can block legitimate MCP clients before their requests reach the Gateway.
+
+MCP clients differ in how they construct HTTP requests, and new clients continue to appear. Aembit can’t anticipate every client’s behavior, so treat WAF tuning as an ongoing part of operating a self-hosted Gateway:
+
+* **Monitor your WAF logs** for blocked requests, and adjust your rules as the MCP clients you support change their behavior.
+* **Exclude rules that reject requests with a missing `User-Agent` header.** Some MCP clients, including Microsoft Copilot, send requests without one.
+
+New MCP clients can exhibit unexpected behavior as AI systems evolve. Some leading MCP clients, for example, send requests with no `User-Agent` header, and common managed rule sets may reject them outright. On AWS WAF, the `NoUserAgent_HEADER` rule in `AWSManagedRulesCommonRuleSet` would block every request to the Gateway for those MCP clients, including the OAuth discovery endpoints and `/mcp`.
+
+The symptoms point away from your firewall. The client’s sign-in window can open blank and report an error such as this one:
+
+`Failed to login. Could not discover authorization server metadata.`
+
+Meanwhile, your Aembit Tenant records no Access Authorization or Workload events, because the requests never reach the Gateway. Override the missing-`User-Agent` rule in your managed rule set, then retry the connection. Confirm the result in your firewall logs rather than the Gateway logs—a blocked request leaves no trace on the Gateway.
+
+> **This applies only to self-hosted Gateways**
+>
+> Aembit’s managed MCP Identity Gateway already accounts for this rule. You only need to tune these rules when you self-host the Gateway behind a WAF you operate.
+
+## Configure Aembit Cloud
 
 With the Gateway running, complete the Aembit Cloud configuration—the Identity Provider, both Access Policies, and a Credential Provider for each MCP server. These steps are identical to the managed service.
 
 Follow [Set up the MCP Identity Gateway](setup-mcp-gateway.md), starting at [Configure an Identity Provider](setup-mcp-gateway.md#configure-an-identity-provider), with one substitution:
 
-Use your own Gateway hostname
-
-Wherever the setup guide references the managed endpoint `<tenantId>.mcpgateway.aembit.io`, use your own Gateway hostname instead (for example, `mcp-gateway.example.com`). This applies to the **Server Workload** **Host** and the **Credential Provider** **Audience** in the client-to-Gateway Access Policy.
+> **Use your own Gateway hostname**
+>
+> Wherever the setup guide references the managed endpoint `<tenantId>.mcpgateway.aembit.io`, use your own Gateway hostname instead (for example, `mcp-gateway.example.com`). This applies to the **Server Workload** **Host** and the **Credential Provider** **Audience** in the client-to-Gateway Access Policy.
 
 After you configure both Access Policies, return to the setup guide’s [Verify the connection](setup-mcp-gateway.md#verify-the-connection) section to test the end-to-end flow.
 
 ## Operate the MCP Identity Gateway
-
-[Section titled “Operate the MCP Identity Gateway”](#operate-the-mcp-identity-gateway)
 
 Because you run the Gateway yourself, you also operate it:
 
@@ -232,6 +233,8 @@ Because you run the Gateway yourself, you also operate it:
   ```shell
   sudo systemctl restart aembit_mcp_gateway
   ```
+
+  A restart ends every open MCP session unless you configured a Valkey session store. See [Session persistence](session-persistence-mcp-gateway.md).
 
 * **Follow the logs** while troubleshooting:
 
@@ -247,8 +250,7 @@ For connectivity, log, and metrics details, see the [MCP Identity Gateway refere
 
 ## Next steps
 
-[Section titled “Next steps”](#next-steps)
-
 * [MCP Identity Gateway environment variables](env-vars-mcp-gateway.md) - Every variable the Gateway and its Agent Controller accept at install time
+* [Session persistence](session-persistence-mcp-gateway.md) - How to keep MCP sessions across restarts with Valkey
 * [MCP Identity Gateway reference](reference-mcp-gateway.md) - Token formats, proxied MCP methods, connectivity, and workload events
 * [Client workload identification](client-workload-identification.md) - How the Gateway identifies users in multi-user deployments

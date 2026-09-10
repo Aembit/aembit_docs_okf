@@ -4,9 +4,8 @@ title: "Connect with MCP Inspector"
 description: "Use MCP Inspector to test and explore the Aembit MCP Server interactively."
 resource: https://docs.aembit.io/ai-guide/mcp/mcp-server/connect/mcp-inspector/
 interface: mcp
-tags: [connect, mcp-server, mcp]
-timestamp: 2026-02-24T15:57:13-08:00
-type_inferred: true
+tags: ["connect", "mcp-server", "mcp"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Connect with MCP Inspector
@@ -15,14 +14,10 @@ MCP Inspector is a visual testing tool for MCP endpoints—similar to Postman fo
 
 ## Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites)
-
 * Node.js installed ([download](https://nodejs.org/))
 * Aembit API Token and MCP Service URL (see [Connect to the MCP Server](overview.md))
 
 ## Launch MCP inspector
-
-[Section titled “Launch MCP inspector”](#launch-mcp-inspector)
 
 Run the following command to download and launch MCP Inspector:
 
@@ -32,13 +27,11 @@ npx @modelcontextprotocol/inspector
 
 Your browser opens automatically to the MCP Inspector interface.
 
-Tip
-
-You can also use the hosted version at [mcpjam.com](https://www.mcpjam.com/).
+> **Tip**
+>
+> You can also use the hosted version at [mcpjam.com](https://www.mcpjam.com/).
 
 ## Configure the connection
-
-[Section titled “Configure the connection”](#configure-the-connection)
 
 To connect MCP Inspector to the Aembit MCP Server, configure the transport type, endpoint URL, and authentication.
 
@@ -68,8 +61,6 @@ To connect MCP Inspector to the Aembit MCP Server, configure the transport type,
 
 ## Explore and test
 
-[Section titled “Explore and test”](#explore-and-test)
-
 Once connected:
 
 1. Go to the **Tools** tab.
@@ -79,8 +70,6 @@ Once connected:
 5. Click **Run Tool** to execute the query and view results.
 
 ## Example: Query audit logs
-
-[Section titled “Example: Query audit logs”](#example-query-audit-logs)
 
 1. Select the `get_audit_logs` tool.
 
@@ -100,8 +89,6 @@ Once connected:
 4. View the returned audit log entries in the response pane.
 
 ## Next steps
-
-[Section titled “Next steps”](#next-steps)
 
 * See the [Prompt Library](../../../prompt-library/overview.md) for example prompts and best practices.
 * If you have connection issues, see [Troubleshooting](overview.md#troubleshooting).

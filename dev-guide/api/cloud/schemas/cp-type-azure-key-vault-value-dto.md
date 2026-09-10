@@ -1,0 +1,34 @@
+---
+type: reference
+title: "CPTypeAzureKeyVaultValueDTO"
+resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
+interface: api
+timestamp: 2026-07-28T14:42:14-04:00
+---
+
+# CPTypeAzureKeyVaultValueDTO
+
+**Extends:** [CredentialProviderV2DTO](credential-provider-v2-dto.md)
+
+**Type:** object
+
+**Properties:**
+
+- **type** *(required)*: string
+- **externalId** *(optional)*: string (uuid)
+- **name** *(required)*: string - Name of the Entity
+- **description** *(optional)*: null,string - Description of the Entity
+- **isActive** *(required)*: boolean (boolean) - True/False value that determines if this entity is Active or Disabled
+- **tags** *(optional)*: null,array
+- **createdAt** *(optional)*: string (date-time)
+- **modifiedAt** *(optional)*: null,string (date-time)
+- **createdBy** *(optional)*: null,string
+- **modifiedBy** *(optional)*: null,string
+- **resourceSet** *(required)*: string (uuid) - ID of the Resource Set in which this Access Entity exists
+- **lifetimeTimeSpanSeconds** *(optional)*: integer (int32)
+- **lifetimeExpiration** *(optional)*: null,string (date-time)
+- **accessPolicyCount** *(optional)*: integer (int32) - Access Policies associated with this Credential Provider
+- **secretName1** *(optional)*: null,string - The first secret. Used when specifying a single key or a key representing a username when working with a username/password pair.
+- **secretName2** *(optional)*: null,string - The second secret. Used when specifying a password when working with a username/password pair.
+- **credentialProviderIntegrationExternalId** *(required)*: string (uuid) - ID of the Azure Entra Federation Credential Provider Integration with which this Azure Key Vault Value Credential is associated
+- **privateNetworkAccess** *(optional)*: boolean - Indicates if the Azure Key Vault Value Credential should be accessed over a private network

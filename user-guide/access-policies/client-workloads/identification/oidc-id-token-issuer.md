@@ -4,9 +4,8 @@ title: "OIDC ID Token Issuer"
 description: "How to identify workloads using the issuer claim from an OIDC ID token in Aembit"
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/oidc-id-token-issuer/
 interface: web-ui
-tags: [generic, identification, client-workload, access-policy]
-timestamp: 2026-05-01T10:19:23-07:00
-type_inferred: true
+tags: ["generic", "identification", "client-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # OIDC ID Token Issuer
@@ -15,15 +14,11 @@ This page explains how to use the **OIDC ID Token Issuer** identifier to identif
 
 ## Understanding the OIDC ID Token Issuer identifier
 
-[Section titled “Understanding the OIDC ID Token Issuer identifier”](#understanding-the-oidc-id-token-issuer-identifier)
-
 The `iss` (issuer) claim in an OIDC ID token identifies the identity provider that minted the token. When Aembit evaluates this identifier, it compares the `iss` claim in the token against the value you configure. The value must match exactly.
 
 This identifier is useful for scoping access to workloads that authenticate through a specific identity provider. For example, you can ensure only pipelines from GitLab.com—not a self-hosted instance—can match a Client Workload. Combine the OIDC ID Token Issuer identifier with the Subject or Audience identifiers to narrow the scope further.
 
 ## Applicable deployment type
-
-[Section titled “Applicable deployment type”](#applicable-deployment-type)
 
 Use this identifier when your Client Workload authenticates using an OIDC ID token from a standards-compliant identity provider. The Access Policy must include an [OIDC ID Token Trust Provider](../../trust-providers/oidc-id-token-trust-provider.md) configured to validate tokens from the same identity provider.
 
@@ -34,8 +29,6 @@ Supported environments include:
 * Any workload that presents a standards-compliant OIDC token to the Aembit Edge Component
 
 ## Create a Client Workload with an OIDC ID Token Issuer identifier
-
-[Section titled “Create a Client Workload with an OIDC ID Token Issuer identifier”](#create-a-client-workload-with-an-oidc-id-token-issuer-identifier)
 
 1. Log into your Aembit Tenant.
 
@@ -57,17 +50,15 @@ Supported environments include:
 
    Aembit displays the new Client Workload on the **Client Workloads** page.
 
-Client Workload identifier uniqueness
-
-When you identify a Client Workload using a single identifier such as this one in a complex environment, this identifier may not always provide sufficient uniqueness.
-
-To avoid Aembit unintentionally matching something beyond what it’s intended to match, Aembit recommends that you set additional identifiers to compliment this one, creating a Client Workload identity that’s unique across your environment.
-
-See [Using multiple Client Workload identifiers](client-workload-multiple-ids.md) for guidance on combining this identifier with more specific identifiers such as those on the [Client Workload Identifiers overview](overview.md) page, which includes vendor- and technology-specific identifiers.
+> **Client Workload identifier uniqueness**
+>
+> When you identify a Client Workload using a single identifier such as this one in a complex environment, this identifier may not always provide sufficient uniqueness.
+>
+> To avoid Aembit unintentionally matching something beyond what it’s intended to match, Aembit recommends that you set additional identifiers to compliment this one, creating a Client Workload identity that’s unique across your environment.
+>
+> See [Using multiple Client Workload identifiers](client-workload-multiple-ids.md) for guidance on combining this identifier with more specific identifiers such as those on the [Client Workload Identifiers overview](overview.md) page, which includes vendor- and technology-specific identifiers.
 
 ## OIDC issuer values by identity provider
-
-[Section titled “OIDC issuer values by identity provider”](#oidc-issuer-values-by-identity-provider)
 
 The following table lists issuer values for common identity providers. The value must exactly match the `iss` claim in the token your workload presents.
 
@@ -79,9 +70,9 @@ The following table lists issuer values for common identity providers. The value
 | Terraform Cloud            | `https://app.terraform.io`                    |
 | Google (Workload Identity) | `https://accounts.google.com`                 |
 
-Tip
-
-Most OIDC identity providers publish their issuer URL in a discovery document at `{issuer}/.well-known/openid-configuration`. Check the `issuer` field in that document to confirm the exact value for your environment.
+> **Tip**
+>
+> Most OIDC identity providers publish their issuer URL in a discovery document at `{issuer}/.well-known/openid-configuration`. Check the `issuer` field in that document to confirm the exact value for your environment.
 
 ## Related
 

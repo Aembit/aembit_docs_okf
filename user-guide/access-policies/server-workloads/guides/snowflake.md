@@ -4,9 +4,8 @@ title: "Snowflake"
 description: "This page describes how to configure Aembit to work with the Snowflake Server Workload."
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/guides/snowflake/
 interface: web-ui
-tags: [data-analytics, guide, server-workload, access-policy]
-timestamp: 2025-05-29T11:26:12-07:00
-type_inferred: true
+tags: ["data-analytics", "guide", "server-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Snowflake
@@ -21,25 +20,17 @@ In the sections below, you can find the required Aembit configuration needed to 
 
 ## Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites)
-
 Before proceeding with the configuration, you must have a Snowflake tenant (or [sign up](https://signup.snowflake.com/) for one).
 
 ## Snowflake via Driver/Connector
-
-[Section titled “Snowflake via Driver/Connector”](#snowflake-via-driverconnector)
 
 This section of the guide is tailored to scenarios where the Client Workload interacts with Snowflake through the [Snowflake Driver/Connector](https://docs.snowflake.com/en/developer-guide/drivers) embedded in the Client Workload.
 
 ### Snowflake key-pair authentication
 
-[Section titled “Snowflake key-pair authentication”](#snowflake-key-pair-authentication)
-
 Snowflake key-pair authentication, when applied to workloads, involves using a public-private key pair for secure, automated authentication. Aembit generates and securely stores a private key, while the corresponding public key is registered with Snowflake. This setup allows Aembit to authenticate with Snowflake, leveraging the robust security of asymmetric encryption, without relying on conventional user-based passwords. For more information on key-pair authentication and key-pair rotation, please refer to the [official Snowflake documentation](https://docs.snowflake.com/en/user-guide/key-pair-auth#configuring-key-pair-rotation).
 
 #### Server Workload Configuration
-
-[Section titled “Server Workload Configuration”](#server-workload-configuration)
 
 1. Create a new Server Workload.
 
@@ -55,8 +46,6 @@ Snowflake key-pair authentication, when applied to workloads, involves using a p
 * **Authentication scheme** - Snowflake JWT
 
 #### Credential provider configuration
-
-[Section titled “Credential provider configuration”](#credential-provider-configuration)
 
 1. Sign into your Snowflake account.
 
@@ -80,17 +69,13 @@ Snowflake key-pair authentication, when applied to workloads, involves using a p
 
 ### Snowflake username/password authentication
 
-[Section titled “Snowflake username/password authentication”](#snowflake-usernamepassword-authentication)
-
-Note
-
-Aembit will be deprecating Snowflake username/password authentication to match Snowflake’s updated MFA security guidance.
+> **Note**
+>
+> Aembit will be deprecating Snowflake username/password authentication to match Snowflake’s updated MFA security guidance.
 
 Username/password authentication in Snowflake involves using a traditional credential-based approach for access control. Users or workloads are assigned a unique username and a corresponding password. When accessing Snowflake, the username and password are used to verify identity. Username/password authentication in Snowflake is considered less secure than key pair authentication and is typically used when key pair methods are not feasible.
 
 #### Server Workload Configuration
-
-[Section titled “Server Workload Configuration”](#server-workload-configuration-1)
 
 1. Create a new Server Workload.
 
@@ -107,8 +92,6 @@ Username/password authentication in Snowflake involves using a traditional crede
 
 #### Credential Provider Configuration
 
-[Section titled “Credential Provider Configuration”](#credential-provider-configuration-1)
-
 1. Create a new Credential Provider.
 
 * **Name** - Choose a user-friendly name.
@@ -118,13 +101,9 @@ Username/password authentication in Snowflake involves using a traditional crede
 
 ## Snowflake SQL REST API
 
-[Section titled “Snowflake SQL REST API”](#snowflake-sql-rest-api)
-
 This section focuses on scenarios where the Client Workload interacts with Snowflake through the [Snowflake SQL REST API](https://docs.snowflake.com/en/developer-guide/sql-api/). The Snowflake SQL REST API offers a flexible REST API for accessing and modifying data within a Snowflake database.
 
 ### Server Workload Configuration
-
-[Section titled “Server Workload Configuration”](#server-workload-configuration-2)
 
 1. Create a new Server Workload.
 
@@ -145,8 +124,6 @@ This section focuses on scenarios where the Client Workload interacts with Snowf
 * **Value** - KEYPAIR\_JWT
 
 ### Credential provider configuration
-
-[Section titled “Credential provider configuration”](#credential-provider-configuration-2)
 
 1. Sign into your Snowflake account.
 
@@ -170,33 +147,27 @@ This section focuses on scenarios where the Client Workload interacts with Snowf
 
 ## Client Workload Configuration
 
-[Section titled “Client Workload Configuration”](#client-workload-configuration)
-
 Aembit now handles the credentials required to access the Server Workload, eliminating the need for you to manage them directly. You can safely remove any previously used credentials from the Client Workload.
 
 If you access the Server Workload through an SDK or library, it is possible that the SDK/library may still require credentials to be present for initialization purposes. In this scenario, you can provide placeholder credentials. Aembit will overwrite these placeholder credentials with the appropriate ones during the access process.
 
 ## Access Policy
 
-[Section titled “Access Policy”](#access-policy)
-
 * Create an Access Policy for a Client Workload to access the Snowflake Server Workload. Assign the newly created Credential Provider to this Access Policy.
 
 ## Required Features
 
-[Section titled “Required Features”](#required-features)
-
 * You will need to configure the [TLS Decrypt](../../../deploy-install/advanced-options/tls-decrypt/configure-tls-decrypt.md) feature to work with the Snowflake Server Workload.
 
-Caution
-
-As of Snowflake SDK 2.1.0, proxy settings must be explicitly specified within the connection string. In prior versions, the SDK automatically utilized proxy configurations based on environment variables such as `http_proxy` or `https_proxy`.
-
-For instance, if you are deploying the SDK within an ECS environment, it is essential to include the following parameters in your connection string:
-
-```shell
-USEPROXY=true;PROXYHOST=localhost;PROXYPORT=8000
-```
+> **Caution**
+>
+> As of Snowflake SDK 2.1.0, proxy settings must be explicitly specified within the connection string. In prior versions, the SDK automatically utilized proxy configurations based on environment variables such as `http_proxy` or `https_proxy`.
+>
+> For instance, if you are deploying the SDK within an ECS environment, it is essential to include the following parameters in your connection string:
+>
+> ```shell
+> USEPROXY=true;PROXYHOST=localhost;PROXYPORT=8000
+> ```
 
 ## Related
 

@@ -4,16 +4,15 @@ title: "Wiz Discovery Source"
 description: "How Aembit discovers workloads using the Wiz Discovery Source"
 resource: https://docs.aembit.io/user-guide/discovery/sources/wiz/
 interface: web-ui
-tags: [source, discovery]
-timestamp: 2025-06-17T17:22:04-07:00
-type_inferred: true
+tags: ["source", "discovery"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Wiz Discovery Source
 
-Note
-
-This is a beta feature and may be subject to changes. To enable Discovery with Wiz, contact Aembit by completing the [Contact Us form](https://aembit.io/contact/).
+> **Note**
+>
+> This is a beta feature and may be subject to changes. To enable Discovery with Wiz, contact Aembit by completing the [Contact Us form](https://aembit.io/contact/).
 
 This page explains how Aembit uses the Wiz Discovery Source to identify workloads in your cloud environments.
 
@@ -25,17 +24,15 @@ Once integrated, Aembit automatically fetches workload data from your Wiz tenant
 
 ### How to perform wiz discovery
 
-[Section titled “How to perform wiz discovery”](#how-to-perform-wiz-discovery)
-
 1. **Configure the Wiz Integration** - Follow the [Wiz Discovery Integration](../../administration/discovery/integrations/wiz.md) guide to configure the integration. This step make sure that Aembit can securely connect to your Wiz environment and begin syncing data.
 
 2. **Sync the Data** - After saving the integration, Aembit starts syncing data from Wiz. The initial sync may take longer than subsequent syncs, as it pulls in all relevant workload data from Wiz.
 
 3. **Review Discovered Workloads** - After syncing, Aembit displays the discovered workloads in the **Discovered** tab. These workloads aren’t yet managed by Aembit, so you can review them and categorize them according to your security and Access Policies.
 
-   Note
-
-   After the initial sync, Aembit compares future syncs to the previously retrieved data. If you add new workloads in Wiz, Aembit won’t detect them until they become available in the Wiz environment.
+   > **Note**
+   >
+   > After the initial sync, Aembit compares future syncs to the previously retrieved data. If you add new workloads in Wiz, Aembit won’t detect them until they become available in the Wiz environment.
 
 By following these steps, Aembit fetches and syncs the latest workload data from your Wiz environment. This streamlines the process of managing workloads in the cloud.
 
@@ -43,13 +40,9 @@ After syncing, Aembit categorizes the workloads as discovered and displays them 
 
 ## Wiz-discoverable resource types
 
-[Section titled “Wiz-discoverable resource types”](#wiz-discoverable-resource-types)
-
 The following lists represent all the available resource types that Aembit can discover through Wiz:
 
 ### Client Workload resources
-
-[Section titled “Client Workload resources”](#client-workload-resources)
 
 * AWS ECS Task
 * AWS EC2 Virtual Machine
@@ -58,8 +51,6 @@ The following lists represent all the available resource types that Aembit can d
 * Kubernetes Deployments
 
 ### Server Workload resources
-
-[Section titled “Server Workload resources”](#server-workload-resources)
 
 * AWS Redshift
 

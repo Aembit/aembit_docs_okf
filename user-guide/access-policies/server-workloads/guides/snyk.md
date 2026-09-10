@@ -4,9 +4,8 @@ title: "Snyk"
 description: "This page describes how to configure Aembit to work with the Snyk Server Workload."
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/guides/snyk/
 interface: web-ui
-tags: [security, guide, server-workload, access-policy]
-timestamp: 2026-04-27T11:40:47-04:00
-type_inferred: true
+tags: ["security", "guide", "server-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Snyk
@@ -16,13 +15,11 @@ type_inferred: true
 
 Below you can find the Aembit configuration required to work with the Snyk service as a Server Workload using the Snyk API.
 
-Prerequisites
-
-Before proceeding with the configuration, you need to have a Snyk tenant and an authorized Snyk App. If you have not created an app before, you can follow the steps outlined in the subsequent sections. For detailed information on how to create a Snyk App using the Snyk API or other methods, please refer to the [official Snyk documentation](https://docs.snyk.io/snyk-api/snyk-apps/create-a-snyk-app-using-the-snyk-api).
+> **Prerequisites**
+>
+> Before proceeding with the configuration, you need to have a Snyk tenant and an authorized Snyk App. If you have not created an app before, you can follow the steps outlined in the subsequent sections. For detailed information on how to create a Snyk App using the Snyk API or other methods, please refer to the [official Snyk documentation](https://docs.snyk.io/snyk-api/snyk-apps/create-a-snyk-app-using-the-snyk-api).
 
 ## Server Workload Configuration
-
-[Section titled “Server Workload Configuration”](#server-workload-configuration)
 
 1. Create a new Server Workload.
 
@@ -38,8 +35,6 @@ Before proceeding with the configuration, you need to have a Snyk tenant and an 
 * **Authentication scheme** - Bearer
 
 ## Credential Provider Configuration
-
-[Section titled “Credential Provider Configuration”](#credential-provider-configuration)
 
 1. Sign in to your Snyk account.
 
@@ -98,13 +93,11 @@ The response includes important configuration details, such as the **clientId** 
 
 ![Credential Provider - Ready State](https://docs.aembit.io/_astro/credential_providers_auth_code_status_ready.CBPCBiJg_ZBh135.webp)
 
-Caution
-
-Once the set lifetime ends, the retrieved credential will expire and will not work anymore. Aembit will notify you before this happens. Please ensure you reauthorize the credential before it expires.
+> **Caution**
+>
+> Once the set lifetime ends, the retrieved credential will expire and will not work anymore. Aembit will notify you before this happens. Please ensure you reauthorize the credential before it expires.
 
 ## Client Workload Configuration
-
-[Section titled “Client Workload Configuration”](#client-workload-configuration)
 
 Aembit now handles the credentials required to access the Server Workload, eliminating the need for you to manage them directly. You can safely remove any previously used credentials from the Client Workload.
 
@@ -112,13 +105,9 @@ If you access the Server Workload through an SDK or library, it is possible that
 
 ## Access Policy
 
-[Section titled “Access Policy”](#access-policy)
-
 * Create an access policy for a Client Workload to access the Snyk Server Workload and assign the newly created Credential Provider to it.
 
 ## Required Features
-
-[Section titled “Required Features”](#required-features)
 
 * You will need to configure the [TLS Decrypt](../../../deploy-install/advanced-options/tls-decrypt/configure-tls-decrypt.md) feature to work with the Snyk Server Workload.
 

@@ -1,31 +1,25 @@
 ---
-type: how-to
+type: explanation
 title: "OpenShift"
 description: "Aembit Edge Component deployment considerations in an OpenShift cluster"
 resource: https://docs.aembit.io/user-guide/deploy-install/kubernetes/openshift/
-interface: web-ui
-tags: [kubernetes, deploy-install]
-timestamp: 2025-08-22T14:59:25-07:00
-type_inferred: true
+tags: ["kubernetes", "deploy-install"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # OpenShift
 
 The Aembit Helm chart supports deploying to OpenShift, including Red Hat OpenShift Service on AWS (ROSA). This page explains the unique considerations when deploying to OpenShift.
 
-Caution
-
-You must use v1.25 of the Aembit Helm chart and all Aembit Edge Components when deploying on OpenShift. If possible, start fresh with the latest Edge Components and the latest Helm chart. Avoid attempting to upgrade from a previously failed installation on OpenShift.
+> **Caution**
+>
+> You must use v1.25 of the Aembit Helm chart and all Aembit Edge Components when deploying on OpenShift. If possible, start fresh with the latest Edge Components and the latest Helm chart. Avoid attempting to upgrade from a previously failed installation on OpenShift.
 
 ## ServiceAccount and SecurityContextConstraint resources
-
-[Section titled “ServiceAccount and SecurityContextConstraint resources”](#serviceaccount-and-securitycontextconstraint-resources)
 
 OpenShift provides an additional layer of security policy in terms of `SecurityContextConstraint` (SCC). Each SCC limits the options available to `Pod` resources, including those embedded in `Deployment` resources. Your cluster rejects any pod that uses [a disallowed option](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/authentication_and_authorization/managing-pod-security-policies#security-context-constraints-about_configuring-internal-oauth) within its `securityContext` field.
 
 ### SCC for Agent Controller and Agent Injector
-
-[Section titled “SCC for Agent Controller and Agent Injector”](#scc-for-agent-controller-and-agent-injector)
 
 When you deploy the Aembit Helm chart, specify an SCC that you expect the Agent Controller and Agent Injector to run under by setting:
 
@@ -53,8 +47,6 @@ Deploying the Aembit Helm chart from ArgoCD presents an additional challenge by 
 
 ### SCC for Client Workloads and Agent Proxy
 
-[Section titled “SCC for Client Workloads and Agent Proxy”](#scc-for-client-workloads-and-agent-proxy)
-
 OpenShift admits your pod under the most restrictive SCC that’s both compatible with the `securityContext` field specified in your pod and compatible with the container image specified in your pod. OpenShift [considers each of the SCCs available to the deployer](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/authentication_and_authorization/managing-pod-security-policies#admission_configuring-internal-oauth) of the pod.
 
 The Agent Proxy is capable of running under the `restricted-v2`. To accomplish this, first set:
@@ -66,8 +58,6 @@ The Agent Proxy is capable of running under the `restricted-v2`. To accomplish t
 With this set, the Agent Proxy container definition uses a `securityContext` that is compatible with the `restricted-v2` SCC. However, the container image declares an empty `User` value. This retains compatibility with the many supported deployment options for the container image. OpenShift considers this an intention to run as the `root` user, triggering OpenShift to admit the Client Workload pod under any of the deployer’s SCCs that allows running as the `root` user. To ensure your Client Workload pod runs under the `restricted-v2` SCC whenever possible, deploy it using a service account that only has permission to use the `restricted-v2` SCC.
 
 ## Explicit versus transparent steering
-
-[Section titled “Explicit versus transparent steering”](#explicit-versus-transparent-steering)
 
 When you deploy Pods to your cluster, annotate them to opt into [explicit steering](../advanced-options/agent-proxy/explicit-steering.md). Configure your Client Workloads to use the Agent Proxy as an HTTP or HTTPS proxy.
 

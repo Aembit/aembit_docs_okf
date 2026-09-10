@@ -4,9 +4,8 @@ title: "GitLab ID Token Subject"
 description: "This page describes how the GitLab ID Token Subject method identifies Client Workloads in Aembit."
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/gitlab-id-token-subject/
 interface: web-ui
-tags: [cicd, identification, client-workload, access-policy]
-timestamp: 2025-08-18T17:47:46-07:00
-type_inferred: true
+tags: ["cicd", "identification", "client-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # GitLab ID Token Subject
@@ -20,17 +19,11 @@ Combine this method with additional Client Workload identification techniques, f
 
 ## Applicable Deployment Type
 
-[Section titled “Applicable Deployment Type”](#applicable-deployment-type)
-
 This method is suitable for GitLab-based CI/CD Workflow deployments.
 
 ## Configuration
 
-[Section titled “Configuration”](#configuration)
-
 ### Aembit Cloud
-
-[Section titled “Aembit Cloud”](#aembit-cloud)
 
 1. Create a new Client Workload.
 2. Choose **GitLab ID Token Subject** for client identification.
@@ -40,8 +33,6 @@ This method is suitable for GitLab-based CI/CD Workflow deployments.
 * **Example** - project\_path:my-group/my-project:ref\_type:branch:ref:feature-branch-1
 
 ### Finding the GitLab ID Token Subject:
-
-[Section titled “Finding the GitLab ID Token Subject:”](#finding-the-gitlab-id-token-subject)
 
 You can reconstruct subject claim as follows:
 

@@ -4,9 +4,8 @@ title: "Verifying Aembit container image signatures"
 description: "How to verify official Aembit container image signatures"
 resource: https://docs.aembit.io/user-guide/deploy-install/verify-container-images/
 interface: web-ui
-tags: [deploy-install]
-timestamp: 2025-07-10T08:39:16-07:00
-type_inferred: true
+tags: ["deploy-install"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Verifying Aembit container image signatures
@@ -23,15 +22,13 @@ Aembit signs all container images in Docker Hub starting from the following vers
 
 ## Verify a container image tag
 
-[Section titled “Verify a container image tag”](#verify-a-container-image-tag)
-
 The following example shows how to verify the container image signature for Agent Controller. Though, you can swap the image name to any of the other available container images available in Aembit’s Docker Hub.
 
 To verify the `aembit_agent_controller` container image:
 
-1. Download the [Aembit Image Signing verification public key](https://docs.aembit.io/aembit-cosign-public-key.pub).
+1. Download the[Aembit Image Signing verification public key](https://docs.aembit.io/aembit-cosign-public-key.pub).
 
-2. Install `cosign` using [Cosign's official installation guide](https://docs.sigstore.dev/cosign/system_config/installation/).
+2. Install `cosign` using[Cosign's official installation guide](https://docs.sigstore.dev/cosign/system_config/installation/).
 
 3. Run the following command to verify the signature for an image:\
    *The following command always uses the latest tag*.
@@ -63,8 +60,6 @@ To verify the `aembit_agent_controller` container image:
 
 ## Verify a specific container image tag
 
-[Section titled “Verify a specific container image tag”](#verify-a-specific-container-image-tag)
-
 Use the commands from the following sections to verify specific Docker Hub tags for Aembit container images. You can verify all images with the same public key.
 
 **Public key**: [Aembit Image Signing verification public key](https://docs.aembit.io/aembit-cosign-public-key.pub)
@@ -77,87 +72,75 @@ cosign verify --key <path-to-public-key> aembit/<image_name>:<tag>
 
 ### Agent Controller
 
-[Section titled “Agent Controller”](#agent-controller)
-
 **Image name**: `aembit_agent_controller`
 
 **Docker Hub repo**: [`aembit/aembit_agent_controller`](https://hub.docker.com/r/aembit/aembit_agent_controller)
 
-**Latest version**: `1.32.3502`
+**Latest version**: `1.32.3541`
 
 **Verification command**:
 
 ```shell
-cosign verify --key <path-to-public-key> aembit/aembit_agent_controller:1.32.3502
+cosign verify --key <path-to-public-key> aembit/aembit_agent_controller:1.32.3541
 ```
 
 ### Agent Proxy
-
-[Section titled “Agent Proxy”](#agent-proxy)
 
 **Image name**: `aembit_agent_proxy`
 
 **Docker Hub repo**: [`aembit/aembit_agent_proxy`](https://hub.docker.com/r/aembit/aembit_agent_proxy)
 
-**Latest version**: `1.32.4999`
+**Latest version**: `1.34.5755`
 
 **Verification command**:
 
 ```shell
-cosign verify --key <path-to-public-key> aembit/aembit_agent_proxy:1.32.4999
+cosign verify --key <path-to-public-key> aembit/aembit_agent_proxy:1.34.5755
 ```
 
 ### Agent Injector
-
-[Section titled “Agent Injector”](#agent-injector)
 
 **Image name**: `aembit_agent_injector`
 
 **Docker Hub repo**: [`aembit/aembit_agent_injector`](https://hub.docker.com/r/aembit/aembit_agent_injector)
 
-**Latest version**: `1.31.425`
+**Latest version**: `1.34.433`
 
 **Verification command**:
 
 ```shell
-cosign verify --key <path-to-public-key> aembit/aembit_agent_injector:1.31.425
+cosign verify --key <path-to-public-key> aembit/aembit_agent_injector:1.34.433
 ```
 
 ### AWS Lambda Extension
-
-[Section titled “AWS Lambda Extension”](#aws-lambda-extension)
 
 **Image name**: `aembit_aws_lambda_extension`
 
 **Docker Hub repo**: [`aembit/aembit_aws_lambda_extension`](https://hub.docker.com/r/aembit/aembit_aws_lambda_extension)
 
-**Latest version**: `1.32.168`
+**Latest version**: `1.34.175`
 
 **Verification command**:
 
 ```shell
-cosign verify --key <path-to-public-key> aembit/aembit_aws_lambda_extension:1.32.168
+cosign verify --key <path-to-public-key> aembit/aembit_aws_lambda_extension:1.34.175
 ```
 
 ### Sidecar Init
-
-[Section titled “Sidecar Init”](#sidecar-init)
 
 **Image name**: `aembit_sidecar_init`
 
 **Docker Hub repo**: [`aembit/aembit_sidecar_init`](https://hub.docker.com/r/aembit/aembit_sidecar_init)
 
-**Latest version**: `1.25.130`
+**Latest version**: `1.34.138`
 
 **Verification command**:
 
 ```shell
-cosign verify --key <path-to-public-key> aembit/aembit_sidecar_init:1.25.130
+cosign verify --key <path-to-public-key> aembit/aembit_sidecar_init:1.34.138
 ```
 
 ## Verify a container image digest
-
-[Section titled “Verify a container image digest”](#verify-a-container-image-digest)
 
 To verify a specific container image digest, you can use the `cosign` command with the `sha256` digest of the image.
 

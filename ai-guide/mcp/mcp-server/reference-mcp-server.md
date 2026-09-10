@@ -4,7 +4,7 @@ title: "Aembit MCP Server reference"
 description: "Technical reference for the Aembit Model Context Protocol (MCP) Server including endpoints, authentication, tools, and resources."
 resource: https://docs.aembit.io/ai-guide/mcp/mcp-server/reference-mcp-server/
 interface: mcp
-tags: [mcp-server, mcp]
+tags: ["mcp-server", "mcp"]
 timestamp: 2026-05-12T15:40:45-07:00
 ---
 
@@ -12,13 +12,11 @@ timestamp: 2026-05-12T15:40:45-07:00
 
 This page documents the Aembit MCP Server API, including the service URL, authentication headers, available tools, and metadata resources. For a conceptual overview, see [About the MCP Server](about-mcp-server.md).
 
-Read-only access
-
-The Aembit MCP Server only supports read operations. You can’t create, update, or delete data through the MCP Server.
+> **Read-only access**
+>
+> The Aembit MCP Server only supports read operations. You can’t create, update, or delete data through the MCP Server.
 
 ## MCP service URL
-
-[Section titled “MCP service URL”](#mcp-service-url)
 
 Use the following URL pattern to connect to the Aembit MCP Server:
 
@@ -31,8 +29,6 @@ Use the following URL pattern to connect to the Aembit MCP Server:
 Replace `<tenantId>` with your tenant identifier, visible in the Aembit Admin UI Profile screen.
 
 ## Authentication
-
-[Section titled “Authentication”](#authentication)
 
 All requests require bearer token authentication using your Aembit API Token.
 
@@ -55,13 +51,9 @@ X-Aembit-ResourceSet: <resourceSetId>
 
 ## Tools
 
-[Section titled “Tools”](#tools)
-
 The following tools are the available MCP Server tools for querying Aembit event logs:
 
 ### `get_audit_logs`
-
-[Section titled “get\_audit\_logs”](#get_audit_logs)
 
 See also [Audit Logs](../../../user-guide/audit-report/audit-logs.md)
 
@@ -101,8 +93,6 @@ All parameters are optional.
 ***
 
 ### `get_auth_events`
-
-[Section titled “get\_auth\_events”](#get_auth_events)
 
 See also [Audit and Report](../../../user-guide/audit-report/overview.md)
 
@@ -144,11 +134,9 @@ All parameters are optional.
 
 ### `get_workload_events`
 
-[Section titled “get\_workload\_events”](#get_workload_events)
+See also [Workload Events](../../../user-guide/audit-report/workload-events/overview.md)
 
-See also [Workload Events](../../../user-guide/audit-report/workload-events.md)
-
-Retrieve workload**Workload**: Any non-human entity (application, service, automation, AI agent, etc.) that needs to access resources.[Learn more](https://docs.aembit.io/get-started/concepts/how-aembit-works/#introducing-workload-iam) events with filtering and pagination. By default, returns the last 24 hours of workload events, sorted by newest first.
+Retrieve workload events with filtering and pagination. By default, returns the last 24 hours of workload events, sorted by newest first.
 
 **Parameters**
 
@@ -186,13 +174,9 @@ All parameters are optional.
 
 ## Resources
 
-[Section titled “Resources”](#resources)
-
 The MCP Server exposes the following resources as machine-readable metadata. AI agents use these resources to discover valid filter values for each tool.
 
 ### Audit log severities
-
-[Section titled “Audit log severities”](#audit-log-severities)
 
 Severity values for the `severity` filter in `get_audit_logs`.
 
@@ -204,15 +188,11 @@ Severity values for the `severity` filter in `get_audit_logs`.
 
 ### Audit log categories
 
-[Section titled “Audit log categories”](#audit-log-categories)
-
 Valid values for the `category` filter in `get_audit_logs`. Each category corresponds to a type of activity logged in the Aembit Admin UI. See [Audit Logs](../../../user-guide/audit-report/audit-logs.md) for descriptions of each category.
 
 `Unknown`, `Tenant`, `Users`, `Authentication`, `Workloads`, `AccessPolicies`, `Agents`, `CredentialProvider`, `TrustProvider`, `AgentControllers`, `LogStreams`, `Integrations`, `AccessConditions`, `Roles`, `IdentityProviders`, `ResourceSets`, `Analysis`, `Routing`, `SignOnPolicies`, `PkiSettings`, `StandaloneCertificateAuthorities`, `CredentialProviderIntegrations`, `DiscoveryIntegration`, `GlobalPolicyCompliance`
 
 ### Authorization event types
-
-[Section titled “Authorization event types”](#authorization-event-types)
 
 Valid values for the `eventType` filter in `get_auth_events`. Each type represents a step in Aembit’s access authorization flow. See [Access Authorization Events](../../../user-guide/audit-report/access-authorization-events.md) for the full event schema.
 
@@ -223,8 +203,6 @@ Valid values for the `eventType` filter in `get_auth_events`. Each type represen
 | `Credential`    | Records the result of credential retrieval from the Credential Provider.                                |
 
 ### Authorization event severities
-
-[Section titled “Authorization event severities”](#authorization-event-severities)
 
 Severity values for the `severity` filter in `get_auth_events`.
 
@@ -237,15 +215,11 @@ Severity values for the `severity` filter in `get_auth_events`.
 
 ### Workload event types
 
-[Section titled “Workload event types”](#workload-event-types)
-
 Application protocol values used with the `appProtocol` filter parameter:
 
 `Redshift`, `HTTP`, `MySQL`, `Postgres`, `Redis`, `Snowflake`, `TCP`, `OracleDatabase`, `MCP`
 
 ### Workload event severities
-
-[Section titled “Workload event severities”](#workload-event-severities)
 
 Severity values for the `severity` filter in `get_workload_events`.
 
@@ -258,8 +232,6 @@ Severity values for the `severity` filter in `get_workload_events`.
 
 ## Supported integration tools
 
-[Section titled “Supported integration tools”](#supported-integration-tools)
-
 The following tools work with the Aembit MCP Server:
 
 * [MCP Inspector](https://www.mcpjam.com/)
@@ -270,36 +242,26 @@ The following tools work with the Aembit MCP Server:
 
 ## Sample prompts
 
-[Section titled “Sample prompts”](#sample-prompts)
-
 For example prompts and prompt engineering best practices, see the [Prompt Library](../../prompt-library/overview.md).
 
 ## Drilldown and filtering
-
-[Section titled “Drilldown and filtering”](#drilldown-and-filtering)
 
 * **Drilldown:** Tools and integrations such as MCP Inspector allow you to drill into event details for each result.
 * **Filtering:** Each tool accepts optional filter parameters for time range, severity, and tool-specific fields. See the preceding parameter tables for available filters per tool.
 
 ## Audit logging
 
-[Section titled “Audit logging”](#audit-logging)
-
 Aembit logs all queries to the MCP Server in the audit trail, including the identity of the requesting agent.
 
 ## Rate limits and constraints
-
-[Section titled “Rate limits and constraints”](#rate-limits-and-constraints)
 
 The MCP Server doesn’t enforce application-level rate limiting. The maximum page size (`perPage`) is `100`. Requests that exceed this value cap to `100`.
 
 ## Limitations
 
-[Section titled “Limitations”](#limitations)
-
-Read-only access
-
-The Aembit MCP Server only supports read operations. You can’t create, update, or delete data through the MCP Server.
+> **Read-only access**
+>
+> The Aembit MCP Server only supports read operations. You can’t create, update, or delete data through the MCP Server.
 
 * Only the tools and resources listed in the preceding sections are available.
-* Your Aembit administrator must enable the MCP Server for your tenant**Aembit Tenant**: Aembit Tenants serve as isolated, dedicated environments within Aembit that provide complete separation of administrative domains and security configurations.[Learn more](../../../get-started/concepts/administration.md).
+* Your Aembit administrator must enable the MCP Server for your tenant.

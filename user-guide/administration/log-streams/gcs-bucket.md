@@ -4,16 +4,13 @@ title: "Create a Google Cloud Storage Bucket Log Stream"
 description: "This page describes how to create a new Log Stream to an Google Cloud Storage (GCS) Bucket"
 resource: https://docs.aembit.io/user-guide/administration/log-streams/gcs-bucket/
 interface: web-ui
-tags: [log-stream, administration]
-timestamp: 2025-05-22T22:55:26-07:00
-type_inferred: true
+tags: ["log-stream", "administration"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Create a Google Cloud Storage Bucket Log Stream
 
 ## Prerequisites
-
-[Section titled “Prerequisites”](#prerequisites)
 
 Before creating a new Google Cloud Storage (GCS) Bucket Log Stream, make sure you have set up and configured:
 
@@ -24,8 +21,6 @@ Before creating a new Google Cloud Storage (GCS) Bucket Log Stream, make sure yo
 * [Workload Identity Federation](https://cloud.google.com/iam/docs/workload-identity-federation-with-other-providers)
 
 ## Create a new Google Cloud Storage Bucket Log Stream
-
-[Section titled “Create a new Google Cloud Storage Bucket Log Stream”](#create-a-new-google-cloud-storage-bucket-log-stream)
 
 To create a new Log Stream for a Google Cloud Storage (GCS) Bucket, follow these steps:
 

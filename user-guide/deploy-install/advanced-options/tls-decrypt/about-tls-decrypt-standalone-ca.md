@@ -1,12 +1,10 @@
 ---
-type: how-to
+type: explanation
 title: "About Standalone CA for TLS Decrypt"
 description: "How to configure TLS Decrypt with a Standalone CA"
 resource: https://docs.aembit.io/user-guide/deploy-install/advanced-options/tls-decrypt/about-tls-decrypt-standalone-ca/
-interface: web-ui
-tags: [tls-decrypt, advanced-option, deploy-install]
-timestamp: 2025-05-29T11:26:12-07:00
-type_inferred: true
+tags: ["tls-decrypt", "advanced-option", "deploy-install"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # About Standalone CA for TLS Decrypt
@@ -19,15 +17,11 @@ To set up a Standalone CA, see [How to configure Standalone CA for TLS Decrypt](
 
 ## Important terminology
 
-[Section titled “Important terminology”](#important-terminology)
-
 **Trust model** - A set of rules and configurations that define which CAs are trusted within a given context. In the context of Aembit’s TLS Decrypt feature, a trust model determines whether Aembit uses a Tenant-level CA, a Standalone CA, or both to validate TLS certificates.
 
 **Trust boundary** - The defined scope within which a CA is trusted. By assigning a Standalone CA to a Resource Set, you create a distinct trust boundary that isolates that Resource Set’s workloads from other environments.
 
 ## How Standalone CAs work
-
-[Section titled “How Standalone CAs work”](#how-standalone-cas-work)
 
 Standalone CAs provide a decentralized approach to certificate management by allowing individual resources to define their own trusted CAs rather than relying on a single Tenant-wide CA.
 
@@ -39,8 +33,6 @@ If you don’t assign a Standalone CA to a Client Workload or its associated Res
 
 ## Standalone CA assignment
 
-[Section titled “Standalone CA assignment”](#standalone-ca-assignment)
-
 You have two options when assigning a Standalone CA:
 
 * **Assign to a Resource Set** - Assigning a Standalone CA to a Resource Set isolates its trust model and establishes a shared trust boundary for all workloads within that set. This makes sure that only workloads within that Resource Set rely on the selected CA.
@@ -50,8 +42,6 @@ You have two options when assigning a Standalone CA:
 This layered structure allows you to establish both broad certificate policies via Resource Sets and targeted overrides for specific Client Workloads.
 
 ## How Aembit chooses which CA to use
-
-[Section titled “How Aembit chooses which CA to use”](#how-aembit-chooses-which-ca-to-use)
 
 Aembit resolves certificate authorities during the TLS Decrypt process from most to least restrictive:
 
@@ -83,8 +73,6 @@ This hierarchy allows the organization to enforce stricter security controls for
 
 ## Best practices for Standalone CAs
 
-[Section titled “Best practices for Standalone CAs”](#best-practices-for-standalone-cas)
-
 * **Use Standalone CAs for Critical Resources** - For sensitive services requiring stricter control, Standalone CAs improve isolation and minimize certificate sprawl.
 
 * **Define Clear Certificate Lifetimes** - Setting appropriate expiration periods reduces exposure to outdated certificates.
@@ -97,21 +85,15 @@ This hierarchy allows the organization to enforce stricter security controls for
 
 ## Scoping Standalone CAs too tightly
 
-[Section titled “Scoping Standalone CAs too tightly”](#scoping-standalone-cas-too-tightly)
-
 While tightly scoped Standalone CAs improve security and isolation, they can increase operational complexity. Managing multiple narrowly scoped CAs requires careful tracking of certificate rotations and renewals. Frequent resource movement across environments may lead to mismatched CA associations, disrupting communication. Additionally, troubleshooting becomes more complex when multiple isolated trust boundaries exist.
 
 Balance security with operational efficiency when defining CA scopes.
 
 ## Standalone CA behavior
 
-[Section titled “Standalone CA behavior”](#standalone-ca-behavior)
-
 When managing Standalone CAs, it’s crucial to understand how Resource Sets influence their behavior. Resource Sets define the scope within which a Standalone CA is trusted, which directly impacts both certificate visibility and Client Workload associations.
 
 ### In Resource Sets
-
-[Section titled “In Resource Sets”](#in-resource-sets)
 
 * **Consider trust boundary establishment** - Assigning a Standalone CA to a Resource Set creates a distinct trust boundary, with all Client Workloads in that Resource Set inheriting the assigned CA unless overridden.
 
@@ -120,8 +102,6 @@ When managing Standalone CAs, it’s crucial to understand how Resource Sets inf
 * **Beware of resource portability risks** - Moving workloads between Resource Sets may break certificate trust unless the new Resource Set shares the same Standalone CA or you reconfigure it.
 
 ### In Client Workloads
-
-[Section titled “In Client Workloads”](#in-client-workloads)
 
 * **Use targeted overrides strategically** - Assign a Standalone CA directly to a Client Workload to override the Resource Set’s CA only when workloads have distinct security requirements.
 
@@ -132,8 +112,6 @@ When managing Standalone CAs, it’s crucial to understand how Resource Sets inf
 By thoughtfully aligning Standalone CA assignments with your Resource Sets and workload structure, you can achieve stronger security without adding unnecessary complexity.
 
 ## Additional resources
-
-[Section titled “Additional resources”](#additional-resources)
 
 * [About TLS Decrypt](overview.md)
 

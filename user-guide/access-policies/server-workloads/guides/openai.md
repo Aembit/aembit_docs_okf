@@ -4,20 +4,17 @@ title: "ChatGPT (OpenAI)"
 description: "This page describes how to configure Aembit to work with the OpenAI Server Workload"
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/guides/openai/
 interface: web-ui
-tags: [ai-ml, guide, server-workload, access-policy]
-timestamp: 2026-07-07T15:50:08-04:00
-type_inferred: true
+tags: ["ai-ml", "guide", "server-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # ChatGPT (OpenAI)
 
-This guide walks you through creating a Server Workload**Server Workload**: Server Workloads represent target services, APIs, databases, or applications that receive and respond to access requests from Client Workloads.[Learn more](../../../../get-started/concepts/server-workloads.md) in Aembit to securely access the [OpenAI](https://platform.openai.com/) API without storing static API keys in your applications.
+This guide walks you through creating a Server Workload in Aembit to securely access the [OpenAI](https://platform.openai.com/) API without storing static API keys in your applications.
 
 Use this Server Workload to let your applications call OpenAI for tasks such as text completion, summarization, and sentiment analysis, while Aembit manages and injects the credential at access time.
 
 ## Create a project API key
-
-[Section titled “Create a project API key”](#create-a-project-api-key)
 
 To configure this Server Workload, you need an OpenAI account and a project API key. If you already have an API key, skip to [Server Workload configuration](#server-workload-configuration). For more details on API key authentication, see the [official OpenAI API documentation](https://platform.openai.com/docs/api-reference/api-keys).
 
@@ -38,13 +35,11 @@ To configure this Server Workload, you need an OpenAI account and a project API 
 
    ![Copy secret key](https://docs.aembit.io/_astro/openai_api_copy_secret_key.DIZm_7L7_ZO84PB.webp)
 
-Note
-
-In the OpenAI console, project API keys offer more granular control over your OpenAI resources than user API keys. The Aembit configuration steps work with either type.
+> **Note**
+>
+> In the OpenAI console, project API keys offer more granular control over your OpenAI resources than user API keys. The Aembit configuration steps work with either type.
 
 ## Server Workload configuration
-
-[Section titled “Server Workload configuration”](#server-workload-configuration)
 
 Now that you’ve copied your OpenAI API key, return to your Aembit Tenant to create the Server Workload.
 
@@ -66,8 +61,6 @@ Now that you’ve copied your OpenAI API key, return to your Aembit Tenant to cr
 
 ## Credential Provider configuration
 
-[Section titled “Credential Provider configuration”](#credential-provider-configuration)
-
 In your Aembit Tenant, create a new Credential Provider with the following values:
 
 * **Name** - Choose a user-friendly name.
@@ -76,13 +69,11 @@ In your Aembit Tenant, create a new Credential Provider with the following value
 
 Click **Save** to store the Credential Provider.
 
-Use Workload Identity Federation for enhanced security
-
-To use short-lived tokens instead, configure an [OpenAI WIF Credential Provider](../../credential-providers/openai-workload-identity-federation.md).
+> **Use Workload Identity Federation for enhanced security**
+>
+> To use short-lived tokens instead, configure an [OpenAI WIF Credential Provider](../../credential-providers/openai-workload-identity-federation.md).
 
 ## Client Workload configuration
-
-[Section titled “Client Workload configuration”](#client-workload-configuration)
 
 Aembit handles the credentials required to access the Server Workload, so you don’t manage them directly. You can remove any previously used credentials from the Client Workload.
 
@@ -90,13 +81,9 @@ If you access the Server Workload through an SDK or library, the SDK or library 
 
 ## Access Policy
 
-[Section titled “Access Policy”](#access-policy)
-
 Create an Access Policy for a Client Workload to access the OpenAI Server Workload. Assign the newly created Credential Provider to this Access Policy.
 
 ## Required features
-
-[Section titled “Required features”](#required-features)
 
 Configure the [TLS Decrypt](../../../deploy-install/advanced-options/tls-decrypt/configure-tls-decrypt.md) feature to work with the OpenAI API Server Workload.
 

@@ -4,9 +4,8 @@ title: "How to retrieve credentials with the Aembit GitHub Action"
 description: "Configure the Aembit GitHub Action to retrieve different credential types in your workflows"
 resource: https://docs.aembit.io/user-guide/deploy-install/ci-cd/github/github-actions-how-to/
 interface: web-ui
-tags: [github, ci-cd, deploy-install]
-timestamp: 2026-04-29T13:30:50-04:00
-type_inferred: true
+tags: ["github", "ci-cd", "deploy-install"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # How to retrieve credentials with the Aembit GitHub Action
@@ -15,18 +14,14 @@ Retrieve credentials from Aembit in your GitHub Actions workflow using the Aembi
 
 ## Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites)
+Before configuring the action, ensure you have an active Access Policy linking these components:
 
-Before configuring the action, ensure you have an active Access Policy**Access Policy**: Access Policies define, enforce, and audit access between Client and Server Workloads by cryptographically verifying workload identity and contextual factors rather than relying on static secrets.[Learn more](../../../../get-started/concepts/access-policies.md) linking these components:
-
-* Client Workload**Client Workload**: Client Workloads represent software applications, scripts, or automated processes that initiate access requests to Server Workloads, operating autonomously without direct user interaction.[Learn more](../../../../get-started/concepts/client-workloads.md) configured with GitHub OpenID Connect (OIDC) identity
-* Trust Provider**Trust Provider**: Trust Providers validate Client Workload identities through workload attestation, verifying identity claims from the workload's runtime environment rather than relying on pre-shared secrets.[Learn more](../../../../get-started/concepts/trust-providers.md) for GitHub Actions
-* Credential Provider**Credential Provider**: Credential Providers obtain the specific access credentials—such as API keys, OAuth tokens, or temporary cloud credentials—that Client Workloads need to authenticate to Server Workloads.[Learn more](../../../../get-started/concepts/credential-providers.md) matching your credential type
-* Server Workload**Server Workload**: Server Workloads represent target services, APIs, databases, or applications that receive and respond to access requests from Client Workloads.[Learn more](../../../../get-started/concepts/server-workloads.md) for the target service
+* Client Workload configured with GitHub OpenID Connect (OIDC) identity
+* Trust Provider for GitHub Actions
+* Credential Provider matching your credential type
+* Server Workload for the target service
 
 ## Configure the action
-
-[Section titled “Configure the action”](#configure-the-action)
 
 Add the Aembit GitHub Action to your workflow with the appropriate configuration for your credential type:
 
@@ -128,8 +123,6 @@ Optionally, add the `resource-set-id` input if your Trust Provider lives in a cu
 
 ## Verify it works
 
-[Section titled “Verify it works”](#verify-it-works)
-
 After running your workflow:
 
 1. Check the GitHub Actions logs for successful credential retrieval. A successful run shows output similar to:
@@ -143,7 +136,7 @@ After running your workflow:
    ✓ Credential masked in logs
    ```
 
-2. In your Aembit Tenant**Aembit Tenant**: Aembit Tenants serve as isolated, dedicated environments within Aembit that provide complete separation of administrative domains and security configurations.[Learn more](../../../../get-started/concepts/administration.md), go to **Reporting** > **Access Authorization Events**.
+2. In your Aembit Tenant, go to **Reporting** > **Access Authorization Events**.
 
 3. Look for events matching your Client Workload. Verify the status shows **Authorized**.
 
@@ -160,17 +153,13 @@ Error: Unable to retrieve credentials. Check your Access Policy configuration.
 
 ## Scaling across workflows
 
-[Section titled “Scaling across workflows”](#scaling-across-workflows)
-
 Use a reusable workflow pattern to standardize credential retrieval across multiple workflows in your repository.
 
 ### Reusable workflow pattern
 
-[Section titled “Reusable workflow pattern”](#reusable-workflow-pattern)
-
 Create a reusable workflow that other workflows can call:
 
-.github/workflows/get-aembit-credentials.yml
+**.github/workflows/get-aembit-credentials.yml**
 
 ```yaml
 name: Get Aembit Credentials
@@ -219,7 +208,7 @@ jobs:
 
 Other workflows call it with:
 
-Example workflow calling the reusable workflow
+**Example workflow calling the reusable workflow**
 
 ```yaml
 jobs:
@@ -234,17 +223,11 @@ jobs:
 
 ### Monitoring at scale
 
-[Section titled “Monitoring at scale”](#monitoring-at-scale)
-
 [Log Streams](../../../administration/log-streams/overview.md) aggregate credential access events across all workflows. Use Log Streams for centralized Continuous Integration/Continuous Deployment (CI/CD) monitoring and alerting.
 
 ## Troubleshooting
 
-[Section titled “Troubleshooting”](#troubleshooting)
-
 ### Permission denied
-
-[Section titled “Permission denied”](#permission-denied)
 
 **Symptom:** The action fails with a permission error.
 
@@ -252,7 +235,7 @@ jobs:
 
 **Solution:** Add the `id-token: write` permission to your workflow:
 
-Required permissions
+**Required permissions**
 
 ```yaml
 permissions:
@@ -261,8 +244,6 @@ permissions:
 ```
 
 ### Credential not found
-
-[Section titled “Credential not found”](#credential-not-found)
 
 **Symptom:** The step output is empty when accessed via `${{ steps.aembit.outputs.<name> }}`.
 
@@ -277,8 +258,6 @@ permissions:
 
 ### Invalid audience
 
-[Section titled “Invalid audience”](#invalid-audience)
-
 **Symptom:** The action fails with an audience validation error.
 
 **Cause:** Your Trust Provider is in a custom Resource Set, but the action isn’t configured to use it.
@@ -286,8 +265,6 @@ permissions:
 **Solution:** Add the `resource-set-id` input — see [Configure the action](#configure-the-action).
 
 ### Credential format mismatch
-
-[Section titled “Credential format mismatch”](#credential-format-mismatch)
 
 **Symptom:** The credential works but isn’t in the expected format.
 
@@ -302,8 +279,6 @@ permissions:
 See the [Action output reference](github-actions-reference.md) for the complete list.
 
 ## Related
-
-[Section titled “Related”](#related)
 
 * [Tutorial](github-actions-tutorial.md) - Step-by-step first setup
 * [Reference](github-actions-reference.md) - All action parameters

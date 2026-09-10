@@ -3,9 +3,8 @@ type: reference
 title: "Edge Component environment variables reference"
 description: "Reference for environment variables of Edge Components categorized by deployment type"
 resource: https://docs.aembit.io/reference/edge-components/edge-component-env-vars/
-tags: [edge-component]
-timestamp: 2026-06-18T13:15:52-04:00
-type_inferred: true
+tags: ["edge-component"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Edge Component environment variables reference
@@ -22,13 +21,9 @@ The following sections list and describe the environment variables available for
 
 ## Agent Controller environment variables
 
-[Section titled “Agent Controller environment variables”](#agent-controller-environment-variables)
-
 Here is a list of all available environment variables for configuring the Agent Controller installer:
 
 ### `AEMBIT_AGENT_CONTROLLER_ID` Required
-
-[Section titled “AEMBIT\_AGENT\_CONTROLLER\_ID ”](#aembit_agent_controller_id)
 
 Default - not set
 
@@ -36,7 +31,7 @@ OS-All
 
 Required if not using `AEMBIT_DEVICE_CODE`.
 
-The Agent Controller ID, available in your tenant’s administrative console for each Agent Controller. This ID is utilized for Trust Provider**Trust Provider**: Trust Providers validate Client Workload identities through workload attestation, verifying identity claims from the workload's runtime environment rather than relying on pre-shared secrets.[Learn more](../../get-started/concepts/trust-providers.md) registration. You must provide either this or the `AEMBIT_DEVICE_CODE` environment variable.
+The Agent Controller ID, available in your tenant’s administrative console for each Agent Controller. This ID is utilized for Trust Provider registration. You must provide either this or the `AEMBIT_DEVICE_CODE` environment variable.
 
 *Example*:\
 `01234567-89ab-cdef-0123-456789abcdef`
@@ -44,8 +39,6 @@ The Agent Controller ID, available in your tenant’s administrative console for
 ***
 
 ### `AEMBIT_DEVICE_CODE` Required
-
-[Section titled “AEMBIT\_DEVICE\_CODE ”](#aembit_device_code)
 
 Default - not set
 
@@ -62,13 +55,11 @@ The device code for the Agent Controller. Generate this code in your tenant’s 
 
 ### `AEMBIT_TENANT_ID` Required
 
-[Section titled “AEMBIT\_TENANT\_ID ”](#aembit_tenant_id)
-
 Default - not set
 
 OS-All
 
-The Aembit Tenant**Aembit Tenant**: Aembit Tenants serve as isolated, dedicated environments within Aembit that provide complete separation of administrative domains and security configurations.[Learn more](../../get-started/concepts/administration.md) ID that the Agent Controller will register with.
+The Aembit Tenant ID that the Agent Controller will register with.
 
 *Example*:\
 `123abc`
@@ -76,8 +67,6 @@ The Aembit Tenant**Aembit Tenant**: Aembit Tenants serve as isolated, dedicated 
 ***
 
 ### `AEMBIT_HTTP_PORT_DISABLED`
-
-[Section titled “AEMBIT\_HTTP\_PORT\_DISABLED”](#aembit_http_port_disabled)
 
 Default - `false`
 
@@ -91,8 +80,6 @@ When `true`, turns off HTTP support in Agent Controller, restricting communicati
 ***
 
 ### `AEMBIT_KERBEROS_ATTESTATION_ENABLED`
-
-[Section titled “AEMBIT\_KERBEROS\_ATTESTATION\_ENABLED”](#aembit_kerberos_attestation_enabled)
 
 Default - not set
 
@@ -111,8 +98,6 @@ When `true`, enables Kerberos-based attestation.
 
 ### `AEMBIT_LOG_LEVEL`
 
-[Section titled “AEMBIT\_LOG\_LEVEL”](#aembit_log_level)
-
 Default - `information`
 
 OS-All
@@ -126,8 +111,6 @@ Set the Agent Controller log level. The supported levels include `fatal`, `error
 
 ### `AEMBIT_MANAGED_TLS_HOSTNAME`
 
-[Section titled “AEMBIT\_MANAGED\_TLS\_HOSTNAME”](#aembit_managed_tls_hostname)
-
 Default - not set
 
 OS-All
@@ -139,21 +122,19 @@ This is mutually exclusive with `TLS_PEM_PATH` and `TLS_KEY_PATH`.
 *Example*:\
 `aembit-agent-controller.example.com`
 
-Note
-
-When you enable TLS on Agent Controller version 1.24.xxxx or later, Agent Controller automatically:
-
-* opens port 443 (5443 on VM) for HTTPS traffic
-
-* doesn’t open port 80 (5000 on VM) for HTTP traffic
-
-As of Agent Controller version 1.29.xxxx, on Kubernetes deployments, Agent Controller exposes Prometheus metrics over HTTP on port 9090 regardless of TLS state. On Virtual Machine deployments, enabling TLS continues to switch Prometheus metrics from HTTP port 9090 to HTTPS port 9091.
+> **Note**
+>
+> When you enable TLS on Agent Controller version 1.24.xxxx or later, Agent Controller automatically:
+>
+> * opens port 443 (5443 on VM) for HTTPS traffic
+>
+> * doesn’t open port 80 (5000 on VM) for HTTP traffic
+>
+> As of Agent Controller version 1.29.xxxx, on Kubernetes deployments, Agent Controller exposes Prometheus metrics over HTTP on port 9090 regardless of TLS state. On Virtual Machine deployments, enabling TLS continues to switch Prometheus metrics from HTTP port 9090 to HTTPS port 9091.
 
 ***
 
 ### `AEMBIT_METRICS_ENABLED`
-
-[Section titled “AEMBIT\_METRICS\_ENABLED”](#aembit_metrics_enabled)
 
 Default - `true`
 
@@ -168,8 +149,6 @@ Enable Prometheus metrics. Agent Controller turns this on by default.
 
 ### `AEMBIT_STACK_DOMAIN`
 
-[Section titled “AEMBIT\_STACK\_DOMAIN”](#aembit_stack_domain)
-
 Default - `useast2.aembit.io`
 
 OS-All
@@ -179,8 +158,6 @@ The cloud stack to connect to. **Don’t set this value unless directed by your 
 ***
 
 ### `HTTP_PROXY`
-
-[Section titled “HTTP\_PROXY”](#http_proxy)
 
 Default - not set
 
@@ -193,8 +170,6 @@ Specifies an HTTP proxy for Agent Controller outbound HTTP connections. When set
 
 ### `HTTPS_PROXY`
 
-[Section titled “HTTPS\_PROXY”](#https_proxy)
-
 Default - not set
 
 OS-All v1.30.3384
@@ -204,16 +179,14 @@ Specifies an HTTPS proxy for Agent Controller outbound HTTPS connections. When s
 
 ***
 
-Installer doesn’t accept these variables
-
-The Agent Controller installer doesn’t accept `HTTP_PROXY`, `HTTPS_PROXY`, or `NO_PROXY`. To route Agent Controller outbound traffic through an upstream HTTP proxy, set these variables in the Agent Controller service’s environment so that the service inherits them:
-
-* **Windows:** Set them as [system environment variables](https://learn.microsoft.com/en-us/windows/win32/procthread/environment-variables).
-* **Linux:** Set them in a [systemd drop-in file](https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html) using the [`Environment=` directive](https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Environment=).
+> **Installer doesn’t accept these variables**
+>
+> The Agent Controller installer doesn’t accept `HTTP_PROXY`, `HTTPS_PROXY`, or `NO_PROXY`. To route Agent Controller outbound traffic through an upstream HTTP proxy, set these variables in the Agent Controller service’s environment so that the service inherits them:
+>
+> * **Windows:** Set them as [system environment variables](https://learn.microsoft.com/en-us/windows/win32/procthread/environment-variables).
+> * **Linux:** Set them in a [systemd drop-in file](https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html) using the [`Environment=` directive](https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Environment=).
 
 ### `NO_PROXY`
-
-[Section titled “NO\_PROXY”](#no_proxy)
 
 Default - not set
 
@@ -228,7 +201,7 @@ Aembit guarantees the following patterns match:
 * Specific IP addresses (for example, `169.254.169.254`)
 * Specific hostnames (for example, `metadata.google.internal`)
 
-Other patterns may cause unexpected behavior. For more information or help, contact [Aembit Support](https://docs.aembit.io/support-overview).
+Other patterns may cause unexpected behavior. For more information or help, contact [Aembit Support](../../support-overview.md).
 
 *Example*:\
 `169.254.169.254,fd00:ec2::254,metadata.google.internal`
@@ -236,8 +209,6 @@ Other patterns may cause unexpected behavior. For more information or help, cont
 ***
 
 ### `SERVICE_LOGON_ACCOUNT`
-
-[Section titled “SERVICE\_LOGON\_ACCOUNT”](#service_logon_account)
 
 Default - not set
 
@@ -252,8 +223,6 @@ When set, this runs the Agent Controller as a different user which is useful for
 
 ### `TLS_PEM_PATH`
 
-[Section titled “TLS\_PEM\_PATH”](#tls_pem_path)
-
 Default - not set
 
 OS-All
@@ -265,21 +234,19 @@ Pair this with `TLS_KEY_PATH`. It’s mutually exclusive with `AEMBIT_MANAGED_TL
 *Example*:\
 `C:\aembit.crt`, `/etc/ssl/certs/aembit.crt`
 
-Note
-
-When you enable TLS on Agent Controller version 1.24.xxxx or later, Agent Controller automatically:
-
-* opens port 443 (5443 on VM) for HTTPS traffic
-
-* doesn’t open port 80 (5000 on VM) for HTTP traffic
-
-As of Agent Controller version 1.29.xxxx, on Kubernetes deployments, Agent Controller exposes Prometheus metrics over HTTP on port 9090 regardless of TLS state. On Virtual Machine deployments, enabling TLS continues to switch Prometheus metrics from HTTP port 9090 to HTTPS port 9091.
+> **Note**
+>
+> When you enable TLS on Agent Controller version 1.24.xxxx or later, Agent Controller automatically:
+>
+> * opens port 443 (5443 on VM) for HTTPS traffic
+>
+> * doesn’t open port 80 (5000 on VM) for HTTP traffic
+>
+> As of Agent Controller version 1.29.xxxx, on Kubernetes deployments, Agent Controller exposes Prometheus metrics over HTTP on port 9090 regardless of TLS state. On Virtual Machine deployments, enabling TLS continues to switch Prometheus metrics from HTTP port 9090 to HTTPS port 9091.
 
 ***
 
 ### `TLS_KEY_PATH`
-
-[Section titled “TLS\_KEY\_PATH”](#tls_key_path)
 
 Default - not set
 
@@ -292,27 +259,23 @@ Pair this with `TLS_PEM_PATH`. It’s mutually exclusive with `AEMBIT_MANAGED_TL
 *Example*:\
 `C:\aembit.key`, `/etc/ssl/private/.aembit.key`
 
-Note
-
-When you enable TLS on Agent Controller version 1.24.xxxx or later, Agent Controller automatically:
-
-* opens port 443 (5443 on VM) for HTTPS traffic
-
-* doesn’t open port 80 (5000 on VM) for HTTP traffic
-
-As of Agent Controller version 1.29.xxxx, on Kubernetes deployments, Agent Controller exposes Prometheus metrics over HTTP on port 9090 regardless of TLS state. On Virtual Machine deployments, enabling TLS continues to switch Prometheus metrics from HTTP port 9090 to HTTPS port 9091.
+> **Note**
+>
+> When you enable TLS on Agent Controller version 1.24.xxxx or later, Agent Controller automatically:
+>
+> * opens port 443 (5443 on VM) for HTTPS traffic
+>
+> * doesn’t open port 80 (5000 on VM) for HTTP traffic
+>
+> As of Agent Controller version 1.29.xxxx, on Kubernetes deployments, Agent Controller exposes Prometheus metrics over HTTP on port 9090 regardless of TLS state. On Virtual Machine deployments, enabling TLS continues to switch Prometheus metrics from HTTP port 9090 to HTTPS port 9091.
 
 ***
 
 ## Agent Proxy environment variables
 
-[Section titled “Agent Proxy environment variables”](#agent-proxy-environment-variables)
-
 Here is a list of all available environment variables for configuring the Agent Proxy installer:
 
 ### `AEMBIT_AGENT_CONTROLLER` Required
-
-[Section titled “AEMBIT\_AGENT\_CONTROLLER ”](#aembit_agent_controller)
 
 Default - not set
 
@@ -327,8 +290,6 @@ The location (scheme, host, and port) of the Agent Controller that the Agent Pro
 
 ### `AEMBIT_AWS_MAX_BUFFERED_PAYLOAD_BYTES` Deprecated
 
-[Section titled “AEMBIT\_AWS\_MAX\_BUFFERED\_PAYLOAD\_BYTES ”](#aembit_aws_max_buffered_payload_bytes)
-
 OS-All
 
 **Deprecated**. This variable has no effect. Previously, this variable set the maximum size in bytes that Agent Proxy buffers when processing AWS S3 uploads with streaming signed payloads. It’s safe to remove from your configuration.
@@ -337,13 +298,11 @@ OS-All
 
 ### `AEMBIT_CLIENT_WORKLOAD_PROCESS_IDENTIFICATION_ENABLED`
 
-[Section titled “AEMBIT\_CLIENT\_WORKLOAD\_PROCESS\_IDENTIFICATION\_ENABLED”](#aembit_client_workload_process_identification_enabled)
-
 Default - `false`
 
 OS-Linux
 
-Enable process-based Client Workload**Client Workload**: Client Workloads represent software applications, scripts, or automated processes that initiate access requests to Server Workloads, operating autonomously without direct user interaction.[Learn more](../../get-started/concepts/client-workloads.md) identification, including [Process Command Line](../../user-guide/access-policies/client-workloads/identification/process-command-line.md), [Process Name](../../user-guide/access-policies/client-workloads/identification/process-name.md), [Process Path](../../user-guide/access-policies/client-workloads/identification/process-path.md), and [Process User Name](../../user-guide/access-policies/client-workloads/identification/process-user-name.md).
+Enable process-based Client Workload identification, including [Process Command Line](../../user-guide/access-policies/client-workloads/identification/process-command-line.md), [Process Name](../../user-guide/access-policies/client-workloads/identification/process-name.md), [Process Path](../../user-guide/access-policies/client-workloads/identification/process-path.md), and [Process User Name](../../user-guide/access-policies/client-workloads/identification/process-user-name.md).
 
 *Example*:\
 `false`
@@ -351,8 +310,6 @@ Enable process-based Client Workload**Client Workload**: Client Workloads repres
 ***
 
 ### `AEMBIT_DEBUG_MAX_CAPTURED_PACKETS_PER_DEVICE`
-
-[Section titled “AEMBIT\_DEBUG\_MAX\_CAPTURED\_PACKETS\_PER\_DEVICE”](#aembit_debug_max_captured_packets_per_device)
 
 Default - not set
 
@@ -367,8 +324,6 @@ The maximum number of network packets that Agent Proxy monitors per IPv4 network
 
 ### `AEMBIT_DOCKER_CONTAINER_CIDR`
 
-[Section titled “AEMBIT\_DOCKER\_CONTAINER\_CIDR”](#aembit_docker_container_cidr)
-
 Default - not set
 
 OS-Linux
@@ -381,8 +336,6 @@ Supports Client Workloads running in Docker Compose on a Virtual Machine. This e
 ***
 
 ### `AEMBIT_ENV_VAR_ALLOWLIST`
-
-[Section titled “AEMBIT\_ENV\_VAR\_ALLOWLIST”](#aembit_env_var_allowlist)
 
 Default - not set (empty)
 
@@ -403,8 +356,6 @@ For platform-specific guidance on injecting environment variables into Agent Pro
 
 ### `AEMBIT_HTTP_IDLE_TIMEOUT_SECS`
 
-[Section titled “AEMBIT\_HTTP\_IDLE\_TIMEOUT\_SECS”](#aembit_http_idle_timeout_secs)
-
 Default - `3600`
 
 OS-All
@@ -417,8 +368,6 @@ Specifies the idle timeout, in seconds, for HTTP/1.1 connections handled by the 
 ***
 
 ### `AEMBIT_HTTP_SERVER_PORT`
-
-[Section titled “AEMBIT\_HTTP\_SERVER\_PORT”](#aembit_http_server_port)
 
 Default - `8000`
 
@@ -433,8 +382,6 @@ Specifies the port the Agent Proxy uses to manage HTTP traffic directed to it vi
 
 ### `AEMBIT_KERBEROS_ATTESTATION_ENABLED`
 
-[Section titled “AEMBIT\_KERBEROS\_ATTESTATION\_ENABLED”](#aembit_kerberos_attestation_enabled-1)
-
 Default - not set
 
 OS-Linux
@@ -447,8 +394,6 @@ Enable Kerberos-based attestation. This value isn’t set by default. To enable 
 ***
 
 ### `AEMBIT_LOG_LEVEL` (Replaces `AEMBIT_LOG`)
-
-[Section titled “AEMBIT\_LOG\_LEVEL (Replaces AEMBIT\_LOG)”](#aembit_log_level-replaces-aembit_log)
 
 Default - `info`
 
@@ -463,8 +408,6 @@ Set the Agent Proxy log level. The supported levels include `error`, `warn`, `in
 
 ### `AEMBIT_METRICS_ENABLED`
 
-[Section titled “AEMBIT\_METRICS\_ENABLED”](#aembit_metrics_enabled-1)
-
 Default - `true`
 
 OS-All
@@ -477,8 +420,6 @@ Enable Prometheus metrics. Defaults to `true`.
 ***
 
 ### `AEMBIT_METRICS_PORT`
-
-[Section titled “AEMBIT\_METRICS\_PORT”](#aembit_metrics_port)
 
 Default - `9099`
 
@@ -493,13 +434,11 @@ The port where Agent Proxy exposes Prometheus metrics.
 
 ### `AEMBIT_PASS_THROUGH_TRAFFIC_BEFORE_REGISTRATION`
 
-[Section titled “AEMBIT\_PASS\_THROUGH\_TRAFFIC\_BEFORE\_REGISTRATION”](#aembit_pass_through_traffic_before_registration)
-
 Default - `true`
 
 OS-All
 
-When set to true, Agent Proxy operates in Passthrough mode. Connections proceed without credential injection until Aembit Cloud**Aembit Cloud**: Aembit Cloud serves as both the central control plane and management plane, making authorization decisions, evaluating policies, coordinating credential issuance, and providing administrative interfaces for configuration.[Learn more](../../get-started/concepts/aembit-cloud.md) registration completes. When set to false, incoming Client Workloads can’t connect until after registration completes. On Kubernetes this has the effect of [delaying pod startup](../../user-guide/deploy-install/kubernetes/kubernetes.md#delaying-pod-startup-until-agent-proxy-has-registered).
+When set to true, Agent Proxy operates in Passthrough mode. Connections proceed without credential injection until Aembit Cloud registration completes. When set to false, incoming Client Workloads can’t connect until after registration completes. On Kubernetes this has the effect of [delaying pod startup](../../user-guide/deploy-install/kubernetes/kubernetes.md#delaying-pod-startup-until-agent-proxy-has-registered).
 
 *Example*:\
 `false`
@@ -507,8 +446,6 @@ When set to true, Agent Proxy operates in Passthrough mode. Connections proceed 
 ***
 
 ### `AEMBIT_POST_START_MAX_WAIT_SEC` Kubernetes only
-
-[Section titled “AEMBIT\_POST\_START\_MAX\_WAIT\_SEC ”](#aembit_post_start_max_wait_sec)
 
 Default - `60`
 
@@ -525,8 +462,6 @@ See [Delaying pod startup until the Agent Proxy has registered](../../user-guide
 
 ### `AEMBIT_PRIVILEGED_KEYTAB`
 
-[Section titled “AEMBIT\_PRIVILEGED\_KEYTAB”](#aembit_privileged_keytab)
-
 Default - `false`
 
 OS-Linux
@@ -539,8 +474,6 @@ Set the configuration flag to enable the Agent Proxy to access a Kerberos princi
 ***
 
 ### `AEMBIT_RESOURCE_SET_ID`
-
-[Section titled “AEMBIT\_RESOURCE\_SET\_ID”](#aembit_resource_set_id)
 
 Default - not set
 
@@ -555,8 +488,6 @@ Associates Agent Proxy with a specific [Resource Set](../../user-guide/administr
 
 ### `AEMBIT_SIGTERM_STRATEGY`
 
-[Section titled “AEMBIT\_SIGTERM\_STRATEGY”](#aembit_sigterm_strategy)
-
 Default - `immediate`
 
 OS-Linux
@@ -569,8 +500,6 @@ The strategy used by Agent Proxy to handle the `SIGTERM` signal. Supported value
 ***
 
 ### `AEMBIT_STEERING_ALLOWED_HOSTS`
-
-[Section titled “AEMBIT\_STEERING\_ALLOWED\_HOSTS”](#aembit_steering_allowed_hosts)
 
 Default - not set
 
@@ -585,15 +514,15 @@ A list of comma-separated hostnames for which Agent Proxy should proxy traffic.
 
 ### `AEMBIT_TENANT_GRPC_PING_INTERVAL_SECS`
 
-[Section titled “AEMBIT\_TENANT\_GRPC\_PING\_INTERVAL\_SECS”](#aembit_tenant_grpc_ping_interval_secs)
-
 Default - not set
 
-OS-All v1.32.4999
+OS-All v1.34.5755
 
 Sets how often, in seconds, Agent Proxy sends gRPC keep-alive messages over its connection to your Aembit Tenant. This setting is off by default. During normal operation, Agent Proxy already exchanges messages over this connection every 60 seconds.
 
 Set this only for unconventional networks, such as a Secure Web Gateway (SWG) that drops or stalls an idle connection without closing it. In those cases, the keep-alive messages let Agent Proxy detect a dead connection and reconnect sooner. Accepts any whole number of seconds greater than 0. Use together with `AEMBIT_TENANT_GRPC_PING_TIMEOUT_SECS`.
+
+Linux honors this variable from Agent Proxy 1.32.4999 on. The Windows installer applies it as an MSI property from Agent Proxy 1.34.5755 on.
 
 *Example*:\
 `30`
@@ -602,15 +531,15 @@ Set this only for unconventional networks, such as a Secure Web Gateway (SWG) th
 
 ### `AEMBIT_TENANT_GRPC_PING_TIMEOUT_SECS`
 
-[Section titled “AEMBIT\_TENANT\_GRPC\_PING\_TIMEOUT\_SECS”](#aembit_tenant_grpc_ping_timeout_secs)
-
 Default - not set
 
-OS-All v1.32.4999
+OS-All v1.34.5755
 
 Sets the maximum time, in seconds, that Agent Proxy waits for a reply to a gRPC keep-alive message. If no reply arrives within this time, Agent Proxy treats the connection to your Aembit Tenant as dead and reconnects. This setting is off by default.
 
 Set this together with `AEMBIT_TENANT_GRPC_PING_INTERVAL_SECS` for unconventional networks where a connection can stall without closing. Accepts any whole number of seconds greater than 0.
+
+Linux honors this variable from Agent Proxy 1.32.4999 on. The Windows installer applies it as an MSI property from Agent Proxy 1.34.5755 on.
 
 *Example*:\
 `10`
@@ -618,8 +547,6 @@ Set this together with `AEMBIT_TENANT_GRPC_PING_INTERVAL_SECS` for unconventiona
 ***
 
 ### `AGENT_TRUST_PATH`
-
-[Section titled “AGENT\_TRUST\_PATH”](#agent_trust_path)
 
 Default - not set
 
@@ -636,13 +563,13 @@ Set this when the Agent Proxy’s connection to the Aembit Cloud presents a cert
 
 ### `CLIENT_WORKLOAD_ID`
 
-[Section titled “CLIENT\_WORKLOAD\_ID”](#client_workload_id)
-
 Default - not set
 
 OS-All
 
-Associate Agent Proxy with the specified Client Workload Id. Aembit uses this in conjunction with [Aembit Client Id](../../user-guide/access-policies/client-workloads/identification/aembit-client-id.md) configuration.
+Associate Agent Proxy with a specific Client Workload by supplying that workload’s Aembit Client ID. Aembit uses this in conjunction with [Aembit Client Id](../../user-guide/access-policies/client-workloads/identification/aembit-client-id.md) configuration.
+
+Set this to the value Aembit generates when you choose **Aembit Client ID** as the Client Workload’s Client Identification method. Despite this variable’s name, it doesn’t take the Client Workload’s own resource ID.
 
 *Example*:\
 `7e75e718-7634-480b-9f7b-a07bb5a4f11d`
@@ -650,8 +577,6 @@ Associate Agent Proxy with the specified Client Workload Id. Aembit uses this in
 ***
 
 ### `HTTP_PROXY`
-
-[Section titled “HTTP\_PROXY”](#http_proxy-1)
 
 Default - not set
 
@@ -665,8 +590,6 @@ Specifies an upstream HTTP proxy for Agent Proxy outbound HTTP connections. When
 ***
 
 ### `HTTPS_PROXY`
-
-[Section titled “HTTPS\_PROXY”](#https_proxy-1)
 
 Default - not set
 
@@ -682,8 +605,6 @@ Agent Proxy supports only the `http` scheme for the proxy URL. For example, `HTT
 ***
 
 ### `K8S_NAMESPACE`
-
-[Section titled “K8S\_NAMESPACE”](#k8s_namespace)
 
 Default - not set
 
@@ -702,8 +623,6 @@ When set, this variable is always available for use in [dynamic claims](../../us
 
 ### `K8S_POD_NAME`
 
-[Section titled “K8S\_POD\_NAME”](#k8s_pod_name)
-
 Default - not set
 
 Kubernetes only
@@ -721,8 +640,6 @@ When set, this variable is always available for use in [dynamic claims](../../us
 
 ### `KUBERNETES_PROVIDER_ID`
 
-[Section titled “KUBERNETES\_PROVIDER\_ID”](#kubernetes_provider_id)
-
 Default - not set
 
 Kubernetes only
@@ -736,16 +653,14 @@ Set this value through your Aembit Helm chart deployment by setting `agentProxy.
 
 ***
 
-Installer doesn’t accept these variables
-
-The Agent Proxy installer doesn’t accept `HTTP_PROXY`, `HTTPS_PROXY`, or `NO_PROXY`. To route Agent Proxy outbound traffic through an upstream HTTP proxy, set these variables in the Agent Proxy service’s environment so that the service inherits them:
-
-* **Windows:** Set them as [system environment variables](https://learn.microsoft.com/en-us/windows/win32/procthread/environment-variables). For required `NO_PROXY` entries on Windows Server, see [Install Agent Proxy on Windows Server](../../user-guide/deploy-install/virtual-machine/windows/agent-proxy-install-windows.md).
-* **Linux:** Set them in a [systemd drop-in file](https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html) using the [`Environment=` directive](https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Environment=).
+> **Installer doesn’t accept these variables**
+>
+> The Agent Proxy installer doesn’t accept `HTTP_PROXY`, `HTTPS_PROXY`, or `NO_PROXY`. To route Agent Proxy outbound traffic through an upstream HTTP proxy, set these variables in the Agent Proxy service’s environment so that the service inherits them:
+>
+> * **Windows:** Set them as [system environment variables](https://learn.microsoft.com/en-us/windows/win32/procthread/environment-variables). For required `NO_PROXY` entries on Windows Server, see [Install Agent Proxy on Windows Server](../../user-guide/deploy-install/virtual-machine/windows/agent-proxy-install-windows.md).
+> * **Linux:** Set them in a [systemd drop-in file](https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html) using the [`Environment=` directive](https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Environment=).
 
 ### `NO_PROXY`
-
-[Section titled “NO\_PROXY”](#no_proxy-1)
 
 Default - not set
 
@@ -771,18 +686,14 @@ Aembit guarantees the following patterns match:
 * Specific IP addresses (for example, `169.254.169.254`)
 * Specific hostnames (for example, `metadata.google.internal`)
 
-Other patterns may cause unexpected behavior. For more information or help, contact [Aembit Support](https://docs.aembit.io/support-overview).
+Other patterns may cause unexpected behavior. For more information or help, contact [Aembit Support](../../support-overview.md).
 
 *Example*:\
 `aembit.io,169.254.169.254,fd00:ec2::254,metadata.google.internal`
 
 ## Agent Injector environment variables
 
-[Section titled “Agent Injector environment variables”](#agent-injector-environment-variables)
-
 ### `AEMBIT_LOG_LEVEL` (Replaces `AEMBIT_LOG`)
-
-[Section titled “AEMBIT\_LOG\_LEVEL (Replaces AEMBIT\_LOG)”](#aembit_log_level-replaces-aembit_log-1)
 
 Default - `info`
 
@@ -795,19 +706,15 @@ Set the Agent Injector log level. The supported levels include `error`, `warn`, 
 
 ## Aembit CLI environment variables
 
-[Section titled “Aembit CLI environment variables”](#aembit-cli-environment-variables)
+Here is a list of all available environment variables for configuring the [Aembit CLI](../../dev-guide/cli/overview.md):
 
-Here is a list of all available environment variables for configuring the [Aembit CLI](../../cli-guide/overview.md):
-
-Environment variable and command option priority
-
-You can configure the Aembit CLI using both environment variables and command options. Command options take precedence, overriding any corresponding environment variables.
-
-For example, if you’ve set a value with the `--client-id` option, Aembit CLI uses that over the `AEMBIT_CLIENT_ID` environment variable. This lets you establish a default configuration with environment variables and override specific settings for individual commands as needed.
+> **Environment variable and command option priority**
+>
+> You can configure the Aembit CLI using both environment variables and command options. Command options take precedence, overriding any corresponding environment variables.
+>
+> For example, if you’ve set a value with the `--client-id` option, Aembit CLI uses that over the `AEMBIT_CLIENT_ID` environment variable. This lets you establish a default configuration with environment variables and override specific settings for individual commands as needed.
 
 ### `AEMBIT_CLIENT_ID` Required
-
-[Section titled “AEMBIT\_CLIENT\_ID ”](#aembit_client_id)
 
 Default - not set
 
@@ -822,15 +729,13 @@ This value represents the Edge SDK Client ID from your Aembit Trust Provider. Ae
 
 ### `AEMBIT_CLIENT_TLS_PRIVATE_KEY`
 
-[Section titled “AEMBIT\_CLIENT\_TLS\_PRIVATE\_KEY”](#aembit_client_tls_private_key)
-
 Default - not set
 
 OS-All v1.32
 
 The path to a PEM-encoded PKCS #8 private key file used to retrieve an X.509-SVID certificate. The certificate comes from an [X.509-SVID Credential Provider](../../user-guide/access-policies/credential-providers/about-spiffe-x509-svid.md). Aembit CLI generates a Certificate Signing Request (CSR) from the supplied key, submits it through the credential retrieval flow, and returns the signed certificate chain in `CLIENT_CERT_CHAIN`. The private key never leaves the local machine.
 
-Equivalent to the [`--client-tls-private-key`](../../cli-guide/reference/credentials-get.md#--client-tls-private-key) flag on `aembit credentials get`.
+Equivalent to the [`--client-tls-private-key`](../../dev-guide/cli/reference/credentials-get.md#--client-tls-private-key) flag on `aembit credentials get`.
 
 *Example*:\
 `/etc/aembit/client.key`
@@ -838,8 +743,6 @@ Equivalent to the [`--client-tls-private-key`](../../cli-guide/reference/credent
 ***
 
 ### `AEMBIT_ENV_VAR_ALLOWLIST`
-
-[Section titled “AEMBIT\_ENV\_VAR\_ALLOWLIST”](#aembit_env_var_allowlist-1)
 
 Default - not set (empty)
 
@@ -856,8 +759,6 @@ The CLI inherits the shell environment automatically; you only need to set the a
 
 ### `AEMBIT_LOG_LEVEL`
 
-[Section titled “AEMBIT\_LOG\_LEVEL”](#aembit_log_level-1)
-
 Default - `warn`
 
 OS-All
@@ -871,13 +772,28 @@ The log level to use for the Aembit CLI. This controls the verbosity of the outp
 
 ### `AEMBIT_RESOURCE_SET_ID`
 
-[Section titled “AEMBIT\_RESOURCE\_SET\_ID”](#aembit_resource_set_id-1)
+Default - not set
+
+OS-All
+
+The [Resource Set](../../user-guide/administration/resource-sets/overview.md) to authenticate against and within which the Access Policy matching happens. This is useful for when you want to use a specific Resource Set for your credentials. You can find the Resource Set ID in your Aembit Tenant UI under the Resource Sets section.
+
+*Example*:\
+`78bg7be6-9301-hj14-d51c-2acf02530y67`
+
+***
+
+### `CLIENT_WORKLOAD_ID`
 
 Default - not set
 
 OS-All
 
-The [Resource Set](../../user-guide/administration/resource-sets/overview.md) to authenticate against and within which the Access Policy**Access Policy**: Access Policies define, enforce, and audit access between Client and Server Workloads by cryptographically verifying workload identity and contextual factors rather than relying on static secrets.[Learn more](../../get-started/concepts/access-policies.md) matching happens. This is useful for when you want to use a specific Resource Set for your credentials. You can find the Resource Set ID in your Aembit Tenant UI under the Resource Sets section.
+Selects a specific Client Workload by supplying that workload’s Aembit Client ID. Set this when two or more Client Workloads attest through the same Trust Provider and would otherwise match the same Access Policy.
+
+Equivalent to the [`--client-workload-id`](../../dev-guide/cli/reference/credentials-get.md#--client-workload-id) flag on `aembit credentials get`.
+
+Despite this variable’s name, it doesn’t take the Client Workload’s own resource ID. Unlike the other Aembit CLI variables, this name has no `AEMBIT_` prefix.
 
 *Example*:\
-`78bg7be6-9301-hj14-d51c-2acf02530y67`
+`7e75e718-7634-480b-9f7b-a07bb5a4f11d`

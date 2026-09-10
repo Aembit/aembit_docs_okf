@@ -4,23 +4,23 @@ title: "BigQuery MCP Server"
 description: "Configure the BigQuery MCP Server to work with AI agents through the Aembit MCP Identity Gateway."
 resource: https://docs.aembit.io/ai-guide/mcp/identity-gateway/supported-servers/bigquery/
 interface: mcp
-tags: [supported-server, identity-gateway, mcp]
-timestamp: 2026-06-30T12:35:49-04:00
+tags: ["supported-server", "identity-gateway", "mcp"]
+timestamp: 2026-08-10T14:01:53-07:00
 ---
 
 # BigQuery MCP Server
 
-Aembit supports the official [BigQuery MCP server](https://docs.cloud.google.com/bigquery/docs/use-bigquery-mcp), which lets AI agents**AI Agent**: A software workload that authenticates to systems, requests credentials, and accesses resources, either on behalf of a person or on its own. Aembit secures AI agents with the same identity-first model it uses for any workload. User-driven agents such as Claude Desktop also carry a blended identity that ties access to both the user and the agent.[Learn more](../../../../get-started/use-cases/ai-agents.md) explore datasets and run SQL queries through MCP**Model Context Protocol**: A standard protocol for AI agent and server interactions that defines how AI assistants communicate with external tools and data sources.[Learn more(opens in new tab)](https://modelcontextprotocol.io/) tools.
+Aembit supports the official [BigQuery MCP server](https://docs.cloud.google.com/bigquery/docs/use-bigquery-mcp), which lets AI agents explore datasets and run SQL queries through MCP tools.
 
-This page describes how to configure BigQuery as an MCP server**MCP Server**: A server that implements the Model Context Protocol to provide tools, resources, or data to AI agents and MCP clients.[Learn more(opens in new tab)](https://modelcontextprotocol.io/specification/2025-03-26/server) behind the Aembit MCP Identity Gateway**MCP Identity Gateway**: A component that brokers MCP traffic between MCP clients and target MCP servers, validating authorization and presenting Aembit-managed credentials on each request.[Learn more](../overview.md). Each user authenticates with their own Google identity, and the Gateway injects their token into MCP requests.
+This page describes how to configure BigQuery as an MCP server behind the Aembit MCP Identity Gateway. Each user authenticates with their own Google identity, and the Gateway injects their token into MCP requests.
 
-Looking for direct BigQuery API access?
+This guide builds the Gateway-to-Server Policy—the second of the two Access Policies the MCP Identity Gateway requires. You create the first, the Client-to-Gateway Policy, during [Gateway setup](../setup-mcp-gateway.md).
 
-This page covers **MCP tool access through Aembit’s MCP Identity Gateway**. To broker credentials for the BigQuery REST API as a traditional Server Workload**Server Workload**: Server Workloads represent target services, APIs, databases, or applications that receive and respond to access requests from Client Workloads.[Learn more](../../../../get-started/concepts/server-workloads.md), see the [GCP BigQuery Server Workload guide](../../../../user-guide/access-policies/server-workloads/guides/gcp-bigquery.md) instead.
+> **Looking for direct BigQuery API access?**
+>
+> This page covers **MCP tool access through Aembit’s MCP Identity Gateway**. To broker credentials for the BigQuery REST API as a traditional Server Workload, see the [GCP BigQuery Server Workload guide](../../../../user-guide/access-policies/server-workloads/guides/gcp-bigquery.md) instead.
 
 ## Prerequisites
-
-[Section titled “Prerequisites”](#prerequisites)
 
 Before you begin, ensure you have the following:
 
@@ -30,36 +30,25 @@ Before you begin, ensure you have the following:
 
 ## Requirements and considerations
 
-[Section titled “Requirements and considerations”](#requirements-and-considerations)
-
 Before you configure BigQuery, review these requirements and behaviors specific to BigQuery’s MCP server.
 
-* **Each user needs their own BigQuery access.** The Gateway authenticates with each user’s Google identity, so BigQuery enforces that user’s IAM roles rather than a shared service account. Also grant `roles/bigquery.jobUser`; without it, BigQuery rejects the `execute_sql` tool.
-* **This guide grants read-only access.** It uses the `bigquery.readonly` scope, which covers browsing datasets and running queries. Add a broader scope if your agents need to modify data.
+* **Non-standard MCP path.** BigQuery uses `/mcp`, not the `/mcp/v1` path of the other Google MCP servers. Use `https://bigquery.googleapis.com/mcp` as the MCP Server URL.
+* **IAM roles required.** The OAuth scope alone isn’t sufficient. Users without `roles/bigquery.dataViewer` and `roles/bigquery.jobUser` authenticate successfully but get permission errors on tool calls. Grant both roles on the GCP project or dataset.
+* **Use User-Based Auth.** Aembit supports User-Based Auth for Google BigQuery.
 
 ## Set up your Google Cloud Platform project
 
-[Section titled “Set up your Google Cloud Platform project”](#set-up-your-google-cloud-platform-project)
+Google doesn’t support OAuth Dynamic Client Registration, so an administrator must create a GCP OAuth 2.0 client before users can authenticate.
 
-Configure a Google Cloud project with the BigQuery API, user permissions, and an OAuth client.
-
-1. In the [Google Cloud console](https://console.cloud.google.com/), select the project you want to use.
-
-2. Enable the **BigQuery API** (`bigquery.googleapis.com`) for the project.
-
-3. Grant each user who queries BigQuery the `roles/bigquery.dataViewer` and `roles/bigquery.jobUser` IAM roles.
-
-4. Go to the [Credentials](https://console.cloud.google.com/apis/credentials) page, click **Create Credentials**, then select **OAuth client ID**. If your project has no consent screen, configure one first: choose a **User type**, enter the app details, then add the `https://www.googleapis.com/auth/bigquery.readonly` scope.
-
-5. For **Application type**, select **Web application**, enter a name, then click **Create**. Leave **Authorized redirect URIs** empty for now. You add the Aembit Callback URL after you create the Credential Provider.
-
-6. Copy the **Client ID** and **Client secret**, and store them for the next section.
+1. Enable the BigQuery API on your GCP project: `gcloud services enable bigquery.googleapis.com --project=<YOUR_PROJECT>`
+2. In the GCP Console, go to **APIs & Services > OAuth consent screen**. Choose **Internal** for same-org users, or **External** for cross-org testing. Under **Scopes**, add `https://www.googleapis.com/auth/bigquery.readonly`.
+3. Go to **APIs & Services > Credentials**, click **Create Credentials > OAuth 2.0 Client ID**, and select **Web application** as the application type. Give it any name. You add the Aembit Callback URL under **Authorized redirect URIs** after you create the Credential Provider.
+4. Grant each user the IAM roles they need on the GCP project or dataset: `roles/bigquery.dataViewer` to read datasets and tables, and `roles/bigquery.jobUser` to run queries. The OAuth scope alone isn’t sufficient.
+5. Copy the **Client ID** and **Client Secret**, and store them for the Credential Provider configuration.
 
 ## Configure the Credential Provider
 
-[Section titled “Configure the Credential Provider”](#configure-the-credential-provider)
-
-Create an MCP User-Based Access Token Credential Provider**Credential Provider**: Credential Providers obtain the specific access credentials—such as API keys, OAuth tokens, or temporary cloud credentials—that Client Workloads need to authenticate to Server Workloads.[Learn more](../../../../get-started/concepts/credential-providers.md) in Aembit.
+Create an MCP User-Based Access Token Credential Provider in Aembit.
 
 1. Log into your Aembit Tenant.
 
@@ -72,8 +61,8 @@ Create an MCP User-Based Access Token Credential Provider**Credential Provider**
    | **Name**            | A user-friendly name                                |
    | **Credential Type** | MCP User-Based Access Token                         |
    | **MCP Server URL**  | `https://bigquery.googleapis.com/mcp`               |
-   | **Client ID**       | The Client ID you copied from Google Cloud          |
-   | **Client Secret**   | The Client Secret you copied from Google Cloud      |
+   | **Client ID**       | The Client ID you copied earlier                    |
+   | **Client Secret**   | The Client Secret you copied earlier                |
    | **Scopes**          | `https://www.googleapis.com/auth/bigquery.readonly` |
    | **PKCE Required**   | On                                                  |
 
@@ -85,25 +74,18 @@ Create an MCP User-Based Access Token Credential Provider**Credential Provider**
 
 ## Finish configuring the OAuth client
 
-[Section titled “Finish configuring the OAuth client”](#finish-configuring-the-oauth-client)
+After you create the Credential Provider, copy its read-only **Callback URL** and return to the GCP OAuth 2.0 Client ID you created in **APIs & Services > Credentials**.
 
-Return to the OAuth client in the Google Cloud console.
-
-1. Open the **Web application** OAuth client you created.
-
-2. Under **Authorized redirect URIs**, click **Add URI**, paste the Aembit **Callback URL**, then click **Save**.
+1. Open the OAuth 2.0 Client ID, and under **Authorized redirect URIs** click **Add URI**, paste the Aembit **Callback URL**, then click **Save**.
+2. Confirm the Credential Provider scope matches the scope you added on the OAuth consent screen: `https://www.googleapis.com/auth/bigquery.readonly`
 
 ## Authorize the Credential Provider
-
-[Section titled “Authorize the Credential Provider”](#authorize-the-credential-provider)
 
 1. Return to the Credential Provider in Aembit and click **Authorize**.
 
 2. Choose your Google Account and approve access. The Credential Provider status changes to **Ready** when the flow completes.
 
 ## Create the Server Workload
-
-[Section titled “Create the Server Workload”](#create-the-server-workload)
 
 1. Go to **Server Workloads** in the left sidebar and click **+ New**.
 
@@ -123,12 +105,16 @@ Return to the OAuth client in the Google Cloud console.
 
 ## Create an Access Policy
 
-[Section titled “Create an Access Policy”](#create-an-access-policy)
+This section creates the Gateway-to-Server Access Policy, which authorizes the MCP Identity Gateway to access Google BigQuery on behalf of authenticated users.
 
-Create an Access Policy**Access Policy**: Access Policies define, enforce, and audit access between Client and Server Workloads by cryptographically verifying workload identity and contextual factors rather than relying on static secrets.[Learn more](../../../../get-started/concepts/access-policies.md) linking your Client Workload**Client Workload**: Client Workloads represent software applications, scripts, or automated processes that initiate access requests to Server Workloads, operating autonomously without direct user interaction.[Learn more](../../../../get-started/concepts/client-workloads.md) (the AI agent), the MCP User-Based Access Token Credential Provider, and the BigQuery Server Workload. See [Access Policies](../../../../user-guide/access-policies/overview.md) for details.
+Create an Access Policy linking the MCP Identity Gateway (as the Client Workload), the Credential Provider you created, and the Server Workload for Google BigQuery.
+
+> **The Gateway is the Client Workload**
+>
+> In this policy, the Client Workload is the MCP Identity Gateway itself—not the AI agent or individual users. The AI agent connects through the separate Client-to-Gateway policy, and the Credential Provider enforces per-user access.
+
+For step-by-step instructions, including the Client Workload settings that identify the Gateway, see [Create the gateway-to-server Access Policy](../setup-mcp-gateway.md#create-the-gateway-to-server-access-policy).
 
 ## Verify
-
-[Section titled “Verify”](#verify)
 
 After a user authorizes access, the Aembit **AI Access Authorized** page lists the BigQuery MCP Server as **Ready**. The AI agent can then call BigQuery MCP tools (such as `execute_sql`) through the Gateway.

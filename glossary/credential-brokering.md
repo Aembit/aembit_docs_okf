@@ -2,7 +2,7 @@
 type: definition
 title: "Credential brokering"
 description: "The process of mediating credential issuance between a requesting workload and a target resource. The broker verifies identity, evaluates policy, and issues short-lived credentials so that workloads never manage static secrets directly."
-tags: [core-concepts]
+tags: ["core-concepts"]
 timestamp: 2026-03-11T16:17:54-07:00
 ---
 

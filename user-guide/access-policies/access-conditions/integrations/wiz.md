@@ -4,23 +4,20 @@ title: "Wiz Integration"
 description: "This page describes how to integrate Wiz with Aembit."
 resource: https://docs.aembit.io/user-guide/access-policies/access-conditions/integrations/wiz/
 interface: web-ui
-tags: [integration, access-condition, access-policy]
-timestamp: 2025-05-22T22:55:26-07:00
-type_inferred: true
+tags: ["integration", "access-condition", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Wiz Integration
 
-Note
-
-The Wiz Integration feature is a paid feature. To use the Wiz Integration feature, please contact Aembit by completing the [Contact Us form](https://aembit.io/contact/).
+> **Note**
+>
+> The Wiz Integration feature is a paid feature. To use the Wiz Integration feature, please contact Aembit by completing the [Contact Us form](https://aembit.io/contact/).
 
 
 The Wiz Cloud Security Platform provides a security analysis service, including inventory enumeration and asset information for identification of customer assets and vulnerabilities. In particular, Wiz provides an Integration API which can be accessed via an OAuth2 Client Credentials Flow and can return an Inventory result set on demand, including Kubernetes Clusters, Deployments, and Vulnerabilities.
 
 ## Wiz Integration API
-
-[Section titled “Wiz Integration API”](#wiz-integration-api)
 
 To integrate Wiz with Aembit, you must already have a Wiz API client set up and configured. When setting up your Wiz API client, make sure you request the following information from your Wiz account representative (you will need this information later when integrating with Aembit):
 
@@ -30,8 +27,6 @@ To integrate Wiz with Aembit, you must already have a Wiz API client set up and 
 * Audience (this is required and the value is expected to be `wiz-api`)
 
 ## Kubernetes/Helm/Agent Proxy Configuration
-
-[Section titled “Kubernetes/Helm/Agent Proxy Configuration”](#kuberneteshelmagent-proxy-configuration)
 
 For the Wiz integration to work correctly, Aembit needs to receive a unique Provider ID that can be compared/matched against the Kubernetes Clusters returned by the Wiz Integration API.
 
@@ -46,13 +41,11 @@ To use this sample value, update your Aembit Edge Helm Chart deployment with the
 
 These parameters instruct the Aembit Edge Components to configure the Agent Proxy containers with an environment variable named `KUBERNETES_PROVIDER_ID` with the value indicated.
 
-Note
-
-This Wiz integration supports Agent Proxy versions 1.8.1203 and higher.
+> **Note**
+>
+> This Wiz integration supports Agent Proxy versions 1.8.1203 and higher.
 
 ### Create a new Wiz -> Aembit integration
-
-[Section titled “Create a new Wiz -> Aembit integration”](#create-a-new-wiz---aembit-integration)
 
 Once you have set up your Wiz API client and are ready to integrate Wiz with your Aembit Tenant, follow the steps listed below.
 
@@ -89,6 +82,6 @@ Once you have set up your Wiz API client and are ready to integrate Wiz with you
 
 7. Click the **Save** button when finished. Your Integration is saved and will then appear on the Integrations page.
 
-Note
-
-After the next sync attempt, the status will be updated to show success/failure details.
+> **Note**
+>
+> After the next sync attempt, the status will be updated to show success/failure details.

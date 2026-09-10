@@ -4,37 +4,34 @@ title: "GCP BigQuery"
 description: "This page describes how to configure Aembit to work with the GCP BigQuery Server Workload."
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/guides/gcp-bigquery/
 interface: web-ui
-tags: [data-analytics, guide, server-workload, access-policy]
-timestamp: 2026-06-09T18:19:33-07:00
-type_inferred: true
+tags: ["data-analytics", "guide", "server-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # GCP BigQuery
 
 [Google BigQuery](https://cloud.google.com/bigquery?hl=en), part of Google Cloud Platform, is a data warehousing solution designed for storing, querying, and analyzing large datasets. It offers scalability, SQL-based querying, and integrations with other GCP services and third-party tools.
 
-Below you can find the Aembit configuration required to work with the GCP BigQuery service as a Server Workload**Server Workload**: Server Workloads represent target services, APIs, databases, or applications that receive and respond to access requests from Client Workloads.[Learn more](../../../../get-started/concepts/server-workloads.md) using the BigQuery REST API.
+Below you can find the Aembit configuration required to work with the GCP BigQuery service as a
 
-Aembit supports multiple authentication/authorization methods for BigQuery. This page describes scenarios where the Credential Provider**Credential Provider**: Credential Providers obtain the specific access credentials—such as API keys, OAuth tokens, or temporary cloud credentials—that Client Workloads need to authenticate to Server Workloads.[Learn more](../../../../get-started/concepts/credential-providers.md) is configured for BigQuery via:
+Server Workload using the BigQuery REST API.
+
+Aembit supports multiple authentication/authorization methods for BigQuery. This page describes scenarios where the Credential Provider is configured for BigQuery via:
 
 * [OAuth 2.0 Authorization Code (3-legged OAuth)](gcp-bigquery.md#oauth-20-authorization-code)
 * [Google Workload Identity Federation](gcp-bigquery.md#google-workload-identity-federation)
 
-Prerequisites
-
-Before proceeding with the configuration, ensure you have the following:
-
-* An active Google Cloud account
-* A GCP project with BigQuery enabled
-* Data available for querying in BigQuery
+> **Prerequisites**
+>
+> Before proceeding with the configuration, ensure you have the following:
+>
+> * An active Google Cloud account
+> * A GCP project with BigQuery enabled
+> * Data available for querying in BigQuery
 
 ## OAuth 2.0 authorization code
 
-[Section titled “OAuth 2.0 authorization code”](#oauth-20-authorization-code)
-
 ### Create the OAuth client ID
-
-[Section titled “Create the OAuth client ID”](#create-the-oauth-client-id)
 
 1. Sign in to the Google Cloud console and go to the [Credentials](https://console.cloud.google.com/apis/credentials) page. Confirm you are working in a project where you have authorization.
 
@@ -57,8 +54,6 @@ Before proceeding with the configuration, ensure you have the following:
 8. For **Application type**, select **Web application**, then enter a name for the client. Leave the **Authorized redirect URIs** field empty for now; you add the Aembit Callback URL in the next section. Keep the Google Cloud console open.
 
 ### Configure the Credential Provider
-
-[Section titled “Configure the Credential Provider”](#configure-the-credential-provider)
 
 Create and authorize an OAuth 2.0 Authorization Code Credential Provider in Aembit. For the full field reference and the authorization flow, see [Configure OAuth 2.0 Authorization Code Credential Provider](../../credential-providers/oauth-authorization-code.md).
 
@@ -85,8 +80,6 @@ Create and authorize an OAuth 2.0 Authorization Code Credential Provider in Aemb
 
 ### Create the Server Workload
 
-[Section titled “Create the Server Workload”](#create-the-server-workload)
-
 1. Create a new Server Workload.
 
 2. Configure the following fields:
@@ -103,17 +96,11 @@ Create and authorize an OAuth 2.0 Authorization Code Credential Provider in Aemb
 
 ### Create an Access Policy
 
-[Section titled “Create an Access Policy”](#create-an-access-policy)
-
-Create an Access Policy**Access Policy**: Access Policies define, enforce, and audit access between Client and Server Workloads by cryptographically verifying workload identity and contextual factors rather than relying on static secrets.[Learn more](../../../../get-started/concepts/access-policies.md) linking your Client Workload**Client Workload**: Client Workloads represent software applications, scripts, or automated processes that initiate access requests to Server Workloads, operating autonomously without direct user interaction.[Learn more](../../../../get-started/concepts/client-workloads.md), the OAuth 2.0 Authorization Code Credential Provider, and the Server Workload. See [Access Policies](../../overview.md) for details.
+Create an Access Policy linking your Client Workload, the OAuth 2.0 Authorization Code Credential Provider, and the Server Workload. See [Access Policies](../../overview.md) for details.
 
 ## Google workload identity federation
 
-[Section titled “Google workload identity federation”](#google-workload-identity-federation)
-
 ### Configure the Credential Provider
-
-[Section titled “Configure the Credential Provider”](#configure-the-credential-provider-1)
 
 Follow the complete setup guide for the Google Workload Identity Federation Credential Provider:
 
@@ -129,8 +116,6 @@ This guide covers:
 
 ### Create the Server Workload
 
-[Section titled “Create the Server Workload”](#create-the-server-workload-1)
-
 1. Create a new Server Workload.
 
 2. Configure the following fields:
@@ -147,21 +132,15 @@ This guide covers:
 
 ### Create an Access Policy
 
-[Section titled “Create an Access Policy”](#create-an-access-policy-1)
-
 Create an Access Policy linking your Client Workload, the Google Workload Identity Federation Credential Provider, and the Server Workload. See [Access Policies](../../overview.md) for details.
 
 ## Client Workload configuration
-
-[Section titled “Client Workload configuration”](#client-workload-configuration)
 
 Aembit now handles the credentials required to access the Server Workload, eliminating the need for you to manage them directly. You can remove any previously used credentials from the Client Workload.
 
 If you access the Server Workload through an SDK or library, it’s possible that the SDK/library may still require credentials to be present for initialization purposes. In this scenario, you can provide placeholder credentials. Aembit overwrites these placeholder credentials with the appropriate ones during the access process.
 
 ## Required features
-
-[Section titled “Required features”](#required-features)
 
 * You must configure the [TLS Decrypt](../../../deploy-install/advanced-options/tls-decrypt/configure-tls-decrypt.md) feature to work with the GCP BigQuery Server Workload.
 

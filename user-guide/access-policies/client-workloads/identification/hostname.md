@@ -4,9 +4,8 @@ title: "Hostname"
 description: "This document describes how the Hostname method identifies Client Workloads in Aembit for Virtual Machine deployments."
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/hostname/
 interface: web-ui
-tags: [vm, identification, client-workload, access-policy]
-timestamp: 2025-05-29T11:26:12-07:00
-type_inferred: true
+tags: ["vm", "identification", "client-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Hostname
@@ -16,17 +15,11 @@ The Hostname Client Workload identification method is applicable to Virtual Mach
 
 ## Applicable Deployment Type
 
-[Section titled “Applicable Deployment Type”](#applicable-deployment-type)
-
 This method is suitable for Aembit Edge-based deployments.
 
 ## Configuration
 
-[Section titled “Configuration”](#configuration)
-
 ### Aembit Cloud
-
-[Section titled “Aembit Cloud”](#aembit-cloud)
 
 1. Create a new Client Workload.
 2. Choose **Hostname** for client identification.
@@ -34,16 +27,12 @@ This method is suitable for Aembit Edge-based deployments.
 
 ### Finding the Hostname
 
-[Section titled “Finding the Hostname”](#finding-the-hostname)
-
 * Open a terminal on your Linux VM.
 * Use the `hostname -f` command to retrieve its hostname.
 
 Alternatively, you can often find the hostname in the Virtual Machine’s configuration settings or system information.
 
 ### Uniqueness
-
-[Section titled “Uniqueness”](#uniqueness)
 
 Ensure the hostname is unique within your organization to avoid unintentionally matching other Virtual Machines. If necessary, consider combining Hostname with other client identifiers. Please consult the [Client Workload multiple identifiers](client-workload-multiple-ids.md) documentation to enhance uniqueness.
 

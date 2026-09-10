@@ -1,89 +1,75 @@
 ---
-type: explanation
+type: reference
 title: "Aembit use cases"
 description: "Find the right starting point for your Aembit implementation"
 resource: https://docs.aembit.io/get-started/use-cases/
-tags: [use-case]
-timestamp: 2026-06-15T10:19:43-07:00
+tags: ["use-case"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Aembit use cases
 
-Aembit replaces static secrets with identity-based access. It secures two kinds of non-human identity, AI agents**AI Agent**: A software workload that authenticates to systems, requests credentials, and accesses resources, either on behalf of a person or on its own. Aembit secures AI agents with the same identity-first model it uses for any workload. User-driven agents such as Claude Desktop also carry a blended identity that ties access to both the user and the agent.[Learn more](ai-agents.md) and workloads**Workload**: Any non-human entity (application, service, automation, AI agent, etc.) that needs to access resources.[Learn more](https://docs.aembit.io/get-started/concepts/how-aembit-works/#introducing-workload-iam), so find your starting point below based on what you’re securing.
+Aembit replaces static secrets with identity-based access. It secures two kinds of non-human identity, AI agents and workloads, so find your starting point below based on what you’re securing.
 
-New to Aembit?
-
-Start with **CI/CD Pipelines**. It’s the fastest path to seeing Aembit in action, with no agent deployment required.
+> **New to Aembit?**
+>
+> Start with **CI/CD Pipelines**. It’s the fastest path to seeing Aembit in action, with no agent deployment required.
 
 ## AI
 
-[Section titled “AI”](#ai)
-
 Aembit secures AI access in both directions: AI agents reaching into your systems (directly or through MCP servers), and your own applications reaching out to LLM APIs. All three use cases share the same identity-first model.
 
-[Securing AI agent access to your resources ](ai-agents.md)Secure Claude Desktop, Gemini CLI, and other MCP clients with user-level access control and full audit trails.
+[Securing AI agent access to your resources](ai-agents.md)Secure Claude Desktop, Gemini CLI, and other MCP clients with user-level access control and full audit trails.
 
 →
 
-[Securing MCP server access ](mcp-server-access.md)Front your MCP servers with the Identity Gateway so AI agents hold no credentials and every request is audited per user.
+[Securing MCP server access](mcp-server-access.md)Front your MCP servers with the Identity Gateway so AI agents hold no credentials and every request is audited per user.
 
 →
 
-[Securing your applications' access to LLM APIs ](ai-llm-access.md)Eliminate embedded API keys for OpenAI, Anthropic, Azure OpenAI, and other LLM APIs. Control costs and prevent denial of wallet attacks.
+[Securing your applications' access to LLM APIs](ai-llm-access.md)Eliminate embedded API keys for OpenAI, Anthropic, Azure OpenAI, and other LLM APIs. Control costs and prevent denial of wallet attacks.
 
 →
 
 ## Workloads
 
-[Section titled “Workloads”](#workloads)
-
 Applications, services, pipelines, and databases all need credentials to reach the resources they depend on. Aembit issues those credentials just-in-time from verified identity, with no static secrets to store or leak.
 
 ### Applications and services
 
-[Section titled “Applications and services”](#applications-and-services)
-
-[Credential Management ](credential-management.md)Unify access to AWS Secrets Manager, Azure Key Vault, and HashiCorp Vault through a single identity-based policy layer.
+[Credential Management](credential-management.md)Unify access to AWS Secrets Manager, Azure Key Vault, and HashiCorp Vault through a single identity-based policy layer.
 
 →
 
-[Microservices Security ](microservices-security.md)Replace shared service accounts with per-workload identity using SPIFFE JWT-SVID or OIDC tokens in your service mesh.
+[Microservices Security](microservices-security.md)Replace shared service accounts with per-workload identity using SPIFFE JWT-SVID or OIDC tokens in your service mesh.
 
 →
 
 ### CI/CD and automation
 
-[Section titled “CI/CD and automation”](#cicd-and-automation)
-
-[CI/CD Pipelines ](ci-cd.md)Eliminate hardcoded secrets in GitHub Actions, GitLab CI, and Jenkins. No agent required; it uses your platform's OIDC tokens.
+[CI/CD Pipelines](ci-cd.md)Eliminate hardcoded secrets in GitHub Actions, GitLab CI, and Jenkins. No agent required; it uses your platform's OIDC tokens.
 
 →
 
 ### Data and analytics
 
-[Section titled “Data and analytics”](#data-and-analytics)
-
-[Database Access ](database-access.md)Replace static database passwords with short-lived, identity-based credentials. No changes required on the database side.
+[Database Access](database-access.md)Replace static database passwords with short-lived, identity-based credentials. No changes required on the database side.
 
 →
 
 ### Infrastructure and platform
 
-[Section titled “Infrastructure and platform”](#infrastructure-and-platform)
-
-[Multicloud Environments ](multicloud.md)Authenticate workloads in AWS, Azure, and GCP using their native identity, with unified policies across all environments.
+[Multicloud Environments](multicloud.md)Authenticate workloads in AWS, Azure, and GCP using their native identity, with unified policies across all environments.
 
 →
 
-[Third-Party Access ](third-party-access.md)Securely connect to external services like GitLab or Snowflake with automatic credential rotation.
+[Third-Party Access](third-party-access.md)Securely connect to external services like GitLab or Snowflake with automatic credential rotation.
 
 →
 
 ***
 
 ## Quick reference
-
-[Section titled “Quick reference”](#quick-reference)
 
 | If you’re…                                  | Start with                                                              | Complexity  |
 | ------------------------------------------- | ----------------------------------------------------------------------- | ----------- |
@@ -100,8 +86,6 @@ Applications, services, pipelines, and databases all need credentials to reach t
 ***
 
 ## See also
-
-[Section titled “See also”](#see-also)
 
 * [How Aembit works](../how-aembit-works.md) - Architecture and deployment model
 * [Quickstart](../quickstart/overview.md) - Get started in minutes

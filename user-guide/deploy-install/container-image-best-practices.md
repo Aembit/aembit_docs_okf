@@ -1,12 +1,10 @@
 ---
-type: how-to
+type: explanation
 title: "Edge Component container image best practices"
 description: "Best practices for deploying official Aembit container images"
 resource: https://docs.aembit.io/user-guide/deploy-install/container-image-best-practices/
-interface: web-ui
-tags: [deploy-install]
-timestamp: 2025-06-24T08:43:36-07:00
-type_inferred: true
+tags: ["deploy-install"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Edge Component container image best practices
@@ -18,8 +16,6 @@ If these are incompatible with your deployment environment, you may run into iss
 The details on this page help you as you follow your own path.
 
 ## Container user IDs
-
-[Section titled “Container user IDs”](#container-user-ids)
 
 Some container images declare a specific user ID that the containerized application expects to run as. The following table lists Aembit container images and their expected user IDs:
 
@@ -44,13 +40,9 @@ If you see this warning, you must make sure to specify the `securityContext/runA
 
 ## Client Workload user IDs
 
-[Section titled “Client Workload user IDs”](#client-workload-user-ids)
-
 Transparent Steering relies on the user ID of the process initiating a network connection to exempt the Agent Proxy outbound connections. Therefore any Client Workload that runs under the `65534` UID (commonly named `nobody`) is also exempt from Transparent Steering.
 
 ## Write-accessible filesystem
-
-[Section titled “Write-accessible filesystem”](#write-accessible-filesystem)
 
 The `aembit_agent_proxy` container image depends on being able to write to the root filesystem to download your tenant’s CA certificate and add it to the trusted certificate bundle. If you turn off writing to the root filesystem, Agent Proxy logs an error message similar to the following:
 
@@ -64,7 +56,5 @@ ECS and Kubernetes use slightly different spelling, using a different letter cas
 * `readOnlyRootFilesystem` on Kubernetes
 
 ## Verify container image signatures
-
-[Section titled “Verify container image signatures”](#verify-container-image-signatures)
 
 Aembit cryptographically signs all [container images in Docker Hub](https://hub.docker.com/u/aembit) so you can verify the authenticity of them before deploying them in your environments. See [Verifying container image signatures](verify-container-images.md) for more details.

@@ -1,10 +1,10 @@
 ---
-type: explanation
+type: reference
 title: "AI Guide"
 description: "Aembit's AI and MCP ecosystem documentation"
 resource: https://docs.aembit.io/ai-guide/
-timestamp: 2026-06-30T15:07:47-04:00
-type_inferred: true
+interface: mcp
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # AI Guide
@@ -12,8 +12,6 @@ type_inferred: true
 The AI Guide provides documentation for Aembit’s AI integrations, including the Model Context Protocol (MCP) ecosystem.
 
 ## MCP ecosystem
-
-[Section titled “MCP ecosystem”](#mcp-ecosystem)
 
 Aembit provides different components for securing AI agent communications using the Model Context Protocol:
 
@@ -23,7 +21,5 @@ Aembit provides different components for securing AI agent communications using 
 * **[MCP Service](mcp/mcp-server/overview.md)** - Query Aembit event logs using the Model Context Protocol
 
 ## Resources
-
-[Section titled “Resources”](#resources)
 
 * [Prompt Library](prompt-library/overview.md) - Curated prompts for Aembit MCP integrations

@@ -1,11 +1,11 @@
 ---
-type: explanation
+type: reference
 title: "Install and Deploy Aembit Edge"
 description: "This document provides a high-level conceptual overview of how Aembit Edge handles Workload connections"
 resource: https://docs.aembit.io/user-guide/deploy-install/
-tags: [deploy-install]
-timestamp: 2026-04-13T13:05:24-07:00
-type_inferred: true
+interface: web-ui
+tags: ["deploy-install"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Install and Deploy Aembit Edge
@@ -18,8 +18,6 @@ For each deployment type, this page describes the multiple connections and proto
 
 ## Aembit Edge - data plane
 
-[Section titled “Aembit Edge - data plane”](#aembit-edge---data-plane)
-
 Aembit Edge Components include:
 
 * Aembit Agent Proxy
@@ -30,8 +28,6 @@ Aembit Edge Components include:
 Before diving into these components, it’s important to understand the fundamentals of workload communication and Aembit’s role in the process. At its most basic level, a Client Workload communicates with a Server Workload using a transport protocol, such as TCP, utilizing a set of IP addresses and ports to exchange data. Aembit is generally based on a Proxy model and will intercept the network communication between Client and Server Workloads, authenticating the connection as configured by an Aembit Access Policy.
 
 ## Deployment
-
-[Section titled “Deployment”](#deployment)
 
 To achieve these capabilities, the Aembit Architecture depends on deploying Agent Controller instances, which Agent Proxy instances can then leverage to bootstrap secure communication with the Aembit Cloud.
 
@@ -49,25 +45,17 @@ From a network/protocol perspective, that deployment is achieved by the followin
 
 ### Virtual machine
 
-[Section titled “Virtual machine”](#virtual-machine)
-
 ![Aembit Edge authentication and registration for VM deployments](https://docs.aembit.io/d2/docs/user-guide/deploy-install/index-0.svg)
 
 ### Kubernetes
-
-[Section titled “Kubernetes”](#kubernetes)
 
 ![Aembit Edge authentication and registration for Kubernetes deployments](https://docs.aembit.io/d2/docs/user-guide/deploy-install/index-1.svg)
 
 ### AWS ECS Fargate
 
-[Section titled “AWS ECS Fargate”](#aws-ecs-fargate)
-
 ![Aembit Edge authentication and registration for AWS ECS Fargate deployments](https://docs.aembit.io/d2/docs/user-guide/deploy-install/index-2.svg)
 
 ## Workload communication
-
-[Section titled “Workload communication”](#workload-communication)
 
 After the Aembit Edge is deployed and registered, we can now begin identifying workloads and managing access for the configured policies.
 

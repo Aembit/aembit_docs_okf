@@ -4,9 +4,8 @@ title: "Deploying to AWS ECS Fargate"
 description: "How to deploy Aembit Edge Components in a ECS Fargate environment"
 resource: https://docs.aembit.io/user-guide/deploy-install/serverless/aws-ecs-fargate/
 interface: web-ui
-tags: [serverless, deploy-install]
-timestamp: 2026-06-18T13:15:52-04:00
-type_inferred: true
+tags: ["serverless", "deploy-install"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Deploying to AWS ECS Fargate
@@ -25,8 +24,6 @@ To further customize your deployments, see the available [optional configuration
 
 ## Before you begin
 
-[Section titled “Before you begin”](#before-you-begin)
-
 1. Ensure that Terraform has valid AWS credentials to deploy resources. Terraform doesn’t require the AWS CLI but can use its credentials if available. Terraform automatically looks for credentials in environment variables, AWS credentials files, IAM roles, and other sources.
 
    For details on configuring authentication, refer to the [AWS Provider Authentication Guide](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration).
@@ -40,8 +37,6 @@ To further customize your deployments, see the available [optional configuration
    The command should complete without errors.
 
 ## Step 1 - Add a Trust Provider
-
-[Section titled “Step 1 - Add a Trust Provider”](#step-1---add-a-trust-provider)
 
 You need to create a Trust Provider, or use an existing one, to enable the Agent Controller (created in the next step) to authenticate with the Aembit cloud. This Trust Provider relies on the AWS Role associated with your application for authentication.
 
@@ -65,8 +60,6 @@ You need to create a Trust Provider, or use an existing one, to enable the Agent
 
 ## Step 2 - Add an Agent Controller
 
-[Section titled “Step 2 - Add an Agent Controller”](#step-2---add-an-agent-controller)
-
 1. Log into your Aembit Tenant and go to **Edge Components —> Agent Controllers**.
 
 2. Click **+ New**, revealing the **Agent Controller** pop out.
@@ -80,8 +73,6 @@ You need to create a Trust Provider, or use an existing one, to enable the Agent
    ![Add Agent Controller UI](https://docs.aembit.io/_astro/create-agent-controller-ecs-fargate.BT1VWuxS_Ffce1.webp)
 
 ## Step 3 - Modify and deploy Terraform configuration
-
-[Section titled “Step 3 - Modify and deploy Terraform configuration”](#step-3---modify-and-deploy-terraform-configuration)
 
 1. Add the Aembit Edge ECS Module to your Terraform code, using configuration:
 
@@ -102,9 +93,9 @@ You need to create a Trust Provider, or use an existing one, to enable the Agent
    }
    ```
 
-   Note
-
-   To see additional configuration options, see [Optional configurations](#configuration-variables)
+   > **Note**
+   >
+   > To see additional configuration options, see [Optional configurations](#configuration-variables)
 
 2. Add the Aembit Agent Proxy container definition to your Client Workload Task Definitions.
 
@@ -136,15 +127,11 @@ You need to create a Trust Provider, or use an existing one, to enable the Agent
 
 ## Configuration variables
 
-[Section titled “Configuration variables”](#configuration-variables)
-
 The following table lists the configurable variables of the module and their default values.
 
 *All variables are required unless marked* Optional.
 
 ### `aembit_tenantid`
-
-[Section titled “aembit\_tenantid”](#aembit_tenantid)
 
 Default - not set
 
@@ -154,8 +141,6 @@ The Aembit TenantID with which to associate this installation and Client Workloa
 
 ### `aembit_agent_controller_id`
 
-[Section titled “aembit\_agent\_controller\_id”](#aembit_agent_controller_id)
-
 Default - not set
 
 The Aembit Agent Controller ID with which to associate this installation.
@@ -163,8 +148,6 @@ The Aembit Agent Controller ID with which to associate this installation.
 ***
 
 ### `aembit_trusted_ca_certs`
-
-[Section titled “aembit\_trusted\_ca\_certs”](#aembit_trusted_ca_certs)
 
 Optional Default - not set
 
@@ -174,8 +157,6 @@ Additional CA Certificates that the Aembit AgentProxy should trust for Server Wo
 
 ### `ecs_cluster`
 
-[Section titled “ecs\_cluster”](#ecs_cluster)
-
 Default - not set
 
 The AWS ECS Cluster that hosts the Aembit Agent Controller.
@@ -183,8 +164,6 @@ The AWS ECS Cluster that hosts the Aembit Agent Controller.
 ***
 
 ### `ecs_vpc_id`
-
-[Section titled “ecs\_vpc\_id”](#ecs_vpc_id)
 
 Default - not set
 
@@ -194,8 +173,6 @@ The AWS VPC that provides network connectivity for the Aembit Agent Controller. 
 
 ### `ecs_subnets`
 
-[Section titled “ecs\_subnets”](#ecs_subnets)
-
 Default - not set
 
 The subnets that the Aembit Agent Controller and Agent Proxy containers use for connectivity between Proxy and Controller and Aembit Cloud.
@@ -203,8 +180,6 @@ The subnets that the Aembit Agent Controller and Agent Proxy containers use for 
 ***
 
 ### `ecs_security_groups`
-
-[Section titled “ecs\_security\_groups”](#ecs_security_groups)
 
 Default - not set
 
@@ -214,8 +189,6 @@ The security group to assign to the AgentController service. This security group
 
 ### `agent_controller_task_role_arn`
 
-[Section titled “agent\_controller\_task\_role\_arn”](#agent_controller_task_role_arn)
-
 Default - `arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/ecsTaskExecutionRole`
 
 The AWS IAM Task Role to use for the Aembit AgentController Service container. AgentController uses this role to register with the Aembit Cloud Service.
@@ -223,8 +196,6 @@ The AWS IAM Task Role to use for the Aembit AgentController Service container. A
 ***
 
 ### `agent_controller_execution_role_arn`
-
-[Section titled “agent\_controller\_execution\_role\_arn”](#agent_controller_execution_role_arn)
 
 Default - `arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/ecsTaskExecutionRole`
 
@@ -234,8 +205,6 @@ The AWS IAM Task Execution Role used by Amazon ECS and Fargate agents for the Ae
 
 ### `log_group_name`
 
-[Section titled “log\_group\_name”](#log_group_name)
-
 Optional Default - `/aembit/edge`
 
 Specifies the name of an optional log group to create and send logs to for components created by this module. You can set this value to `null`.
@@ -243,8 +212,6 @@ Specifies the name of an optional log group to create and send logs to for compo
 ***
 
 ### `agent_controller_image`
-
-[Section titled “agent\_controller\_image”](#agent_controller_image)
 
 Default - not set
 
@@ -254,8 +221,6 @@ The container image to use for the AgentController installation. As a best pract
 
 ### `agent_proxy_image`
 
-[Section titled “agent\_proxy\_image”](#agent_proxy_image)
-
 Default - not set
 
 The container image to use for the AgentProxy installation. As a best practice, always [verify container image signatures](../verify-container-images.md#agent-proxy).
@@ -263,8 +228,6 @@ The container image to use for the AgentProxy installation. As a best practice, 
 ***
 
 ### `aembit_stack`
-
-[Section titled “aembit\_stack”](#aembit_stack)
 
 Default - `useast2.aembit.io`
 
@@ -274,8 +237,6 @@ The Aembit Stack which hosts the specified Tenant.
 
 ### `ecs_task_prefix`
 
-[Section titled “ecs\_task\_prefix”](#ecs_task_prefix)
-
 Default - `aembit_`
 
 Prefix to include in front of the Agent Controller ECS Task Definitions to ensure uniqueness.
@@ -283,8 +244,6 @@ Prefix to include in front of the Agent Controller ECS Task Definitions to ensur
 ***
 
 ### `ecs_service_prefix`
-
-[Section titled “ecs\_service\_prefix”](#ecs_service_prefix)
 
 Default - `aembit_`
 
@@ -294,8 +253,6 @@ Prefix to include in front of the Agent Controller Service Name to ensure unique
 
 ### `ecs_private_dns_domain`
 
-[Section titled “ecs\_private\_dns\_domain”](#ecs_private_dns_domain)
-
 Default - `aembit.local`
 
 The Private DNS TLD that the specified AWS VPC uses for AgentProxy to AgentController connectivity.
@@ -303,8 +260,6 @@ The Private DNS TLD that the specified AWS VPC uses for AgentProxy to AgentContr
 ***
 
 ### `agent_proxy_resource_set_id`
-
-[Section titled “agent\_proxy\_resource\_set\_id”](#agent_proxy_resource_set_id)
 
 Default - not set
 
@@ -314,8 +269,6 @@ Associates Agent Proxy with a specific [Resource Set](../../administration/resou
 
 ### `agent_controller_environment_variables`
 
-[Section titled “agent\_controller\_environment\_variables”](#agent_controller_environment_variables)
-
 Default - not set
 
 Set [Agent Controller Environment Variables](../../../reference/edge-components/edge-component-env-vars.md#agent-controller-environment-variables) directly.
@@ -324,15 +277,11 @@ Set [Agent Controller Environment Variables](../../../reference/edge-components/
 
 ### `agent_proxy_environment_variables`
 
-[Section titled “agent\_proxy\_environment\_variables”](#agent_proxy_environment_variables)
-
 Default - not set
 
 Set [Agent Proxy Environment Variables](../../../reference/edge-components/edge-component-env-vars.md#agent-proxy-environment-variables) directly.
 
 ## Overriding Agent Controller and Agent Proxy environment variables
-
-[Section titled “Overriding Agent Controller and Agent Proxy environment variables”](#overriding-agent-controller-and-agent-proxy-environment-variables)
 
 Use the `agent_controller_environment_variables` and `agent_proxy_environment_variables` Terraform module variables to set the respective Edge Component [environment variables](../../../reference/edge-components/edge-component-env-vars.md).
 

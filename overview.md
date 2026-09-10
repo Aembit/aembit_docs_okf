@@ -1,25 +1,22 @@
 ---
-type: explanation
+type: reference
 title: "Aembit Docs"
 description: "Attest. Authenticate. Accelerate."
 resource: https://docs.aembit.io/
-timestamp: 2026-06-15T10:19:43-07:00
-type_inferred: true
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Aembit Docs
 
 NEW
 
-## AI Guide
+## Aembit Edge SDKs
 
-Aembit now provides documentation for securing AI agent communications using the Model Context Protocol (MCP). Covers the MCP Authorization Server, MCP Identity Gateway, and MCP Server.
+Aembit now offers Edge SDKs for TypeScript and Python, so your application can attest its workload and retrieve credentials in a few method calls.
 
-[Explore the AI Guide ](ai-guide/overview.md)
+[Explore the Edge SDKs](dev-guide/sdk/edge/overview.md)
 
 ## Choose your path
-
-NEW
 
 ### [AI Guide](ai-guide/overview.md)
 
@@ -49,6 +46,36 @@ Interesting and helpful topics.
 
 [Prompts Library](ai-guide/prompt-library/overview.md)[MCP Overview](ai-guide/mcp/overview.md)[About Blended Identities](ai-guide/blended-identity.md)
 
+NEW
+
+### [Developer Guide](dev-guide/overview.md)
+
+Integrate from code, commands, or infrastructure. Choose how your workload gets credentials at runtime, then how you manage the configuration behind it.
+
+[Aembit SDKs](dev-guide/sdk/edge/overview.md)
+
+Attest your workload and retrieve credentials from TypeScript or Python.
+
+[Edge SDK overview](dev-guide/sdk/edge/overview.md)[Quickstart](dev-guide/sdk/edge/quickstart.md)[AWS Lambda integration](dev-guide/sdk/edge/integrations/aws-lambda.md)
+
+[Aembit APIs](dev-guide/api/overview.md)
+
+Manage configuration through the Cloud API and retrieve credentials through the Edge API.
+
+[Cloud API](dev-guide/api/cloud/overview.md)[Edge API](dev-guide/api/edge/overview.md)[Authentication](dev-guide/api/edge/auth/overview.md)
+
+[Aembit CLI](dev-guide/cli/overview.md)
+
+Retrieve credentials in CI/CD pipelines using GitLab, GitHub, or OIDC tokens.
+
+[Set up Aembit CLI](dev-guide/cli/usage/setup.md)[Getting credentials](dev-guide/cli/usage/get-credentials.md)[Command reference](dev-guide/cli/reference/overview.md)
+
+[Agent Proxy](dev-guide/integration/agent-proxy.md)
+
+Intercept your workload's traffic so its source needs no changes.
+
+[Integrate through Agent Proxy](dev-guide/integration/agent-proxy.md)[Local development](dev-guide/integration/local-development.md)[Test and debug](dev-guide/integration/testing.md)
+
 ### [Get Started](get-started/overview.md)
 
 Learn what Aembit does, how workload identity works, and set up your first secure connection.
@@ -61,23 +88,11 @@ Deploy Aembit Edge, configure access policies, manage credentials, and monitor w
 
 [Deploy & Install](user-guide/deploy-install/overview.md)[Manage Access Policies](user-guide/access-policies/overview.md)[Audit & Report](user-guide/audit-report/overview.md)
 
-### [CLI Guide](cli-guide/overview.md)
-
-Retrieve credentials in CI/CD pipelines using GitLab, GitHub, or OIDC tokens.
-
-[Set up Aembit CLI](cli-guide/usage/setup.md)[Getting credentials](cli-guide/usage/get-credentials.md)[Command reference](cli-guide/reference/overview.md)
-
-### [API Guide](api-guide/overview.md)
-
-Build integrations with Aembit's Cloud and Edge REST APIs. Full endpoint reference included.
-
-[Cloud API](api-guide/cloud/overview.md)[Edge API](api-guide/edge/overview.md)[Authentication](api-guide/edge/auth/overview.md)
-
 ## Find your focus
 
 Select your role
 
-Security Teams   Platform Engineers   Developers   IT Admins   Executives
+Security TeamsPlatform EngineersDevelopersIT AdminsExecutives
 
 ### Control & Audit
 
@@ -89,7 +104,7 @@ Security policies, compliance monitoring, and audit tools
 
 #### Monitoring
 
-[Authorization Events](user-guide/audit-report/access-authorization-events.md)[Audit Logs](user-guide/audit-report/audit-logs.md)[Workload Activity](user-guide/audit-report/workload-events.md)[Log Streams](user-guide/administration/log-streams/overview.md)[Dashboard](user-guide/audit-report/overview.md)
+[Authorization Events](user-guide/audit-report/access-authorization-events.md)[Audit Logs](user-guide/audit-report/audit-logs.md)[Workload Activity](user-guide/audit-report/workload-events/overview.md)[Log Streams](user-guide/administration/log-streams/overview.md)[Dashboard](user-guide/audit-report/overview.md)
 
 #### Compliance
 
@@ -97,7 +112,7 @@ Security policies, compliance monitoring, and audit tools
 
 #### Quick Actions
 
-[Create Policy](user-guide/access-policies/overview.md)[View Audit Log](user-guide/audit-report/audit-logs.md)[Generate Report](user-guide/audit-report/overview.md)[Export Data](api-guide/overview.md)
+[Create Policy](user-guide/access-policies/overview.md)[View Audit Log](user-guide/audit-report/audit-logs.md)[Generate Report](user-guide/audit-report/overview.md)[Export Data](dev-guide/api/overview.md)
 
 ### Deploy & Scale
 
@@ -109,7 +124,7 @@ Infrastructure deployment, scaling, and operations
 
 #### Infrastructure
 
-[Terraform Provider](https://docs.aembit.io/user-guide/access-policies/advanced-options/terraform/)[Helm Charts](user-guide/deploy-install/kubernetes/overview.md)[Network Config](user-guide/deploy-install/overview.md)[TLS Decrypt](user-guide/deploy-install/advanced-options/tls-decrypt/overview.md)
+[Terraform Provider](user-guide/access-policies/advanced-options/terraform/terraform-configuration.md)[Helm Charts](user-guide/deploy-install/kubernetes/overview.md)[Network Config](user-guide/deploy-install/overview.md)[TLS Decrypt](user-guide/deploy-install/advanced-options/tls-decrypt/overview.md)
 
 #### Operations
 
@@ -125,11 +140,11 @@ SDKs, APIs, and integration guides for developers
 
 #### Integration
 
-[Developer Integration](user-guide/access-policies/server-workloads/developer-integration.md)[Architecture Patterns](user-guide/access-policies/server-workloads/architecture-patterns.md)[Server Workload Guides](user-guide/access-policies/server-workloads/guides/overview.md)[CLI Get Credentials](cli-guide/usage/get-credentials.md)
+[Developer Guide](dev-guide/overview.md)[Edge SDK](dev-guide/sdk/edge/overview.md)[Agent Proxy Integration](dev-guide/integration/agent-proxy.md)[Architecture Patterns](user-guide/access-policies/server-workloads/architecture-patterns.md)[Server Workload Guides](user-guide/access-policies/server-workloads/guides/overview.md)[CLI Get Credentials](dev-guide/cli/usage/get-credentials.md)
 
 #### APIs
 
-[REST API Reference](api-guide/overview.md)[Cloud API](api-guide/cloud/overview.md)[Edge API](api-guide/edge/overview.md)[Authentication](api-guide/edge/auth/overview.md)
+[REST API Reference](dev-guide/api/overview.md)[Cloud API](dev-guide/api/cloud/overview.md)[Edge API](dev-guide/api/edge/overview.md)[Authentication](dev-guide/api/edge/auth/overview.md)
 
 #### CI/CD
 
@@ -181,7 +196,7 @@ High-level insights and business value
 
 ## How Aembit works
 
-AI Agents   Multicloud   Database Access
+AI AgentsMulticloudDatabase Access
 
 WorkloadsIdentity & TrustPolicy EvaluationCredential Injection
 
@@ -217,7 +232,7 @@ WorkloadsIdentity & TrustPolicy EvaluationCredential Injection
 
 [MCP User-Based Access Token](user-guide/access-policies/credential-providers/mcp-user-based-access-token.md)
 
-![AI Agents architecture diagram](https://docs.aembit.io/diagrams/use-case-explorer/ai-agents/base.svg) ![AI Agents - Workloads highlighted](https://docs.aembit.io/diagrams/use-case-explorer/ai-agents/workloads.svg)![AI Agents - Identity & Trust highlighted](https://docs.aembit.io/diagrams/use-case-explorer/ai-agents/identity.svg)![AI Agents - Policy Evaluation highlighted](https://docs.aembit.io/diagrams/use-case-explorer/ai-agents/policy.svg)![AI Agents - Credential Injection highlighted](https://docs.aembit.io/diagrams/use-case-explorer/ai-agents/credentials.svg)
+![AI Agents architecture diagram](https://docs.aembit.io/diagrams/use-case-explorer/ai-agents/base.svg)![AI Agents - Workloads highlighted](https://docs.aembit.io/diagrams/use-case-explorer/ai-agents/workloads.svg)![AI Agents - Identity & Trust highlighted](https://docs.aembit.io/diagrams/use-case-explorer/ai-agents/identity.svg)![AI Agents - Policy Evaluation highlighted](https://docs.aembit.io/diagrams/use-case-explorer/ai-agents/policy.svg)![AI Agents - Credential Injection highlighted](https://docs.aembit.io/diagrams/use-case-explorer/ai-agents/credentials.svg)
 
 WorkloadsIdentity TranslationAccess PoliciesCross-Cloud Credentials
 
@@ -253,7 +268,7 @@ WorkloadsIdentity TranslationAccess PoliciesCross-Cloud Credentials
 
 [Azure Entra WIF](user-guide/access-policies/credential-providers/azure-entra-workload-identity-federation.md)[GCP Workload Identity](user-guide/access-policies/credential-providers/google-workload-identity-federation.md)
 
-![Multicloud architecture diagram](https://docs.aembit.io/diagrams/use-case-explorer/multicloud/base.svg) ![Multicloud - Workloads highlighted](https://docs.aembit.io/diagrams/use-case-explorer/multicloud/workloads.svg)![Multicloud - Identity Translation highlighted](https://docs.aembit.io/diagrams/use-case-explorer/multicloud/identity.svg)![Multicloud - Access Policies highlighted](https://docs.aembit.io/diagrams/use-case-explorer/multicloud/policy.svg)![Multicloud - Cross-Cloud Credentials highlighted](https://docs.aembit.io/diagrams/use-case-explorer/multicloud/credentials.svg)
+![Multicloud architecture diagram](https://docs.aembit.io/diagrams/use-case-explorer/multicloud/base.svg)![Multicloud - Workloads highlighted](https://docs.aembit.io/diagrams/use-case-explorer/multicloud/workloads.svg)![Multicloud - Identity Translation highlighted](https://docs.aembit.io/diagrams/use-case-explorer/multicloud/identity.svg)![Multicloud - Access Policies highlighted](https://docs.aembit.io/diagrams/use-case-explorer/multicloud/policy.svg)![Multicloud - Cross-Cloud Credentials highlighted](https://docs.aembit.io/diagrams/use-case-explorer/multicloud/credentials.svg)
 
 WorkloadsCloud IAM TrustAccess PoliciesDatabase Credentials
 
@@ -289,4 +304,4 @@ WorkloadsCloud IAM TrustAccess PoliciesDatabase Credentials
 
 [PostgreSQL guide](user-guide/access-policies/server-workloads/guides/aws-postgres.md)[Snowflake guide](user-guide/access-policies/server-workloads/guides/snowflake.md)
 
-![Database Access architecture diagram](https://docs.aembit.io/diagrams/use-case-explorer/database/base.svg) ![Database Access - Workloads highlighted](https://docs.aembit.io/diagrams/use-case-explorer/database/workloads.svg)![Database Access - Cloud IAM Trust highlighted](https://docs.aembit.io/diagrams/use-case-explorer/database/identity.svg)![Database Access - Access Policies highlighted](https://docs.aembit.io/diagrams/use-case-explorer/database/policy.svg)![Database Access - Database Credentials highlighted](https://docs.aembit.io/diagrams/use-case-explorer/database/credentials.svg)
+![Database Access architecture diagram](https://docs.aembit.io/diagrams/use-case-explorer/database/base.svg)![Database Access - Workloads highlighted](https://docs.aembit.io/diagrams/use-case-explorer/database/workloads.svg)![Database Access - Cloud IAM Trust highlighted](https://docs.aembit.io/diagrams/use-case-explorer/database/identity.svg)![Database Access - Access Policies highlighted](https://docs.aembit.io/diagrams/use-case-explorer/database/policy.svg)![Database Access - Database Credentials highlighted](https://docs.aembit.io/diagrams/use-case-explorer/database/credentials.svg)

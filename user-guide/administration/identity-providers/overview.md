@@ -1,11 +1,11 @@
 ---
-type: explanation
+type: reference
 title: "Identity Providers overview"
 description: "Description of what Identity Providers are and how they work in the Aembit UI"
 resource: https://docs.aembit.io/user-guide/administration/identity-providers/
-tags: [identity-provider, administration]
-timestamp: 2026-03-12T14:33:26-07:00
-type_inferred: true
+interface: web-ui
+tags: ["identity-provider", "administration"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Identity Providers overview
@@ -22,37 +22,29 @@ Requiring your users to remember and manually enter a username and password ever
 
 To enforce the exclusive use of SSO and prevent your users from authenticating with their username and password, enable [Require Single Sign On](../sign-on-policy/overview.md#require-single-sign-on).
 
-Tip
-
-The Identity Providers feature is only available on the following subscription plans:
-
-* Teams plan
-
-* Enterprise plan
-
-To enable Identity Providers, please contact Aembit by completing the [Contact Us form](https://aembit.io/contact/).
+> **Tip**
+>
+> The Identity Providers feature is only available on the following subscription plans:
+>
+> * Teams plan
+>
+> * Enterprise plan
+>
+> To enable Identity Providers, please contact Aembit by completing the [Contact Us form](https://aembit.io/contact/).
 
 ## SSO overview
-
-[Section titled “SSO overview”](#sso-overview)
 
 SAML 2.0 (Security Assertion Markup Language) is an open standard for cross-domain Single Sign-On (SSO). SSO allows a user to authenticate in one system—the [Identity Provider](#saml-identity-provider)—and gain access to a different system. The [Service Provider](#service-provider) accepts proof of authentication from the IdP.
 
 ### SAML Identity Provider
 
-[Section titled “SAML Identity Provider”](#saml-identity-provider)
-
 The SAML Identity Provider (IdP) enables SSO user authentication where Aembit acts as the Service Provider. Common SAML Identity Providers include Okta, Google, Microsoft Entra ID, and many others.
 
 ### Service Provider
 
-[Section titled “Service Provider”](#service-provider)
-
 The Service Provider takes this information and implicitly trusts the information given and provides access to the service or resource. The Aembit Service Provider is an example of a resource that accepts external Identity Provider data.
 
 ## Aembit SSO authentication process
-
-[Section titled “Aembit SSO authentication process”](#aembit-sso-authentication-process)
 
 The following occurs during the SSO authentication process on your Aembit Tenant:
 
@@ -72,8 +64,6 @@ The following diagram shows the SSO authentication flow:
 
 ## About automatic user creation
 
-[Section titled “About automatic user creation”](#about-automatic-user-creation)
-
 When you enable the automatic user creation feature, Aembit automatically generates new user accounts on your behalf when your users go through the [SSO authenticate process](#aembit-sso-authentication-process). This automation not only saves time and resources by reducing or eliminating the manual effort needed to manage user accounts but also minimizes errors associated with manual account management. Also, this feature provides granular control of what user roles Aembit assigns to new users it creates.
 
 The automatic user creation feature works by extracting certain SAML attributes in the SAML response from the IdP after successful authentication with that IdP. It’s important to know, however, that not all IdPs configure their SAML attributes the same way. Different IdPs use distinct attribute names to pass user group claim information.
@@ -82,8 +72,6 @@ To alleviate these inconsistencies, Aembit allows you to map your IdP’s SAML a
 
 ### How automatic user creation works
 
-[Section titled “How automatic user creation works”](#how-automatic-user-creation-works)
-
 During the SSO authentication process, when Aembit verifies the authentication response, if no user account exists for that user, Aembit initiates the automatic user creation process.
 
 Aembit requires an email address to uniquely identify users of your Aembit Tenant. If it can, Aembit populates the first and last name of the users it automatically creates. If not, Aembit sets the first and last name to the user’s email address.
@@ -91,8 +79,6 @@ Aembit requires an email address to uniquely identify users of your Aembit Tenan
 Aembit extracts user information from authentication response claims including email, name, and group membership. For technical details about specific claim requirements and attribute names, see [Configure automatic user creation](automatic-user-creation.md).
 
 ## Complete setup checklist
-
-[Section titled “Complete setup checklist”](#complete-setup-checklist)
 
 Setting up SSO requires configuration in two places:
 
@@ -108,8 +94,6 @@ Setting up SSO requires configuration in two places:
 4. **Test SSO with a test user before enforcing it** - Verify SSO works before enabling “Require Single Sign On”
 
 ## Additional resources
-
-[Section titled “Additional resources”](#additional-resources)
 
 The following pages provide more information about working with Identity Providers:
 

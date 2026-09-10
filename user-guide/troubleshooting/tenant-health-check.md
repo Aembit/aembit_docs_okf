@@ -4,9 +4,8 @@ title: "Checking Tenant Health"
 description: "This page describes how to check the health of the Aembit Cloud components."
 resource: https://docs.aembit.io/user-guide/troubleshooting/tenant-health-check/
 interface: web-ui
-tags: [troubleshooting]
-timestamp: 2025-05-22T22:55:26-07:00
-type_inferred: true
+tags: ["troubleshooting"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Checking Tenant Health
@@ -21,13 +20,9 @@ When working with Aembit for your environment workloads, you may find it useful 
 
 ### Aembit Status Page
 
-[Section titled “Aembit Status Page”](#aembit-status-page)
-
 The Aembit Service Status Page displays the current status of the Aembit Service, including any incidents that have been logged by service. You may find this useful if you would like to verify that the service is up and running before working with your Aembit Tenant.
 
 #### Checking the Health of the Aembit Service
-
-[Section titled “Checking the Health of the Aembit Service”](#checking-the-health-of-the-aembit-service)
 
 To check the current status of the Aembit service:
 
@@ -39,27 +34,23 @@ To check the current status of the Aembit service:
 
 ![Aembit Status Page](https://docs.aembit.io/_astro/aembit_status_page.BopzVRXw_meVli.webp)
 
-Note
-
-If you would like to view historical uptime data beyond 90 days, click on the **View historical uptime** link. When you click on this link, you will see an Aembit Historical Data page where you can choose between historical data from either the Management Portal or Control Plane.
-
-![Aembit Historical Data Page](https://docs.aembit.io/_astro/aembit_status_historical_uptime_data.6E5TIBkH_JzSne.webp)
-
-Tip
-
-You may automatically receive Aembit service status updates by clicking on the **Subscribe to Updates** button in the top-right corner of the Status page and entering your email address.
+> **Note**
+>
+> If you would like to view historical uptime data beyond 90 days, click on the **View historical uptime** link. When you click on this link, you will see an Aembit Historical Data page where you can choose between historical data from either the Management Portal or Control Plane.
+>
+> ![Aembit Historical Data Page](https://docs.aembit.io/_astro/aembit_status_historical_uptime_data.6E5TIBkH_JzSne.webp)
+>
+> > **Tip**
+> >
+> > You may automatically receive Aembit service status updates by clicking on the **Subscribe to Updates** button in the top-right corner of the Status page and entering your email address.
 
 ### API/Management Plane
-
-[Section titled “API/Management Plane”](#apimanagement-plane)
 
 The API/Management Plane is a programmatic interface that enables you to perform many of the same actions and tasks you can perform in your Aembit Tenant. While the Aembit Tenant allows you to perform these tasks in a user interface; sometimes, you may wish to programmatically perform some of these actions, especially if you wish to perform batch operations or write scripts to perform these tasks.
 
 Monitoring the API/Management Plane can be useful in ensuring the endpoints that control these actions are operational and working properly.
 
 #### Checking the Health of the API/Management Plane
-
-[Section titled “Checking the Health of the API/Management Plane”](#checking-the-health-of-the-apimanagement-plane)
 
 To check the health of the API/Management Plane, follow the steps described below.
 
@@ -89,8 +80,6 @@ Where:
 
 ### Agent Controller
 
-[Section titled “Agent Controller”](#agent-controller)
-
 Agent Controller communicates its health status to Aembit Cloud every 60 seconds (similar to a “heartbeat” request), enabling you to monitor the real-time health status of Agent Controller.
 
 When reviewing the health status of Agent Controller, there are (4) different connection states:
@@ -100,13 +89,11 @@ When reviewing the health status of Agent Controller, there are (4) different co
 * **Unregistered** - The Agent Controller is not registered with a Device Code or Trust Provider (yellow).
 * **Registered and Not Connected** - The Agent Controller is registered and healthy, but the connection is down (yellow).
 
-Note
-
-If Agent Controller is in an “inactive” state, Agent Controller status will be displayed with a gray icon in the **Status** column.
+> **Note**
+>
+> If Agent Controller is in an “inactive” state, Agent Controller status will be displayed with a gray icon in the **Status** column.
 
 #### Checking the Health of the Agent Controller In the Aembit Tenant
-
-[Section titled “Checking the Health of the Agent Controller In the Aembit Tenant”](#checking-the-health-of-the-agent-controller-in-the-aembit-tenant)
 
 To check the health of the Agent Controller in your Aembit Tenant:
 
@@ -114,9 +101,9 @@ To check the health of the Agent Controller in your Aembit Tenant:
 
 2. Click on the **Edge Components** link in the left sidebar. You will see the Edge Components Dashboard displayed.
 
-Note
-
-By default, The Agent Controllers dashboard is displayed.
+> **Note**
+>
+> By default, The Agent Controllers dashboard is displayed.
 
 ![Agent Controller Dashboard](https://docs.aembit.io/_astro/agent_controller_health_status_check.C5BB5QSB_Z226cOn.webp)
 
@@ -126,15 +113,11 @@ By default, The Agent Controllers dashboard is displayed.
 
 ### Edge Controller
 
-[Section titled “Edge Controller”](#edge-controller)
-
 The Edge Controller is a component within the Aembit Cloud infrastructure that provides endpoints that enable you to generate application events, retrieve configuration information, policies, and credentials via a set of endpoints.
 
 Verifying the Edge Controller, and its endpoints, are operating correctly is important in ensuring that application events and other configuration information is captured and logged, and able to be retrieved by users.
 
 #### Checking the Health of the Edge Controller
-
-[Section titled “Checking the Health of the Edge Controller”](#checking-the-health-of-the-edge-controller)
 
 To check the health of the Edge Controller:
 
@@ -148,15 +131,11 @@ For example, if you run this command with Docker, the command should look like t
 
 ### Identity Provider
 
-[Section titled “Identity Provider”](#identity-provider)
-
 An Identity Provider is a system that stores, manages, and verifies digital identities for users or entities connected to a network or system so a user may be authenticated to use a service. In the Aembit framework, the Identity Provider authenticates users and grants them access to various Aembit services.
 
 Monitoring the health of the Identity Provider ensures authentication and identity verification services are running correctly, and users can be authenticated properly before granting access to Aembit services.
 
 #### Checking the Health of the Identity Provider
-
-[Section titled “Checking the Health of the Identity Provider”](#checking-the-health-of-the-identity-provider)
 
 If you would like to check the current health of your Identity Provider, the steps are very similar to the steps you followed to check the API/Management Plane, which are described below.
 

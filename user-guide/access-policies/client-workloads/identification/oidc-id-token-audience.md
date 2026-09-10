@@ -4,9 +4,8 @@ title: "OIDC ID Token Audience"
 description: "How to identify workloads using the audience claim from an OIDC ID token in Aembit"
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/oidc-id-token-audience/
 interface: web-ui
-tags: [generic, identification, client-workload, access-policy]
-timestamp: 2026-05-01T10:19:23-07:00
-type_inferred: true
+tags: ["generic", "identification", "client-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # OIDC ID Token Audience
@@ -15,15 +14,11 @@ This page explains how to use the **OIDC ID Token Audience** identifier to ident
 
 ## Understanding the OIDC ID Token Audience identifier
 
-[Section titled “Understanding the OIDC ID Token Audience identifier”](#understanding-the-oidc-id-token-audience-identifier)
-
 The `aud` (audience) claim in an OIDC ID token specifies the intended recipient of the token. When Aembit evaluates this identifier, it compares the `aud` claim in the token against the value you configure. The value must match exactly.
 
 This identifier verifies that the identity provider issued the token specifically for your Aembit deployment. For example, in GitLab CI/CD pipelines, you can explicitly set the audience to your Aembit tenant endpoint in the pipeline configuration, then configure Aembit to match on that value. This ensures a token issued for one system can’t authenticate with another.
 
 ## Applicable deployment type
-
-[Section titled “Applicable deployment type”](#applicable-deployment-type)
 
 Use this identifier when your Client Workload authenticates using an OIDC ID token from a standards-compliant identity provider. The Access Policy must include an [OIDC ID Token Trust Provider](../../trust-providers/oidc-id-token-trust-provider.md) configured to validate tokens from the same identity provider.
 
@@ -34,8 +29,6 @@ Supported environments include:
 * Any workload that presents a standards-compliant OIDC token to the Aembit Edge Component
 
 ## Create a Client Workload with an OIDC ID Token Audience identifier
-
-[Section titled “Create a Client Workload with an OIDC ID Token Audience identifier”](#create-a-client-workload-with-an-oidc-id-token-audience-identifier)
 
 1. Log into your Aembit Tenant.
 
@@ -57,17 +50,15 @@ Supported environments include:
 
    Aembit displays the new Client Workload on the **Client Workloads** page.
 
-Client Workload identifier uniqueness
-
-When you identify a Client Workload using a single identifier such as this one in a complex environment, this identifier may not always provide sufficient uniqueness.
-
-To avoid Aembit unintentionally matching something beyond what it’s intended to match, Aembit recommends that you set additional identifiers to compliment this one, creating a Client Workload identity that’s unique across your environment.
-
-See [Using multiple Client Workload identifiers](client-workload-multiple-ids.md) for guidance on combining this identifier with more specific identifiers such as those on the [Client Workload Identifiers overview](overview.md) page, which includes vendor- and technology-specific identifiers.
+> **Client Workload identifier uniqueness**
+>
+> When you identify a Client Workload using a single identifier such as this one in a complex environment, this identifier may not always provide sufficient uniqueness.
+>
+> To avoid Aembit unintentionally matching something beyond what it’s intended to match, Aembit recommends that you set additional identifiers to compliment this one, creating a Client Workload identity that’s unique across your environment.
+>
+> See [Using multiple Client Workload identifiers](client-workload-multiple-ids.md) for guidance on combining this identifier with more specific identifiers such as those on the [Client Workload Identifiers overview](overview.md) page, which includes vendor- and technology-specific identifiers.
 
 ## Audience values by identity provider
-
-[Section titled “Audience values by identity provider”](#audience-values-by-identity-provider)
 
 How the identity provider sets the `aud` claim depends on your pipeline or workload configuration.
 
@@ -81,11 +72,9 @@ How the identity provider sets the `aud` claim depends on your pipeline or workl
 
 ### GitLab CI/CD
 
-[Section titled “GitLab CI/CD”](#gitlab-cicd)
-
 In GitLab CI/CD, you define the audience in the pipeline’s `id_tokens` configuration block. The following example sets the audience to an Aembit tenant endpoint:
 
-.gitlab-ci.yml
+**.gitlab-ci.yml**
 
 ```yaml
 job_name:

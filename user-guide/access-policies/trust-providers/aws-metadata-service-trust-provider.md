@@ -1,12 +1,11 @@
 ---
-type: how-to
+type: reference
 title: "AWS Metadata Service trust provider"
 description: "This page describes the steps required to configure an AWS Metadata Service Trust Provider."
 resource: https://docs.aembit.io/user-guide/access-policies/trust-providers/aws-metadata-service-trust-provider/
 interface: web-ui
-tags: [trust-provider, access-policy]
-timestamp: 2026-07-07T18:22:50-07:00
-type_inferred: true
+tags: ["trust-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # AWS Metadata Service trust provider
@@ -17,8 +16,6 @@ The AWS Metadata Service Trust Provider supports attestation of Client Workloads
 The AWS Metadata Service Trust Provider relies on the [AWS Metadata Service](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html) for instance identity document.
 
 ## Match rules
-
-[Section titled “Match rules”](#match-rules)
 
 The following match rules are available for this Trust Provider type:
 
@@ -40,8 +37,6 @@ The following match rules are available for this Trust Provider type:
 Please refer to the [AWS documentation](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-identity-documents.html) for a detailed description of match rule fields available in the identity document.
 
 ## Additional configurations
-
-[Section titled “Additional configurations”](#additional-configurations)
 
 Aembit requires one of AWS’s public certificates to verify the identity document signature. Please download the certificate from the [AWS public certificate page](https://docs.aws.amazon.com/es_en/AWSEC2/latest/UserGuide/regions-certs.html) for the region that hosts your Client Workloads. Please use certificates under the RSA tabs on the AWS documentation page and paste the appropriate certificate into **Certificate** field on the **Trust Provider** page.
 

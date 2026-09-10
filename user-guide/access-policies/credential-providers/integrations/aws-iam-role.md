@@ -4,9 +4,8 @@ title: "Create a AWS IAM Role Integration for an AWS IAM Role"
 description: "How to create an AWS IAM Role Credential Provider Integration using an AWS IAM Role"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/integrations/aws-iam-role/
 interface: web-ui
-tags: [integration, credential-provider, access-policy]
-timestamp: 2025-08-19T18:15:09-07:00
-type_inferred: true
+tags: ["integration", "credential-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Create a AWS IAM Role Integration for an AWS IAM Role
@@ -16,8 +15,6 @@ Aembit uses the AWS IAM Role Credential Provider Integration to enable you to re
 This page details everything you need to create an AWS IAM Role Credential Provider Integration. This integration requires the use of an AWS IAM Role that has the necessary permissions to access the resources you want to manage with Aembit.
 
 ## Configure a AWS IAM Role integration
-
-[Section titled “Configure a AWS IAM Role integration”](#configure-a-aws-iam-role-integration)
 
 To create a AWS IAM Role integration, follow these steps:
 
@@ -41,9 +38,9 @@ To create a AWS IAM Role integration, follow these steps:
 
    * **AWS IAM Role ARN** - Enter the Amazon Resource Name (ARN) of the AWS IAM Role that you want to use for this integration. This role must have the necessary permissions to access the resources you want to manage with Aembit.
 
-     AWS IAM Role ARN location
-
-     You can find the ARN of an AWS IAM Role in the AWS Management Console under **IAM -> Roles**, then select the role you want to use. AWS displays the role ARN at the top of the role’s **Summary** page.
+     > **AWS IAM Role ARN location**
+     >
+     > You can find the ARN of an AWS IAM Role in the AWS Management Console under **IAM -> Roles**, then select the role you want to use. AWS displays the role ARN at the top of the role’s **Summary** page.
 
    * **Lifetime** - Specify the duration of the temporary AWS credentials which Aembit uses to access AWS resources (default: 3600 seconds).
 
@@ -64,7 +61,5 @@ You can tell that you’ve configured the integration correctly if you see a gre
 ![Credential Provider - Integrations tab with new integration](https://docs.aembit.io/_astro/cp-integration-aws-iam-role-verify.DhmHJ759_1APmnF.webp)
 
 ## Next steps
-
-[Section titled “Next steps”](#next-steps)
 
 Now that you’ve created a AWS Secrets Manager Credential Provider Integration, create a [AWS Secrets Manager Value Credential Provider](../aws-secrets-manager.md) to use with your Server Workloads.

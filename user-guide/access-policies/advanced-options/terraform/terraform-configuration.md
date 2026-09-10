@@ -4,9 +4,8 @@ title: "Configuration with Terraform"
 description: "How to use the Aembit Terraform Provider to configure Aembit Cloud resources"
 resource: https://docs.aembit.io/user-guide/access-policies/advanced-options/terraform/terraform-configuration/
 interface: web-ui
-tags: [terraform, advanced-option, access-policy]
-timestamp: 2026-06-23T16:24:12-07:00
-type_inferred: true
+tags: ["terraform", "advanced-option", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Configuration with Terraform
@@ -14,8 +13,6 @@ type_inferred: true
 Aembit has released a Terraform Provider in the [Terraform Registry](https://registry.terraform.io/providers/Aembit/aembit/latest) that enables users to configure Aembit Cloud resources in an automated manner.
 
 ## Configuration
-
-[Section titled “Configuration”](#configuration)
 
 Configuring the Aembit Terraform provider requires two steps:
 
@@ -30,8 +27,6 @@ Configuring the Aembit Terraform provider requires two steps:
 Additional details for how to perform each of these steps can be found in the [Provider Documentation](https://registry.terraform.io/providers/Aembit/aembit/latest/docs) section of the Aembit Terraform provider page.
 
 ## Resources and Data Sources
-
-[Section titled “Resources and Data Sources”](#resources-and-data-sources)
 
 The Aembit [Terraform Provider](https://registry.terraform.io/providers/Aembit/aembit/latest) enables users to create, update, import, and delete Aembit Cloud resources using terraform manually or via CI/CD workflows. For example, users can configure GitHub Actions or Terraform Workspaces to utilize the Aembit Terraform provider and manage Aembit Cloud resources on demand to best serve their Workload purposes.
 

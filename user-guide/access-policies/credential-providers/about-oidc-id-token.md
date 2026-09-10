@@ -1,12 +1,10 @@
 ---
-type: how-to
+type: explanation
 title: "About the OIDC ID Token Credential Provider"
 description: "This page describes the OIDC ID Token Credential Provider and how it works"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/about-oidc-id-token/
-interface: web-ui
-tags: [credential-provider, access-policy]
-timestamp: 2026-07-07T18:35:05-07:00
-type_inferred: true
+tags: ["credential-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # About the OIDC ID Token Credential Provider
@@ -25,35 +23,27 @@ See [Create an OIDC ID Token Credential Provider](oidc-id-token.md) to create on
 
 ## Common use cases
 
-[Section titled “Common use cases”](#common-use-cases)
-
 * **Cloud Provider Access** - Securely access to AWS, GCP, or Azure resources using their respective WIF solutions.
 * **Vault Integration** - Authenticate with HashiCorp Vault using OIDC tokens.
 * **Custom Service Authentication** - Integrate with any service that supports OIDC/JWT authentication.
 
 ## How the OIDC ID Token Credential Provider works
 
-[Section titled “How the OIDC ID Token Credential Provider works”](#how-the-oidc-id-token-credential-provider-works)
-
 1. **Token Generation** - Aembit’s custom IdP generates JWT-formatted OIDC tokens and signs them using your Aembit Tenant-specific keys.
 
 2. **Client identification** - Aembit identifies each IdP client configuration using an Aembit-specific Uniform Resource Name (URN) notation as its `client_id` (for example: `aembit:useast2:1ed42e:identity:oidc-idtoken:2821c459-5541-4a59-9add-d69d5b3ae3db`).
 
-   Custom claims
-
-   If you’re creating custom claims when configuring an OIDC ID Token Credential Provider, don’t use `client_id` as Aembit reserves the value to identify Client Workloads.
+   > **Custom claims**
+   >
+   > If you’re creating custom claims when configuring an OIDC ID Token Credential Provider, don’t use `client_id` as Aembit reserves the value to identify Client Workloads.
 
 3. **Token Exchange** - The Credential Provider requests tokens from Aembit’s IdP and then exchanges these tokens with external identity brokers to obtain service-specific credentials for the workload.
 
 ## Configuration options
 
-[Section titled “Configuration options”](#configuration-options)
-
 The following sections detail the configuration options you have for the OIDC ID Token Credential Provider:
 
 ### Claims configuration
-
-[Section titled “Claims configuration”](#claims-configuration)
 
 Aembit’s IdP supports dynamic token generation with the following capabilities:
 
@@ -65,8 +55,6 @@ Aembit’s IdP supports dynamic token generation with the following capabilities
 See the list of [Common OIDC claims](#common-oidc-claims) for more info.
 
 #### Subject configuration options
-
-[Section titled “Subject configuration options”](#subject-configuration-options)
 
 The OIDC ID Token Credential Provider offers two methods for configuring the subject claim in OIDC ID tokens:
 
@@ -80,8 +68,6 @@ The OIDC ID Token Credential Provider offers two methods for configuring the sub
 
 ### Signing configuration
 
-[Section titled “Signing configuration”](#signing-configuration)
-
 Aembit manages signing keys on a per-tenant basis and has the following characteristics:
 
 * uses the signature algorithm that you choose when setting up your IdP client; either **RS256** or **ES256**.
@@ -90,15 +76,11 @@ Aembit manages signing keys on a per-tenant basis and has the following characte
 
 ### Refresh token support
 
-[Section titled “Refresh token support”](#refresh-token-support)
-
 The OIDC ID Token Credential Provider supports optional refresh token configuration for [MCP Authorization Server](../../../ai-guide/mcp/authorization-server/overview.md) use cases. When you enable refresh token support, MCP clients can maintain longer-lived sessions through token rotation without completing a new authorization flow.
 
 For details on how refresh tokens work, see [Token refresh](../../../ai-guide/mcp/authorization-server/concepts-mcp-auth-server.md#token-refresh). For configuration steps, see [Create an OIDC ID Token Credential Provider](oidc-id-token.md).
 
 ### Identity broker integration
-
-[Section titled “Identity broker integration”](#identity-broker-integration)
 
 The OIDC ID Token Credential Provider supports integration with different identity brokers through configurable options:
 
@@ -118,15 +100,11 @@ The OIDC ID Token Credential Provider supports integration with different identi
 
 ## Implementation notes
 
-[Section titled “Implementation notes”](#implementation-notes)
-
 * The Credential Provider builds on existing WIF Credential Provider capabilities.
 * Current JWKS endpoint implementation aligns with industry standards (AWS EKS, Google APIs, Okta, GitHub), which typically use RS256 algorithms.
 * Aembit recommends testing when using with identity brokers that may have specific algorithm requirements.
 
 ## Common OIDC claims
-
-[Section titled “Common OIDC claims”](#common-oidc-claims)
 
 The following table describes some common OIDC claims and how to configure them:
 
@@ -144,6 +122,6 @@ The following table describes some common OIDC claims and how to configure them:
 | `role`       | **Role** - User’s role or permission level          | Dynamic/Literal | **Dynamic**: `${oidc.identityToken.decode.payload.role}` **Literal**: `admin`                                                                                |
 | `department` | **Department** - User’s organizational department   | Dynamic/Literal | **Dynamic**: `${oidc.identityToken.decode.payload.department}` **Literal**: `engineering`                                                                    |
 
-Using custom claims
-
-If you’re creating custom claims when configuring an OIDC ID Token Credential Provider, don’t use `client_id` as Aembit reserves the value to identify Client Workloads.
+> **Using custom claims**
+>
+> If you’re creating custom claims when configuring an OIDC ID Token Credential Provider, don’t use `client_id` as Aembit reserves the value to identify Client Workloads.

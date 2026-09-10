@@ -1,11 +1,11 @@
 ---
-type: explanation
+type: reference
 title: "About TLS Decrypt"
 description: "Overview of how TLS Decrypt works"
 resource: https://docs.aembit.io/user-guide/deploy-install/advanced-options/tls-decrypt/
-tags: [tls-decrypt, advanced-option, deploy-install]
-timestamp: 2025-05-29T11:26:12-07:00
-type_inferred: true
+interface: web-ui
+tags: ["tls-decrypt", "advanced-option", "deploy-install"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # About TLS Decrypt
@@ -30,15 +30,13 @@ One of the most important aspects of TLS decryption is the way in which you mana
 
 * Each Aembit Tenant has a unique Root CA, making sure TLS decryption certificates issued by one tenant aren’t trusted by Client Workloads configured to trust the Root CA of a different tenant.
 
-  Caution
-
-  Since Aembit issues each tenant its own Root CA, Aembit recommends setting up separate tenants for environments with distinct security boundaries.
-
-  By configuring separate tenants, each environment remains securely isolated. This prevents potential risks where an actor uses a certificate issued in one environment (with lower safeguards) to attack another environment with stricter safeguards.
+  > **Caution**
+  >
+  > Since Aembit issues each tenant its own Root CA, Aembit recommends setting up separate tenants for environments with distinct security boundaries.
+  >
+  > By configuring separate tenants, each environment remains securely isolated. This prevents potential risks where an actor uses a certificate issued in one environment (with lower safeguards) to attack another environment with stricter safeguards.
 
 ## Example workflow
-
-[Section titled “Example workflow”](#example-workflow)
 
 When a Client Workload first attempts to establish a connection to a Server Workload, Agent Proxy intercepts the connection, generates a key pair and Certificate Signing Request (CSR), and then requests a certificate for TLS decryption from Aembit Cloud. This certificate is then cached and reused for subsequent connections until a [configurable percentage of its lifetime](configure-tls-decrypt.md#change-your-leaf-certificate-lifetime) has elapsed, optimizing performance while maintaining security.
 
@@ -46,9 +44,7 @@ Once Aembit Cloud evaluates the request and authorizes the Client Workload to ac
 
 ## Decryption scope
 
-[Section titled “Decryption scope”](#decryption-scope)
-
-Aembit Agent Proxy only decrypts connections when it evaluates and matches the associated Access Policy, and the Server Workload for this Access Policy has the TLS Decrypt flag enabled.
+Aembit Agent Proxy only decrypts connections when it evaluates and matches the associated Access Policy, and the Server Workload for this Access Policy has the TLS checkbox enabled.
 
 Because of these restrictions, the Agent Proxy only decrypts the connection when it:
 
@@ -62,16 +58,14 @@ Because of these restrictions, the Agent Proxy only decrypts the connection when
 
 * Conditional Access checks pass
 
-* Server Workload has the TLS flag enabled
+* Server Workload has the TLS checkbox enabled
 
 If any of these conditions aren’t met, Aembit leaves the connection intact and doesn’t decrypt it.
 
 ## Standalone CA for TLS Decrypt
 
-[Section titled “Standalone CA for TLS Decrypt”](#standalone-ca-for-tls-decrypt)
-
 Instead of using your Aembit Tenant’s CA, you have the option to define and use your own Standalone CA.
 
-See [About Standalone CA for TLS Decrypt](configure-tls-decrypt-standalone-ca.md) to learn more.
+See [About Standalone CA for TLS Decrypt](about-tls-decrypt-standalone-ca.md) to learn more.
 
 To set up a Standalone CA, see [How to configure a Standalone CA](configure-tls-decrypt-standalone-ca.md).

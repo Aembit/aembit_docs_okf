@@ -3,7 +3,7 @@ type: explanation
 title: "Securing credential management"
 description: "How Aembit enables you to centrally manage and control credentials in your environments"
 resource: https://docs.aembit.io/get-started/use-cases/credential-management/
-tags: [use-case]
+tags: ["use-case"]
 timestamp: 2026-04-13T13:05:24-07:00
 ---
 
@@ -21,8 +21,6 @@ Aembit addresses all three: workloads receive credentials only after identity ve
 
 ## What Aembit solves
 
-[Section titled “What Aembit solves”](#what-aembit-solves)
-
 Aembit centralizes credential management and ties access to [workload identity](../concepts/client-workloads.md). Aembit delivers credentials just-in-time to requesting workloads, scopes them to specific applications, and rotates them automatically:
 
 * [Credential Providers](../../user-guide/access-policies/credential-providers/overview.md) integrate with AWS Secrets Manager, Azure Key Vault, HashiCorp Vault, and other secret storage systems
@@ -31,8 +29,6 @@ Aembit centralizes credential management and ties access to [workload identity](
 * Rotating a secret in the vault is seamless because Aembit always delivers the latest version to requesting workloads
 
 ## Real example: Using cloud credential vaults
-
-[Section titled “Real example: Using cloud credential vaults”](#real-example-using-cloud-credential-vaults)
 
 Imagine you’re running Kubernetes workloads across multiple environments that all need database passwords. You’re storing these passwords in Kubernetes Secrets or ConfigMaps, which means they’re stored in `etcd` (Kubernetes’ database) and visible to anyone with cluster access. Rotating passwords is a manual process: update the secret, restart the deployment, hope nothing breaks.
 
@@ -50,15 +46,11 @@ When you rotate the password in your vault, you don’t need to update any Kuber
 
 ### Why this matters for credential management
 
-[Section titled “Why this matters for credential management”](#why-this-matters-for-credential-management)
-
 Secrets stored in Kubernetes Secrets or ConfigMaps sit in `etcd` and are visible to anyone with cluster access. Rotating them means updating manifests, restarting pods, and coordinating across teams. One missed update breaks a deployment.
 
 Aembit removes secrets from your infrastructure entirely. Workloads authenticate with their existing identity, Aembit retrieves the current credential from your vault, and the workload never stores it. Rotation happens in the vault and takes effect on the next request with no restarts or manifest changes.
 
 ## Supported platforms
-
-[Section titled “Supported platforms”](#supported-platforms)
 
 * AWS Secrets Manager
 * Azure Key Vault
@@ -66,8 +58,6 @@ Aembit removes secrets from your infrastructure entirely. Workloads authenticate
 * Snowflake (keypair rotation)
 
 ## Next steps
-
-[Section titled “Next steps”](#next-steps)
 
 * [Configure a Credential Provider](../../user-guide/access-policies/credential-providers/overview.md) for your vault system
 * [Set up Trust Providers](../concepts/trust-providers.md) to authenticate your workloads by identity

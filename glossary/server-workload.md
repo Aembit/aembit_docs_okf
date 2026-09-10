@@ -2,7 +2,7 @@
 type: definition
 title: "Server Workload"
 description: "Server Workloads represent target services, APIs, databases, or applications that receive and respond to access requests from Client Workloads."
-tags: [core-concepts]
+tags: ["core-concepts"]
 timestamp: 2025-10-14T06:32:52-07:00
 ---
 

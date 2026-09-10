@@ -1,12 +1,11 @@
 ---
-type: how-to
+type: reference
 title: "OIDC ID Token Trust Provider"
 description: "How to configure an OIDC ID Token Trust Provider"
 resource: https://docs.aembit.io/user-guide/access-policies/trust-providers/oidc-id-token-trust-provider/
 interface: web-ui
-tags: [trust-provider, access-policy]
-timestamp: 2026-03-23T14:00:13-04:00
-type_inferred: true
+tags: ["trust-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # OIDC ID Token Trust Provider
@@ -22,8 +21,6 @@ This gives you maximum flexibility to integrate with virtually any OIDC-complian
 
 ## Benefits
 
-[Section titled “Benefits”](#benefits)
-
 By supporting the open OIDC standard, Aembit provides you with maximum flexibility and the following benefits:
 
 **Support for Any OIDC Provider** - Connect to any identity provider compliant with the OIDC standard.
@@ -36,8 +33,6 @@ By supporting the open OIDC standard, Aembit provides you with maximum flexibili
 
 ## Match rules
 
-[Section titled “Match rules”](#match-rules)
-
 The following table describes the match rules available for the OIDC ID Token Trust Provider:
 
 | Rule\Claim       | Description                                                                                                                                                                                                                                                                                                                                                                                                |
@@ -49,8 +44,6 @@ The following table describes the match rules available for the OIDC ID Token Tr
 
 ## Attestation methods
 
-[Section titled “Attestation methods”](#attestation-methods)
-
 The following table describes the attestation methods available for the OIDC ID Token Trust Provider:
 
 | Attestation Method | Description                                                                                                                                                                                                                                                                                                                                                                   |
@@ -61,8 +54,6 @@ The following table describes the attestation methods available for the OIDC ID 
 | Upload Public Key  | Your provider’s public key file (such as `.pem` or `.cer`). Use this for providers in private or air-gapped networks that don’t expose a public JWKS endpoint. You must paste the text content of a single public key, typically in PEM format. The Thumbprint is a unique, short identifier for that key that Aembit automatically calculates and displays for verification. |
 
 ## How the OIDC ID Token Trust Provider works
-
-[Section titled “How the OIDC ID Token Trust Provider works”](#how-the-oidc-id-token-trust-provider-works)
 
 The authentication process involves a clear sequence of actions performed by your workload and by Aembit.
 

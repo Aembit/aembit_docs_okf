@@ -1,12 +1,11 @@
 ---
-type: how-to
+type: reference
 title: "Azure Instance Metadata Service trust provider"
 description: "This page describes the steps required to configure the Azure Instance Metadata Service Trust Provider."
 resource: https://docs.aembit.io/user-guide/access-policies/trust-providers/azure-metadata-service-trust-provider/
 interface: web-ui
-tags: [trust-provider, access-policy]
-timestamp: 2026-05-18T14:17:19-07:00
-type_inferred: true
+tags: ["trust-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Azure Instance Metadata Service trust provider
@@ -17,8 +16,6 @@ The Azure Instance Metadata Service Trust Provider supports attestation of Clien
 The Azure Instance Metadata Service Trust Provider relies on the [Azure Instance Metadata Service (IMDS)](https://learn.microsoft.com/en-us/azure/virtual-machines/instance-metadata-service?tabs=linux) to retrieve an instance identity document.
 
 ## Match rules
-
-[Section titled “Match rules”](#match-rules)
 
 The following match rules are available for this Trust Provider type:
 

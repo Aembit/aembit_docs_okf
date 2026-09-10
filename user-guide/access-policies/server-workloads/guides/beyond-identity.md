@@ -4,9 +4,8 @@ title: "Beyond Identity"
 description: "This page describes how to configure Aembit to work with the Beyond Identity Server Workload."
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/guides/beyond-identity/
 interface: web-ui
-tags: [security, guide, server-workload, access-policy]
-timestamp: 2025-05-29T11:26:12-07:00
-type_inferred: true
+tags: ["security", "guide", "server-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Beyond Identity
@@ -18,16 +17,12 @@ Below you can find the Aembit configuration required to work with the Beyond Ide
 
 ## Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites)
-
 Before proceeding with the configuration, ensure you have the following:
 
 * Beyond Identity tenant.
 * An app configured in your Beyond Identity tenant. This can either be a custom application you set up or the built-in **Beyond Identity Management API app**. If you have not configured an app yet, follow the steps outlined in the next section or refer to the [official Beyond Identity documentation](https://developer.beyondidentity.com/docs/add-an-application) for more detailed instructions.
 
 ### Add new app in Beyond Identity
-
-[Section titled “Add new app in Beyond Identity”](#add-new-app-in-beyond-identity)
 
 1. Log in to the [Beyond Identity Admin Console](https://console-us.beyondidentity.com/login).
 
@@ -49,8 +44,6 @@ Before proceeding with the configuration, ensure you have the following:
 
 ## Server Workload Configuration
 
-[Section titled “Server Workload Configuration”](#server-workload-configuration)
-
 1. Create a new Server Workload.
 
 * **Name** - Choose a user-friendly name.
@@ -65,8 +58,6 @@ Before proceeding with the configuration, ensure you have the following:
 * **Authentication scheme** - Bearer
 
 ## Credential Provider Configuration
-
-[Section titled “Credential Provider Configuration”](#credential-provider-configuration)
 
 1. Log in to the [Beyond Identity Admin Console](https://console-us.beyondidentity.com/login).
 
@@ -89,21 +80,15 @@ Before proceeding with the configuration, ensure you have the following:
 
 ## Client Workload Configuration
 
-[Section titled “Client Workload Configuration”](#client-workload-configuration)
-
 Aembit now handles the credentials required to access the Server Workload, eliminating the need for you to manage them directly. You can safely remove any previously used credentials from the Client Workload.
 
 If you access the Server Workload through an SDK or library, it is possible that the SDK/library may still require credentials to be present for initialization purposes. In this scenario, you can provide placeholder credentials. Aembit will overwrite these placeholder credentials with the appropriate ones during the access process.
 
 ## Access Policy
 
-[Section titled “Access Policy”](#access-policy)
-
 * Create an Access Policy for a Client Workload to access the Beyond Identity Server Workload. Assign the newly created Credential Provider to this Access Policy.
 
 ## Required Features
-
-[Section titled “Required Features”](#required-features)
 
 * You will need to configure the [TLS Decrypt](../../../deploy-install/advanced-options/tls-decrypt/configure-tls-decrypt.md) feature to work with the Beyond Identity Server Workload.
 

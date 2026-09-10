@@ -4,30 +4,25 @@ title: "Create a Wiz Discovery Integration"
 description: "How to create a Wiz Discovery Integration"
 resource: https://docs.aembit.io/user-guide/administration/discovery/integrations/wiz/
 interface: web-ui
-tags: [integration, discovery, administration]
-timestamp: 2025-05-29T11:26:12-07:00
-type_inferred: true
+tags: ["integration", "discovery", "administration"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Create a Wiz Discovery Integration
 
-Note
-
-This is a beta feature and may be subject to changes.
+> **Note**
+>
+> This is a beta feature and may be subject to changes.
 
 This page describes how to create a new Wiz integration for [Discovery](../../../discovery/overview.md).
 
 ## Prerequisites
-
-[Section titled “Prerequisites”](#prerequisites)
 
 Before you begin, you must have access to the following:
 
 * **Wiz Account** - You should have a **Wiz account**.
 
 ## Set up a service account in Wiz
-
-[Section titled “Set up a service account in Wiz”](#set-up-a-service-account-in-wiz)
 
 1. Sign in to your **Wiz account**.
 
@@ -57,8 +52,6 @@ Before you begin, you must have access to the following:
    ![Wiz Integration Details](https://docs.aembit.io/_astro/discovery_wiz_integration_details.T7C2vXIe_Z2unSaX.webp)
 
 ## Configure Wiz Discovery
-
-[Section titled “Configure Wiz Discovery”](#configure-wiz-discovery)
 
 Follow these steps to configure the Wiz integration in your Aembit Tenant:
 

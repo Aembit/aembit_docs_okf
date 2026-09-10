@@ -4,22 +4,19 @@ title: "Configure multiple Credential Providers with Aembit's Terraform Provider
 description: "How to configure multiple Credential Providers to map to an Aembit Terraform Provider"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/advanced-options/multiple-credential-providers-terraform/
 interface: web-ui
-tags: [advanced-option, credential-provider, access-policy]
-timestamp: 2025-05-29T11:26:12-07:00
-type_inferred: true
+tags: ["advanced-option", "credential-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Configure multiple Credential Providers with Aembit's Terraform Provider
 
 Aembit supports users who would like to use the Aembit Terraform Provider to manage their Aembit resources, while also supporting single and multiple Credential Providers per Access Policy. The Aembit Terraform Provider enables you to perform Create, Read, Update and Delete (CRUD) operations on these Aembit resources using Terraform directly, or via a CI/CD workflow.
 
-Note
-
-These instructions assume you already have configured the Aembit Terraform Provider. If you have not already performed this configuration, please refer to the [Configuration with Terraform](../../advanced-options/terraform/terraform-configuration.md) page to configure the Aembit Terraform Provider before continuing on this page.
+> **Note**
+>
+> These instructions assume you already have configured the Aembit Terraform Provider. If you have not already performed this configuration, please refer to the [Configuration with Terraform](../../advanced-options/terraform/terraform-configuration.md) page to configure the Aembit Terraform Provider before continuing on this page.
 
 ## Configure an Access Policy with multiple Credential providers
-
-[Section titled “Configure an Access Policy with multiple Credential providers”](#configure-an-access-policy-with-multiple-credential-providers)
 
 To configure your Aembit Access Policies with multiple Credential Providers with the `AccountName` mapping type:
 
@@ -101,13 +98,9 @@ To configure your Aembit Access Policies with multiple Credential Providers with
 
 ### Multiple Credential Provider examples
 
-[Section titled “Multiple Credential Provider examples”](#multiple-credential-provider-examples)
-
 The following examples use `HttpHeader` and `HttpBody` Mapping Types to show multiple Credential Providers:
 
 #### HttpHeader Example
-
-[Section titled “HttpHeader Example”](#httpheader-example)
 
 ```hcl
 resource "aembit_access_policy" "multi_cp_httpheader" {
@@ -138,8 +131,6 @@ Where:
 
 #### HttpBody Example
 
-[Section titled “HttpBody Example”](#httpbody-example)
-
 ```hcl
 resource "aembit_access_policy" "multi_cp_httpbody" {
     is_active = true
@@ -167,6 +158,6 @@ Where:
 * `httpbody_field_path` - The JSON path to a value that triggers this Credential Provider to be used. Note that the `HttpBody` mapping type requires JSON HTTP body content, and this parameter must be specified in JSON path notation.
 * `httpbody_field_value` - The JSON path to a value which triggers this Credential Provider to be used.
 
-Note
-
-In these two examples, you can see that different fields need to be configured, based on the `mapping_type` specified in the configuration file.
+> **Note**
+>
+> In these two examples, you can see that different fields need to be configured, based on the `mapping_type` specified in the configuration file.

@@ -4,9 +4,8 @@ title: "Verify the Aembit Edge Helm chart signature"
 description: "How to verify the Aembit Edge Helm chart signature"
 resource: https://docs.aembit.io/user-guide/deploy-install/kubernetes/verify-helm-chart/
 interface: web-ui
-tags: [kubernetes, deploy-install]
-timestamp: 2026-06-26T13:11:59-07:00
-type_inferred: true
+tags: ["kubernetes", "deploy-install"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Verify the Aembit Edge Helm chart signature
@@ -20,8 +19,6 @@ This page describes how to verify the Aembit Helm chart you’ll use in your Kub
 * [manually](#verify-manually)
 
 ## Prerequisites
-
-[Section titled “Prerequisites”](#prerequisites)
 
 To verify the Aembit Edge Helm chart, you must have the following:
 
@@ -91,8 +88,6 @@ To verify the Aembit Edge Helm chart, you must have the following:
 
 ## Verify using the Helm CLI
 
-[Section titled “Verify using the Helm CLI”](#verify-using-the-helm-cli)
-
 The following steps describe how to verify the Aembit Edge Helm chart using Helm with signature verification. This method provides explicit verification of the chart’s signature and ensures that the chart is valid before installation.
 
 1. Add or update the Aembit Helm repository to your local Helm configuration by running:
@@ -118,9 +113,9 @@ The following steps describe how to verify the Aembit Edge Helm chart using Helm
    gpg --export --output ~/.gnupg/pubring.gpg
    ```
 
-   Why export the public key?
-
-   You must export your keyring because Helm requires the older GPG keyring format (`.gpg`) and can’t use the newer keyring format (`.kbx`) that modern GPG uses by default.
+   > **Why export the public key?**
+   >
+   > You must export your keyring because Helm requires the older GPG keyring format (`.gpg`) and can’t use the newer keyring format (`.kbx`) that modern GPG uses by default.
 
 4. Choose your verification method:
 
@@ -186,19 +181,13 @@ The following steps describe how to verify the Aembit Edge Helm chart using Helm
 
 ## Verify using Terraform
 
-[Section titled “Verify using Terraform”](#verify-using-terraform)
-
 You can also verify the Aembit Edge Helm chart using Terraform, ensuring that the installation occurs only if the chart is authentic and valid.
 
 ### Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites-1)
-
 Complete steps 2-3 from the [Helm CLI section](#verify-using-the-helm-cli) to import the Aembit key and export your keyring.
 
 ### Terraform configuration
-
-[Section titled “Terraform configuration”](#terraform-configuration)
 
 You must add the following options to your Terraform configuration to enable verification of the Helm chart signature:
 
@@ -239,8 +228,6 @@ resource "helm_release" "aembit_edge" {
 If the verification is successful, you’ll get output indicating that the plan was successful and that Terraform won’t make any changes to your cluster. If there are any issues with the Helm chart or its signature, Terraform reports an error.
 
 ## Verify manually
-
-[Section titled “Verify manually”](#verify-manually)
 
 To manually verify the signature of the Aembit Edge Helm chart, follow these steps:
 
@@ -288,13 +275,9 @@ To manually verify the signature of the Aembit Edge Helm chart, follow these ste
 
 ## Troubleshooting
 
-[Section titled “Troubleshooting”](#troubleshooting)
-
 If you encounter issues during the verification process, here are some common errors and their solutions:
 
 ### Key Not Found
-
-[Section titled “Key Not Found”](#key-not-found)
 
 ```shell
 Error: keyring "~/.gnupg/pubring.gpg" does not exist
@@ -303,8 +286,6 @@ Error: keyring "~/.gnupg/pubring.gpg" does not exist
 **Solution**: Ensure you’ve exported the keyring using step 3 in the Helm CLI section.
 
 ### Signature verification failed
-
-[Section titled “Signature verification failed”](#signature-verification-failed)
 
 ```shell
 Error: failed to verify chart signature
@@ -325,8 +306,6 @@ gpg --fingerprint EA3D8D2FDAC6BD8137163D00D655E64729BC67D7
 
 ### Permission issues
 
-[Section titled “Permission issues”](#permission-issues)
-
 ```shell
 Error: permission denied accessing keyring
 ```
@@ -345,8 +324,6 @@ chmod 600 ~/.gnupg/*
 ```
 
 ### Chart repository issues
-
-[Section titled “Chart repository issues”](#chart-repository-issues)
 
 If you get repository-related errors:
 

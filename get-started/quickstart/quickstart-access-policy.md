@@ -1,22 +1,21 @@
 ---
-type: tutorial
+type: how-to
 title: "Quickstart: Add an Access Policy to the core setup"
 description: "Enhancing the Aembit quickstart guide to set up a Trust Provider, Access Conditions, and reporting"
 resource: https://docs.aembit.io/get-started/quickstart/quickstart-access-policy/
-tags: [quickstart]
-timestamp: 2026-06-30T13:30:29-04:00
-type_inferred: true
+tags: ["quickstart"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Quickstart: Add an Access Policy to the core setup
 
-You’ve completed the [Quickstart guide](quickstart-core.md) and set up your sandbox environment. Now you can enhance your Access Policies**Access Policy**: Access Policies define, enforce, and audit access between Client and Server Workloads by cryptographically verifying workload identity and contextual factors rather than relying on static secrets.[Learn more](../concepts/access-policies.md). Add Trust Providers, Access Conditions, and reporting to give you finer control over how you grant access and to gain insights about those interactions.
+You’ve completed the [Quickstart guide](quickstart-core.md) and set up your sandbox environment. Now you can enhance your Access Policies. Add Trust Providers, Access Conditions, and reporting to give you finer control over how you grant access and to gain insights about those interactions.
 
 To build upon your quickstart foundation, you’ll complete practical steps to implement the following features:
 
-* Trust Provider**Trust Provider**: Trust Providers validate Client Workload identities through workload attestation, verifying identity claims from the workload's runtime environment rather than relying on pre-shared secrets.[Learn more](../concepts/trust-providers.md) - This verifies workload identities, making sure only authenticated workloads can securely interact with your resources.
+* Trust Provider - This verifies workload identities, making sure only authenticated workloads can securely interact with your resources.
 
-* Access Conditions**Access Condition**: Access Conditions add dynamic, context-aware constraints to authorization by evaluating circumstances like time, location, or security posture to determine whether to grant access.[Learn more](../concepts/access-conditions.md) - Enforce detailed rules such as time-based or geo-based restrictions, to tailor access policies to your needs.
+* Access Conditions - Enforce detailed rules such as time-based or geo-based restrictions, to tailor access policies to your needs.
 
 * [Reporting](#reporting) - Tools to help you monitor and analyze workload interactions in your sandbox environment, providing insights into policy effectiveness and system health.
 
@@ -24,23 +23,19 @@ With these enhancements, Aembit empowers you to make the most of your sandbox se
 
 ## Before you begin
 
-[Section titled “Before you begin”](#before-you-begin)
-
 You must have completed the following *before* starting this guide:
 
 * [Aembit quickstart guide](quickstart-core.md) and it’s prerequisites.
 
 ## Configure a Trust Provider
 
-[Section titled “Configure a Trust Provider”](#configure-a-trust-provider)
-
 Trust Providers allow Aembit to verify workload identities without relying on traditional credentials or secrets. By using third-party systems for authentication, Trust Providers make sure that only verified workloads can securely interact with your resources. These steps use Docker Desktop Kubernetes deployments.
 
-Returning to the Access Policy Builder
-
-If you’re continuing directly from the core quickstart, your Access Policy should still be open in the builder.
-
-If you’re returning later, navigate to **Access Policies** and select the policy you created.
+> **Returning to the Access Policy Builder**
+>
+> If you’re continuing directly from the core quickstart, your Access Policy should still be open in the builder.
+>
+> If you’re returning later, navigate to **Access Policies** and select the policy you created.
 
 1. From your Aembit Tenant, go to **Access Policies** and select the Access Policy you created in the quickstart guide.
 
@@ -90,13 +85,11 @@ This flexibility allows you to seamlessly integrate Trust Providers that align w
 
 ## Configure Access Conditions
 
-[Section titled “Configure Access Conditions”](#configure-access-conditions)
-
 Access Conditions allow you to define specific rules to control when and how Aembit issues credentials to Server Workloads. Access Conditions strengthen security by making sure Aembit grants access only when the Access Conditions aligns with your organization’s policies.
 
-Paid feature
-
-Access Conditions are a paid feature. To enable this feature, contact [Aembit Support](https://aembit.io/support/).
+> **Paid feature**
+>
+> Access Conditions are a paid feature. To enable this feature, contact [Aembit Support](https://aembit.io/support/).
 
 1. In the **Access Conditions** card in the right panel, click **+ Configure**.
 
@@ -110,9 +103,9 @@ Access Conditions are a paid feature. To enable this feature, contact [Aembit Su
 
 4. Click the **+** icon next to each day you want to include in your Time Condition configuration, such as Monday from 8 AM to 5 PM.
 
-   Include your current time
-
-   Make sure your current time falls within the period you set so the condition remains in effect while following this guide.
+   > **Include your current time**
+   >
+   > Make sure your current time falls within the period you set so the condition remains in effect while following this guide.
 
 5. Click **Save** to add the Access Condition to the policy.
 
@@ -127,8 +120,6 @@ In the next section, [Reporting](#reporting), you’ll see how to review these l
 Aembit also supports other types of Conditional Access configurations, such as [GeoIP restrictions](../../user-guide/access-policies/access-conditions/aembit-geoip.md) and integrations with third-party vendors such as [CrowdStrike](../../user-guide/access-policies/access-conditions/crowdstrike.md). These options allow you to build comprehensive and flexible access policies suited to your organization’s needs. For more details on Access Conditions, see [Access Conditions Overview](../../user-guide/access-policies/access-conditions/overview.md) and explore related sub-pages to configure additional types.
 
 ## Reporting
-
-[Section titled “Reporting”](#reporting)
 
 Reporting is crucial for maintaining security and operational efficiency. It provides a clear view of access attempts, policy evaluations, and credential usage, enabling you to identify potential issues and maintain compliance.
 
@@ -150,13 +141,11 @@ For now, you’ll look at **Access Authorization Events**. As they provide essen
 
 ### Access Authorization Events
 
-[Section titled “Access Authorization Events”](#access-authorization-events)
-
-Whenever a Client Workload**Client Workload**: Client Workloads represent software applications, scripts, or automated processes that initiate access requests to Server Workloads, operating autonomously without direct user interaction.[Learn more](../concepts/client-workloads.md) attempts to access a Server Workload**Server Workload**: Server Workloads represent target services, APIs, databases, or applications that receive and respond to access requests from Client Workloads.[Learn more](../concepts/server-workloads.md), Aembit generates Access Authorization Events. These events capture access attempts, log how Aembit evaluated access, and display the outcome (granted or denied). The process has three stages:
+Whenever a Client Workload attempts to access a Server Workload, Aembit generates Access Authorization Events. These events capture access attempts, log how Aembit evaluated access, and display the outcome (granted or denied). The process has three stages:
 
 * **Access Request** - Captures initial request details, including source, target, and transport protocol.
 
-* **Access Authorization** - Evaluates the request against Access Policies, detailing results from Trust Providers, Access Conditions, and Credential Providers**Credential Provider**: Credential Providers obtain the specific access credentials—such as API keys, OAuth tokens, or temporary cloud credentials—that Client Workloads need to authenticate to Server Workloads.[Learn more](../concepts/credential-providers.md).
+* **Access Authorization** - Evaluates the request against Access Policies, detailing results from Trust Providers, Access Conditions, and Credential Providers.
 
 * **Access Credential** - Shows how Aembit retrieved and injected credentials, or explains any failure reasons.
 
@@ -206,9 +195,9 @@ At this stage, everything is in place; the request was successfully authorized, 
 
 For more detailed insights into Access Credential Events and other reports, visit the [Reporting](../../user-guide/audit-report/overview.md) page. These pages provide further guidance on using filters, understanding event data, and troubleshooting potential issues.
 
-Quickstart completed!
-
-Congratulations on completing the quickstart! You now have a solid foundation in Aembit’s key capabilities. This is just the beginning, and Aembit has much more to offer! Aembit’s full documentation provides in-depth guides and advanced techniques to help you expand your access policies and strengthen workload identity management.
+> **Quickstart completed!**
+>
+> Congratulations on completing the quickstart! You now have a solid foundation in Aembit’s key capabilities. This is just the beginning, and Aembit has much more to offer! Aembit’s full documentation provides in-depth guides and advanced techniques to help you expand your access policies and strengthen workload identity management.
 
 For your next steps, you can either try configuring Aembit with your real client workloads or explore additional possibilities to tailor it to your needs. In both cases, see the following resources:
 
@@ -220,8 +209,6 @@ Check out these guides and more to optimize your workloads with confidence!
 
 ## Next steps
 
-[Section titled “Next steps”](#next-steps)
-
 * [Core concepts](../concepts/overview.md) - Understand Aembit’s core concepts and how they work together.
 * [Aembit User Guide](../../user-guide/overview.md) - Dive deeper into Aembit’s features and capabilities.
-* [Aembit API Guide](../../api-guide/overview.md) - Access detailed technical documentation.
+* [Aembit API Guide](../../dev-guide/api/overview.md) - Access detailed technical documentation.

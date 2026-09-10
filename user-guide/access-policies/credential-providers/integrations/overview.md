@@ -1,11 +1,11 @@
 ---
-type: explanation
+type: reference
 title: "Credential Provider integrations overview"
 description: "An overview of what Credential Provider integrations are and how they work"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/integrations/
-tags: [integration, credential-provider, access-policy]
-timestamp: 2025-10-21T20:04:07-07:00
-type_inferred: true
+interface: web-ui
+tags: ["integration", "credential-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Credential Provider integrations overview
@@ -16,35 +16,31 @@ Aembit’s credential lifecycle management capabilities include creating, rotati
 
 ## Configure Credential Provider Integrations
 
-[Section titled “Configure Credential Provider Integrations”](#configure-credential-provider-integrations)
-
 ![AWS Icon](https://docs.aembit.io/3p-logos/aws-icon.svg)
 
-[AWS IAM Role ](aws-iam-role.md)Integrate with AWS IAM Roles Anywhere for credential management.
+[AWS IAM Role](aws-iam-role.md)Integrate with AWS IAM Roles Anywhere for credential management.
 
 →
 
 ![Azure Icon](https://docs.aembit.io/3p-logos/azure-icon2.svg)
 
-[Azure Entra Federation ](azure-entra-federation.md)Integrate with Azure Key Vault using Workload Identity Federation.
+[Azure Entra Federation](azure-entra-federation.md)Integrate with Azure Key Vault using Workload Identity Federation.
 
 →
 
 ![GitLab Icon](https://docs.aembit.io/3p-logos/gitlab-icon.svg)
 
-[GitLab.com ](gitlab.md)Integrate with GitLab.com for service account management.
+[GitLab.com](gitlab.md)Integrate with GitLab.com for service account management.
 
 →
 
 ![GitLab Icon](https://docs.aembit.io/3p-logos/gitlab-icon.svg)
 
-[GitLab Dedicated/Self-Managed ](gitlab-dedicated-self.md)Integrate with GitLab Dedicated or Self-Managed instances.
+[GitLab Dedicated/Self-Managed](gitlab-dedicated-self.md)Integrate with GitLab Dedicated or Self-Managed instances.
 
 →
 
 ## How Credential Provider Integrations work
-
-[Section titled “How Credential Provider Integrations work”](#how-credential-provider-integrations-work)
 
 In general, Credential Provider Integrations use the following process:
 
@@ -58,21 +54,17 @@ In general, Credential Provider Integrations use the following process:
 
 4. When you delete a Credential Provider, Aembit deletes the third-party account and credential.
 
-   Deleting integrations
-
-   You can’t delete a Credential Provider Integration until you delete all its associated Credential Providers.
-
-   You can’t change the association between a Credential Provider Integration and a Credential Provider after you create it.
+   > **Deleting integrations**
+   >
+   > You can’t delete a Credential Provider Integration until you delete all its associated Credential Providers.
+   >
+   > You can’t change the association between a Credential Provider Integration and a Credential Provider after you create it.
 
 ### Azure Entra Federation integration
-
-[Section titled “Azure Entra Federation integration”](#azure-entra-federation-integration)
 
 The [Azure Entra Federation](azure-entra-federation.md) integration enables Aembit to securely access Microsoft Azure resources—such as Azure Key Vault—on behalf of your workloads, without requiring long-lived secrets or static credentials. It leverages Azure’s Workload Identity Federation, allowing Aembit to authenticate using short-lived, federated tokens based on OpenID Connect (OIDC) standards.
 
 #### Process flow
-
-[Section titled “Process flow”](#process-flow)
 
 At a high level, the Azure Entra Federation Credential Provider Integration works like this:
 
@@ -88,15 +80,11 @@ At a high level, the Azure Entra Federation Credential Provider Integration work
 
 ### GitLab Service Account integration
 
-[Section titled “GitLab Service Account integration”](#gitlab-service-account-integration)
-
 This [GitLab Service Account](gitlab.md) integration uses your GitLab administrator account to connect with your GitLab instance and control credential lifecycle management for each Managed GitLab Account Credential Provider.
 
 When creating a [Managed GitLab Account Credential Provider](../managed-gitlab-account.md), you scope it to only access specific GitLab Projects or GitLab Groups. Each provider creates an additional, separate GitLab service account that manages credentials on your behalf. This approach gives you fine-grained control over your GitLab workloads’ credential lifecycle management.
 
 #### GitLab subscriptions
-
-[Section titled “GitLab subscriptions”](#gitlab-subscriptions)
 
 Depending on the type of [GitLab plan](https://docs.gitlab.com/subscriptions/choosing_subscription/) you have, you have different choices of how to set up your GitLab Service Account integration.
 
@@ -105,13 +93,11 @@ Depending on the type of [GitLab plan](https://docs.gitlab.com/subscriptions/cho
 
 See [GitLab’s plans](https://docs.gitlab.com/subscriptions/choosing_subscription/) for details about GitLab subscription types.
 
-GitLab plan differences
-
-The distinction between the different GitLab plans requires you to use different API calls when creating the GitLab Service Account integration.
+> **GitLab plan differences**
+>
+> The distinction between the different GitLab plans requires you to use different API calls when creating the GitLab Service Account integration.
 
 #### Process flow
-
-[Section titled “Process flow”](#process-flow-1)
 
 At a high level, the GitLab Service Account Credential Provider Integration works like this:
 

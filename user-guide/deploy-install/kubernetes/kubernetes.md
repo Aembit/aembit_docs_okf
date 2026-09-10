@@ -4,9 +4,8 @@ title: "Deploy Aembit to Kubernetes"
 description: "How to deploy Aembit Edge Components in a Kubernetes environment"
 resource: https://docs.aembit.io/user-guide/deploy-install/kubernetes/kubernetes/
 interface: web-ui
-tags: [kubernetes, deploy-install]
-timestamp: 2026-06-05T14:13:51-07:00
-type_inferred: true
+tags: ["kubernetes", "deploy-install"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Deploy Aembit to Kubernetes
@@ -27,8 +26,6 @@ To further customize your deployments, see the available [optional configuration
 
 ## Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites)
-
 1. Make sure you run all commands from your local terminal with `kubectl` configured for your cluster.
 
 2. Verify that you have set your current context in Kubernetes correctly:
@@ -45,8 +42,6 @@ To further customize your deployments, see the available [optional configuration
 
 ## Step 1 - Prepare Edge Components
 
-[Section titled “Step 1 - Prepare Edge Components”](#step-1---prepare-edge-components)
-
 1. Log into your Aembit Tenant and go to **Edge Components -> Deploy Aembit Edge**.
 
 2. In the **Prepare Edge Components** section, click **New Agent Controller** or select an existing one.
@@ -59,20 +54,18 @@ To further customize your deployments, see the available [optional configuration
 
    This creates a temporary Device Code that Aembit uses to authorize your Agent Controller.
 
-   Device Codes vs Trust Providers
-
-   Device Codes are a fallback authentication method for the Agent Controller, and they’re less secure than Trust Providers. Prefer a Trust Provider for production deployments, since Trust Providers offer stronger, automated attestation with better control and flexibility.
-
-   Use a Device Code only in these cases:
-
-   * A test, proof-of-concept, lab, or demo environment.
-   * A production environment that has no Trust-Provider-based attestation available, such as a bare-metal or on-premises host, or VMware vSphere without cloud metadata services. In these environments, Device Code is the supported Agent Controller registration method.
-
-   See [About the Aembit Agent Controller](../about-agent-controller.md) for more information.
+   > **Device Codes vs Trust Providers**
+   >
+   > Device Codes are a fallback authentication method for the Agent Controller, and they’re less secure than Trust Providers. Prefer a Trust Provider for production deployments, since Trust Providers offer stronger, automated attestation with better control and flexibility.
+   >
+   > Use a Device Code only in these cases:
+   >
+   > * A test, proof-of-concept, lab, or demo environment.
+   > * A production environment that has no Trust-Provider-based attestation available, such as a bare-metal or on-premises host, or VMware vSphere without cloud metadata services. In these environments, Device Code is the supported Agent Controller registration method.
+   >
+   > See [About the Aembit Agent Controller](../about-agent-controller.md) for more information.
 
 ## Step 2 - Install Aembit Edge Helm chart
-
-[Section titled “Step 2 - Install Aembit Edge Helm chart”](#step-2---install-aembit-edge-helm-chart)
 
 Follow the steps in the **Install Aembit Edge Helm chart** section:
 
@@ -101,17 +94,15 @@ The Aembit Edge Helm chart is a package that contains all the necessary Kubernet
      --set tenant=<tenantId>,agentController.id=<agentControllerId>
    ```
 
-   Using the Aembit Web UI to generate the command
-
-   To reduce errors, copy the `helm install` command from the Aembit Web UI for this step, as it populates your `<tenantId>` and `<agentControllerId>` for you.
-
-   ![Deploy Aembit Edge Generate Code button](https://docs.aembit.io/_astro/deploy_aembit_edge-ac-helm-install.D3ra04xd_1m5F9X.webp)
+   > **Using the Aembit Web UI to generate the command**
+   >
+   > To reduce errors, copy the `helm install` command from the Aembit Web UI for this step, as it populates your `<tenantId>` and `<agentControllerId>` for you.
+   >
+   > ![Deploy Aembit Edge Generate Code button](https://docs.aembit.io/_astro/deploy_aembit_edge-ac-helm-install.D3ra04xd_1m5F9X.webp)
 
    If you set up a Device Code, the `helm install` command sets `agentController.deviceCode=<deviceCode>` instead.
 
 ## Step 3 - Annotate Client Workloads
-
-[Section titled “Step 3 - Annotate Client Workloads”](#step-3---annotate-client-workloads)
 
 For Aembit Edge to manage your client workloads, you must annotate them with `aembit.io/agent-inject: "enabled"` so that the Aembit Agent Proxy can intercept network requests from them.
 
@@ -144,8 +135,6 @@ To add this annotation to your client workloads, you can:
 
 ## Upgrade the Aembit Edge Helm chart
 
-[Section titled “Upgrade the Aembit Edge Helm chart”](#upgrade-the-aembit-edge-helm-chart)
-
 To stay up to date with the latest features and improvements, follow these steps to update and upgrade the Aembit Edge Helm chart:
 
 1. From your local terminal with `kubectl` configured for your cluster, update the Aembit Helm chart repo:
@@ -162,19 +151,13 @@ To stay up to date with the latest features and improvements, follow these steps
 
 ## Add the Agent Injector TLS certificate to your certificate management procedures
 
-[Section titled “Add the Agent Injector TLS certificate to your certificate management procedures”](#add-the-agent-injector-tls-certificate-to-your-certificate-management-procedures)
-
 The Aembit Helm chart relies on a TLS certificate for the Agent Injector service. Next read through the guide on [Managing the Agent Injector Certificate](agent-injector-certificate.md).
 
 ## Optional configurations
 
-[Section titled “Optional configurations”](#optional-configurations)
-
 The following sections contain optional configurations that you can use to customize your Kubernetes deployments.
 
 ### Agent Proxy native sidecar configuration
-
-[Section titled “Agent Proxy native sidecar configuration”](#agent-proxy-native-sidecar-configuration)
 
 For Kubernetes versions `1.29` and higher, Aembit supports init-container-based Client Workloads. This starts the Agent Proxy as part of the init containers.
 
@@ -190,19 +173,13 @@ To enable native sidecar configurations, do the following:
 
 ### Edge Component environment variables
 
-[Section titled “Edge Component environment variables”](#edge-component-environment-variables)
-
 The Edge Components you deploy as part of this process have environment variables that you can configure to customize your deployment further. See [Edge Component environment variables reference](../../../reference/edge-components/edge-component-env-vars.md), for all available configuration options.
 
 ### Aembit Edge Component configurations
 
-[Section titled “Aembit Edge Component configurations”](#aembit-edge-component-configurations)
-
 The Aembit Helm chart includes configurations that control the behavior of Aembit Edge Components (both Agent Controller and Agent Proxy). See [Helm chart config options](../../../reference/edge-components/helm-chart-config-options.md), for all available configuration options.
 
 ### Client Workload annotations
-
-[Section titled “Client Workload annotations”](#client-workload-annotations)
 
 Beyond the required `aembit.io/agent-inject` annotation, you can apply optional annotations to your Client Workload pod specs to further configure Agent Proxy behavior.
 
@@ -218,8 +195,6 @@ Beyond the required `aembit.io/agent-inject` annotation, you can apply optional 
 For detailed descriptions, usage examples, and configuration steps for each annotation, see the [Client Workload annotation reference](../../../reference/edge-components/cw-annotations.md).
 
 ### Delaying pod startup until Agent Proxy has registered
-
-[Section titled “Delaying pod startup until Agent Proxy has registered”](#delaying-pod-startup-until-agent-proxy-has-registered)
 
 By default, Agent Proxy allows Client Workload pods to enter the [`Running`](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#pod-phase) state as soon as proxying ports become available, even if registration with Aembit Cloud isn’t yet complete. While in this pre-registration state, Agent Proxy operates in Passthrough mode and can’t inject credentials into Client Workloads. As a result, you may have to retry application requests.
 
@@ -237,13 +212,11 @@ See [Edge Component environment variables reference](../../../reference/edge-com
 
 ### Deploying on OpenShift
 
-[Section titled “Deploying on OpenShift”](#deploying-on-openshift)
-
 The Aembit Helm Chart supports deploying to OpenShift, including Red Hat OpenShift Service on AWS (ROSA).
 
-Note
-
-The Agent Proxy doesn’t support transparent steering on OpenShift. You must annotate your Client Workload Pod specs use [explicit steering](../advanced-options/agent-proxy/explicit-steering.md)
+> **Note**
+>
+> The Agent Proxy doesn’t support transparent steering on OpenShift. You must annotate your Client Workload Pod specs use [explicit steering](../advanced-options/agent-proxy/explicit-steering.md)
 
 You must specify two additional options to the Helm chart.
 

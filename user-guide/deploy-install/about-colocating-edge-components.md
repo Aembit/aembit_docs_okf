@@ -1,12 +1,10 @@
 ---
-type: how-to
+type: explanation
 title: "About Colocating Aembit Edge Components"
 description: "Considerations and best practices if colocating Aembit Edge Components"
 resource: https://docs.aembit.io/user-guide/deploy-install/about-colocating-edge-components/
-interface: web-ui
-tags: [deploy-install]
-timestamp: 2025-05-22T22:55:26-07:00
-type_inferred: true
+tags: ["deploy-install"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # About Colocating Aembit Edge Components
@@ -14,8 +12,6 @@ type_inferred: true
 Deploying Aembit’s Edge Components is all about balancing security, scalability, and operational simplicity. Ideally, the Agent Controller and Agent Proxy should run on separate machines. However, in some situations—perhaps for a test environment or because of infrastructure limitations—you may have no choice but to colocate them. If that’s the case, understanding the risks and following best practices can help you minimize issues.
 
 ## Why Aembit recommends separating Edge Components
-
-[Section titled “Why Aembit recommends separating Edge Components”](#why-aembit-recommends-separating-edge-components)
 
 Keeping Agent Controller and Agent Proxy on separate machines is the best way to make sure they remain resilient and secure.
 
@@ -29,13 +25,9 @@ Lastly, colocation can complicate your network design. The Agent Proxy must sit 
 
 ## When colocation might be the right choice
 
-[Section titled “When colocation might be the right choice”](#when-colocation-might-be-the-right-choice)
-
 While Aembit recommends separate deployments, there may be times when colocation is your only option. In smaller test environments, proof-of-concept setups, or resource-constrained scenarios, colocating the Agent Controller and Proxy may be acceptable. When this happens, taking steps to mitigate risk is essential.
 
 ## Best Practices for colocating Edge Components
-
-[Section titled “Best Practices for colocating Edge Components”](#best-practices-for-colocating-edge-components)
 
 If you must colocate, follow these guidelines to reduce risk and maintain performance:
 
@@ -48,7 +40,5 @@ If you must colocate, follow these guidelines to reduce risk and maintain perfor
 * **Carefully design your network** - Ensure the Agent Proxy can intercept workload traffic while maintaining secure access to the Agent Controller’s trust anchor services.
 
 ## Making the best decision for your environment
-
-[Section titled “Making the best decision for your environment”](#making-the-best-decision-for-your-environment)
 
 Colocating Aembit’s Edge Components should be a last resort, not a first choice. When separation isn’t possible, understanding the risks and applying best practices can help you maintain a secure and stable deployment. By taking these steps, you can make sure your environment remains resilient, even in less-than-ideal circumstances.

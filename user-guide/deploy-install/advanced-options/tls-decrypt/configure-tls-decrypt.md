@@ -4,14 +4,13 @@ title: "Configure TLS Decrypt"
 description: "How to configure TLS Decrypt when using HTTPS or Redis over TLS"
 resource: https://docs.aembit.io/user-guide/deploy-install/advanced-options/tls-decrypt/configure-tls-decrypt/
 interface: web-ui
-tags: [tls-decrypt, advanced-option, deploy-install]
-timestamp: 2025-05-29T11:26:12-07:00
-type_inferred: true
+tags: ["tls-decrypt", "advanced-option", "deploy-install"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Configure TLS Decrypt
 
-When your Client Workload uses Transport Layer Security (TLS) (such as HTTPS or Redis with TLS) to communicate with the Server Workload, you must enable [TLS Decrypt](overview.md) in your Aembit Tenant. TLS Decrypt allows the Aembit Agent Proxy to decrypt and manage encrypted traffic between your Client and Server Workloads, enabling Workload IAM functionality.
+Traffic that your Client Workload sends over Transport Layer Security (TLS), such as HTTPS or Redis with TLS, requires [TLS Decrypt](overview.md) in your Aembit Tenant. TLS Decrypt allows the Aembit Agent Proxy to decrypt and manage encrypted traffic between your Client and Server Workloads, enabling Workload IAM functionality.
 
 To configure TLS Decrypt, you must configure your Client Workloads to trust your Aembit Tenant Root Certificate Authorities (CAs) so they can establish TLS connections with your Server Workload. To do this, you must:
 
@@ -23,8 +22,6 @@ To configure TLS Decrypt, you must configure your Client Workloads to trust your
 
 ## Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites)
-
 To configure TLS Decrypt, you must have the following:
 
 * A Server Workload with TLS enabled (see [Enable Server Workload TLS](../../../access-policies/server-workloads/server-workload-enable-tls.md)).
@@ -33,13 +30,11 @@ To configure TLS Decrypt, you must have the following:
 
 * TLS version 1.2+ on your Client and Server Workloads (Agent Proxy requirement).
 
-  Note
-
-  If your Client Workloads support TLS version 1.3, then Agent Proxy uses TLS version 1.3.
+  > **Note**
+  >
+  > If your Client Workloads support TLS version 1.3, then Agent Proxy uses TLS version 1.3.
 
 ## Get your Aembit Tenant Root CA
-
-[Section titled “Get your Aembit Tenant Root CA”](#get-your-aembit-tenant-root-ca)
 
 To get your Aembit Tenant Root CA, perform the following steps:
 
@@ -47,11 +42,11 @@ To get your Aembit Tenant Root CA, perform the following steps:
 
 2. In the left sidebar menu, go to **Edge Components**.
 
-3. In the top ribbon menu, click **TLS Decrypt**.
+3. In the top ribbon menu, click **Certificates**.
 
-   ![TLS Decrypt Page](https://docs.aembit.io/_astro/tls_decrypt.C32a0KWO_1kPyNr.webp)
+   ![Certificates page](https://docs.aembit.io/_astro/tls_decrypt.DLNb9bgh_2tlh0N.webp)
 
-4. Click Download your Aembit Tenant Root CA certificate.
+4. Click **Download Tenant Root CA**.
 
 Alternatively, you may download the Aembit Tenant Root CA directly by using to the following URL, making sure to replace `<your_tenant_id>` with your actual Aembit Tenant ID:
 
@@ -60,8 +55,6 @@ https://<your_tenant_id>.aembit.io/api/v1/root-ca
 ```
 
 ## Add your Aembit Tenant Root CA to a trusted root store
-
-[Section titled “Add your Aembit Tenant Root CA to a trusted root store”](#add-your-aembit-tenant-root-ca-to-a-trusted-root-store)
 
 Different operating systems and application frameworks have different methods for adding root certificates to their associated root store. Most Client Workloads use the system root store. This isn’t always the case, however, so make sure to consult your operating system’s documentation.
 
@@ -128,15 +121,11 @@ Select a tab for your operating system, distribution, and specific application t
 
   #### Using the Python `requests` library
 
-  [Section titled “Using the Python requests library”](#using-the-python-requests-library)
-
   Configure the environment variable `REQUESTS_CA_BUNDLE` to point to a bundle of trusted certificates, including the Aembit Tenant Root CA.
 
   For more details, refer to the [requests advanced user guide](https://requests.readthedocs.io/en/latest/user/advanced/).
 
   #### Using the Python `httpx` package
-
-  [Section titled “Using the Python httpx package”](#using-the-python-httpx-package)
 
   Configure the environment variable `SSL_CERT_FILE` to include the Aembit Tenant Root CA.
 
@@ -148,15 +137,13 @@ Select a tab for your operating system, distribution, and specific application t
 
 ## Change your leaf certificate lifetime
 
-[Section titled “Change your leaf certificate lifetime”](#change-your-leaf-certificate-lifetime)
-
 The default lifetime of leaf certificates for your Aembit Tenant Root CA is **1 day**. To change this value, follow these steps:
 
 1. Log in to your Aembit Tenant.
 
 2. In the left sidebar menu, go to **Edge Components**.
 
-3. In the top ribbon menu, click **TLS Decrypt**.
+3. In the top ribbon menu, click **Certificates**.
 
 4. Under **Leaf Certificate Lifetime**, select the desired value (`1 hour`, `1 day`, or `1 week`) from the dropdown menu.
 
@@ -168,15 +155,13 @@ The default lifetime of leaf certificates for your Aembit Tenant Root CA is **1 
 
    * Wait for existing certificates to expire.
 
-     Security best practice
-
-     Changing the lifetime duration for leaf certificates doesn’t require reinstallation of the root CA certificate in any location where it’s already installed. The root CA certificate itself remains unchanged, and this modification only affects the validity period of newly issued leaf certificates.
-
-     That said, it’s important to remember that **existing certificates retain their original expiration dates**. This means you’ll need to restart the associated Agent Proxy to fully transition to the shorter lifetime. This is especially important for more drastic decreases like going from one week to one hour.
+     > **Security best practice**
+     >
+     > Changing the lifetime duration for leaf certificates doesn’t require reinstallation of the root CA certificate in any location where it’s already installed. The root CA certificate itself remains unchanged, and this modification only affects the validity period of newly issued leaf certificates.
+     >
+     > That said, it’s important to remember that **existing certificates retain their original expiration dates**. This means you’ll need to restart the associated Agent Proxy to fully transition to the shorter lifetime. This is especially important for more drastic decreases like going from one week to one hour.
 
 ### Verifying your leaf certificate lifetime
-
-[Section titled “Verifying your leaf certificate lifetime”](#verifying-your-leaf-certificate-lifetime)
 
 [After changing your leaf certificate lifetime](#change-your-leaf-certificate-lifetime), verify the changes by viewing the details of the cert through the following commands:
 
@@ -194,7 +179,7 @@ The default lifetime of leaf certificates for your Aembit Tenant Root CA is **1 
 
    Copy the contents of the certificate (highlighted in the following example):
 
-   ```txt
+   ```plaintext
    Server certificate
    -----BEGIN CERTIFICATE-----
    MjUwMjA1MjI1MDIxWhcNMzUwMjAzMjI1MDIxWjBrMSUwIwYDVQQDDBxBZW1iaXQg
@@ -203,7 +188,7 @@ The default lifetime of leaf certificates for your Aembit Tenant Root CA is **1 
    ...
    0ApHb7jB+YkL59eG9WOdCUqjQjBAA=
    -----END CERTIFICATE-----
-   subject-CN - my.service.com
+   subject-CN - api.example.com
    ```
 
 5. View and inspect the detailed contents of the certificate by echoing the certificate you just copied into the `openssl x509 -text` command:
@@ -224,7 +209,7 @@ The default lifetime of leaf certificates for your Aembit Tenant Root CA is **1 
            Validity
                Not Before: Feb 10 13:25:42 2025 GMT
                Not After : Feb 11 13:30:42 2025 GMT
-           Subject: CN = my.service.com
+           Subject: CN = api.example.com
               ...
               ... omitted for brevity
               ...

@@ -4,9 +4,8 @@ title: "Kubernetes Namespace"
 description: "How to identify Kubernetes workloads using the Kubernetes Namespace within Aembit"
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/kubernetes-namespace/
 interface: web-ui
-tags: [kubernetes, identification, client-workload, access-policy]
-timestamp: 2025-06-09T09:41:35-07:00
-type_inferred: true
+tags: ["kubernetes", "identification", "client-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Kubernetes Namespace
@@ -15,19 +14,13 @@ This page explains how to use the **Kubernetes Namespace** identifier to uniquel
 
 ## Understanding the Kubernetes Namespace identifier
 
-[Section titled “Understanding the Kubernetes Namespace identifier”](#understanding-the-kubernetes-namespace-identifier)
-
 Namespaces in Kubernetes provide a way to divide cluster resources between multiple users or applications. They’re commonly used to group related workloads and manage resource allocation and access boundaries. Using a namespace as an identifier is useful when you want to manage Access Policies for all workloads within a specific namespace.
 
 ## Applicable deployment type
 
-[Section titled “Applicable deployment type”](#applicable-deployment-type)
-
 Aembit supports the Kubernetes Namespace identification method for Edge-based deployments on [Kubernetes](../../../deploy-install/kubernetes/kubernetes.md).
 
 ## Create a Client Workload with a Kubernetes Namespace identifier
-
-[Section titled “Create a Client Workload with a Kubernetes Namespace identifier”](#create-a-client-workload-with-a-kubernetes-namespace-identifier)
 
 To configure a Client Workload with a Kubernetes Namespace identifier, follow these steps:
 
@@ -51,25 +44,23 @@ To configure a Client Workload with a Kubernetes Namespace identifier, follow th
 
    Aembit displays the new Client Workload on the **Client Workloads** page.
 
-Client Workload identifier uniqueness
-
-When you identify a Client Workload using a single identifier such as this one in a complex environment, this identifier may not always provide sufficient uniqueness.
-
-To avoid Aembit unintentionally matching something beyond what it’s intended to match, Aembit recommends that you set additional identifiers to compliment this one, creating a Client Workload identity that’s unique across your environment.
-
-See [Using multiple Client Workload identifiers](client-workload-multiple-ids.md) for guidance on combining this identifier with more specific identifiers such as those on the [Client Workload Identifiers overview](overview.md) page, which includes vendor- and technology-specific identifiers.
+> **Client Workload identifier uniqueness**
+>
+> When you identify a Client Workload using a single identifier such as this one in a complex environment, this identifier may not always provide sufficient uniqueness.
+>
+> To avoid Aembit unintentionally matching something beyond what it’s intended to match, Aembit recommends that you set additional identifiers to compliment this one, creating a Client Workload identity that’s unique across your environment.
+>
+> See [Using multiple Client Workload identifiers](client-workload-multiple-ids.md) for guidance on combining this identifier with more specific identifiers such as those on the [Client Workload Identifiers overview](overview.md) page, which includes vendor- and technology-specific identifiers.
 
 ## Find Kubernetes namespace
 
-[Section titled “Find Kubernetes namespace”](#find-kubernetes-namespace)
-
 To find the Kubernetes Namespace of a workload, follow these steps:
 
-Note
-
-You can also find the namespace in the Kubernetes deployment YAML files, Helm chart values, or other IaC configurations that define where you deploy workloads.
-
-Be sure to enter the namespace exactly as it appears in your Kubernetes cluster configuration.
+> **Note**
+>
+> You can also find the namespace in the Kubernetes deployment YAML files, Helm chart values, or other IaC configurations that define where you deploy workloads.
+>
+> Be sure to enter the namespace exactly as it appears in your Kubernetes cluster configuration.
 
 1. Use the command: `kubectl get pods --all-namespaces`.
 

@@ -1,11 +1,11 @@
 ---
-type: explanation
+type: reference
 title: "Aembit Edge on serverless services"
 description: "Guides and topics about deploying Aembit Edge Components on serverless services functions"
 resource: https://docs.aembit.io/user-guide/deploy-install/serverless/
-tags: [serverless, deploy-install]
-timestamp: 2025-07-10T08:39:16-07:00
-type_inferred: true
+interface: web-ui
+tags: ["serverless", "deploy-install"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Aembit Edge on serverless services

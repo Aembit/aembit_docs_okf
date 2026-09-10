@@ -4,9 +4,8 @@ title: "Box"
 description: "This page describes how to configure Aembit to work with the Box Server Workload."
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/guides/box/
 interface: web-ui
-tags: [productivity, guide, server-workload, access-policy]
-timestamp: 2025-05-29T11:26:12-07:00
-type_inferred: true
+tags: ["productivity", "guide", "server-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Box
@@ -18,8 +17,6 @@ Below you can find the Aembit configuration required to work with the Box servic
 
 ## Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites)
-
 Before proceeding with the configuration, ensure you have the following:
 
 * Box tenant.
@@ -27,8 +24,6 @@ Before proceeding with the configuration, ensure you have the following:
 * 2FA enabled on your Box tenant to view and copy the application’s client secret.
 
 ### Create New App In Box
-
-[Section titled “Create New App In Box”](#create-new-app-in-box)
 
 1. Log in to the [Box Developer Console](https://app.box.com/developers/console).
 
@@ -48,8 +43,6 @@ Before proceeding with the configuration, ensure you have the following:
 
 ### Authorize App As an Admin
 
-[Section titled “Authorize App As an Admin”](#authorize-app-as-an-admin)
-
 1. Navigate to the [Admin Console](https://app.box.com/master).
 
 2. In the left panel, click on **Apps**, and then in the right panel, click on **Custom Apps Manager** in the ribbon list to view a list of your Server Authentication Apps.
@@ -63,8 +56,6 @@ Before proceeding with the configuration, ensure you have the following:
 5. A pop-up window will appear. Click **Authorize** to proceed.
 
 ## Server Workload Configuration
-
-[Section titled “Server Workload Configuration”](#server-workload-configuration)
 
 1. Create a new Server Workload.
 
@@ -80,8 +71,6 @@ Before proceeding with the configuration, ensure you have the following:
 * **Authentication scheme** - Bearer
 
 ## Credential Provider Configuration
-
-[Section titled “Credential Provider Configuration”](#credential-provider-configuration)
 
 1. Log in to the [Box Developer Console](https://app.box.com/developers/console).
 
@@ -113,9 +102,9 @@ Before proceeding with the configuration, ensure you have the following:
 
 **Additional Parameters**
 
-Note
-
-The following parameters are used to authenticate as the application’s **Service Account**. To authenticate as a **Managed User**, refer to the [official Box Developer documentation](https://developer.box.com/guides/authentication/client-credentials/) for additional configuration steps. For security purposes, we recommend using the service account option and collaborating your service account on just the content it needs to access.
+> **Note**
+>
+> The following parameters are used to authenticate as the application’s **Service Account**. To authenticate as a **Managed User**, refer to the [official Box Developer documentation](https://developer.box.com/guides/authentication/client-credentials/) for additional configuration steps. For security purposes, we recommend using the service account option and collaborating your service account on just the content it needs to access.
 
 * **Name** - box\_subject\_type
 
@@ -127,21 +116,15 @@ The following parameters are used to authenticate as the application’s **Servi
 
 ## Client Workload Configuration
 
-[Section titled “Client Workload Configuration”](#client-workload-configuration)
-
 Aembit now handles the credentials required to access the Server Workload, eliminating the need for you to manage them directly. You can safely remove any previously used credentials from the Client Workload.
 
 If you access the Server Workload through an SDK or library, it is possible that the SDK/library may still require credentials to be present for initialization purposes. In this scenario, you can provide placeholder credentials. Aembit will overwrite these placeholder credentials with the appropriate ones during the access process.
 
 ## Access Policy
 
-[Section titled “Access Policy”](#access-policy)
-
 * Create an Access Policy for a Client Workload to access the Box Server Workload. Assign the newly created Credential Provider to this Access Policy.
 
 ## Required Features
-
-[Section titled “Required Features”](#required-features)
 
 * You will need to configure the [TLS Decrypt](../../../deploy-install/advanced-options/tls-decrypt/configure-tls-decrypt.md) feature to work with the Box Server Workload.
 

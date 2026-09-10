@@ -1,21 +1,17 @@
 ---
-type: how-to
+type: explanation
 title: "How Aembit uses AWS SigV4 and SigV4a"
 description: "How Aembit's Credential Provider for AWS STS works with the AWS SigV4 and Sigv4a request signing protocols"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/aws-sigv4/
-interface: web-ui
-tags: [credential-provider, access-policy]
-timestamp: 2026-05-02T11:31:27-07:00
-type_inferred: true
+tags: ["credential-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # How Aembit uses AWS SigV4 and SigV4a
 
-AWS Signature Version 4 (SigV4) and Signature Version 4a (SigV4a) are AWS request signing protocols. Aembit uses these protocols to sign HTTP requests from Client Workloads**Client Workload**: Client Workloads represent software applications, scripts, or automated processes that initiate access requests to Server Workloads, operating autonomously without direct user interaction.[Learn more](../../../get-started/concepts/client-workloads.md) to AWS services. Credentials come from Aembit’s [AWS STS Credential Provider](aws-security-token-service-federation.md). During authentication, SigV4 ensures requests are authentic, unaltered in transit, and not replayed.
+AWS Signature Version 4 (SigV4) and Signature Version 4a (SigV4a) are AWS request signing protocols. Aembit uses these protocols to sign HTTP requests from Client Workloads to AWS services. Credentials come from Aembit’s [AWS STS Credential Provider](aws-security-token-service-federation.md). During authentication, SigV4 ensures requests are authentic, unaltered in transit, and not replayed.
 
 ## SigV4 versions
-
-[Section titled “SigV4 versions”](#sigv4-versions)
 
 SigV4 has two versions:
 
@@ -25,11 +21,9 @@ SigV4 has two versions:
 
 ## SigV4 version selection
 
-[Section titled “SigV4 version selection”](#sigv4-version-selection)
-
 Aembit automatically determines whether to use SigV4 or SigV4a when a Client Workload uses an AWS STS Credential Provider to access AWS services. It works like this:
 
-* Aembit uses **SigV4** when a Server Workload's**Server Workload**: Server Workloads represent target services, APIs, databases, or applications that receive and respond to access requests from Client Workloads.[Learn more](../../../get-started/concepts/server-workloads.md) hostname includes a region (such as `us-east-1` or `us-east-2`), scoping the signature to only that region.
+* Aembit uses **SigV4** when a Server Workload's hostname includes a region (such as `us-east-1` or `us-east-2`), scoping the signature to only that region.
 
 * Aembit uses **SigV4a** when the Server Workload’s hostname doesn’t include a region (S3 Multi-Region Access Points or other global AWS services), which allows the signature to work across AWS regions.
 
@@ -37,9 +31,9 @@ Aembit performs this selection automatically based on the hostname structure, fo
 
 ## Workload identity and service access separation in AWS
 
-[Section titled “Workload identity and service access separation in AWS”](#workload-identity-and-service-access-separation-in-aws)
+When working with Aembit Trust Providers and
 
-When working with Aembit Trust Providers**Trust Provider**: Trust Providers validate Client Workload identities through workload attestation, verifying identity claims from the workload's runtime environment rather than relying on pre-shared secrets.[Learn more](../../../get-started/concepts/trust-providers.md) and Credential Providers**Credential Provider**: Credential Providers obtain the specific access credentials—such as API keys, OAuth tokens, or temporary cloud credentials—that Client Workloads need to authenticate to Server Workloads.[Learn more](../../../get-started/concepts/credential-providers.md) in AWS environments, it’s important to understand the roles each of these play. Aembit uses Trust Providers to verify who a workload is, and Credential Providers to control what AWS services that workload can access.
+Credential Providers in AWS environments, it’s important to understand the roles each of these play. Aembit uses Trust Providers to verify who a workload is, and Credential Providers to control what AWS services that workload can access.
 
 1. Trust Providers (like the [AWS Role Trust Provider](../trust-providers/aws-role-trust-provider.md)) verify who a workload is by confirming the AWS environment it’s running in and the IAM Role it’s using.
 
@@ -57,8 +51,6 @@ This clear separation makes sure that:
 
 ## Choosing the right Credential Provider for AWS environments
 
-[Section titled “Choosing the right Credential Provider for AWS environments”](#choosing-the-right-credential-provider-for-aws-environments)
-
 Aembit offers two Credential Providers commonly used in AWS environments, each serving different purposes:
 
 * **[AWS STS Federation](aws-security-token-service-federation.md)** - Use this Credential Provider to access AWS services (S3, EC2, Lambda, DynamoDB, etc.). It generates temporary credentials and signs requests using SigV4/SigV4a, which the AWS API requires for secure authentication.
@@ -68,8 +60,6 @@ Aembit offers two Credential Providers commonly used in AWS environments, each s
 AWS Secrets Manager can store AWS access keys, but Aembit’s Credential Provider for Secrets Manager doesn’t support SigV4 signing. For AWS service access, always use AWS STS Federation.
 
 ## S3 upload support
-
-[Section titled “S3 upload support”](#s3-upload-support)
 
 Aembit’s Agent Proxy enables secure, transparent support for AWS S3 upload requests, addressing the unique signing and credential injection requirements of S3. S3 uploads are challenging because:
 
@@ -99,17 +89,13 @@ Supported `x-amz-content-sha256` header values
 
 ## About request compression
 
-[Section titled “About request compression”](#about-request-compression)
-
 Agent Proxy doesn’t support streaming payload signing for S3 requests that use request compression. This limitation only affects deployments that have explicitly enabled request compression in their AWS SDK clients, which isn’t enabled by default.
 
-Note
-
-Agent Proxy does support the `aws-chunked` Content-Encoding, which is the standard encoding for S3 streaming uploads.
+> **Note**
+>
+> Agent Proxy does support the `aws-chunked` Content-Encoding, which is the standard encoding for S3 streaming uploads.
 
 ### Workaround: turn off request compression
-
-[Section titled “Workaround: turn off request compression”](#workaround-turn-off-request-compression)
 
 To avoid this limitation, turn off request compression in your AWS SDK client. You can set the `AWS_DISABLE_REQUEST_COMPRESSION` environment variable, or configure it in code:
 
@@ -159,13 +145,9 @@ Alternatively, you can use `UNSIGNED-PAYLOAD` mode for single-chunk uploads or `
 
 ## Known limitations
 
-[Section titled “Known limitations”](#known-limitations)
-
 Agent Proxy has the following limitations when processing S3 upload requests.
 
 ### Pre-signed URLs
-
-[Section titled “Pre-signed URLs”](#pre-signed-urls)
 
 Aembit doesn’t support AWS pre-signed URLs. Pre-signed URLs include signing parameters in the URL query string rather than in HTTP headers, which is a different signing mechanism than the header-based SigV4/SigV4a signing that Aembit’s Agent Proxy handles.
 

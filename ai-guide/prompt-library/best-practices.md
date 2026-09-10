@@ -3,7 +3,7 @@ type: explanation
 title: "Prompt engineering best practices"
 description: "Ten essential techniques for writing effective prompts that get better results from AI models."
 resource: https://docs.aembit.io/ai-guide/prompt-library/best-practices/
-tags: [prompt-library]
+tags: ["prompt-library"]
 timestamp: 2026-02-24T15:57:13-08:00
 ---
 
@@ -11,15 +11,13 @@ timestamp: 2026-02-24T15:57:13-08:00
 
 These ten best practices help you write more effective prompts for AI models, including when using the [Aembit MCP Server](../mcp/mcp-server/overview.md).
 
-Note
-
-Examples in this guide use placeholder names like `payment-service` and `database-prod` for illustration. When adapting these prompts, use sanitized or generic names appropriate for your environment.
+> **Note**
+>
+> Examples in this guide use placeholder names like `payment-service` and `database-prod` for illustration. When adapting these prompts, use sanitized or generic names appropriate for your environment.
 
 For the highest impact on basic prompts, start with [Section 1](#1-be-clear-and-specific) (clarity) and [Section 2](#2-provide-context) (context). Add [Section 7](#7-specify-output-format) (format) and [Section 8](#8-use-delimiters-and-structure) (delimiters) for structured output. Sections 3-6 and 9-10 refine results for complex analysis tasks.
 
 ## 1. Be clear and specific
-
-[Section titled “1. Be clear and specific”](#1-be-clear-and-specific)
 
 Models process tokens sequentially, so ambiguous requests force them to guess your intent rather than follow it.
 
@@ -40,8 +38,6 @@ source IP, and reason for failure.
 
 ## 2. Provide context
 
-[Section titled “2. Provide context”](#2-provide-context)
-
 Background information narrows the model’s interpretation space, producing more relevant and targeted responses.
 
 Give background information to help the model understand your goals and deliver targeted responses. Explain why you need the information and how you’ll use it.
@@ -53,8 +49,6 @@ client workload.
 ```
 
 ## 3. Use examples (few-shot prompting)
-
-[Section titled “3. Use examples (few-shot prompting)”](#3-use-examples-few-shot-prompting)
 
 Examples anchor the model’s output format and style more reliably than instructions alone.
 
@@ -73,8 +67,6 @@ Now show me the last 10 authorization denials in this format.
 ```
 
 ## 4. Break complex tasks into steps
-
-[Section titled “4. Break complex tasks into steps”](#4-break-complex-tasks-into-steps)
 
 Smaller sub-tasks reduce the chance of compounding errors in multi-step analysis.
 
@@ -101,8 +93,6 @@ Based on this timeline, identify any patterns in when failures occur.
 
 ## 5. Encourage step-by-step reasoning
 
-[Section titled “5. Encourage step-by-step reasoning”](#5-encourage-step-by-step-reasoning)
-
 Explicit reasoning steps force the model to show its work, making errors visible and correctable.
 
 For complex analysis, ask the model to think through the problem systematically. This improves accuracy for troubleshooting and multi-step reasoning.
@@ -117,8 +107,6 @@ Think through this step by step:
 
 ## 6. Assign a role or persona
 
-[Section titled “6. Assign a role or persona”](#6-assign-a-role-or-persona)
-
 A persona constrains vocabulary, depth, and analytical lens to match your intended audience.
 
 Setting a persona helps the model adopt the appropriate tone, vocabulary, and depth of analysis.
@@ -130,8 +118,6 @@ would require additional documentation for SOC 2 compliance.
 ```
 
 ## 7. Specify output format
-
-[Section titled “7. Specify output format”](#7-specify-output-format)
 
 Specifying structure prevents the model from choosing a format that doesn’t match your workflow.
 
@@ -156,8 +142,6 @@ Provide a summary of workload events from the last 24 hours in this format:
 
 ## 8. Use delimiters and structure
 
-[Section titled “8. Use delimiters and structure”](#8-use-delimiters-and-structure)
-
 Clear boundaries help the model distinguish between instructions, context, and data in your prompt.
 
 Separate different parts of your prompt with clear delimiters. This helps the model understand which parts are instructions, context, and data.
@@ -181,8 +165,6 @@ OUTPUT REQUIREMENTS:
 
 ## 9. Iterate and refine
 
-[Section titled “9. Iterate and refine”](#9-iterate-and-refine)
-
 Prompt engineering is empirical—small wording changes can markedly shift model behavior.
 
 Start with a basic prompt and refine based on results. Small wording changes can improve outputs by a large margin.
@@ -203,8 +185,6 @@ method used and any error codes.
 
 ## 10. Provide output primers
 
-[Section titled “10. Provide output primers”](#10-provide-output-primers)
-
 Starting the response constrains the model’s first tokens, which strongly influence the rest of the output.
 
 Start the response format for the model to guide how it completes the rest. This reduces randomness and improves consistency.
@@ -221,8 +201,6 @@ Total Requests: "
 
 ## Security considerations
 
-[Section titled “Security considerations”](#security-considerations)
-
 Keep these practices in mind when writing prompts for your organization:
 
 * **Never include credentials or secrets** - Don’t embed API keys, passwords, or tokens in prompts. If your prompt needs to reference an authenticated service, use the service name without credentials.
@@ -231,8 +209,6 @@ Keep these practices in mind when writing prompts for your organization:
 * **Consider prompt visibility** - Other team members may log, store, or view your prompts. Avoid embedding sensitive operational details that shouldn’t appear outside your security tooling.
 
 ## Combining techniques
-
-[Section titled “Combining techniques”](#combining-techniques)
 
 For best results, combine multiple techniques. Here’s an example that uses context, role assignment, specific formatting, and step-by-step reasoning:
 
@@ -261,8 +237,6 @@ Begin with: "Daily Security Briefing - Authorization Activity"
 ```
 
 ## Sources
-
-[Section titled “Sources”](#sources)
 
 These best practices are from industry-leading resources:
 

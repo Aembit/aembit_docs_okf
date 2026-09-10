@@ -1,11 +1,11 @@
 ---
-type: explanation
+type: reference
 title: "Administering Aembit"
 description: "This page describes steps for troubleshooting authentication issues from Client Workloads to Server Workloads"
 resource: https://docs.aembit.io/user-guide/administration/
-tags: [administration]
-timestamp: 2025-05-29T11:26:12-07:00
-type_inferred: true
+interface: web-ui
+tags: ["administration"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Administering Aembit

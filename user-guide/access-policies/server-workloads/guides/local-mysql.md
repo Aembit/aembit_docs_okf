@@ -4,9 +4,8 @@ title: "Local MySQL"
 description: "This page describes how to configure Aembit to work with the local MySQL Server Workload."
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/guides/local-mysql/
 interface: web-ui
-tags: [databases, guide, server-workload, access-policy]
-timestamp: 2025-05-29T11:26:12-07:00
-type_inferred: true
+tags: ["databases", "guide", "server-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Local MySQL
@@ -18,17 +17,13 @@ Below you can find the Aembit configuration required to work with MySQL as a Ser
 
 ## Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites)
-
 Before proceeding with the configuration, ensure you have access to a Kubernetes cluster. Modify the example YAML file according to your specific configurations, and then deploy it to your Kubernetes cluster.
 
 ### Example MySQL Yaml File
 
-[Section titled “Example MySQL Yaml File”](#example-mysql-yaml-file)
-
-Note
-
-This example does not use TLS and is shown here for demonstration purposes only. It is strongly recommended to use TLS in production settings.
+> **Note**
+>
+> This example does not use TLS and is shown here for demonstration purposes only. It is strongly recommended to use TLS in production settings.
 
 ```yaml
 apiVersion: apps/v1
@@ -83,8 +78,6 @@ Use the following command to deploy this file to your Kubernetes cluster.
 
 ## Server Workload Configuration
 
-[Section titled “Server Workload Configuration”](#server-workload-configuration)
-
 1. Create a new Server Workload.
 
 * **Name** - Choose a user-friendly name.
@@ -100,8 +93,6 @@ Use the following command to deploy this file to your Kubernetes cluster.
 
 ## Credential Provider Configuration
 
-[Section titled “Credential Provider Configuration”](#credential-provider-configuration)
-
 1. Create a new Credential Provider.
 
 * **Name** - Choose a user-friendly name.
@@ -111,15 +102,11 @@ Use the following command to deploy this file to your Kubernetes cluster.
 
 ## Client Workload Configuration
 
-[Section titled “Client Workload Configuration”](#client-workload-configuration)
-
 Aembit now handles the credentials required to access the Server Workload, eliminating the need for you to manage them directly. You can safely remove any previously used credentials from the Client Workload.
 
 If you access the Server Workload through an SDK or library, it is possible that the SDK/library may still require credentials to be present for initialization purposes. In this scenario, you can provide placeholder credentials. Aembit will overwrite these placeholder credentials with the appropriate ones during the access process.
 
 ## Access Policy
-
-[Section titled “Access Policy”](#access-policy)
 
 * Create an access policy for a Client Workload to access the MySQL Server Workload and assign the newly created Credential Provider to it.
 

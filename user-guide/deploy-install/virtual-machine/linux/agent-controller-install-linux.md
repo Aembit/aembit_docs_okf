@@ -4,9 +4,8 @@ title: "How to set up Agent Controller on Linux"
 description: "How to set up Aembit Agent Controller on Linux"
 resource: https://docs.aembit.io/user-guide/deploy-install/virtual-machine/linux/agent-controller-install-linux/
 interface: web-ui
-tags: [linux, virtual-machine, deploy-install]
-timestamp: 2026-05-18T14:17:19-07:00
-type_inferred: true
+tags: ["linux", "virtual-machine", "deploy-install"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # How to set up Agent Controller on Linux
@@ -15,15 +14,13 @@ Aembit provides many different deployment options you can use to deploy Aembit E
 
 This page describes the process to deploy Agent Controller to a Linux virtual machine (VM).
 
-Note
-
-Aembit recommends deploying Agent Controller and Agent Proxy on standalone VMs and not collocating them on the same VM.
-
-See [About Colocating Aembit Edge Components](../../about-colocating-edge-components.md) for more info.
+> **Note**
+>
+> Aembit recommends deploying Agent Controller and Agent Proxy on standalone VMs and not collocating them on the same VM.
+>
+> See [About Colocating Aembit Edge Components](../../about-colocating-edge-components.md) for more info.
 
 ## Supported versions
-
-[Section titled “Supported versions”](#supported-versions)
 
 Use the following table to make sure that Aembit supports the operating system and platform you’re deploying to your VM:
 
@@ -36,8 +33,6 @@ Use the following table to make sure that Aembit supports the operating system a
 \* See [How to configure Agent Proxy on SELinux or RHEL](agent-proxy-selinux-config.md) for more info.
 
 ## Install Agent Controller
-
-[Section titled “Install Agent Controller”](#install-agent-controller)
 
 To install Agent Controller, follow these steps:
 
@@ -75,45 +70,41 @@ To install Agent Controller, follow these steps:
 
    Optionally, add any other [Agent Controller environment variables reference](../../../../reference/edge-components/edge-component-env-vars.md#agent-controller-environment-variables) in the format `ENV_VAR_NAME=myvalue`.
 
-   Trust Providers
+   > **Trust Providers**
+   >
+   > If you don’t already have a Trust Provider, see [Add Trust Provider](../../../access-policies/trust-providers/add-trust-provider.md).
+   >
+   > Popular Trust Providers:
+   >
+   > * [AWS Metadata Service](../../../access-policies/trust-providers/aws-metadata-service-trust-provider.md)
+   > * [Azure Instance Metadata Service](../../../access-policies/trust-providers/azure-metadata-service-trust-provider.md)
 
-   If you don’t already have a Trust Provider, see [Add Trust Provider](../../../access-policies/trust-providers/add-trust-provider.md).
-
-   Popular Trust Providers:
-
-   * [AWS Metadata Service](../../../access-policies/trust-providers/aws-metadata-service-trust-provider.md)
-   * [Azure Instance Metadata Service](../../../access-policies/trust-providers/azure-metadata-service-trust-provider.md)
-
-   Device Codes vs Trust Providers
-
-   Device Codes are a fallback authentication method for the Agent Controller, and they’re less secure than Trust Providers. Prefer a Trust Provider for production deployments, since Trust Providers offer stronger, automated attestation with better control and flexibility.
-
-   Use a Device Code only in these cases:
-
-   * A test, proof-of-concept, lab, or demo environment.
-   * A production environment that has no Trust-Provider-based attestation available, such as a bare-metal or on-premises host, or VMware vSphere without cloud metadata services. In these environments, Device Code is the supported Agent Controller registration method.
-
-   See [About the Aembit Agent Controller](../../about-agent-controller.md) for more information.
+   > **Device Codes vs Trust Providers**
+   >
+   > Device Codes are a fallback authentication method for the Agent Controller, and they’re less secure than Trust Providers. Prefer a Trust Provider for production deployments, since Trust Providers offer stronger, automated attestation with better control and flexibility.
+   >
+   > Use a Device Code only in these cases:
+   >
+   > * A test, proof-of-concept, lab, or demo environment.
+   > * A production environment that has no Trust-Provider-based attestation available, such as a bare-metal or on-premises host, or VMware vSphere without cloud metadata services. In these environments, Device Code is the supported Agent Controller registration method.
+   >
+   > See [About the Aembit Agent Controller](../../about-agent-controller.md) for more information.
 
    To use a Device Code, you must generate a Device Code in the Aembit website UI and replace `AEMBIT_AGENT_CONTROLLER_ID` with the `AEMBIT_DEVICE_CODE` environmental variable in the preceding command.
 
-HTTP proxy configuration
-
-If your network routes outbound traffic through an HTTP proxy, configure the `HTTP_PROXY`, `HTTPS_PROXY`, and `NO_PROXY` environment variables for Agent Controller. See [Agent Controller environment variables](../../../../reference/edge-components/edge-component-env-vars.md#http_proxy) for details.
+> **HTTP proxy configuration**
+>
+> If your network routes outbound traffic through an HTTP proxy, configure the `HTTP_PROXY`, `HTTPS_PROXY`, and `NO_PROXY` environment variables for Agent Controller. See [Agent Controller environment variables](../../../../reference/edge-components/edge-component-env-vars.md#http_proxy) for details.
 
 ### Agent Controller environment variables
 
-[Section titled “Agent Controller environment variables”](#agent-controller-environment-variables)
-
 For a list of all available environment variables for configuring the Agent Controller installer, see [Agent Controller environment variables reference](../../../../reference/edge-components/edge-component-env-vars.md#agent-controller-environment-variables).
 
-Security Best Practice
-
-Make sure the Agent Controller can accept connections on port 5000 from Agent Proxies (update your security groups if needed). Because access to Agent Controller is sensitive, *your Agent Controller’s port should not be open to the Internet*.
+> **Security Best Practice**
+>
+> Make sure the Agent Controller can accept connections on port 5000 from Agent Proxies (update your security groups if needed). Because access to Agent Controller is sensitive, *your Agent Controller’s port should not be open to the Internet*.
 
 ### Uninstall Agent Controller
-
-[Section titled “Uninstall Agent Controller”](#uninstall-agent-controller)
 
 Run the following command to uninstall the previously installed Agent Controller.
 

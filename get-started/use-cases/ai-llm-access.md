@@ -3,7 +3,7 @@ type: explanation
 title: "Securing your applications' access to LLM APIs"
 description: "How Aembit protects workload connections to LLM APIs like OpenAI, Azure OpenAI, and Anthropic"
 resource: https://docs.aembit.io/get-started/use-cases/ai-llm-access/
-tags: [use-case]
+tags: ["use-case"]
 timestamp: 2026-06-15T10:19:43-07:00
 ---
 
@@ -11,7 +11,7 @@ timestamp: 2026-06-15T10:19:43-07:00
 
 Applications that call LLM APIs like OpenAI, Anthropic, or Azure OpenAI typically embed static API keys in code.
 
-Exfiltrated or misused keys let attackers consume API services at the victim’s expense. This attack pattern is called LLMjacking**LLMjacking**: The unauthorized use of stolen LLM API credentials to consume AI services at the victim's expense. Attackers obtain API keys through exposed repositories, compromised environments, or leaked credentials, then resell access or use it directly.[Learn more(opens in new tab)](https://sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack/).
+Exfiltrated or misused keys let attackers consume API services at the victim’s expense. This attack pattern is called LLMjacking.
 
 Stolen credentials sell for as little as $30, and a single compromised key can generate significant unexpected charges in hours.
 
@@ -19,7 +19,7 @@ LLMjacking and denial of wallet attacks
 
 **LLMjacking** is the unauthorized use of stolen LLM API credentials to consume AI services at the victim’s expense. Attackers obtain API keys through exposed repositories, compromised environments, or leaked credentials, then resell access or use it directly. Sysdig reported a 10x increase in LLMjacking attacks in mid-2024, and Pillar Security documented 35,000 attack sessions targeting exposed AI infrastructure between December 2025 and January 2026.
 
-LLMjacking is a form of **denial of wallet (DoW) attack**, a broader class of attacks that exploit consumption-based billing models to inflict financial damage. Unlike traditional denial-of-service attacks that crash systems, denial of wallet**Denial of wallet**: An attack that exploits consumption-based billing models to inflict financial damage through excessive resource usage. Unlike denial-of-service attacks that crash systems, denial of wallet attacks drain budgets. attacks drain your budget through excessive resource consumption.
+LLMjacking is a form of **denial of wallet (DoW) attack**, a broader class of attacks that exploit consumption-based billing models to inflict financial damage. Unlike traditional denial-of-service attacks that crash systems, denial of wallet attacks drain your budget through excessive resource consumption.
 
 LLM APIs are particularly susceptible because of how they’re priced and provisioned:
 
@@ -31,9 +31,7 @@ As an example, one experimental AI agent project making unconstrained calls to G
 
 ## What Aembit solves
 
-[Section titled “What Aembit solves”](#what-aembit-solves)
-
-Aembit eliminates embedded API keys and brings identity-based access control to LLM API access. Instead of distributing static credentials to applications, Aembit authenticates workloads and issues short-lived credentials based on your Access Policy**Access Policy**: Access Policies define, enforce, and audit access between Client and Server Workloads by cryptographically verifying workload identity and contextual factors rather than relying on static secrets.[Learn more](../concepts/access-policies.md) rules.
+Aembit eliminates embedded API keys and brings identity-based access control to LLM API access. Instead of distributing static credentials to applications, Aembit authenticates workloads and issues short-lived credentials based on your Access Policy rules.
 
 * Applications request temporary credentials from Aembit instead of storing static API keys in code or configuration files.
 * Access Policies enforce conditional access to prevent unauthorized or runaway LLM API usage that generates unexpected bills.
@@ -43,7 +41,7 @@ Aembit eliminates embedded API keys and brings identity-based access control to 
 
 LLM API credential vulnerabilities
 
-Most LLM APIs use bearer token**Bearer token**: An authentication credential passed in HTTP headers where anyone who possesses the token can use it to access the protected resource. No additional proof of identity is required beyond holding the token itself. authentication, which means basic API keys passed in HTTP headers. This is one of the most rudimentary authentication methods.
+Most LLM APIs use bearer token authentication, which means basic API keys passed in HTTP headers. This is one of the most rudimentary authentication methods.
 
 * Keys often remain valid indefinitely until manually revoked.
 * A single key typically grants full account access to all models and endpoints.
@@ -53,8 +51,6 @@ Most LLM APIs use bearer token**Bearer token**: An authentication credential pas
 An exfiltrated key is functionally identical to a legitimate one. Without external controls like Aembit, there’s no way to distinguish between authorized and unauthorized usage until the bill arrives.
 
 ## Real example: Application accessing OpenAI API
-
-[Section titled “Real example: Application accessing OpenAI API”](#real-example-application-accessing-openai-api)
 
 Your organization runs a customer support chatbot that calls OpenAI’s GPT-4 API. Without Aembit, you’d need to:
 
@@ -82,8 +78,6 @@ The application makes a standard HTTP request to OpenAI. Aembit handles authenti
 
 ### Why this matters for AI and LLM access
 
-[Section titled “Why this matters for AI and LLM access”](#why-this-matters-for-ai-and-llm-access)
-
 LLM APIs bill per token and request, making them prime targets for LLMjacking. Attackers use stolen credentials to consume AI services at the victim’s expense. One experimental agent project ran up about $4M-$15M in bills in a single week of operation. Credential protection for LLM APIs has a direct budget impact.
 
 While some LLM providers offer more sophisticated authentication options, the most common pattern across the LLM ecosystem remains static API keys with rudimentary security. Aembit upgrades this security model without requiring LLM providers to change anything.
@@ -93,8 +87,6 @@ Connecting to an LLM API is the same fundamental pattern as connecting to any ot
 When an application makes thousands of LLM API calls, compliance, finance, and security teams need to know which workload was responsible. Aembit logs every access request with verified workload identity, creating an audit trail that ties API usage to specific applications.
 
 ## Supported LLM providers
-
-[Section titled “Supported LLM providers”](#supported-llm-providers)
 
 Aembit works with any LLM API that accepts standard authentication mechanisms like API keys, OAuth tokens, or bearer tokens. The integration is credential-provider-specific, not provider-specific. Configure Aembit with the appropriate [Credential Provider](../concepts/credential-providers.md) for your LLM service, and Aembit handles the rest.
 
@@ -110,8 +102,6 @@ Common LLM providers include:
 See the [Credential Provider documentation](../concepts/credential-providers.md) for configuration details specific to your LLM provider’s authentication method.
 
 ## Next steps
-
-[Section titled “Next steps”](#next-steps)
 
 * [Learn about Access Policies](../concepts/access-policies.md) to control which workloads can access LLM APIs and under what conditions
 * [Explore AI agent scenarios](ai-agents.md) where AI agents themselves become workloads accessing enterprise resources via the Model Context Protocol (MCP)

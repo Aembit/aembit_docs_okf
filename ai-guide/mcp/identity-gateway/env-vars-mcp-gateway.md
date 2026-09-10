@@ -4,17 +4,17 @@ title: "MCP Identity Gateway environment variables (self-hosted only)"
 description: "Environment variables for configuring a self-hosted MCP Identity Gateway."
 resource: https://docs.aembit.io/ai-guide/mcp/identity-gateway/env-vars-mcp-gateway/
 interface: mcp
-tags: [identity-gateway, mcp]
-timestamp: 2026-06-23T16:02:22-07:00
+tags: ["identity-gateway", "mcp"]
+timestamp: 2026-08-19T15:11:05-07:00
 ---
 
 # MCP Identity Gateway environment variables (self-hosted only)
 
-This page is the configuration reference for [self-hosting the MCP Identity Gateway](self-host-mcp-gateway.md). You supply these environment variables on the install command when you run the Gateway on your own host, and they configure how it operates at install time.
+This page is the configuration reference for [self-hosting the MCP Identity Gateway](self-host-mcp-gateway.md). You supply most of these environment variables on the install command when you run the Gateway on your own host, and they configure how it operates at install time. [`AEMBIT_MCP_GATEWAY_TIMEOUT`](#aembit_mcp_gateway_timeout) is the one exception, and its entry explains how to set it.
 
-Self-hosted only
-
-These variables apply only to self-hosted deployments.
+> **Self-hosted only**
+>
+> These variables apply only to self-hosted deployments.
 
 If you use the Aembit-managed service, you don’t configure any of these. Aembit sets them when it provisions your Gateway endpoint.
 
@@ -22,11 +22,7 @@ For Tenant-side configuration (Identity Provider, Trust Provider, and Access Pol
 
 ## Required variables
 
-[Section titled “Required variables”](#required-variables)
-
 ### `AEMBIT_AUTHORIZATION_SERVER` Required
-
-[Section titled “AEMBIT\_AUTHORIZATION\_SERVER ”](#aembit_authorization_server)
 
 Default - not set
 
@@ -43,8 +39,6 @@ See [Set up the MCP Identity Gateway](setup-mcp-gateway.md) for detailed configu
 
 ### `AEMBIT_MCP_GATEWAY_URL` Required
 
-[Section titled “AEMBIT\_MCP\_GATEWAY\_URL ”](#aembit_mcp_gateway_url)
-
 Default - not set
 
 Public URL of this MCP Identity Gateway instance. This is the URL that MCP clients use to connect.
@@ -56,8 +50,6 @@ Public URL of this MCP Identity Gateway instance. This is the URL that MCP clien
 
 ### `AEMBIT_AGENT_CONTROLLER_URL` Required
 
-[Section titled “AEMBIT\_AGENT\_CONTROLLER\_URL ”](#aembit_agent_controller_url)
-
 Default - not set
 
 URL of the local Agent Controller. Must point to localhost because the MCP Identity Gateway and Agent Controller must run on the same host. The Agent Controller registers the MCP Identity Gateway with Aembit Cloud and provides it with the credentials and configuration needed to operate. This local-only communication ensures credentials never traverse the network. For architecture details, see [MCP Identity Gateway concepts](concepts-mcp-gateway.md).
@@ -68,8 +60,6 @@ URL of the local Agent Controller. Must point to localhost because the MCP Ident
 ***
 
 ### `AEMBIT_TLS_CERT_CHAIN_PATH` Required
-
-[Section titled “AEMBIT\_TLS\_CERT\_CHAIN\_PATH ”](#aembit_tls_cert_chain_path)
 
 Default - not set
 
@@ -84,8 +74,6 @@ Filesystem path to the TLS certificate chain file (PEM format). Must include the
 
 ### `AEMBIT_TLS_PRIVATE_KEY_PATH` Required
 
-[Section titled “AEMBIT\_TLS\_PRIVATE\_KEY\_PATH ”](#aembit_tls_private_key_path)
-
 Default - not set
 
 Sensitive - Yes
@@ -99,11 +87,7 @@ Filesystem path to the TLS private key file (PEM format). Store in a secrets man
 
 ## Optional variables
 
-[Section titled “Optional variables”](#optional-variables)
-
 ### `AEMBIT_LOG_LEVEL`
-
-[Section titled “AEMBIT\_LOG\_LEVEL”](#aembit_log_level)
 
 Default - `info`
 
@@ -114,9 +98,70 @@ Log verbosity level. Options: `trace`, `debug`, `info`, `warn`, `error`, `off`. 
 
 ***
 
-### `AEMBIT_METRICS_PORT`
+### `AEMBIT_MCP_GATEWAY_TIMEOUT`
 
-[Section titled “AEMBIT\_METRICS\_PORT”](#aembit_metrics_port)
+Default - not set
+
+Overrides how long the MCP Identity Gateway waits for your assigned MCP servers when it fans a request out to them.
+
+> **Not supplied on the install command**
+>
+> Unlike the other variables on this page, the installer doesn’t pass this one through to the running service. The systemd unit it writes calls the Gateway with a fixed set of arguments, so the service starts with the default timeouts even when you set this variable on the install command. Use a systemd drop-in instead, as shown below.
+
+You rarely need this. The defaults are high enough that an AI client usually reaches its own timeout before the Gateway reaches one of these. Treat it as a last resort for MCP servers that answer more slowly than the defaults allow.
+
+To override a timeout, create `/etc/systemd/system/aembit_mcp_gateway.service.d/override.conf`:
+
+```ini
+[Service]
+Environment="AEMBIT_MCP_GATEWAY_TIMEOUT=initialize=15s,tools/list=5s"
+```
+
+Then reload systemd and restart the Gateway:
+
+```shell
+sudo systemctl daemon-reload
+sudo systemctl restart aembit_mcp_gateway
+```
+
+A drop-in survives an upgrade. Edits to `/etc/systemd/system/aembit_mcp_gateway.service` don’t, because the installer replaces that file each time it runs.
+
+The value is a comma-separated list of `<name>=<duration>` pairs. Durations take a unit suffix, such as `500ms`, `3s`, or `1m`. Any name you leave out keeps its default. The Gateway validates the value when the service starts, and a zero duration or the same name listed twice stops the service from starting. A malformed value also fails the install command, even though a valid one has no effect there.
+
+| Name                               | Also accepted                      | Default | Applies to                                                                                   |
+| ---------------------------------- | ---------------------------------- | ------- | -------------------------------------------------------------------------------------------- |
+| `initialize`                       | -                                  | `10s`   | The `initialize` fanout, including the one the Gateway sends for a newly assigned server     |
+| `notifications_initialized`        | `notifications/initialized`        | `1s`    | The `notifications/initialized` fanout                                                       |
+| `tools_list`                       | `tools/list`                       | `3s`    | The `tools/list` fanout for a client request                                                 |
+| `proactive_tools_list`             | -                                  | `5s`    | The `tools/list` fanout the Gateway sends before a `tools/call` when its tool cache is empty |
+| `resources_list`                   | `resources/list`                   | `3s`    | The `resources/list` fanout                                                                  |
+| `reinit_initialize`                | -                                  | `10s`   | The `initialize` fanout sent while re-establishing an expired upstream session               |
+| `reinit_notifications_initialized` | `reinit/notifications/initialized` | `1s`    | The `notifications/initialized` fanout sent during that re-initialization                    |
+| `reinit_tools_list`                | `reinit/tools/list`                | `5s`    | The `tools/list` fanout that refreshes the tool cache after re-initialization                |
+
+`proactive_tools_list` and `reinit_tools_list` are longer than their non-prefixed counterparts. Both cover a case where an upstream server is cold or a cache is empty, which is when a server is slowest to answer.
+
+*Example*:\
+`initialize=15s,tools/list=5s`
+
+***
+
+### `AEMBIT_MCP_SESSION_IDLE_TTL_SECS`
+
+Default - `43200` (12 hours)
+
+How long the MCP Identity Gateway keeps an MCP session that receives no requests. Every request on a session refreshes its expiry. When the window passes, the Gateway drops the session, and the client’s next request returns `404 Not Found` so the client starts a new session.
+
+The maximum is `1209600` seconds (14 days). A larger value fails the install.
+
+This variable applies whether the Gateway keeps sessions in memory or in Valkey. See [Session persistence](session-persistence-mcp-gateway.md).
+
+*Example*:\
+`86400`
+
+***
+
+### `AEMBIT_METRICS_PORT`
 
 Default - `9091`
 
@@ -131,8 +176,6 @@ Port `9091` avoids a collision with the Agent Controller, which uses port `9090`
 
 ### `AEMBIT_TRUSTED_ISSUER_DOMAINS`
 
-[Section titled “AEMBIT\_TRUSTED\_ISSUER\_DOMAINS”](#aembit_trusted_issuer_domains)
-
 Default - not set
 
 Additional trusted issuer domains for token validation. When set, MCP Identity Gateway also accepts tokens from these domains beyond the default Aembit Cloud domain.
@@ -142,13 +185,32 @@ This variable is primarily for testing and development environments where MCP Id
 *Example*:\
 `test.aembit-eng.com`
 
+***
+
+### `AEMBIT_VALKEY_URL`
+
+Default - not set
+
+Sensitive - Yes
+
+URL of a Valkey instance to store MCP sessions in. When you leave this variable unset, the MCP Identity Gateway keeps sessions in process memory, and a restart ends every open session. Setting it lets sessions survive a restart and lets more than one Gateway instance share session state.
+
+The Gateway accepts `redis://<host>[:<port>]` and `rediss://<host>[:<port>]`. Use `rediss://` for any network connection, because `redis://` sends session data unencrypted.
+
+You can include Valkey credentials as `rediss://<user>:<password>@<host>` or as `user` and `pass` query parameters, which is why this value is sensitive. The Gateway redacts them when it logs the URL at startup.
+
+The MCP Identity Gateway connects to Valkey while it validates your install arguments and again when the service starts. It fails closed on both: an unreachable Valkey stops the install and stops the service.
+
+For what a session holds and how to operate the store, see [Session persistence](session-persistence-mcp-gateway.md).
+
+*Example*:\
+`rediss://valkey.internal.example.com:6379`
+
 ## Example installation
 
-[Section titled “Example installation”](#example-installation)
-
-Production security
-
-The following example shows environment variables on the command line for clarity. In production, use an environment file with restricted permissions (`chmod 600`) or inject values from a secrets manager so configuration values don’t appear in shell history or process listings.
+> **Production security**
+>
+> The following example shows environment variables on the command line for clarity. In production, use an environment file with restricted permissions (`chmod 600`) or inject values from a secrets manager so configuration values don’t appear in shell history or process listings.
 
 ```shell
 sudo AEMBIT_AUTHORIZATION_SERVER=https://abc123.mcp.useast2.aembit.io/ \
@@ -162,13 +224,9 @@ sudo AEMBIT_AUTHORIZATION_SERVER=https://abc123.mcp.useast2.aembit.io/ \
 
 ## Validation and failure behavior
 
-[Section titled “Validation and failure behavior”](#validation-and-failure-behavior)
-
 The MCP Identity Gateway validates configuration at startup and fails closed on errors.
 
 ### Startup validation
-
-[Section titled “Startup validation”](#startup-validation)
 
 When the MCP Identity Gateway starts, it validates:
 
@@ -181,8 +239,6 @@ If any validation fails, the MCP Identity Gateway exits immediately with an erro
 
 ### Runtime caching
 
-[Section titled “Runtime caching”](#runtime-caching)
-
 During operation, the MCP Identity Gateway caches data from Aembit Cloud to maintain availability:
 
 | Data type                     | Cache duration |
@@ -194,8 +250,6 @@ During operation, the MCP Identity Gateway caches data from Aembit Cloud to main
 If Aembit Cloud becomes unreachable, the MCP Identity Gateway continues operating with cached data until the cache expires.
 
 ### Verifying configuration
-
-[Section titled “Verifying configuration”](#verifying-configuration)
 
 After installation, verify the MCP Identity Gateway is running:
 
@@ -211,13 +265,9 @@ sudo journalctl -u aembit_mcp_gateway -n 50
 
 ## Agent Controller environment variables
 
-[Section titled “Agent Controller environment variables”](#agent-controller-environment-variables)
-
 The MCP Identity Gateway requires an Agent Controller running on the same host. The Agent Controller uses its own set of environment variables during installation.
 
 ### `AEMBIT_TENANT_ID` Required
-
-[Section titled “AEMBIT\_TENANT\_ID ”](#aembit_tenant_id)
 
 Default - not set
 
@@ -230,8 +280,6 @@ Aembit Tenant ID.
 
 ### `AEMBIT_AGENT_CONTROLLER_ID` Required
 
-[Section titled “AEMBIT\_AGENT\_CONTROLLER\_ID ”](#aembit_agent_controller_id)
-
 Default - not set
 
 ID of the Agent Controller as configured in Aembit.
@@ -243,8 +291,6 @@ ID of the Agent Controller as configured in Aembit.
 
 ### `AEMBIT_STACK_DOMAIN`
 
-[Section titled “AEMBIT\_STACK\_DOMAIN”](#aembit_stack_domain)
-
 Default - `useast2.aembit.io`
 
 Aembit stack domain for this tenant. **Don’t set this value unless directed by your Aembit representative.**
@@ -253,8 +299,6 @@ Aembit stack domain for this tenant. **Don’t set this value unless directed by
 
 ### `AEMBIT_LOG_LEVEL`
 
-[Section titled “AEMBIT\_LOG\_LEVEL”](#aembit_log_level-1)
-
 Default - `information`
 
 Log verbosity level for Agent Controller. The supported levels include `fatal`, `error`, `warning`, `information`, `debug`, `verbose`.
@@ -262,20 +306,18 @@ Log verbosity level for Agent Controller. The supported levels include `fatal`, 
 *Example*:\
 `verbose`
 
-Log level mapping
-
-The Agent Controller uses its own `AEMBIT_LOG_LEVEL` independently from the Gateway. For consistent logging in aggregated environments, use the following mapping:
-
-| Gateway level | Agent Controller level |
-| ------------- | ---------------------- |
-| `info`        | `information`          |
-| `debug`       | `debug`                |
-| `trace`       | `verbose`              |
+> **Log level mapping**
+>
+> The Agent Controller uses its own `AEMBIT_LOG_LEVEL` independently from the Gateway. For consistent logging in aggregated environments, use the following mapping:
+>
+> | Gateway level | Agent Controller level |
+> | ------------- | ---------------------- |
+> | `info`        | `information`          |
+> | `debug`       | `debug`                |
+> | `trace`       | `verbose`              |
 
 For Agent Controller installation details, see [Set up the MCP Identity Gateway](setup-mcp-gateway.md).
 
 ## Related resources
-
-[Section titled “Related resources”](#related-resources)
 
 * [MCP Identity Gateway reference](reference-mcp-gateway.md)

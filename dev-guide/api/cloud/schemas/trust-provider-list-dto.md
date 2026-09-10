@@ -1,0 +1,23 @@
+---
+type: reference
+title: "TrustProviderListDTO"
+description: "Page of Trust Providers"
+resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
+interface: api
+timestamp: 2026-07-28T14:42:14-04:00
+---
+
+# TrustProviderListDTO
+
+Page of Trust Providers
+
+**Type:** object
+
+**Properties:**
+
+- **page** *(optional)*: integer (int32) - Page of entities
+- **perPage** *(optional)*: integer (int32) - Number of entities requested for the current page
+- **order** *(optional)*: null,string - Ordering criteria used for the current page
+- **statusCode** *(optional)*: integer (int32) - HTTP Status Code of the response
+- **recordsTotal** *(optional)*: integer (int32) - Total number of Trust Providers
+- **trustProviders** *(optional)*: null,array - Page of Trust Providers

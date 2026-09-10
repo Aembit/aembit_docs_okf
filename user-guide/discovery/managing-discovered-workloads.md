@@ -4,16 +4,15 @@ title: "Managing discovered workloads"
 description: "How to manage workloads found through Aembit Discovery"
 resource: https://docs.aembit.io/user-guide/discovery/managing-discovered-workloads/
 interface: web-ui
-tags: [discovery]
-timestamp: 2026-06-26T15:17:49-07:00
-type_inferred: true
+tags: ["discovery"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Managing discovered workloads
 
-Note
-
-This is a beta feature and may be subject to changes.
+> **Note**
+>
+> This is a beta feature and may be subject to changes.
 
 This section explains how to manage discovered workloads—view their details, convert them to managed, ignore them, and restore them if needed.
 
@@ -42,8 +41,6 @@ Following that, Aembit displays a table of all discovered or ignored workloads. 
 
 ## Filtering Discovered Workloads
 
-[Section titled “Filtering Discovered Workloads”](#filtering-discovered-workloads)
-
 You can filter the discovered workloads based on different criteria to find the workloads you need. As you filter, Aembit updates the list of discovered workloads to match your criteria. This enables you to narrow your search and locate specific workloads without having to scroll through the entire list, especially if you have many discovered workloads.
 
 ![Discovered Client Workloads filtered](https://docs.aembit.io/_astro/discovery-client-workload-filters-chosen.B8xBAhRa_sJ7uQ.webp)
@@ -53,8 +50,6 @@ You can filter the discovered workloads based on different criteria to find the 
 The following sections detail the filtering options available for Client and Server Workloads:
 
 ### Client Workload filtering options
-
-[Section titled “Client Workload filtering options”](#client-workload-filtering-options)
 
 On the **Client Workloads** page in the **Discovered** tab, you can filter for specific workloads based on the following:
 
@@ -69,8 +64,6 @@ On the **Client Workloads** page in the **Discovered** tab, you can filter for s
 
 ### Server Workload filtering options
 
-[Section titled “Server Workload filtering options”](#server-workload-filtering-options)
-
 On the **Server Workloads** page in the **Discovered** tab, you can filter for specific workloads based on the following:
 
 * **SOURCE** - Filter by [Workload Discovery Source](sources/overview.md).
@@ -84,8 +77,6 @@ On the **Server Workloads** page in the **Discovered** tab, you can filter for s
 ![Server Workload Discovered tab filtering options](https://docs.aembit.io/_astro/discovery-filtering-server-workloads.DYgQ_RTL_Z7jji8.webp)
 
 ## Viewing workload details
-
-[Section titled “Viewing workload details”](#viewing-workload-details)
 
 On the **Discovered** tab, you can view the details of each workload that Aembit has discovered. However, you can’t edit the details of discovered workloads directly from this page. Instead, you must first convert them to **managed** workloads to edit their details or you can ignore them if they’re not relevant to your use case.
 
@@ -118,8 +109,6 @@ The details on this page differ between Client and Server Workloads:
 
 ### View workload details
 
-[Section titled “View workload details”](#view-workload-details)
-
 To view the details of a discovered workload, follow these steps:
 
 1. In left nav menu, click either **Client Workloads** or **Server Workloads**.
@@ -140,8 +129,6 @@ To view the details of a discovered workload, follow these steps:
 
 ## Manage a discovered workload
 
-[Section titled “Manage a discovered workload”](#manage-a-discovered-workload)
-
 After [reviewing a workload’s details](#view-workload-details) and deciding to manage it, follow these steps to convert that workload to **managed**:
 
 1. On the workload you want to convert, click **+ Manage**.
@@ -154,15 +141,13 @@ After [reviewing a workload’s details](#view-workload-details) and deciding to
 
 You can then return to the **Managed tab** to create and apply Access Policies for the workload.
 
-Mmanaging multiple workloads
-
-When selecting more than one workload from the **Discovered** tab, you only have the option to **Ignore**. You can only manage one workload at a time from this tab.
-
-![Comparison of single vs multiple selected workloads](https://docs.aembit.io/_astro/discovery-client-workload-multi-item-selection-comparison.DmcOjNtX_Z1jCRYg.webp)
+> **Mmanaging multiple workloads**
+>
+> When selecting more than one workload from the **Discovered** tab, you only have the option to **Ignore**. You can only manage one workload at a time from this tab.
+>
+> ![Comparison of single vs multiple selected workloads](https://docs.aembit.io/_astro/discovery-client-workload-multi-item-selection-comparison.DmcOjNtX_Z1jCRYg.webp)
 
 ## Ignore a discovered workload
-
-[Section titled “Ignore a discovered workload”](#ignore-a-discovered-workload)
 
 If you find a workload unnecessary or irrelevant, and you no longer want to see it in the **Discovered tab**, do the following:
 
@@ -183,8 +168,6 @@ If you find a workload unnecessary or irrelevant, and you no longer want to see 
 You can always [restore an ignored workload](#restore-or-manage-an-ignored-workload) if you change your mind or need to manage it later.
 
 ## Restore or manage an ignored workload
-
-[Section titled “Restore or manage an ignored workload”](#restore-or-manage-an-ignored-workload)
 
 To restore workloads to the **Discovered tab**, follow these steps:
 
@@ -210,8 +193,8 @@ To restore workloads to the **Discovered tab**, follow these steps:
 
 ![Ignoring discovered Server Workloads](https://docs.aembit.io/_astro/discovery-server-workload-ignored-one-item-selection.CUwIXTmC_Z2ge7Qf.webp)
 
-Restoring or managing multiple ignored workloads
-
-When selecting more than one workload from the **Ignored** tab, you only have the option to **Restore**. You can only manage one workload at a time from this tab.
-
-![Comparison of single vs multiple selected workloads](https://docs.aembit.io/_astro/discovery-client-workload-multi-item-selection-comparison.DmcOjNtX_Z1jCRYg.webp)
+> **Restoring or managing multiple ignored workloads**
+>
+> When selecting more than one workload from the **Ignored** tab, you only have the option to **Restore**. You can only manage one workload at a time from this tab.
+>
+> ![Comparison of single vs multiple selected workloads](https://docs.aembit.io/_astro/discovery-client-workload-multi-item-selection-comparison.DmcOjNtX_Z1jCRYg.webp)

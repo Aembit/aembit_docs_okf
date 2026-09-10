@@ -4,9 +4,8 @@ title: "How to create a Resource Set"
 description: "How to create a Resource Set"
 resource: https://docs.aembit.io/user-guide/administration/resource-sets/create-resource-set/
 interface: web-ui
-tags: [resource-set, administration]
-timestamp: 2025-05-22T22:55:26-07:00
-type_inferred: true
+tags: ["resource-set", "administration"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # How to create a Resource Set

@@ -4,9 +4,8 @@ title: "AWS Role Trust Provider"
 description: "This page describes the steps needed to configure the AWS Role Trust Provider."
 resource: https://docs.aembit.io/user-guide/access-policies/trust-providers/aws-role-trust-provider/
 interface: web-ui
-tags: [trust-provider, access-policy]
-timestamp: 2025-05-22T22:55:26-07:00
-type_inferred: true
+tags: ["trust-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # AWS Role Trust Provider
@@ -21,8 +20,6 @@ The AWS Role Trust Provider supports attestation within the AWS environment. Aem
 
 ## Match rules
 
-[Section titled “Match rules”](#match-rules)
-
 The following match rules are available for this Trust Provider type:
 
 * `accountId`
@@ -33,8 +30,6 @@ The following match rules are available for this Trust Provider type:
 For a description of the match rule fields available in the AWS Role Trust Provider, please refer to the [AWS documentation](https://docs.aws.amazon.com/STS/latest/APIReference/API_GetCallerIdentity.html).
 
 ## AWS Role support
-
-[Section titled “AWS Role support”](#aws-role-support)
 
 Aembit supports AWS Role-Based Trust Providers by enabling you to create a new Trust Provider using the Aembit Tenant UI. Follow the steps below to create the AWS Role Trust Provider.
 
@@ -54,9 +49,9 @@ Aembit supports AWS Role-Based Trust Providers by enabling you to create a new T
 
 * If you use the `username` value, make sure it is in the following format: `<USER_NAME>:<EC2_INSTANCE_ID>`
 
-Note
-
-The username value refers to the `AccessKeyId` field in Amazon’s [IAM Roles for Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html#instance-metadata-security-credentials) documentation.
+> **Note**
+>
+> The username value refers to the `AccessKeyId` field in Amazon’s [IAM Roles for Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html#instance-metadata-security-credentials) documentation.
 
 ![Trust Provider Dialog Window -
 Complete](https://docs.aembit.io/_astro/trust_providers_new_trust_provider_dialog_window_complete.BhLqwfZ0_ZOSkmU.webp)
@@ -65,13 +60,11 @@ Complete](https://docs.aembit.io/_astro/trust_providers_new_trust_provider_dialo
 
 ## ECS Fargate container support
 
-[Section titled “ECS Fargate container support”](#ecs-fargate-container-support)
-
 You must assign an AWS IAM role with `AmazonECSTaskExecutionRolePolicy` permission to your ECS tasks.
 
-Note
-
-You have different ways to perform the following steps (e.g. UI, API, CDK, Terraform, etc.). The following steps are one approach; however, select the way that is most appropriate for your organization.
+> **Note**
+>
+> You have different ways to perform the following steps (e.g. UI, API, CDK, Terraform, etc.). The following steps are one approach; however, select the way that is most appropriate for your organization.
 
 1. Check the existence of AWS IAM ecsTaskExecutionRole. Please refer to the [AWS documentation](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_execution_IAM_role.html#procedure_check_execution_role) for more information.
 
@@ -84,8 +77,6 @@ You have different ways to perform the following steps (e.g. UI, API, CDK, Terra
 ![ECS Role Trust Provider Page](https://docs.aembit.io/_astro/ecs_task_role.DHKGsPm6_d5pbv.webp)
 
 ## Lambda support
-
-[Section titled “Lambda support”](#lambda-support)
 
 If you are using this Trust Provider for attestation of workloads running in a Lambda environment, you may use the following match rules:
 

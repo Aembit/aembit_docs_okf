@@ -2,7 +2,7 @@
 type: definition
 title: "JWKS"
 description: "JSON Web Key Set - A set of cryptographic keys published at a well-known endpoint, used to verify the signatures of JSON Web Tokens (JWTs) issued by an authorization server."
-tags: [security]
+tags: ["security"]
 timestamp: 2026-01-13T14:54:59-08:00
 ---
 

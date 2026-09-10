@@ -4,9 +4,8 @@ title: "How to stream Aembit events to Splunk SIEM"
 description: "How to create a new a Log Stream for Splunk SIEM"
 resource: https://docs.aembit.io/user-guide/administration/log-streams/splunk-siem/
 interface: web-ui
-tags: [log-stream, administration]
-timestamp: 2025-05-29T06:42:45-07:00
-type_inferred: true
+tags: ["log-stream", "administration"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # How to stream Aembit events to Splunk SIEM
@@ -14,8 +13,6 @@ type_inferred: true
 Aembit’s Log Stream to Splunk Security Information and Event Management (SIEM) feature enables rapid streaming of Aembit Edge event logs and audit logs directly to Splunk. This integration uses the HTTP Event Collector (HEC) protocol to deliver comprehensive security data, enhancing threat detection capabilities, improving incident management, and streamlining compliance monitoring for your organization.
 
 ## Prerequisites
-
-[Section titled “Prerequisites”](#prerequisites)
 
 Before you can stream Aembit events to Splunk SIEM, you must have an HTTP Event Collector (HEC) set up in your Splunk environment with the following attributes:
 
@@ -27,8 +24,6 @@ Use your HEC’s **Source Name** and **Token Value** in your Splunk SIEM Log Str
 To configure an HEC in Splunk, see [Set up and use HTTP Event Collector in Splunk Web](https://docs.splunk.com/Documentation/SplunkCloud/latest/Data/UsetheHTTPEventCollector) in Splunk’s official docs.
 
 ## Create a Splunk SIEM Log Stream
-
-[Section titled “Create a Splunk SIEM Log Stream”](#create-a-splunk-siem-log-stream)
 
 1. Log into your Aembit Tenant.
 
@@ -74,8 +69,6 @@ Once you save your Log Stream, you can view its details by selecting it in the l
 
 ## Monitor logs in Splunk SIEM
 
-[Section titled “Monitor logs in Splunk SIEM”](#monitor-logs-in-splunk-siem)
-
 After configuration, you can search and view logs that Aembit generates from the event type you selected in Splunk’s Search and Reporting page using the following search phrase:
 
 ```shell
@@ -87,7 +80,5 @@ You should see results similar to the following screenshot:
 ![Splunk Search UI with results](https://docs.aembit.io/_astro/log-stream-splunk-siem-splunk-search.BY1bCkcc_11bE36.webp)
 
 ## Failure notifications
-
-[Section titled “Failure notifications”](#failure-notifications)
 
 If your Aembit account has write privileges for Log Streams, Aembit automatically sends you an email notification when Log Stream transactions consistently fail.

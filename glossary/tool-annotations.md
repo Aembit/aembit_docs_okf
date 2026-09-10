@@ -2,7 +2,7 @@
 type: definition
 title: "Tool annotations"
 description: "Metadata in MCP tool discovery responses that categorize tools by behavior, such as read-only or destructive operations. MCP clients use annotations to drive safety decisions — specifically whether to auto-approve a tool call or prompt the user for confirmation."
-tags: [core-concepts]
+tags: ["core-concepts"]
 timestamp: 2026-04-03T17:08:42-07:00
 ---
 

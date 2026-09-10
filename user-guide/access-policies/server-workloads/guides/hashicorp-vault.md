@@ -4,9 +4,8 @@ title: "HashiCorp Vault"
 description: "This page describes how to configure Aembit to work with the HashiCorp Vault Server Workload."
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/guides/hashicorp-vault/
 interface: web-ui
-tags: [security, guide, server-workload, access-policy]
-timestamp: 2025-05-29T11:26:12-07:00
-type_inferred: true
+tags: ["security", "guide", "server-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # HashiCorp Vault
@@ -18,16 +17,12 @@ Below you can find the Aembit configuration required to work with the HashiCorp 
 
 ## Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites)
-
 Before proceeding with the configuration, ensure you have the following:
 
 * Vault Cluster (self-hosted or HCP tenant).
 * An OIDC authentication method enabled in your Vault cluster. If you have not already set this up, follow the steps outlined in the next section or refer to the [official HashiCorp Vault documentation](https://developer.hashicorp.com/vault/tutorials/auth-methods/oidc-auth) for more detailed instructions.
 
 ### Configure Vault
-
-[Section titled “Configure Vault”](#configure-vault)
 
 1. Log in to your Vault cluster.
 
@@ -46,8 +41,6 @@ Before proceeding with the configuration, ensure you have the following:
 
 ### Configure Vault Role
 
-[Section titled “Configure Vault Role”](#configure-vault-role)
-
 After completing the configuration on Vault, creating a Vault Role for the associated Vault Authentication Method is essential. To do this, navigate to the Vault CLI shell icon (>\_) to open a command shell, and within the terminal, execute the following command:
 
 ```shell
@@ -61,8 +54,6 @@ $ vault write auth/$AUTH_PATH/role/$ROLE_NAME \
 :warning: Before running the command, ensure you have replaced the variables (e.g. `$AUTH_PATH`, `$ROLE_NAME`, etc.) with your desired values and `$AEMBIT_ISSUER` with the Issuer URL copied from the Aembit Credential Provider.
 
 ## Credential Provider Configuration
-
-[Section titled “Credential Provider Configuration”](#credential-provider-configuration)
 
 1. Create a new Credential Provider.
 
@@ -90,8 +81,6 @@ VAULT AUTHENTICATION
 
 ### Configuration-Specific Fields
 
-[Section titled “Configuration-Specific Fields”](#configuration-specific-fields)
-
 Depending on your Vault Role configuration, ensure that the Credential Provider includes the following values:
 
 * **Subject** - If using a `bound_subject` configuration for your Vault Role, this value must match that configuration.
@@ -102,8 +91,6 @@ CUSTOM CLAIMS
 * **Value** - This value should match the configuration in your Vault role’s `bound_audiences` setting.
 
 ## Server Workload configuration
-
-[Section titled “Server Workload configuration”](#server-workload-configuration)
 
 1. Create a new Server Workload.
 
@@ -121,21 +108,15 @@ CUSTOM CLAIMS
 
 ## Client Workload Configuration
 
-[Section titled “Client Workload Configuration”](#client-workload-configuration)
-
 Aembit now handles the credentials required to access the Server Workload, eliminating the need for you to manage them directly. You can safely remove any previously used credentials from the Client Workload.
 
 If you access the Server Workload through an SDK or library, it is possible that the SDK/library may still require credentials to be present for initialization purposes. In this scenario, you can provide placeholder credentials. Aembit will overwrite these placeholder credentials with the appropriate ones during the access process.
 
 ## Access Policy
 
-[Section titled “Access Policy”](#access-policy)
-
 * Create an access policy for a Client Workload to access the HashiCorp Vault Server Workload and assign the newly created Credential Provider to it.
 
 ## Required Features
-
-[Section titled “Required Features”](#required-features)
 
 * You will need to configure the [TLS Decrypt](../../../deploy-install/advanced-options/tls-decrypt/configure-tls-decrypt.md) feature to work with the HashiCorp Vault Server Workload.
 

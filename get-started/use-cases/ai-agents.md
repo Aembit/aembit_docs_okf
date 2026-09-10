@@ -3,7 +3,7 @@ type: explanation
 title: "Securing AI agent access to your resources"
 description: "How Aembit secures AI agent access to enterprise resources through the Model Context Protocol (MCP)"
 resource: https://docs.aembit.io/get-started/use-cases/ai-agents/
-tags: [use-case]
+tags: ["use-case"]
 timestamp: 2026-06-15T10:19:43-07:00
 ---
 
@@ -21,15 +21,11 @@ Both traditional applications and AI agents follow the same path: authenticate w
 
 ### User-driven AI agents
 
-[Section titled “User-driven AI agents”](#user-driven-ai-agents)
-
-AI assistants like Claude Desktop or Gemini CLI that act on behalf of an authenticated user. These agents have a blended identity**Blended Identity**: An access model that combines a human user's identity (authenticated through an Identity Provider) with an AI agent's workload identity into a single access decision, enabling policies that evaluate both "who is this user" and "which agent are they using" simultaneously.[Learn more](../../ai-guide/blended-identity.md): access ties to both the user’s identity (from your IdP) and the agent’s workload identity, so policies can scope permissions based on “who is using which agent to do what.”
+AI assistants like Claude Desktop or Gemini CLI that act on behalf of an authenticated user. These agents have a blended identity: access ties to both the user’s identity (from your IdP) and the agent’s workload identity, so policies can scope permissions based on “who is using which agent to do what.”
 
 The rest of this page focuses on user-driven agents, the most mature category and the one organizations are deploying today.
 
 ## What Aembit solves
-
-[Section titled “What Aembit solves”](#what-aembit-solves)
 
 Organizations want to deploy AI agents, but security and compliance requirements block progress. Without centralized identity controls, teams wait on security reviews, agents lack access to internal systems, and long-lived API keys distributed as workarounds create unmonitored risk.
 
@@ -46,8 +42,6 @@ With Aembit, you get:
 * Instant revocation by disabling access for a specific user, agent type, or user-agent combination through policy changes, not credential rotation
 
 ## Real example: securing Claude Desktop access
-
-[Section titled “Real example: securing Claude Desktop access”](#real-example-securing-claude-desktop-access)
 
 Your team wants to use Claude Desktop to query Jira issues and search Confluence documentation. Without Aembit, you’d need to:
 
@@ -66,10 +60,10 @@ If approved, Aembit issues a short-lived token that the MCP server validates. Th
 
 How MCP OAuth 2.1 authorization works
 
-The [Model Context Protocol (MCP) specification](https://spec.modelcontextprotocol.io/) defines how AI agents discover and connect to servers that provide context (data sources, tools, resources). MCP uses OAuth 2.1**OAuth 2.1**: An updated consolidation of the OAuth 2.0 specification that mandates PKCE for all clients, removes the implicit grant and resource owner password grant, and requires stricter security defaults.[Learn more(opens in new tab)](https://oauth.net/2.1/) with dynamic client registration, which means:
+The [Model Context Protocol (MCP) specification](https://spec.modelcontextprotocol.io/) defines how AI agents discover and connect to servers that provide context (data sources, tools, resources). MCP uses OAuth 2.1 with dynamic client registration, which means:
 
 * AI agent clients don’t need static credentials to authenticate to the MCP Authorization Server (no pre-shared secrets)
-* The agent registers itself at runtime, receives a client ID, and uses Proof Key for Code Exchange (PKCE)**PKCE (Proof Key for Code Exchange)**: An OAuth 2.0 extension that prevents authorization code interception attacks. The client creates a cryptographic challenge during the authorization request and proves possession of the original secret when exchanging the code for a token.[Learn more(opens in new tab)](https://oauth.net/2/pkce/) to complete the OAuth flow
+* The agent registers itself at runtime, receives a client ID, and uses Proof Key for Code Exchange (PKCE) to complete the OAuth flow
 * After user authentication, the MCP Authorization Server issues a token with a limited lifetime (default 1 hour), which the agent uses to access the MCP server
 
 This differs from traditional OAuth 2.0 by eliminating client secrets, since AI agents running on user devices can’t protect stored secrets. It also requires PKCE for all clients, not just public clients.
@@ -86,8 +80,6 @@ The Identity Gateway model provides the strongest security (zero credential expo
 
 ### Why this architecture matters for AI agents
 
-[Section titled “Why this architecture matters for AI agents”](#why-this-architecture-matters-for-ai-agents)
-
 AI agents introduce security challenges that traditional secret management doesn’t address.
 
 Unlike scripts or applications, AI agents make decisions about what to access and when. An agent might query your entire Jira backlog or search Confluence for sensitive keywords. Blended identity policies let you scope access based on both the user and the agent. You can allow your security team to use Claude Desktop for vulnerability data while restricting engineering to Jira and Confluence only.
@@ -99,8 +91,6 @@ When an AI agent takes an action on behalf of a user, compliance teams need to k
 Aembit’s AI agent security isn’t a separate product. It leverages the same [Trust Providers](../concepts/trust-providers.md), [Credential Providers](../concepts/credential-providers.md), and [Access Policies](../concepts/access-policies.md) you use for securing service-to-service communication. The MCP Authorization Server is an integration layer on top of Aembit’s workload IAM foundation, and it extends to new agent types without rebuilding the security model.
 
 ### Audit and compliance for AI agents
-
-[Section titled “Audit and compliance for AI agents”](#audit-and-compliance-for-ai-agents)
 
 AI agents introduce a new audit challenge. When an agent takes an action, compliance teams need the same answers they require for human access: who was responsible, what did they access, and when did it happen?
 
@@ -122,8 +112,6 @@ For organizations with audit requirements around privileged access or regulatory
 
 ## Supported AI platforms
 
-[Section titled “Supported AI platforms”](#supported-ai-platforms)
-
 Aembit’s MCP Authorization Server supports OAuth 2.1 with dynamic client registration, which means it works with MCP-compatible AI platforms including:
 
 * Claude Desktop, the Anthropic desktop application with MCP support
@@ -132,31 +120,21 @@ Aembit’s MCP Authorization Server supports OAuth 2.1 with dynamic client regis
 
 ## Next steps
 
-[Section titled “Next steps”](#next-steps)
-
 ### Start with the MCP Authorization Server
-
-[Section titled “Start with the MCP Authorization Server”](#start-with-the-mcp-authorization-server)
 
 * [MCP Authorization Server overview](../../ai-guide/mcp/authorization-server/overview.md) covers how OAuth 2.1 authorization works for MCP clients
 * [Set up the MCP Authorization Server](../../ai-guide/mcp/authorization-server/setup-mcp-auth-server.md) walks through configuring Aembit as your MCP authorization provider
 
 ### Understand blended identity
 
-[Section titled “Understand blended identity”](#understand-blended-identity)
-
 * [Blended identity](../../ai-guide/blended-identity.md) explains how Aembit combines user and workload identity for AI agent access control
 
 ### Configure identity and policies
-
-[Section titled “Configure identity and policies”](#configure-identity-and-policies)
 
 * [Trust Providers](../concepts/trust-providers.md) for connecting your identity provider for user authentication
 * [Access Policies](../concepts/access-policies.md) for defining who can access which MCP servers and under what conditions
 
 ### Related use cases
-
-[Section titled “Related use cases”](#related-use-cases)
 
 * [MCP server access](mcp-server-access.md) covers the MCP Identity Gateway, a centralized proxy that adds per-user credential isolation and zero credential exposure when agents reach many MCP servers
 * [AI and LLM Access](ai-llm-access.md) covers securing your applications’ access to AI APIs (OpenAI, Anthropic, etc.), which is distinct from securing AI agents’ access to your enterprise resources

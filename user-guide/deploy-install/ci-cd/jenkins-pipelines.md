@@ -4,24 +4,21 @@ title: "Injecting credentials into Jenkins Pipelines with Aembit"
 description: "Set up Jenkins to use Aembit's OIDC ID Token Trust Provider for secure CI/CD authentication without static credentials"
 resource: https://docs.aembit.io/user-guide/deploy-install/ci-cd/jenkins-pipelines/
 interface: web-ui
-tags: [ci-cd, deploy-install]
-timestamp: 2026-06-30T13:30:29-04:00
-type_inferred: true
+tags: ["ci-cd", "deploy-install"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Injecting credentials into Jenkins Pipelines with Aembit
 
 Aembit provides many different deployment options you can use to deploy Aembit Edge Components in your environment. Each of these options provides similar features and functionality; however, the steps for each of these options are specific to the deployment option you select.
 
-This page describes the process to use the [Aembit CLI](../../../cli-guide/overview.md) in [Jenkins Pipelines](https://www.jenkins.io/doc/book/pipeline/) (recommended) and Freestyle projects, providing step-by-step instructions for each approach.
+This page describes the process to use the [Aembit CLI](../../../dev-guide/cli/overview.md) in [Jenkins Pipelines](https://www.jenkins.io/doc/book/pipeline/) (recommended) and Freestyle projects, providing step-by-step instructions for each approach.
 
 Configure Jenkins to authenticate with Aembit using OpenID Connect (OIDC) tokens, enabling secure access to your infrastructure without managing static credentials in your CI/CD pipelines.
 
 This configuration allows Jenkins jobs to obtain temporary credentials from Aembit using OIDC tokens that Jenkins issues eliminating the need to store long-lived secrets in Jenkins.
 
 ## Prerequisites
-
-[Section titled “Prerequisites”](#prerequisites)
 
 Before you begin, ensure you have:
 
@@ -30,8 +27,6 @@ Before you begin, ensure you have:
 * Basic familiarity with Jenkins job configuration and pipeline scripting
 
 ## What you’ll do
-
-[Section titled “What you’ll do”](#what-youll-do)
 
 This page walks you through the following tasks:
 
@@ -45,8 +40,6 @@ This page walks you through the following tasks:
 
 ## Install the Jenkins OIDC plugin
 
-[Section titled “Install the Jenkins OIDC plugin”](#install-the-jenkins-oidc-plugin)
-
 This procedure requires a third-party plugin to issue OIDC tokens.
 
 You’ll install the **OpenID Connect Provider Plugin**, which enables Jenkins to act as an OIDC provider, issuing tokens that your jobs can use to authenticate with Aembit.
@@ -59,24 +52,22 @@ You’ll install the **OpenID Connect Provider Plugin**, which enables Jenkins t
 
 4. Search for “OIDC Provider” and install the **OpenID Connect Provider Plugin** from this URL: `https://plugins.jenkins.io/oidc-provider/`.
 
-   OIDC plugin selection
-
-   Multiple OIDC-related plugins exist. **Ensure you install the “OpenID Connect Provider Plugin” specifically**, which enables Jenkins to issue its own OIDC tokens. Note that this plugin don’t appear in the “Installed” plugins list after installation. The other common plugin, “OpenID Connect authentication,” typically handles Single Sign-On (SSO) *into* Jenkins and doesn’t issue tokens.
+   > **OIDC plugin selection**
+   >
+   > Multiple OIDC-related plugins exist. **Ensure you install the “OpenID Connect Provider Plugin” specifically**, which enables Jenkins to issue its own OIDC tokens. Note that this plugin don’t appear in the “Installed” plugins list after installation. The other common plugin, “OpenID Connect authentication,” typically handles Single Sign-On (SSO) *into* Jenkins and doesn’t issue tokens.
 
 5. Restart Jenkins when prompted to complete the installation.
 
 ## Configure Jenkins system settings
 
-[Section titled “Configure Jenkins system settings”](#configure-jenkins-system-settings)
-
 **The Jenkins URL configuration is critical for OIDC token verification**.
 
-Choosing your attestation method
-
-The Jenkins URL you configure here determines which attestation method you’ll use when setting up the Aembit Trust Provider later:
-
-* **OIDC Discovery** (recommended): Your Jenkins URL must be publicly accessible to Aembit, have a valid TLS certificate, and allow access to `/oidc/.well-known/jwks.json`
-* **Upload JWKS**: Use this if your Jenkins instance uses self-signed certificates, has network restrictions, or returns `localhost:8080` URLs in OIDC configuration (common in Docker/proxy deployments)
+> **Choosing your attestation method**
+>
+> The Jenkins URL you configure here determines which attestation method you’ll use when setting up the Aembit Trust Provider later:
+>
+> * **OIDC Discovery** (recommended): Your Jenkins URL must be publicly accessible to Aembit, have a valid TLS certificate, and allow access to `/oidc/.well-known/jwks.json`
+> * **Upload JWKS**: Use this if your Jenkins instance uses self-signed certificates, has network restrictions, or returns `localhost:8080` URLs in OIDC configuration (common in Docker/proxy deployments)
 
 1. In the Jenkins UI, go to **Manage Jenkins -> System**.
 2. Locate the **Jenkins Location** section.
@@ -85,17 +76,15 @@ The Jenkins URL you configure here determines which attestation method you’ll 
 
 ## Create OIDC credentials in Jenkins
 
-[Section titled “Create OIDC credentials in Jenkins”](#create-oidc-credentials-in-jenkins)
-
 Jenkins credentials store the configuration needed to issue OIDC tokens for your jobs.
 
 1. In the Jenkins UI, go to **Manage Jenkins -> Credentials**.
 
 2. Click on the **Global** domain (or create a new domain if needed).
 
-   Tip
-
-   Use the Global scope for credentials that need to be available to all jobs. Jenkins reserves System scope for internal operations like agent connections.
+   > **Tip**
+   >
+   > Use the Global scope for credentials that need to be available to all jobs. Jenkins reserves System scope for internal operations like agent connections.
 
 3. Click **Add Credentials** to create a new credential.
 
@@ -108,9 +97,9 @@ Jenkins credentials store the configuration needed to issue OIDC tokens for your
    * **ID** - Leave this field blank to let Jenkins generate a unique ID. Jenkins uses this ID internally.
    * **Description** - Enter a descriptive name (this serves as the credential’s display name). This is important for the credential to appear in job dropdowns.
 
-   Caution
-
-   If you fill in the **Default Issuer URI** field, Jenkins won’t include this credential in its public key manifest, causing token verification to fail. **Leave this field blank** unless you’re using an external OIDC provider.
+   > **Caution**
+   >
+   > If you fill in the **Default Issuer URI** field, Jenkins won’t include this credential in its public key manifest, causing token verification to fail. **Leave this field blank** unless you’re using an external OIDC provider.
 
 5. Click **OK** to save the credential.
 
@@ -118,13 +107,11 @@ Jenkins credentials store the configuration needed to issue OIDC tokens for your
 
 6. Record the **ID** of the credential you just created. You’ll use this ID in your Jenkins job configuration to reference the OIDC credential.
 
-   Note
-
-   The ID is a unique identifier for the credential, which you’ll use in your Jenkins job configurations. You can find this ID in the credentials list or by clicking on the credential to view its details.
+   > **Note**
+   >
+   > The ID is a unique identifier for the credential, which you’ll use in your Jenkins job configurations. You can find this ID in the credentials list or by clicking on the credential to view its details.
 
 ## Set up Aembit OIDC ID Token Trust Provider
-
-[Section titled “Set up Aembit OIDC ID Token Trust Provider”](#set-up-aembit-oidc-id-token-trust-provider)
 
 Configure Aembit to trust tokens issued by your Jenkins instance:
 
@@ -150,9 +137,9 @@ Configure Aembit to trust tokens issued by your Jenkins instance:
 
      Use OIDC Discovery when Jenkins has a valid TLS certificate and is publicly accessible. This is the recommended method for standard deployments.
 
-     Self-signed certificates
-
-     If your Jenkins instance uses self-signed certificates, OIDC Discovery fails. Use the **Upload JWKS** attestation method instead.
+     > **Self-signed certificates**
+     >
+     > If your Jenkins instance uses self-signed certificates, OIDC Discovery fails. Use the **Upload JWKS** attestation method instead.
 
      1. Select **OIDC Discovery** as the attestation method.
      2. In the **OIDC Endpoint** field that appears, enter your Jenkins issuer URL (for example, `https://jenkins.my-company.com/oidc`).\
@@ -199,13 +186,13 @@ Configure Aembit to trust tokens issued by your Jenkins instance:
 
      6. In the **JWKS Content** field that appears in Aembit, paste the JSON content.
 
-   Other attestation methods
-
-   The **Public Key** and **Symmetric Key** attestation methods aren’t applicable for the OpenID Connect Provider Plugin because:
-
-   * OpenID Connect Provider Plugin uses asymmetric cryptography internally and doesn’t export keys in PEM/CER format
-   * OpenID Connect Provider Plugin doesn’t support symmetric key signing configuration
-   * Keys are only available in JWKS format through the OpenID Connect Provider Plugin’s standard OIDC endpoints
+   > **Other attestation methods**
+   >
+   > The **Public Key** and **Symmetric Key** attestation methods aren’t applicable for the OpenID Connect Provider Plugin because:
+   >
+   > * OpenID Connect Provider Plugin uses asymmetric cryptography internally and doesn’t export keys in PEM/CER format
+   > * OpenID Connect Provider Plugin doesn’t support symmetric key signing configuration
+   > * Keys are only available in JWKS format through the OpenID Connect Provider Plugin’s standard OIDC endpoints
 
 8. Click **Save** to create the Trust Provider.
 
@@ -219,8 +206,6 @@ Configure Aembit to trust tokens issued by your Jenkins instance:
 
 ## Configure an Access Policy
 
-[Section titled “Configure an Access Policy”](#configure-an-access-policy)
-
 From your Aembit Tenant, create a new Access Policy or update an existing one to start using the Trust Provider you just created.
 
 1. Go to **Access Policies** and select an existing policy to open the Access Policy Builder, or click **+ New** to create a new one.
@@ -230,17 +215,15 @@ From your Aembit Tenant, create a new Access Policy or update an existing one to
 
 ## Create a test Jenkins job
 
-[Section titled “Create a test Jenkins job”](#create-a-test-jenkins-job)
-
 Return to the Jenkins UI to verify your configuration by creating a sample job that uses the OIDC credential.
 
 This job injects the OIDC token into a Jenkins job environment variable for use by the Aembit CLI.
 
 * Pipeline
 
-  Prerequisites
-
-  Pipeline jobs require the **[Pipeline plugin](https://plugins.jenkins.io/workflow-aggregator/)**, which is typically included in modern Jenkins installations. If you don’t see the Pipeline option when creating a new item, install the Pipeline plugin from **Manage Jenkins -> Plugins**.
+  > **Prerequisites**
+  >
+  > Pipeline jobs require the **[Pipeline plugin](https://plugins.jenkins.io/workflow-aggregator/)**, which is typically included in modern Jenkins installations. If you don’t see the Pipeline option when creating a new item, install the Pipeline plugin from **Manage Jenkins -> Plugins**.
 
   1. In Jenkins, click **New Item**.
 
@@ -381,15 +364,15 @@ This job injects the OIDC token into a Jenkins job environment variable for use 
      }
      ```
 
-     Caution
+     > **Caution**
+     >
+     > Replace `'your-oidc-credential-id'` with the actual ID of the OIDC credential you created earlier. You can find this ID in the Jenkins credentials page.
 
-     Replace `'your-oidc-credential-id'` with the actual ID of the OIDC credential you created earlier. You can find this ID in the Jenkins credentials page.
-
-     File-based credential sharing
-
-     This pipeline uses a file-based approach (`aembit_credentials.env`) to share dynamic credentials between stages.
-
-     In Jenkins Pipelines, environment variables set in one stage don’t automatically carry over to other stages because each stage runs in a separate shell session. Writing credentials to a file and sourcing it in subsequent stages is the most reliable method for sharing dynamic credentials between pipeline stages and is considered a best practice.
+     > **File-based credential sharing**
+     >
+     > This pipeline uses a file-based approach (`aembit_credentials.env`) to share dynamic credentials between stages.
+     >
+     > In Jenkins Pipelines, environment variables set in one stage don’t automatically carry over to other stages because each stage runs in a separate shell session. Writing credentials to a file and sourcing it in subsequent stages is the most reliable method for sharing dynamic credentials between pipeline stages, and it’s a best practice.
 
   7. Click **Save**.
 
@@ -411,10 +394,10 @@ This job injects the OIDC token into a Jenkins job environment variable for use 
 
   7. Configure the secret text binding:
 
-  8. In the **Environment** section, check **Use secret text(s) or file(s)**, and enter the following:
+  8. In the **Environment** section, check `Use secret text(s) or file(s)`, and enter the following:
 
      * **Variable** - Enter `OIDC_TOKEN` (or your preferred environment variable name).
-     * **Credentials**: Select **Specific credentials** and choose the OIDC credential you created earlier. This sets up the OIDC discovery URL for the Aembit CLI to use.
+     * **Credentials**: Select **Specific credentials** and choose the OIDC credential you created earlier. This sets up the OIDC discovery URL that Aembit CLI uses.
 
   9. In the **Build Steps** section, click **Add build step**, and select the appropriate execution method:
 
@@ -456,8 +439,6 @@ This job injects the OIDC token into a Jenkins job environment variable for use 
       Jenkins takes you to the job’s main page, where you can see the configuration summary.
 
 ### Run and verify the job
-
-[Section titled “Run and verify the job”](#run-and-verify-the-job)
 
 Now that you’ve configured the Jenkins job, you can run it to verify that it retrieves credentials from Aembit using the OIDC token.
 
@@ -501,23 +482,17 @@ To run and verify the job, follow these steps:
 
 ## Troubleshooting common issues
 
-[Section titled “Troubleshooting common issues”](#troubleshooting-common-issues)
-
 ### Token verification failures
-
-[Section titled “Token verification failures”](#token-verification-failures)
 
 **Problem** - Aembit reports that it can’t verify the OIDC token.
 
 **Possible causes and solutions**:
 
-* **Jenkins URL is localhost** - Update your Jenkins base URL to use a publicly accessible domain name. Even when the Jenkins instance is public, the plugin’s JWKS endpoint might initially reference `localhost:8080`, which needs to be replaced with your actual public URL for Aembit to reach it.
+* **Jenkins URL is localhost** - Update your Jenkins base URL to use a publicly accessible domain name. Even when the Jenkins instance is public, the plugin’s JWKS endpoint might initially reference `localhost:8080`, which you must replace with your actual public URL so Aembit can reach it.
 * **Default Issuer URI has content** - Leave the Default Issuer URI blank in the Jenkins credential configuration.
 * **Discovery endpoint unreachable** - Verify that `https://your-jenkins-url/oidc/.well-known/openid_configuration` provides access from the internet.
 
 ### Missing public keys
-
-[Section titled “Missing public keys”](#missing-public-keys)
 
 **Problem** - Aembit can’t retrieve public keys to verify tokens.
 
@@ -549,9 +524,7 @@ The JWKS endpoint should return a JSON object containing the public keys used to
 
 ### Jenkins returns localhost URLs in OIDC configuration
 
-[Section titled “Jenkins returns localhost URLs in OIDC configuration”](#jenkins-returns-localhost-urls-in-oidc-configuration)
-
-**Problem** - Jenkins OIDC endpoints reference `localhost:8080` instead of your public domain, causing Aembit token verification to fail even when the Jenkins URL is configured correctly.
+**Problem** - Jenkins OIDC endpoints reference `localhost:8080` instead of your public domain, causing Aembit token verification to fail even when you configure the Jenkins URL correctly.
 
 **This commonly occurs when**:
 
@@ -593,8 +566,6 @@ The JWKS endpoint should return a JSON object containing the public keys used to
 
 ### Credential not appearing in dropdown
 
-[Section titled “Credential not appearing in dropdown”](#credential-not-appearing-in-dropdown)
-
 **This only applies to Jenkins Freestyle projects.**
 
 **Problem** - Your OIDC credential doesn’t appear in the job’s credential selection dropdown.
@@ -603,11 +574,7 @@ The JWKS endpoint should return a JSON object containing the public keys used to
 
 ## Deployment considerations
 
-[Section titled “Deployment considerations”](#deployment-considerations)
-
 ### Standard Jenkins installations
-
-[Section titled “Standard Jenkins installations”](#standard-jenkins-installations)
 
 For traditional Jenkins installations, apply the configuration steps listed earlier directly.
 
@@ -615,25 +582,19 @@ Ensure your Jenkins instance provides access from the internet for OIDC discover
 
 ### Generic nature of the OpenID Connect Provider plugin
 
-[Section titled “Generic nature of the OpenID Connect Provider plugin”](#generic-nature-of-the-openid-connect-provider-plugin)
-
 The Jenkins OIDC Provider plugin operates generically. The resulting JSON Web Token (JWT) functions consistently **whether you deploy Jenkins as a VM or otherwise**, or if the token originates from other providers like GitHub or GitLab. This highlights the broad applicability of the generated tokens and the standard implementation of the plugin.
 
 ## Understanding terminology
 
-[Section titled “Understanding terminology”](#understanding-terminology)
-
 The integration involves multiple identifiers that serve different purposes:
 
 * **OIDC Client ID** - The identifier for the Jenkins credential (configured in the credential’s audience field)
-* **Client Workload ID** - The Aembit identifier for the requesting application (used in CLI commands)
-* **Edge SDK Client ID** - The identifier from your OIDC Trust Provider in your Aembit Tenant (used in CLI commands)
+* Client Workload ID - The value you pass to `--client-workload-id`. Supply the Client Workload’s Aembit Client ID, not the workload’s own resource ID.
+* Edge SDK Client ID - The identifier from your OIDC Trust Provider in your Aembit Tenant (passed to `--client-id`)
 
 These are distinct values that serve different parts of the authentication flow.
 
 ## Next steps
-
-[Section titled “Next steps”](#next-steps)
 
 With Jenkins and Aembit OIDC integration configured, you can:
 

@@ -4,9 +4,8 @@ title: "GitLab ID Token Project Path"
 description: "This page describes how the GitLab ID Token Project Path method identifies Client Workloads in Aembit."
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/gitlab-id-token-project-path/
 interface: web-ui
-tags: [cicd, identification, client-workload, access-policy]
-timestamp: 2025-08-18T17:47:46-07:00
-type_inferred: true
+tags: ["cicd", "identification", "client-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # GitLab ID Token Project Path
@@ -18,17 +17,11 @@ This Client Workload identification method is specifically designed for [GitLab 
 
 ## Applicable Deployment Type
 
-[Section titled “Applicable Deployment Type”](#applicable-deployment-type)
-
 This method is suitable for GitLab-based CI/CD Workflow deployments.
 
 ## Configuration
 
-[Section titled “Configuration”](#configuration)
-
 ### Aembit Cloud
-
-[Section titled “Aembit Cloud”](#aembit-cloud)
 
 1. Create a new Client Workload.
 2. Choose **GitLab ID Token Project Path** for client identification.
@@ -38,8 +31,6 @@ This method is suitable for GitLab-based CI/CD Workflow deployments.
 * **Example** - my-group/my-project
 
 ### Finding the GitLab ID Token Project Path:
-
-[Section titled “Finding the GitLab ID Token Project Path:”](#finding-the-gitlab-id-token-project-path)
 
 * Navigate to the **Projects** on GitLab and go to the **All** tab. Locate your project and copy the full displayed project path in the format specified above.
 

@@ -4,9 +4,8 @@ title: "GitHub REST"
 description: "This page describes how to configure Aembit to work with the GitHub REST API Server Workload."
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/guides/github-rest/
 interface: web-ui
-tags: [ci-cd, guide, server-workload, access-policy]
-timestamp: 2026-04-27T11:40:47-04:00
-type_inferred: true
+tags: ["ci-cd", "guide", "server-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # GitHub REST
@@ -21,23 +20,19 @@ Aembit supports multiple authentication/authorization methods for GitHub. This p
 * [OAuth 2.0 Authorization Code (3LO)](#oauth-20-authorization-code)
 * [API Key](github-rest.md#api-key)
 
-Prerequisites
-
-Before proceeding with the configuration, ensure you have the following:
-
-* A GitHub account
-* A personal access token (API Key Method)
-* A GitHub app (OAuth 2.0 Authorization Code Method)
-
-If you have not created a token or an app before, you can follow the steps outlined in the subsequent sections. For detailed information on authenticating with different flows, please refer to the [official GitHub documentation](https://docs.github.com/en/rest/authentication/authenticating-to-the-rest-api?apiVersion=2022-11-28).
+> **Prerequisites**
+>
+> Before proceeding with the configuration, ensure you have the following:
+>
+> * A GitHub account
+> * A personal access token (API Key Method)
+> * A GitHub app (OAuth 2.0 Authorization Code Method)
+>
+> If you have not created a token or an app before, you can follow the steps outlined in the subsequent sections. For detailed information on authenticating with different flows, please refer to the [official GitHub documentation](https://docs.github.com/en/rest/authentication/authenticating-to-the-rest-api?apiVersion=2022-11-28).
 
 ## OAuth 2.0 Authorization Code
 
-[Section titled “OAuth 2.0 Authorization Code”](#oauth-20-authorization-code)
-
 ### Server Workload Configuration
-
-[Section titled “Server Workload Configuration”](#server-workload-configuration)
 
 1. Create a new Server Workload.
 
@@ -53,8 +48,6 @@ If you have not created a token or an app before, you can follow the steps outli
 * **Authentication scheme** - Bearer
 
 ### Credential Provider Configuration
-
-[Section titled “Credential Provider Configuration”](#credential-provider-configuration)
 
 1. Sign in to your GitHub account.
 
@@ -104,17 +97,13 @@ If you have not created a token or an app before, you can follow the steps outli
 
 ![Credential Provider - Ready State](https://docs.aembit.io/_astro/credential_providers_auth_code_status_ready.CBPCBiJg_ZBh135.webp)
 
-Caution
-
-Once the set lifetime ends, the retrieved credential will expire and no longer be active. Aembit will notify you before this happens. Please ensure you reauthorize your credential before it expires.
+> **Caution**
+>
+> Once the set lifetime ends, the retrieved credential will expire and no longer be active. Aembit will notify you before this happens. Please ensure you reauthorize your credential before it expires.
 
 ## API Key
 
-[Section titled “API Key”](#api-key)
-
 ### Server Workload Configuration
-
-[Section titled “Server Workload Configuration”](#server-workload-configuration-1)
 
 1. Create a new Server Workload.
 
@@ -130,8 +119,6 @@ Once the set lifetime ends, the retrieved credential will expire and no longer b
 * **Authentication scheme** - Bearer
 
 ### Credential Provider Configuration
-
-[Section titled “Credential Provider Configuration”](#credential-provider-configuration-1)
 
 1. Sign in to your GitHub account.
 
@@ -155,9 +142,9 @@ Once the set lifetime ends, the retrieved credential will expire and no longer b
 
 ![Copy fine-grained token](https://docs.aembit.io/_astro/github_rest_copy_fine_grained_token.D0fWLkgl_6DIXM.webp)
 
-Note
-
-The following configuration steps also work with classic personal access tokens; however, fine-grained tokens are recommended as they offer more granular permissions and improved security.
+> **Note**
+>
+> The following configuration steps also work with classic personal access tokens; however, fine-grained tokens are recommended as they offer more granular permissions and improved security.
 
 10. Create a new Credential Provider.
 
@@ -167,21 +154,15 @@ The following configuration steps also work with classic personal access tokens;
 
 ## Client Workload Configuration
 
-[Section titled “Client Workload Configuration”](#client-workload-configuration)
-
 Aembit now handles the credentials required to access the Server Workload, eliminating the need for you to manage them directly. You can safely remove any previously used credentials from the Client Workload.
 
 If you access the Server Workload through an SDK or library, it is possible that the SDK/library may still require credentials to be present for initialization purposes. In this scenario, you can provide placeholder credentials. Aembit will overwrite these placeholder credentials with the appropriate ones during the access process.
 
 ## Access Policy
 
-[Section titled “Access Policy”](#access-policy)
-
 * Create an Access Policy for a Client Workload to access the GitHub REST API Server Workload. Assign the newly created Credential Provider to this Access Policy.
 
 ## Required Features
-
-[Section titled “Required Features”](#required-features)
 
 * You will need to configure the [TLS Decrypt](../../../deploy-install/advanced-options/tls-decrypt/configure-tls-decrypt.md) feature to work with the GitHub REST API Server Workload.
 

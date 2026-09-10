@@ -1,10 +1,9 @@
 ---
-type: explanation
+type: reference
 title: "Aembit reference documentation"
 description: "Reference documentation for Aembit features and functionality"
 resource: https://docs.aembit.io/reference/
-timestamp: 2025-05-29T11:26:12-07:00
-type_inferred: true
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Aembit reference documentation
@@ -14,11 +13,10 @@ This section provides technical reference documentation for Aembit, including su
 The following pages are available in the reference section:
 
 * [Edge Component Supported Versions](edge-components/edge-component-supported-versions.md)
+* [Identifiers](identifiers.md)
 * [Support Matrix](support-matrix.md)
 
-### Edge Components Reference
-
-[Section titled “Edge Components Reference”](#edge-components-reference)
+### Edge Components reference
 
 * [Agent Log Level Reference](edge-components/agent-log-level-reference.md)
 * [Edge Component Environment Variables](edge-components/edge-component-env-vars.md)

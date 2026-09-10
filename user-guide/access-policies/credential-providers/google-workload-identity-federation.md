@@ -4,28 +4,23 @@ title: "Configure a Google GCP WIF Credential Provider"
 description: "How to create a Google GCP Workload Identity Federation (WIF) Credential Provider"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/google-workload-identity-federation/
 interface: web-ui
-tags: [credential-provider, access-policy]
-timestamp: 2026-06-09T18:19:33-07:00
-type_inferred: true
+tags: ["credential-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Configure a Google GCP WIF Credential Provider
 
-Aembit’s Credential Provider**Credential Provider**: Credential Providers obtain the specific access credentials—such as API keys, OAuth tokens, or temporary cloud credentials—that Client Workloads need to authenticate to Server Workloads.[Learn more](../../../get-started/concepts/credential-providers.md) for Google Workload Identity Federation (WIF) lets your workloads obtain short-lived Google Cloud credentials through Aembit acting as a third-party federated Identity Provider (IdP). Use it to authenticate to any Google Cloud service, such as BigQuery, Vertex AI, or Cloud Storage, without managing long-lived service account keys.
+Aembit’s Credential Provider for Google Workload Identity Federation (WIF) lets your workloads obtain short-lived Google Cloud credentials through Aembit acting as a third-party federated Identity Provider (IdP). Use it to authenticate to any Google Cloud service, such as BigQuery, Vertex AI, or Cloud Storage, without managing long-lived service account keys.
 
 ## Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites)
-
 To configure a Google Workload Identity Federation Credential Provider, you must have the following:
 
-* Access to your Aembit Tenant**Aembit Tenant**: Aembit Tenants serve as isolated, dedicated environments within Aembit that provide complete separation of administrative domains and security configurations.[Learn more](../../../get-started/concepts/administration.md) with permission to manage Credential Providers.
+* Access to your Aembit Tenant with permission to manage Credential Providers.
 
 * Access to a Google Cloud project where you can manage IAM, service accounts, and Workload Identity Federation.
 
 ## Create the Credential Provider
-
-[Section titled “Create the Credential Provider”](#create-the-credential-provider)
 
 Create the Credential Provider in Aembit first, so you can copy its OIDC Issuer URL into Google Cloud during setup.
 
@@ -44,8 +39,6 @@ Create the Credential Provider in Aembit first, so you can copy its OIDC Issuer 
    Leave the **Audience** and **Service Account Email** fields empty for now, and keep the Aembit web UI open. You complete these fields after you finish the Google Cloud setup in the following sections.
 
 ## Set up the service account
-
-[Section titled “Set up the service account”](#set-up-the-service-account)
 
 Create a service account for Aembit to impersonate, then grant it the IAM roles your workloads need.
 
@@ -75,8 +68,6 @@ Create a service account for Aembit to impersonate, then grant it the IAM roles 
 
 ## Create a workload identity federation pool
 
-[Section titled “Create a workload identity federation pool”](#create-a-workload-identity-federation-pool)
-
 Create a Workload Identity Federation pool and add an OpenID Connect (OIDC) provider that trusts Aembit as the issuer.
 
 1. In the Google Cloud console, go to [Workload Identity Federation](https://console.cloud.google.com/iam-admin/workload-identity-pools). If this is your first pool, click **Get Started**; otherwise, click **Create Pool**.
@@ -103,8 +94,6 @@ Create a Workload Identity Federation pool and add an OpenID Connect (OIDC) prov
 
 ## Grant the pool access to the service account
 
-[Section titled “Grant the pool access to the service account”](#grant-the-pool-access-to-the-service-account)
-
 Grant the pool’s identities permission to impersonate the service account you created.
 
 1. In the pool you just created, click **Grant Access**.
@@ -118,8 +107,6 @@ Grant the pool’s identities permission to impersonate the service account you 
    ![Grant pool access to the service account using the subject attribute and the Aembit Tenant ID](https://docs.aembit.io/_astro/gcp_bigquery_grant_access_pool_identity.l_f4MUnm_ZewhH4.webp)
 
 ## Complete the Credential Provider in your Aembit Tenant
-
-[Section titled “Complete the Credential Provider in your Aembit Tenant”](#complete-the-credential-provider-in-your-aembit-tenant)
 
 Return to the Aembit web UI you left open, and complete the **Credential Provider** you started:
 
@@ -135,15 +122,13 @@ Return to the Aembit web UI you left open, and complete the **Credential Provide
 
    ![Completed Aembit Google Workload Identity Federation Credential Provider showing the audience, service account email, and lifetime](https://docs.aembit.io/_astro/gcp_bigquery_wif_credential_provider.DxdT3EiH_Z16cV71.webp)
 
-   Caution
-
-   The default audience value must begin with `//iam.googleapis.com`. If the value you copied from Google Cloud starts with the `https:` scheme, remove it so the value begins with `//`.
+   > **Caution**
+   >
+   > The default audience value must begin with `//iam.googleapis.com`. If the value you copied from Google Cloud starts with the `https:` scheme, remove it so the value begins with `//`.
 
 2. Click **Save**. Your Google Workload Identity Federation Credential Provider now appears in your list of Credential Providers.
 
 ## Verify the connection
-
-[Section titled “Verify the connection”](#verify-the-connection)
 
 Verify that Aembit can exchange tokens with Google Cloud using your new Credential Provider:
 
@@ -154,8 +139,6 @@ Verify that Aembit can exchange tokens with Google Cloud using your new Credenti
 You’re now ready to use your Google Workload Identity Federation Credential Provider with your Server Workloads in an Aembit Access Policy.
 
 ## Google Cloud and Credential Provider value mappings
-
-[Section titled “Google Cloud and Credential Provider value mappings”](#google-cloud-and-credential-provider-value-mappings)
 
 The following table shows how each Aembit Credential Provider field maps to a Google Cloud value and where to find it:
 

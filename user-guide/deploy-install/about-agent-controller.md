@@ -1,12 +1,10 @@
 ---
-type: how-to
+type: explanation
 title: "About the Aembit Agent Controller"
 description: "Understanding the Agent Controller's role as a critical Edge component that facilitates secure registration and communication between Agent Proxies and Aembit Cloud"
 resource: https://docs.aembit.io/user-guide/deploy-install/about-agent-controller/
-interface: web-ui
-tags: [deploy-install]
-timestamp: 2026-06-27T20:47:56-07:00
-type_inferred: true
+tags: ["deploy-install"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # About the Aembit Agent Controller
@@ -17,75 +15,63 @@ Agent Controller simplifies the deployment and management of Aembit Edge by cent
 
 ## Deployment options
 
-[Section titled “Deployment options”](#deployment-options)
-
 Agent Controller supports deployment across diverse computing environments to meet your infrastructure requirements:
 
 ### Virtual machines
-
-[Section titled “Virtual machines”](#virtual-machines)
 
 Deploy Agent Controller on dedicated virtual machines using native installers:
 
 ![](https://docs.aembit.io/3p-logos/linux-icon.svg)
 
-[Linux virtual machines ](virtual-machine/linux/overview.md)Ubuntu and Red Hat Enterprise Linux
+[Linux virtual machines](virtual-machine/linux/overview.md)Ubuntu and Red Hat Enterprise Linux
 
 →
 
 ![](https://docs.aembit.io/3p-logos/windows-icon.svg)
 
-[Windows virtual machines ](virtual-machine/windows/overview.md)Windows Server
+[Windows virtual machines](virtual-machine/windows/overview.md)Windows Server
 
 →
 
 ### Container environments
 
-[Section titled “Container environments”](#container-environments)
-
 Deploy Agent Controller within containerized environments:
 
 ![](https://docs.aembit.io/3p-logos/kubernetes-icon.svg)
 
-[Kubernetes clusters ](kubernetes/overview.md)Deployed via Helm charts with automatic configuration
+[Kubernetes clusters](kubernetes/overview.md)Deployed via Helm charts with automatic configuration
 
 →
 
 ![](https://docs.aembit.io/3p-logos/aws-ecs-icon.svg)
 
-[AWS ECS Fargate ](serverless/aws-ecs-fargate.md)Container-based deployment using Terraform modules
+[AWS ECS Fargate](serverless/aws-ecs-fargate.md)Container-based deployment using Terraform modules
 
 →
 
 ### Specialized deployments
 
-[Section titled “Specialized deployments”](#specialized-deployments)
-
 Support for specialized deployment scenarios:
 
 ![](https://docs.aembit.io/3p-logos/aws-lambda-icon.svg)
 
-[AWS Lambda deployments ](serverless/aws-lambda-function.md)Supports Edge component deployment in AWS Lambda
+[AWS Lambda deployments](serverless/aws-lambda-function.md)Supports Edge component deployment in AWS Lambda
 
 →
 
 ![](https://docs.aembit.io/aembit-icons/sliders-solid.svg)
 
-[High availability configurations ](advanced-options/agent-controller/agent-controller-high-availability.md)Multiple instances with load balancing for production resilience
+[High availability configurations](advanced-options/agent-controller/agent-controller-high-availability.md)Multiple instances with load balancing for production resilience
 
 →
 
 ### Deployments without Agent Controller
 
-[Section titled “Deployments without Agent Controller”](#deployments-without-agent-controller)
-
-In some deployment models, like [Aembit CLI](../../cli-guide/usage/overview.md) for CI/CD and when your applications use the Aembit API directly, you may not need an Agent Controller, reducing operational complexity.
+In some deployment models, like [Aembit CLI](../../dev-guide/cli/usage/overview.md) for CI/CD and when your applications use the Aembit API directly, you may not need an Agent Controller, reducing operational complexity.
 
 For more details, see [Aembit Edge on CI/CD services](ci-cd/overview.md).
 
 ## Key responsibilities
-
-[Section titled “Key responsibilities”](#key-responsibilities)
 
 Agent Controller performs multiple critical functions within the Aembit Edge architecture:
 
@@ -99,13 +85,9 @@ Agent Controller performs multiple critical functions within the Aembit Edge arc
 
 ## How Agent Controller works
 
-[Section titled “How Agent Controller works”](#how-agent-controller-works)
-
 Agent Controller operates as part of the broader Aembit Edge registration and credential injection workflow:
 
 ### During registration
-
-[Section titled “During registration”](#during-registration)
 
 Agent Controller supports the following registration methods, each with its own workflow:
 
@@ -125,16 +107,16 @@ Agent Controller supports the following registration methods, each with its own 
 
   Device Codes are temporary one-time-use codes, valid for 15 minutes, that you use during installation to authenticate the Agent Controller with your Aembit Tenant.
 
-  Device Codes vs Trust Providers
-
-  Device Codes are a fallback authentication method for the Agent Controller, and they’re less secure than Trust Providers. Prefer a Trust Provider for production deployments, since Trust Providers offer stronger, automated attestation with better control and flexibility.
-
-  Use a Device Code only in these cases:
-
-  * A test, proof-of-concept, lab, or demo environment.
-  * A production environment that has no Trust-Provider-based attestation available, such as a bare-metal or on-premises host, or VMware vSphere without cloud metadata services. In these environments, Device Code is the supported Agent Controller registration method.
-
-  See [About the Aembit Agent Controller](about-agent-controller.md) for more information.
+  > **Device Codes vs Trust Providers**
+  >
+  > Device Codes are a fallback authentication method for the Agent Controller, and they’re less secure than Trust Providers. Prefer a Trust Provider for production deployments, since Trust Providers offer stronger, automated attestation with better control and flexibility.
+  >
+  > Use a Device Code only in these cases:
+  >
+  > * A test, proof-of-concept, lab, or demo environment.
+  > * A production environment that has no Trust-Provider-based attestation available, such as a bare-metal or on-premises host, or VMware vSphere without cloud metadata services. In these environments, Device Code is the supported Agent Controller registration method.
+  >
+  > See [About the Aembit Agent Controller](about-agent-controller.md) for more information.
 
   1. **Device code flow** - Agent Controller requests a device code from Aembit Cloud and polls for an access token
   2. **Agent Controller registration** - Using the access token, Agent Controller completes its secure registration with Aembit Cloud
@@ -145,8 +127,6 @@ Agent Controller supports the following registration methods, each with its own 
   ![Agent Controller Device Code-based registration sequence](https://docs.aembit.io/d2/docs/user-guide/deploy-install/about-agent-controller-1.svg)
 
 ### During operation
-
-[Section titled “During operation”](#during-operation)
 
 Once registered, Agent Controller plays a continuous, active role in your Aembit Edge deployment. Its main operational responsibilities include:
 
@@ -170,13 +150,9 @@ Once registered, Agent Controller plays a continuous, active role in your Aembit
 
 ## Monitoring and health
 
-[Section titled “Monitoring and health”](#monitoring-and-health)
-
 Agent Controller provides robust monitoring and health reporting features to help you maintain operational visibility and ensure reliability in your Edge deployments.
 
 ### Where to find Agent Controller logs
-
-[Section titled “Where to find Agent Controller logs”](#where-to-find-agent-controller-logs)
 
 Agent Controller logs are essential for monitoring its operation and troubleshooting issues. The log file locations vary based on the operating system:
 
@@ -202,8 +178,6 @@ Agent Controller logs are essential for monitoring its operation and troubleshoo
 
 ### What `ReportHealth` logs look like
 
-[Section titled “What ReportHealth logs look like”](#what-reporthealth-logs-look-like)
-
 When Agent Controller sends a health report to Aembit Cloud, you’ll see log entries like:
 
 **On Success**:
@@ -218,13 +192,11 @@ Cloud Health Reporting Service sent the Health Report to the Cloud successfully.
 Error while getting Report Health from gRPC
 ```
 
-Tip
-
-If you’re troubleshooting health reporting, look for these log entries in the Agent Controller logs. A successful message means Agent Controller is reporting health status to Aembit Cloud; errors indicate connectivity or configuration issues.
+> **Tip**
+>
+> If you’re troubleshooting health reporting, look for these log entries in the Agent Controller logs. A successful message means Agent Controller is reporting health status to Aembit Cloud; errors indicate connectivity or configuration issues.
 
 ### Health reporting
-
-[Section titled “Health reporting”](#health-reporting)
 
 **Automatic Health Checks** - Agent Controller sends a health report to Aembit Cloud every minute over a secure connection. This report includes the controller’s status, version, and uptime.
 
@@ -245,13 +217,11 @@ If you’re troubleshooting health reporting, look for these log entries in the 
 
 ### TLS status
 
-[Section titled “TLS status”](#tls-status)
-
 The **TLS** column in the Agent Controller list provides an at-a-glance view of each controller’s TLS certificate status for Agent Controller communication with Agent Proxies. This helps identify expiring or misconfigured certificates.
 
-Note
-
-This TLS status refers to Agent Controller’s own certificates for secure communication with Agent Proxies and Aembit Cloud. This is separate from TLS Decrypt certificates, which Agent Proxy manages for decrypting application traffic. For TLS Decrypt certificate monitoring, see [Configure TLS Decrypt](advanced-options/tls-decrypt/configure-tls-decrypt.md).
+> **Note**
+>
+> This TLS status refers to Agent Controller’s own certificates for secure communication with Agent Proxies and Aembit Cloud. This is separate from TLS Decrypt certificates, which Agent Proxy manages for decrypting application traffic. For TLS Decrypt certificate monitoring, see [Configure TLS Decrypt](advanced-options/tls-decrypt/configure-tls-decrypt.md).
 
 The **TLS** status uses color-coded icons (and sometimes tooltips) to show the health of the Agent Controller’s TLS certificate:
 
@@ -262,8 +232,6 @@ The **TLS** status uses color-coded icons (and sometimes tooltips) to show the h
 * **Grey/Not configured**: TLS isn’t configured for this Agent Controller.
 
 ### Metrics and observability
-
-[Section titled “Metrics and observability”](#metrics-and-observability)
 
 Agent Controller exposes operational metrics to help you monitor performance and health:
 
@@ -279,8 +247,6 @@ Agent Controller exposes operational metrics to help you monitor performance and
 
 ## High availability considerations
 
-[Section titled “High availability considerations”](#high-availability-considerations)
-
 For production deployments, configure Agent Controller in a [high availability setup](advanced-options/agent-controller/agent-controller-high-availability.md):
 
 * **Redundancy** - Multiple Agent Controller instances remove single points of failure.
@@ -290,13 +256,9 @@ For production deployments, configure Agent Controller in a [high availability s
 
 ## Security features and best practices
 
-[Section titled “Security features and best practices”](#security-features-and-best-practices)
-
 Agent Controller incorporates multiple security mechanisms:
 
 ### TLS encryption
-
-[Section titled “TLS encryption”](#tls-encryption)
 
 Agent Controller supports both Aembit-managed and customer-managed PKI for securing communication between itself and Agent Proxies:
 
@@ -304,8 +266,6 @@ Agent Controller supports both Aembit-managed and customer-managed PKI for secur
 * [Customer PKI configuration](advanced-options/agent-controller/configure-customer-pki-agent-controller-tls.md) - For organizations with existing PKI infrastructure
 
 ### Identity validation
-
-[Section titled “Identity validation”](#identity-validation)
 
 Agent Controller may use Trust Providers to authenticate itself with Aembit Cloud, enabling it to provide tokens for the deployment.
 
@@ -317,21 +277,17 @@ Agent Controller supports a limited set of Trust Providers for authentication:
 
 See the Aembit Support Matrix [Agent Controller Trust Providers](../../reference/support-matrix.md) section for details.
 
-Note
-
-This only applies when using Trust Provider-based authentication. As a best practice, use Trust Provider-based registration in production environments. Use Device Code-based registration for testing or proof-of-concept deployments. In production, use Device Code only where no Trust Provider-based attestation is available, such as bare-metal, on-premises, or VMware vSphere without cloud metadata.
-
-See [During registration](#during-registration) for more details.
+> **Note**
+>
+> This only applies when using Trust Provider-based authentication. As a best practice, use Trust Provider-based registration in production environments. Use Device Code-based registration for testing or proof-of-concept deployments. In production, use Device Code only where no Trust Provider-based attestation is available, such as bare-metal, on-premises, or VMware vSphere without cloud metadata.
+>
+> See [During registration](#during-registration) for more details.
 
 ## Integration with the Aembit ecosystem
-
-[Section titled “Integration with the Aembit ecosystem”](#integration-with-the-aembit-ecosystem)
 
 Agent Controller is a core part of the Aembit Edge architecture, acting as the bridge between distributed Edge components and the Aembit Cloud control plane. It enables secure registration, policy retrieval, and health monitoring across your environment.
 
 ### Related topics
-
-[Section titled “Related topics”](#related-topics)
 
 * **[About TLS Decrypt](advanced-options/tls-decrypt/overview.md)** - Learn how Agent Proxy performs TLS decryption with Agent Controller support
 * **[Agent Proxy installation](virtual-machine/linux/agent-proxy-install-linux.md)** - Install the component that performs TLS decryption

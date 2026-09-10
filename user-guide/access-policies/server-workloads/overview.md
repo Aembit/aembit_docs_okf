@@ -1,22 +1,20 @@
 ---
-type: explanation
+type: reference
 title: "Server Workloads"
 description: "This document provides a high-level description of Server Workloads"
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/
-tags: [server-workload, access-policy]
-timestamp: 2026-02-26T15:41:06-08:00
-type_inferred: true
+interface: web-ui
+tags: ["server-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Server Workloads
 
-Reuse this in another Resource Set
-
-You can copy a Server Workload to another Resource Set. See [About component copying](../../administration/resource-sets/about-component-copying.md) to learn more.
+> **Reuse this in another Resource Set**
+>
+> You can copy a Server Workload to another Resource Set. See [About component copying](../../administration/resource-sets/about-component-copying.md) to learn more.
 
 ## Using wildcard domains
-
-[Section titled “Using wildcard domains”](#using-wildcard-domains)
 
 In Aembit, wildcard domains simplify Server Workload configuration by allowing a single workload to handle requests across multiple services or regions. This is particularly useful for services with consistent domain structures like AWS’s `amazonaws.com`.
 
@@ -26,13 +24,9 @@ For more granular control, you can specify exact hostnames like `kms.us-east-1.a
 
 ## Server Workloads by category
 
-[Section titled “Server Workloads by category”](#server-workloads-by-category)
-
 The following sections break down the Server Workloads by category. Choose from the following pages to learn more about each category and its respective Server Workloads.
 
 ### AI and machine learning
-
-[Section titled “AI and machine learning”](#ai-and-machine-learning)
 
 * [Claude](guides/claude.md)
 * [Gemini](guides/gemini.md)
@@ -40,15 +34,11 @@ The following sections break down the Server Workloads by category. Choose from 
 
 ### CI/CD
 
-[Section titled “CI/CD”](#cicd)
-
 * [GitHub REST](guides/github-rest.md)
 * [GitLab REST](guides/gitlab-rest.md)
 * [SauceLabs](guides/saucelabs.md)
 
 ### Cloud platforms and services
-
-[Section titled “Cloud platforms and services”](#cloud-platforms-and-services)
 
 * [Apigee](guides/apigee.md)
 * [AWS Cloud](guides/aws-cloud.md)
@@ -56,13 +46,9 @@ The following sections break down the Server Workloads by category. Choose from 
 
 ### CRM
 
-[Section titled “CRM”](#crm)
-
 * [Salesforce REST](guides/salesforce-rest.md)
 
 ### Data analytics
-
-[Section titled “Data analytics”](#data-analytics)
 
 * [AWS Redshift](guides/aws-redshift.md)
 * [Databricks](guides/databricks.md)
@@ -71,8 +57,6 @@ The following sections break down the Server Workloads by category. Choose from 
 * [Snowflake](guides/snowflake.md)
 
 ### Databases
-
-[Section titled “Databases”](#databases)
 
 For database protocol details and deployment requirements, see [Database protocol support](../../deploy-install/databases/overview.md).
 
@@ -85,20 +69,14 @@ For database protocol details and deployment requirements, see [Database protoco
 
 ### Financial services
 
-[Section titled “Financial services”](#financial-services)
-
 * [PayPal](guides/paypal.md)
 * [Stripe](guides/stripe.md)
 
 ### IT tooling
 
-[Section titled “IT tooling”](#it-tooling)
-
 * [PagerDuty](guides/pagerduty.md)
 
 ### Productivity
-
-[Section titled “Productivity”](#productivity)
 
 * [Atlassian](guides/atlassian.md)
 * [Box](guides/box.md)
@@ -107,8 +85,6 @@ For database protocol details and deployment requirements, see [Database protoco
 * [Slack](guides/slack.md)
 
 ### Security
-
-[Section titled “Security”](#security)
 
 * [Aembit](guides/aembit.md)
 * [Beyond Identity](guides/beyond-identity.md)

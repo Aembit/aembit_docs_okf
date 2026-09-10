@@ -4,7 +4,7 @@ title: "MCP Authorization Server reference"
 description: "Configuration options, endpoints, and error codes for the Aembit MCP Authorization Server."
 resource: https://docs.aembit.io/ai-guide/mcp/authorization-server/reference-mcp-auth-server/
 interface: mcp
-tags: [authorization-server, mcp]
+tags: ["authorization-server", "mcp"]
 timestamp: 2026-06-30T15:16:59-04:00
 ---
 
@@ -13,8 +13,6 @@ timestamp: 2026-06-30T15:16:59-04:00
 This reference documents the configuration options, endpoints, and error codes for the Aembit Model Context Protocol (MCP) Authorization Server.
 
 ## Configuration concepts
-
-[Section titled “Configuration concepts”](#configuration-concepts)
 
 MCP servers require specific configuration to work with Aembit’s MCP Authorization Server. Most settings are standard OAuth concepts from the MCP specification—the exact field names vary by MCP server implementation.
 
@@ -29,19 +27,15 @@ MCP servers require specific configuration to work with Aembit’s MCP Authoriza
 
 ### MCP server configuration
 
-[Section titled “MCP server configuration”](#mcp-server-configuration)
-
-Looking for the Aembit MCP Server?
-
-This section covers configuring third-party MCP servers to work with Aembit’s MCP Authorization Server. For information about Aembit’s own MCP Server, see [Aembit MCP Server](../mcp-server/overview.md).
+> **Looking for the Aembit MCP Server?**
+>
+> This section covers configuring third-party MCP servers to work with Aembit’s MCP Authorization Server. For information about Aembit’s own MCP Server, see [Aembit MCP Server](../mcp-server/overview.md).
 
 MCP servers must specify their Authorization Server so unauthenticated clients know where to authenticate. Configuration methods and field names vary by implementation—your MCP server may use JSON, YAML, environment variables, or other formats. Use the values from the preceding table and consult your MCP server’s documentation for the correct field names.
 
 For step-by-step configuration instructions, see [Set up the MCP Authorization Server](setup-mcp-auth-server.md#mcp-server-requirements). For environment variable-based configuration, see the [MCP server environment variables reference](env-vars-mcp-auth-server.md).
 
 ## Tenant URL patterns
-
-[Section titled “Tenant URL patterns”](#tenant-url-patterns)
 
 Aembit uses different subdomains for different services. When configuring your MCP server, use the correct subdomain for each service.
 
@@ -53,13 +47,11 @@ Aembit uses different subdomains for different services. When configuring your M
 
 Replace `[tenant]` with your Aembit tenant ID and `[region]` with your deployment region (for example, `useast2`).
 
-Token issuer subdomain
-
-The token issuer uses the `.id.` subdomain, not `.mcp.`. Ensure your MCP server’s `issuer` configuration uses the correct subdomain.
+> **Token issuer subdomain**
+>
+> The token issuer uses the `.id.` subdomain, not `.mcp.`. Ensure your MCP server’s `issuer` configuration uses the correct subdomain.
 
 ## Endpoints
-
-[Section titled “Endpoints”](#endpoints)
 
 | Endpoint                                       | Method | Description                                               |
 | ---------------------------------------------- | ------ | --------------------------------------------------------- |
@@ -73,11 +65,7 @@ All endpoints except `/.well-known/openid-configuration` are discovered via the 
 
 ### Endpoint response examples
 
-[Section titled “Endpoint response examples”](#endpoint-response-examples)
-
 #### OAuth authorization server metadata
-
-[Section titled “OAuth authorization server metadata”](#oauth-authorization-server-metadata)
 
 ```http
 GET /.well-known/oauth-authorization-server
@@ -103,8 +91,6 @@ Response:
 
 #### Protected resource metadata
 
-[Section titled “Protected resource metadata”](#protected-resource-metadata)
-
 ```http
 GET <resource_metadata_url>
 ```
@@ -120,13 +106,9 @@ Response:
 
 ## HTTP headers
 
-[Section titled “HTTP headers”](#http-headers)
-
 The MCP authorization flow uses these headers:
 
 ### Response headers
-
-[Section titled “Response headers”](#response-headers)
 
 | Header             | Description                                                                                   |
 | ------------------ | --------------------------------------------------------------------------------------------- |
@@ -140,8 +122,6 @@ WWW-Authenticate: Bearer resource_metadata_url="http://localhost:8000/mcp"
 
 ### Request headers
 
-[Section titled “Request headers”](#request-headers)
-
 | Header          | Description                                            |
 | --------------- | ------------------------------------------------------ |
 | `Authorization` | Bearer token for authenticated requests to MCP servers |
@@ -153,8 +133,6 @@ Authorization: Bearer <access_token>
 ```
 
 ## Error codes
-
-[Section titled “Error codes”](#error-codes)
 
 The following table contains common HTTP status codes returned by the MCP Authorization Server (this isn’t an exhaustive list):
 
@@ -169,8 +147,6 @@ The following table contains common HTTP status codes returned by the MCP Author
 
 ## Supported components
 
-[Section titled “Supported components”](#supported-components)
-
 | Component                      | Options                                                                                                                                                                                                                                                                       |
 | ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Identity providers             | OpenID Connect (OIDC) with MFA support; SAML 2.0                                                                                                                                                                                                                              |
@@ -182,13 +158,9 @@ When Enforce SSO is off on the Client Workload, no Trust Provider is required. F
 
 ## Dynamic client registration (DCR) support
 
-[Section titled “Dynamic client registration (DCR) support”](#dynamic-client-registration-dcr-support)
-
 Aembit’s MCP Authorization Server supports Dynamic Client Registration (DCR) as defined in RFC 7591, allowing MCP clients to register automatically without pre-configuration.
 
 ### Client registration requirements
-
-[Section titled “Client registration requirements”](#client-registration-requirements)
 
 When implementing DCR in your MCP client:
 
@@ -201,16 +173,12 @@ When implementing DCR in your MCP client:
 
 ### Registration behavior
 
-[Section titled “Registration behavior”](#registration-behavior)
-
 * **Automatic registration**: Clients can self-register on first connection
 * **Standards compliance**: Follows RFC 7591 Dynamic Client Registration specification
 * **Unique credentials**: Each client receives a unique `client_id`
 * **Redirect URI matching**: Exact match required (port ignored for localhost per MCP spec)
 
 ### Implementation notes
-
-[Section titled “Implementation notes”](#implementation-notes)
 
 Ensure your MCP client library supports DCR. The client must:
 
@@ -221,8 +189,6 @@ Ensure your MCP client library supports DCR. The client must:
 
 ## Client ID Metadata Document (CIMD) support
 
-[Section titled “Client ID Metadata Document (CIMD) support”](#client-id-metadata-document-cimd-support)
-
 Aembit’s MCP Authorization Server also supports OAuth Client ID Metadata Documents (CIMD). Instead of registering through DCR, an MCP client hosts a metadata document at an HTTPS URL, and that URL serves as its `client_id`. An administrator registers the URL on a Client Workload, and Aembit fetches and validates the document at runtime.
 
 The hosted document and its URL must use HTTPS, omit query strings and fragments, return `application/json`, stay within 8 KB, and set a `client_id` that exactly matches the fetch URL. Aembit must reach the URL directly, without redirects or private IP ranges.
@@ -231,13 +197,9 @@ For configuration steps and the full requirements, see [CIMD Client ID](../../..
 
 ## Access token information
 
-[Section titled “Access token information”](#access-token-information)
-
 Aembit’s MCP Authorization Server issues standard OAuth 2.1 JWT access tokens for use with MCP resource servers.
 
 ### Token validation for resource servers
-
-[Section titled “Token validation for resource servers”](#token-validation-for-resource-servers)
 
 MCP resource servers validate access tokens using standard OAuth practices:
 
@@ -250,8 +212,6 @@ MCP resource servers validate access tokens using standard OAuth practices:
 | **Scope**                  | Confirm token includes required scopes for the request                     |
 
 ### Standard claims
-
-[Section titled “Standard claims”](#standard-claims)
 
 Tokens issued by the MCP Authorization Server include these standard claims:
 
@@ -266,8 +226,6 @@ Tokens issued by the MCP Authorization Server include these standard claims:
 
 ### JWKS endpoint
 
-[Section titled “JWKS endpoint”](#jwks-endpoint)
-
 Token validation keys are available at:
 
 ```text
@@ -278,11 +236,7 @@ Resource servers should cache JWKS responses and refresh periodically per standa
 
 ## MCP server token configuration
 
-[Section titled “MCP server token configuration”](#mcp-server-token-configuration)
-
 ### Configurable token claims
-
-[Section titled “Configurable token claims”](#configurable-token-claims)
 
 MCP servers validate tokens using these configurable claims:
 
@@ -294,16 +248,14 @@ Token lifetime is configurable on the MCP server side.
 
 ### Token algorithm
 
-[Section titled “Token algorithm”](#token-algorithm)
-
 Aembit supports two signing algorithms for access tokens:
 
 * **ES256** - ECDSA with P-256 and SHA-256
 * **RSA** - RSA signatures
 
-Algorithm selection
-
-Aembit typically uses ES256 by default and supports RSA-based algorithms, as configured in your Credential Provider.
+> **Algorithm selection**
+>
+> Aembit typically uses ES256 by default and supports RSA-based algorithms, as configured in your Credential Provider.
 
 Configure your MCP server’s JWT verifier to match the algorithm in your Credential Provider settings:
 
@@ -315,8 +267,6 @@ token_verifier = JWTVerifier(
 ```
 
 ## Related resources
-
-[Section titled “Related resources”](#related-resources)
 
 * [MCP specification (version 2025-06-18)](https://modelcontextprotocol.io/specification/2025-06-18/basic)
 * [MCP Authorization Server overview](overview.md)

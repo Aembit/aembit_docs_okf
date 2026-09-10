@@ -2,7 +2,7 @@
 type: definition
 title: "MCP Server"
 description: "A server that implements the Model Context Protocol to provide tools, resources, or data to AI agents and MCP clients."
-tags: [core-concepts]
+tags: ["core-concepts"]
 timestamp: 2026-04-03T17:08:42-07:00
 ---
 

@@ -3,7 +3,7 @@ type: explanation
 title: "Securing multicloud access"
 description: "How Aembit secures workload access between cloud providers"
 resource: https://docs.aembit.io/get-started/use-cases/multicloud/
-tags: [use-case]
+tags: ["use-case"]
 timestamp: 2026-05-18T14:17:19-07:00
 ---
 
@@ -15,16 +15,14 @@ Multicloud identity isn’t a networking problem. It’s not about connecting AW
 
 Most multicloud environments aren’t planned from the start. Whether through acquisitions, strategic vendor diversification, or teams independently choosing the best tool for their job, most enterprises end up operating across AWS, Azure, GCP, or a combination. The challenge is that each cloud has its own identity system, and they weren’t designed to work together.
 
-Terminology note
-
-The following terms describe the same pattern but for different audiences: workloads in one cloud accessing resources in another
-
-* **Multicloud** resonates with CISOs and strategic decision-makers who think about *multicloud strategy*
-* **Crosscloud** resonates with DevOps engineers who need to wire different systems together
+> **Terminology note**
+>
+> The following terms describe the same pattern but for different audiences: workloads in one cloud accessing resources in another
+>
+> * **Multicloud** resonates with CISOs and strategic decision-makers who think about *multicloud strategy*
+> * **Crosscloud** resonates with DevOps engineers who need to wire different systems together
 
 ## What Aembit solves
-
-[Section titled “What Aembit solves”](#what-aembit-solves)
 
 Cloud providers aren’t incentivized to make cross-cloud identity straightforward. Each has built an IAM system optimized for keeping workloads within their own ecosystem. AWS IAM, Azure Managed Identity, and GCP Workload Identity Federation each work well internally. None of them provide a native way to authenticate a workload in one cloud to a resource in another.
 
@@ -42,15 +40,11 @@ Aembit handles the identity translation:
 
 ## When multicloud happens
 
-[Section titled “When multicloud happens”](#when-multicloud-happens)
-
 Multicloud environments don’t start with a strategy document. A company acquires a competitor running on Azure while the parent company runs on AWS. A data team adopts GCP BigQuery because it’s the best fit, while production services run on AWS EKS. A security mandate requires geographic redundancy across providers. These are business decisions, not infrastructure failures, but each one adds another identity system to manage.
 
 Often it’s engineering teams and data teams operating in different clouds. Engineering runs production services on AWS while the data team builds analytics pipelines on GCP or Snowflake. Both teams need access to each other’s resources, and each manages credentials independently with no centralized visibility.
 
 ### When this applies
-
-[Section titled “When this applies”](#when-this-applies)
 
 This use case applies when your workloads need to authenticate across cloud boundaries. For example, an AWS Lambda calling an Azure SQL database, a GCP Cloud Run service pushing to an S3 bucket, or Kubernetes pods accessing resources in a different cloud. If your workloads stay within a single cloud provider’s ecosystem, native IAM handles this well. Aembit adds value when workloads need to cross those boundaries.
 
@@ -68,8 +62,6 @@ Without a vendor-neutral layer, teams typically handle cross-cloud access by:
 Each approach has security and operational drawbacks, which is why teams describe these as “workarounds” rather than solutions.
 
 ## Real example: AWS Lambda accessing Azure Blob Storage
-
-[Section titled “Real example: AWS Lambda accessing Azure Blob Storage”](#real-example-aws-lambda-accessing-azure-blob-storage)
 
 You might be managing this problem today by maintaining separate credentials for each cloud: an AWS access key, an Azure service principal, a GCP service account key. For a single service accessing resources in three clouds, that’s three sets of credentials to provision, rotate, audit, and revoke. Multiply that across dozens of services, and credential management becomes a significant operational and security burden.
 
@@ -97,8 +89,6 @@ The Lambda makes a standard HTTP request to Azure. Aembit handles the cross-clou
 
 ### Why this matters for multicloud
 
-[Section titled “Why this matters for multicloud”](#why-this-matters-for-multicloud)
-
 Each cross-cloud access path gets its own Access Policy. If you have workloads in three clouds accessing resources in three clouds, you create policies for each specific access pattern you need, such as:
 
 * AWS Lambda → Azure Blob Storage
@@ -112,8 +102,6 @@ Each policy specifies exactly which workload can access which resource. You can 
 Aembit logs every cross-cloud access request in one place, regardless of which clouds your workloads use.
 
 ## Supported cross-cloud patterns
-
-[Section titled “Supported cross-cloud patterns”](#supported-cross-cloud-patterns)
 
 Aembit verifies Client Workload identity using [Trust Providers](../concepts/trust-providers.md). Each cloud platform has a corresponding Trust Provider that validates workloads running in that environment:
 
@@ -129,8 +117,6 @@ Aembit can provision credentials for resources in:
 * Third-party services like [Snowflake](../../user-guide/access-policies/server-workloads/guides/snowflake.md), [Databricks](../../user-guide/access-policies/server-workloads/guides/databricks.md), and [more](../../user-guide/access-policies/server-workloads/guides/overview.md)
 
 ## Next steps
-
-[Section titled “Next steps”](#next-steps)
 
 * For securing pipelines that deploy across clouds, see [CI/CD Pipelines](ci-cd.md)
 * For cross-cloud database access specifically, see [Database Access](database-access.md)

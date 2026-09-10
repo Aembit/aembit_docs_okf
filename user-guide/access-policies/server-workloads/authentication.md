@@ -1,12 +1,10 @@
 ---
-type: how-to
+type: explanation
 title: "Authentication methods and schemes"
 description: "This document describes the configuration of Authentication Methods and Schemes for Server workloads."
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/authentication/
-interface: web-ui
-tags: [server-workload, access-policy]
-timestamp: 2026-05-21T15:38:50-07:00
-type_inferred: true
+tags: ["server-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Authentication methods and schemes
@@ -14,8 +12,6 @@ type_inferred: true
 Aembit offers a variety of authentication methods and schemes to secure access to Server Workloads. These configurations define how Credential Providers inject or present credentials. This page details the supported authentication methods and helps you choose the right one for your needs.
 
 ## Authentication methods and schemes
-
-[Section titled “Authentication methods and schemes”](#authentication-methods-and-schemes)
 
 When you configure access between Client Workloads and Server Workloads, two key elements dictate how Aembit injects credentials into a request:
 
@@ -28,15 +24,11 @@ Aembit supports combinations of methods and schemes to meet diverse protocol and
 
 ## Credential requirements
 
-[Section titled “Credential requirements”](#credential-requirements)
-
 Most authentication methods rely on a single credential that a Credential Provider generates, ensuring broad compatibility. However, some methods use two-part credentials (for example: a username and password), which restricts them to Credential Providers that supply such data.
 
 Additionally, some authentication schemes depend on specific Credential Providers. While you may use them with others, they typically target a particular provider.
 
 ## Choosing the right method and scheme
-
-[Section titled “Choosing the right method and scheme”](#choosing-the-right-method-and-scheme)
 
 Selecting the appropriate method and scheme is essential to ensure the Client Workload can successfully authenticate to the Server Workload. Consider the following:
 
@@ -47,8 +39,6 @@ Selecting the appropriate method and scheme is essential to ensure the Client Wo
 Aembit includes method/scheme recommendations for common Server Workloads in Server Workload guides. If your Server Workload doesn’t appear in those guides, use the following guidance to choose and configure an appropriate method and scheme.
 
 ## Supported authentication methods and schemes
-
-[Section titled “Supported authentication methods and schemes”](#supported-authentication-methods-and-schemes)
 
 Most methods inject credentials into the application protocol. mTLS Authentication presents the credential during the TLS handshake, beneath the application protocol.
 

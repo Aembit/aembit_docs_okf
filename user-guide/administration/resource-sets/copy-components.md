@@ -4,17 +4,15 @@ title: "Copy components to another Resource Set"
 description: "Step-by-step procedures for copying Access Policy components between Resource Sets"
 resource: https://docs.aembit.io/user-guide/administration/resource-sets/copy-components/
 interface: web-ui
-tags: [resource-set, administration]
-timestamp: 2026-01-30T00:27:24-08:00
+tags: ["resource-set", "administration"]
+timestamp: 2026-09-09T08:20:13-07:00
 ---
 
 # Copy components to another Resource Set
 
-This guide covers how to copy individual components and entire Access Policy**Access Policy**: Access Policies define, enforce, and audit access between Client and Server Workloads by cryptographically verifying workload identity and contextual factors rather than relying on static secrets.[Learn more](../../../get-started/concepts/access-policies.md) between Resource Set**Resource Set**: Resource Sets are organizational containers that group Access Policy components together, enabling you to manage configurations across different environments, regions, or use cases.[Learn more](overview.md).
+This guide covers how to copy individual components and entire Access Policy between Resource Set.
 
 ## Prerequisites
-
-[Section titled “Prerequisites”](#prerequisites)
 
 To copy any components, you must have:
 
@@ -26,9 +24,14 @@ For background on what component copying does and when to use it, see [Understan
 
 ## Copy an individual component
 
-[Section titled “Copy an individual component”](#copy-an-individual-component)
+Copy any of these component types to another Resource Set:
 
-Copy a single component (Client Workload**Client Workload**: Client Workloads represent software applications, scripts, or automated processes that initiate access requests to Server Workloads, operating autonomously without direct user interaction.[Learn more](../../../get-started/concepts/client-workloads.md), Server Workload**Server Workload**: Server Workloads represent target services, APIs, databases, or applications that receive and respond to access requests from Client Workloads.[Learn more](../../../get-started/concepts/server-workloads.md), Trust Provider**Trust Provider**: Trust Providers validate Client Workload identities through workload attestation, verifying identity claims from the workload's runtime environment rather than relying on pre-shared secrets.[Learn more](../../../get-started/concepts/trust-providers.md), Credential Provider**Credential Provider**: Credential Providers obtain the specific access credentials—such as API keys, OAuth tokens, or temporary cloud credentials—that Client Workloads need to authenticate to Server Workloads.[Learn more](../../../get-started/concepts/credential-providers.md), or Access Condition**Access Condition**: Access Conditions add dynamic, context-aware constraints to authorization by evaluating circumstances like time, location, or security posture to determine whether to grant access.[Learn more](../../../get-started/concepts/access-conditions.md)) to another Resource Set.
+* Client Workload
+* Server Workload
+* Trust Provider
+* Credential Provider
+* Access Condition
+* Content Security
 
 1. Navigate to the component you want to copy.
 2. Open the component’s three-dot menu (**⋮**).
@@ -44,9 +47,7 @@ After copying completes, a toast notification appears:
 
 ## Copy an Access Policy
 
-[Section titled “Copy an Access Policy”](#copy-an-access-policy)
-
-When you copy an Access Policy, the system copies the policy and all its related components together. This includes any Client Workloads, Server Workloads, Trust Providers, Credential Providers, and Access Conditions associated with the policy.
+When you copy an Access Policy, the system copies the policy and all its related components together. This includes any Client Workloads, Server Workloads, Trust Providers, Credential Providers, Access Conditions, and Content Security Providers associated with the policy.
 
 1. Navigate to the Access Policy you want to copy.
 
@@ -74,39 +75,33 @@ After copying completes, a toast notification appears:
 
 ## After copying
 
-[Section titled “After copying”](#after-copying)
-
 After you copy components to a new Resource Set, you’re responsible for:
 
 * **Modifying target-specific attributes** - Update any environment-specific values like URLs, endpoints, or identifiers
-* **Authorizing 3LO**3LO**: 3-legged OAuth (3LO) is the OAuth 2.0 Authorization Code flow where a user explicitly authorizes an application to access their data on a third-party service, requiring user interaction to complete the authorization.[Learn more](../../access-policies/credential-providers/oauth-authorization-code.md) Credential Providers** - If you copied Credential Providers that use OAuth 2.0 Authorization Code flow (3LO), reauthorize them with the third-party system
-* **Binding to Aembit Edge**Aembit Edge**: Aembit Edge represents components deployed within your operational environments that enforce Access Policies by intercepting traffic, verifying identities, and injecting credentials just-in-time.[Learn more](../../../get-started/concepts/aembit-edge.md)** - Configure Edge bindings in the target Resource Set to deploy the copied components
+* **Authorizing 3LO Credential Providers** - If you copied Credential Providers that use OAuth 2.0 Authorization Code flow (3LO), reauthorize them with the third-party system
+* **Binding to Aembit Edge** - Configure Edge bindings in the target Resource Set to deploy the copied components
 * **Managing the deployment lifecycle** - The copied components are independent; changes to the original don’t affect the copy
 
 ## Client Workload uniqueness
 
-[Section titled “Client Workload uniqueness”](#client-workload-uniqueness)
-
 Client Workloads must have unique client identification values within a Resource Set. If the target Resource Set already has a Client Workload with the same client identification type and value, that Client Workload won’t copy.
+
+The Access Policy doesn’t copy either, because a policy can’t exist without its Client Workload. Aembit reports `Client Workload missing. Not Copied.` for the policy.
 
 To resolve this, modify the client identification on either the source or target Client Workload before copying.
 
 ## Standalone certificate authorities
 
-[Section titled “Standalone certificate authorities”](#standalone-certificate-authorities)
-
 The **Copy Stand-Alone CA** toggle controls whether Standalone Certificate Authorities copy with your components. This applies to Client Workloads and Access Policies that use Standalone CAs.
 
 | Toggle state | Behavior                                                                                        |
 | ------------ | ----------------------------------------------------------------------------------------------- |
-| Enabled      | The Standalone CA associated with the component copies to the target Resource Set               |
-| Disabled     | Only the component copies; the target Resource Set must already have a compatible CA configured |
+| On           | The Standalone CA associated with the component copies to the target Resource Set               |
+| Off          | Only the component copies; the target Resource Set must already have a compatible CA configured |
 
 Enable this toggle when you want the target Resource Set to have its own copy of the CA. Disable it when the target Resource Set already has the CA you need or shares CAs with the source.
 
 ## Related resources
-
-[Section titled “Related resources”](#related-resources)
 
 * [Understanding component copying](about-component-copying.md) - Learn what copying does, use cases, and key behaviors
 * [Resource Sets overview](overview.md) - Learn about Resource Sets and how they work

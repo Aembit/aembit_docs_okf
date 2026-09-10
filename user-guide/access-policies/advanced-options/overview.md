@@ -3,9 +3,8 @@ type: explanation
 title: "Access Policy advanced options"
 description: "Advanced options for Aembit Access Policies"
 resource: https://docs.aembit.io/user-guide/access-policies/advanced-options/
-tags: [advanced-option, access-policy]
-timestamp: 2025-08-20T15:53:48-07:00
-type_inferred: true
+tags: ["advanced-option", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Access Policy advanced options

@@ -4,24 +4,21 @@ title: "Configure an OpenAI WIF Credential Provider"
 description: "Configure an OpenAI Workload Identity Federation Credential Provider so workloads call the OpenAI API with short-lived tokens."
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/openai-workload-identity-federation/
 interface: web-ui
-tags: [credential-provider, access-policy]
-timestamp: 2026-07-07T15:50:08-04:00
-type_inferred: true
+tags: ["credential-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Configure an OpenAI WIF Credential Provider
 
-Aembit’s Credential Provider**Credential Provider**: Credential Providers obtain the specific access credentials—such as API keys, OAuth tokens, or temporary cloud credentials—that Client Workloads need to authenticate to Server Workloads.[Learn more](../../../get-started/concepts/credential-providers.md) for OpenAI Workload Identity Federation (WIF) lets your Client Workloads**Client Workload**: Client Workloads represent software applications, scripts, or automated processes that initiate access requests to Server Workloads, operating autonomously without direct user interaction.[Learn more](../../../get-started/concepts/client-workloads.md) authenticate to the OpenAI API with short-lived tokens instead of long-lived API keys. Aembit obtains those tokens on the Client Workload’s behalf. Aembit acts as a third-party federated Identity Provider (IdP), and OpenAI trusts Aembit as an OIDC**OpenID Connect (OIDC)**: An identity layer built on top of OAuth 2.0 that lets applications verify the identity of a user or workload and obtain basic profile information using JSON Web Tokens (JWTs).[Learn more(opens in new tab)](https://openid.net/developers/how-connect-works/) issuer. When an Access Policy**Access Policy**: Access Policies define, enforce, and audit access between Client and Server Workloads by cryptographically verifying workload identity and contextual factors rather than relying on static secrets.[Learn more](../../../get-started/concepts/access-policies.md) grants a Client Workload access, Aembit exchanges its issued assertion for a short-lived OpenAI access token.
+Aembit’s Credential Provider for OpenAI Workload Identity Federation (WIF) lets your Client Workloads authenticate to the OpenAI API with short-lived tokens instead of long-lived API keys. Aembit obtains those tokens on the Client Workload’s behalf. Aembit acts as a third-party federated Identity Provider (IdP), and OpenAI trusts Aembit as an OIDC issuer. When an Access Policy grants a Client Workload access, Aembit exchanges its issued assertion for a short-lived OpenAI access token.
 
 You can configure the OpenAI Credential Provider using the [Aembit Tenant](#create-a-credential-provider) or through the [Aembit Terraform provider](#configure-openai-wif-using-the-aembit-terraform-provider).
 
 ## Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites)
-
 To configure an OpenAI WIF Credential Provider, you’ll need the following:
 
-* Ability to access and manage your Aembit Tenant**Aembit Tenant**: Aembit Tenants serve as isolated, dedicated environments within Aembit that provide complete separation of administrative domains and security configurations.[Learn more](../../../get-started/concepts/administration.md).
+* Ability to access and manage your Aembit Tenant.
 
 * An OpenAI organization owner role, which OpenAI requires to configure Workload Identity Federation. You create a Workload Identity Provider and a service account mapping in your OpenAI organization. See the OpenAI [Workload Identity Federation](https://developers.openai.com/api/docs/guides/workload-identity-federation) documentation.
 
@@ -34,17 +31,13 @@ To configure an OpenAI WIF Credential Provider, you’ll need the following:
 
 ## Configure a Credential Provider for OpenAI
 
-[Section titled “Configure a Credential Provider for OpenAI”](#configure-a-credential-provider-for-openai)
-
 This section explains how to configure an OpenAI WIF Credential Provider in the Aembit Tenant. You create the Credential Provider in your Aembit Tenant, configure the matching federation trust in OpenAI, then return to your Aembit Tenant to finish and verify.
 
-Use multiple browser tabs/windows
-
-Keep OpenAI open in another browser window alongside the Aembit Tenant so you can work in both spaces.
+> **Use multiple browser tabs/windows**
+>
+> Keep OpenAI open in another browser window alongside the Aembit Tenant so you can work in both spaces.
 
 ## Create a Credential Provider
-
-[Section titled “Create a Credential Provider”](#create-a-credential-provider)
 
 1. Log in to your Aembit Tenant and click **Credential Providers**.
 
@@ -62,8 +55,6 @@ Keep OpenAI open in another browser window alongside the Aembit Tenant so you ca
 
 ## Configure the federation trust in OpenAI
 
-[Section titled “Configure the federation trust in OpenAI”](#configure-the-federation-trust-in-openai)
-
 In OpenAI, create a **Workload Identity Provider** that trusts Aembit as the OIDC issuer. Then add a **service account mapping** that authorizes Aembit’s tokens to mint access tokens for an OpenAI service account.
 
 Follow OpenAI’s [Workload Identity Federation](https://developers.openai.com/api/docs/guides/workload-identity-federation) documentation to complete this setup, with a few things to note for Aembit:
@@ -78,8 +69,6 @@ As you configure OpenAI, record the following values, which you’ll enter in Ae
 2. **Service Account ID** - the OpenAI service account your mapping authorizes; its ID starts with `user-`.
 
 ## Complete the Credential Provider in the Aembit Tenant
-
-[Section titled “Complete the Credential Provider in the Aembit Tenant”](#complete-the-credential-provider-in-the-aembit-tenant)
 
 Return to the Aembit Tenant and complete the **Credential Provider** page with the values from OpenAI. For a field-by-field reference, see [OpenAI and Credential Provider UI value mappings](#openai-and-credential-provider-ui-value-mappings).
 
@@ -99,8 +88,6 @@ Return to the Aembit Tenant and complete the **Credential Provider** page with t
 
 ## Verify the connection
 
-[Section titled “Verify the connection”](#verify-the-connection)
-
 To verify the connection between your Aembit Credential Provider and your OpenAI federation setup:
 
 1. On the **Credential Providers** page, select the Credential Provider you just created.
@@ -111,11 +98,9 @@ To verify the connection between your Aembit Credential Provider and your OpenAI
 
    If verification fails, recheck the values in your Aembit Credential Provider against the Workload Identity Provider, service account, and mapping in OpenAI. A failure often points to an issuer or audience mismatch, or to a mapping that matches no token or more than one token.
 
-You’re now ready to use your Credential Provider for OpenAI Workload Identity Federation with your Server Workloads**Server Workload**: Server Workloads represent target services, APIs, databases, or applications that receive and respond to access requests from Client Workloads.[Learn more](../../../get-started/concepts/server-workloads.md) in an Aembit [Access Policy](../create-access-policy.md). To configure OpenAI as a Server Workload, see the [ChatGPT (OpenAI)](../server-workloads/guides/openai.md) guide.
+You’re now ready to use your Credential Provider for OpenAI Workload Identity Federation with your Server Workloads in an Aembit [Access Policy](../create-access-policy.md). To configure OpenAI as a Server Workload, see the [ChatGPT (OpenAI)](../server-workloads/guides/openai.md) guide.
 
 ## Configure OpenAI WIF using the Aembit Terraform provider
-
-[Section titled “Configure OpenAI WIF using the Aembit Terraform provider”](#configure-openai-wif-using-the-aembit-terraform-provider)
 
 To configure an OpenAI WIF Credential Provider using the [Aembit Terraform Provider](https://registry.terraform.io/providers/Aembit/aembit/latest), follow the steps in this section.
 
@@ -151,8 +136,6 @@ You’re now ready to use your Credential Provider for OpenAI Workload Identity 
 
 ## OpenAI and Credential Provider UI value mappings
 
-[Section titled “OpenAI and Credential Provider UI value mappings”](#openai-and-credential-provider-ui-value-mappings)
-
 The following table shows how the values in your OpenAI WIF configuration map to the Aembit Credential Provider web UI and Terraform provider:
 
 | Aembit Credential Provider value | OpenAI WIF configuration                       | Terraform value            |
@@ -163,8 +146,6 @@ The following table shows how the values in your OpenAI WIF configuration map to
 | Audience                         | Workload Identity Provider **Audience**        | `audience`                 |
 
 ## Limitations
-
-[Section titled “Limitations”](#limitations)
 
 * **No Admin API access.** You can’t use OpenAI WIF access tokens to call OpenAI Admin API endpoints.
 * **Token lifetime.** OpenAI access tokens expire after at most one hour and can’t outlive the Aembit-issued token used for the exchange.

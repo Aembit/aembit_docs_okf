@@ -1,27 +1,24 @@
 ---
-type: how-to
+type: reference
 title: "GitHub Trust Provider"
 description: "This page outlines the steps required to configure the GitHub Trust Provider."
 resource: https://docs.aembit.io/user-guide/access-policies/trust-providers/github-trust-provider/
 interface: web-ui
-tags: [trust-provider, access-policy]
-timestamp: 2025-09-05T06:12:10-07:00
-type_inferred: true
+tags: ["trust-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # GitHub Trust Provider
 
 The GitHub Trust Provider supports attestation of Client Workloads identities in a [GitHub Actions](https://github.com/features/actions) environment.
 
-Enterprise Support
-
-Aembit supports GitHub Cloud but doesn’t support self-hosted GitHub Enterprise Server instances.
+> **Enterprise Support**
+>
+> Aembit supports GitHub Cloud but doesn’t support self-hosted GitHub Enterprise Server instances.
 
 The GitHub Trust Provider relies on OIDC (OpenID Connect) tokens issued by GitHub. These tokens contain verifiable information about the workflow, its origin, and the triggering actor.
 
 ## Match rules
-
-[Section titled “Match rules”](#match-rules)
 
 The following match rules are available for this Trust Provider type:
 

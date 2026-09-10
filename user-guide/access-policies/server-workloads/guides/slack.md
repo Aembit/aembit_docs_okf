@@ -4,9 +4,8 @@ title: "Slack"
 description: "This page describes how to configure Aembit to work with the Slack Server Workload."
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/guides/slack/
 interface: web-ui
-tags: [productivity, guide, server-workload, access-policy]
-timestamp: 2026-04-27T11:40:47-04:00
-type_inferred: true
+tags: ["productivity", "guide", "server-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Slack
@@ -21,17 +20,13 @@ Aembit supports multiple authentication/authorization methods for Slack. This pa
 * [OAuth 2.0 Authorization Code (3LO)](slack.md#oauth-20-authorization-code)
 * [API Key](slack.md#api-key)
 
-Prerequisites
-
-Before proceeding with the configuration, ensure you have a Slack workspace and a Slack App with the necessary scopes. If you have not set up a Slack App yet, follow the steps under the Credential Provider configuration in the flow you will use. For detailed information on Slack Apps, please refer to the [official Slack documentation](https://api.slack.com/start/apps).
+> **Prerequisites**
+>
+> Before proceeding with the configuration, ensure you have a Slack workspace and a Slack App with the necessary scopes. If you have not set up a Slack App yet, follow the steps under the Credential Provider configuration in the flow you will use. For detailed information on Slack Apps, please refer to the [official Slack documentation](https://api.slack.com/start/apps).
 
 ## OAuth 2.0 Authorization Code
 
-[Section titled “OAuth 2.0 Authorization Code”](#oauth-20-authorization-code)
-
 ### Server Workload Configuration
-
-[Section titled “Server Workload Configuration”](#server-workload-configuration)
 
 1. Create a new Server Workload.
 
@@ -47,8 +42,6 @@ Before proceeding with the configuration, ensure you have a Slack workspace and 
 * **Authentication scheme** - Bearer
 
 ### Credential Provider Configuration
-
-[Section titled “Credential Provider Configuration”](#credential-provider-configuration)
 
 1. Sign in to your Slack account.
 
@@ -99,17 +92,13 @@ Click on **URL Discovery** to populate the Authorization and Token URL fields. T
 
 ![Credential Provider - Ready State](https://docs.aembit.io/_astro/credential_providers_auth_code_status_ready.CBPCBiJg_ZBh135.webp)
 
-Caution
-
-Once the set lifetime ends, the retrieved credential will expire and no longer be active. Aembit will notify you before this happens. Please ensure you reauthorize your credential before it expires.
+> **Caution**
+>
+> Once the set lifetime ends, the retrieved credential will expire and no longer be active. Aembit will notify you before this happens. Please ensure you reauthorize your credential before it expires.
 
 ## API Key
 
-[Section titled “API Key”](#api-key)
-
 ### Server Workload Configuration
-
-[Section titled “Server Workload Configuration”](#server-workload-configuration-1)
 
 1. Create a new Server Workload.
 
@@ -125,8 +114,6 @@ Once the set lifetime ends, the retrieved credential will expire and no longer b
 * **Authentication scheme** - Bearer
 
 ### Credential Provider Configuration
-
-[Section titled “Credential Provider Configuration”](#credential-provider-configuration-1)
 
 1. Sign in to your Slack account.
 
@@ -162,21 +149,15 @@ Once the set lifetime ends, the retrieved credential will expire and no longer b
 
 ## Client Workload Configuration
 
-[Section titled “Client Workload Configuration”](#client-workload-configuration)
-
 Aembit now handles the credentials required to access the Server Workload, eliminating the need for you to manage them directly. You can safely remove any previously used credentials from the Client Workload.
 
 If you access the Server Workload through an SDK or library, it is possible that the SDK/library may still require credentials to be present for initialization purposes. In this scenario, you can provide placeholder credentials. Aembit will overwrite these placeholder credentials with the appropriate ones during the access process.
 
 ## Access Policy
 
-[Section titled “Access Policy”](#access-policy)
-
 * Create an Access Policy for a Client Workload to access the Slack Server Workload. Assign the newly created Credential Provider to this Access Policy.
 
 ## Required Features
-
-[Section titled “Required Features”](#required-features)
 
 * You will need to configure the [TLS Decrypt](../../../deploy-install/advanced-options/tls-decrypt/configure-tls-decrypt.md) feature to work with the Slack Server Workload.
 

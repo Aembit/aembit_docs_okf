@@ -4,9 +4,8 @@ title: "Kubernetes Service Account trust provider"
 description: "This page describes the steps required to configure the Kubernetes Service Account Trust Provider."
 resource: https://docs.aembit.io/user-guide/access-policies/trust-providers/kubernetes-service-account-trust-provider/
 interface: web-ui
-tags: [trust-provider, access-policy]
-timestamp: 2025-04-14T12:09:34-07:00
-type_inferred: true
+tags: ["trust-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Kubernetes Service Account trust provider
@@ -15,8 +14,6 @@ type_inferred: true
 The Kubernetes Service Account Trust Provider supports attestation of Client Workloads and Agent Controller identities in a Kubernetes environment (either self-hosted or managed by cloud providers - [AWS EKS](https://aws.amazon.com/eks/), [Azure AKS](https://azure.microsoft.com/en-us/products/kubernetes-service), [GCP GKE](https://cloud.google.com/kubernetes-engine?hl=en)).
 
 ## Match rules
-
-[Section titled “Match rules”](#match-rules)
 
 The following match rules are available for this Trust Provider type:
 
@@ -36,19 +33,15 @@ The following match rules are available for this Trust Provider type:
 
 ## Additional configurations
 
-[Section titled “Additional configurations”](#additional-configurations)
-
 Aembit requires a Kubernetes cluster public key to validate the Service Account token used by this trusted provider.
 
 The majority of cloud providers expose an OIDC endpoint that enables automatic retrieval of the Kubernetes cluster public key.
 
-Note
-
-There are multiple ways to retrieve the OIDC endpoint (via UI, CLI, API, etc.) The steps below use the CLI approach; however, select the way that is most appropriate for your organization.
+> **Note**
+>
+> There are multiple ways to retrieve the OIDC endpoint (via UI, CLI, API, etc.) The steps below use the CLI approach; however, select the way that is most appropriate for your organization.
 
 ### AWS EKS
-
-[Section titled “AWS EKS”](#aws-eks)
 
 * Ensure your AWS CLI is installed, configured, and authenticated.
 
@@ -62,8 +55,6 @@ aws eks describe-cluster --name \<cluster_name\> --query "cluster.identity.oidc.
 
 ### GCP GKE
 
-[Section titled “GCP GKE”](#gcp-gke)
-
 * Ensure your GCP CLI is installed, configured, and authenticated.
 
 * Execute the following command:
@@ -75,8 +66,6 @@ gcloud container clusters describe \<cluster_name\> --region=\<cluster_region\> 
 * Paste the response in **OIDC Endpoint** field.
 
 ## Azure AKS
-
-[Section titled “Azure AKS”](#azure-aks)
 
 * Ensure your Azure CLI is installed, configured, and authenticated.
 

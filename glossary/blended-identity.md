@@ -2,7 +2,7 @@
 type: definition
 title: "Blended Identity"
 description: "An access model that combines a human user's identity (authenticated through an Identity Provider) with an AI agent's workload identity into a single access decision, enabling policies that evaluate both \"who is this user\" and \"which agent are they using\" simultaneously."
-tags: [core-concepts]
+tags: ["core-concepts"]
 timestamp: 2026-03-11T16:17:54-07:00
 ---
 

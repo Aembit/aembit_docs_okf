@@ -4,9 +4,8 @@ title: "Amazon Redshift"
 description: "This page describes how to configure Aembit to work with the Amazon Redshift Server Workload."
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/guides/aws-redshift/
 interface: web-ui
-tags: [data-analytics, guide, server-workload, access-policy]
-timestamp: 2026-07-07T18:22:50-07:00
-type_inferred: true
+tags: ["data-analytics", "guide", "server-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Amazon Redshift
@@ -18,13 +17,9 @@ Below you can find the Aembit configuration required to work with Amazon Redshif
 
 ## Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites)
-
 Before proceeding with the configuration, ensure you have an AWS tenant (or [sign up](https://portal.aws.amazon.com/billing/signup#/start/email) for one) and an Amazon Redshift managed cluster. If you haven’t created a cluster before, you can follow the steps in the next section. For more information on creating Amazon Redshift resources, please refer to the [official Amazon documentation](https://docs.aws.amazon.com/redshift/latest/mgmt/overview.html).
 
 ### Create a cluster with Amazon Redshift
-
-[Section titled “Create a cluster with Amazon Redshift”](#create-a-cluster-with-amazon-redshift)
 
 1. Sign in to the AWS Management Console and navigate to the [Amazon Redshift console](https://console.aws.amazon.com/redshiftv2) and choose **Clusters** in the navigation pane.
 
@@ -35,9 +30,9 @@ Before proceeding with the configuration, ensure you have an AWS tenant (or [sig
 * Under **Cluster configuration**, enter a name for the **cluster identifier**, which the endpoint uses.
 * In **Database configurations**, set an **Admin user name**, and either auto-generate or provide an **Admin password**. Save this information for future use.
 
-Note
-
-In this example, this guide uses the `admin` username and password for demonstration purposes; however, it’s advisable to create a dedicated user with appropriate privileges for enhanced security.
+> **Note**
+>
+> In this example, this guide uses the `admin` username and password for demonstration purposes; however, it’s advisable to create a dedicated user with appropriate privileges for enhanced security.
 
 * In **Additional configuration**, you may turn off **Use defaults** and customize settings further.
 * In **Network and security**, find the **Publicly Accessible** option and check the box for **Turn on Publicly accessible**.
@@ -50,8 +45,6 @@ In this example, this guide uses the `admin` username and password for demonstra
 3. After making all your selections, click **Create cluster**.
 
 ## Server Workload configuration
-
-[Section titled “Server Workload configuration”](#server-workload-configuration)
 
 To retrieve the connection information for a cluster in the Amazon Redshift Console:
 
@@ -80,8 +73,6 @@ To retrieve the connection information for a cluster in the Amazon Redshift Cons
 
 ## Credential Provider configuration
 
-[Section titled “Credential Provider configuration”](#credential-provider-configuration)
-
 1. Create a new Credential Provider.
 
 * **Name** - Choose a user-friendly name.
@@ -91,15 +82,11 @@ To retrieve the connection information for a cluster in the Amazon Redshift Cons
 
 ## Client Workload configuration
 
-[Section titled “Client Workload configuration”](#client-workload-configuration)
-
 Aembit now handles the credentials required to access the Server Workload, eliminating the need for you to manage them directly. You can remove any previously used credentials from the Client Workload.
 
 If you access the Server Workload through an SDK or library, it’s possible that the SDK/library may still require credentials to be present for initialization purposes. In this scenario, you can provide placeholder credentials. Aembit overwrites these placeholder credentials with the appropriate ones during the access process.
 
 ## Access Policy
-
-[Section titled “Access Policy”](#access-policy)
 
 * Create an access policy for a Client Workload to access the Amazon Redshift Server Workload and assign the newly created Credential Provider to it.
 

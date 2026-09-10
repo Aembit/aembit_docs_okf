@@ -1,28 +1,26 @@
 ---
-type: explanation
+type: how-to
 title: "Connect to the MCP Server"
 description: "Prerequisites and authentication for connecting your AI tools to the Aembit MCP Server."
 resource: https://docs.aembit.io/ai-guide/mcp/mcp-server/connect/
-tags: [connect, mcp-server, mcp]
-timestamp: 2026-02-24T15:57:13-08:00
-type_inferred: true
+interface: mcp
+tags: ["connect", "mcp-server", "mcp"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Connect to the MCP Server
 
 Use this page to find authentication requirements and connection instructions for the Aembit MCP Server.
 
-Read-only access
-
-The Aembit MCP Server only supports read operations. You can’t create, update, or delete data through the MCP Server.
+> **Read-only access**
+>
+> The Aembit MCP Server only supports read operations. You can’t create, update, or delete data through the MCP Server.
 
 ## Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites)
-
 Before connecting any client, ensure you have:
 
-* **Feature enabled:** Your Aembit administrator must enable the MCP Server for your tenant**Aembit Tenant**: Aembit Tenants serve as isolated, dedicated environments within Aembit that provide complete separation of administrative domains and security configurations.[Learn more](../../../../get-started/concepts/administration.md). If the feature isn’t enabled, you receive a 403 error when attempting to connect.
+* **Feature enabled:** Your Aembit administrator must enable the MCP Server for your tenant. If the feature isn’t enabled, you receive a 403 error when attempting to connect.
 
 * **API Token:** Generate or retrieve your API Token from the Aembit Admin UI:
 
@@ -34,8 +32,6 @@ Before connecting any client, ensure you have:
 
 ## MCP service URL
 
-[Section titled “MCP service URL”](#mcp-service-url)
-
 Your MCP Service URL follows this pattern:
 
 ```shell
@@ -46,8 +42,6 @@ Replace `<tenantId>` with your tenant identifier (visible in your Admin UI Profi
 
 ## Authentication
 
-[Section titled “Authentication”](#authentication)
-
 All connections require a Bearer token in the `Authorization` header:
 
 ```shell
@@ -55,8 +49,6 @@ Authorization: Bearer <apiToken>
 ```
 
 ### Resource set scoping Optional
-
-[Section titled “Resource set scoping ”](#resource-set-scoping-)
 
 By default, queries use your default resource set. To scope queries to a different resource set, include:
 
@@ -68,8 +60,6 @@ Resource sets provide separation of concerns, allowing you to segment event data
 
 ## Choose your client
 
-[Section titled “Choose your client”](#choose-your-client)
-
 Select your AI tool to get connection instructions:
 
 * [Claude Desktop](claude-desktop.md) - Connect the Claude desktop app to query Aembit events
@@ -79,13 +69,9 @@ Select your AI tool to get connection instructions:
 
 ## Troubleshooting
 
-[Section titled “Troubleshooting”](#troubleshooting)
-
 The following sections help resolve common connection, authentication, and query issues:
 
 ### Connection issues
-
-[Section titled “Connection issues”](#connection-issues)
 
 **Server not detected or not appearing:**
 
@@ -100,8 +86,6 @@ The following sections help resolve common connection, authentication, and query
 
 ### Authentication errors
 
-[Section titled “Authentication errors”](#authentication-errors)
-
 **403 Forbidden error:**
 
 * Your administrator hasn’t enabled the MCP Server for your tenant.
@@ -115,8 +99,6 @@ The following sections help resolve common connection, authentication, and query
 
 ### Query issues
 
-[Section titled “Query issues”](#query-issues)
-
 **No data returned or empty results:**
 
 * Adjust your filter parameters (try a broader time range).
@@ -129,7 +111,5 @@ The following sections help resolve common connection, authentication, and query
 * Contact your Aembit administrator to verify feature enablement.
 
 ## Prompts and examples
-
-[Section titled “Prompts and examples”](#prompts-and-examples)
 
 For example prompts and prompt engineering best practices, see the [Prompt Library](../../../prompt-library/overview.md).

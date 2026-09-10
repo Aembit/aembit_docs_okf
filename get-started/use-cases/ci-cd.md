@@ -3,7 +3,7 @@ type: explanation
 title: "Securing CI/CD pipelines"
 description: "How Aembit secures workload access in CI/CD environments"
 resource: https://docs.aembit.io/get-started/use-cases/ci-cd/
-tags: [use-case]
+tags: ["use-case"]
 timestamp: 2026-04-13T13:05:24-07:00
 ---
 
@@ -12,8 +12,6 @@ timestamp: 2026-04-13T13:05:24-07:00
 Most teams running CI/CD pipelines manage secrets in environment variables, vaults, or hardcoded in scripts. Rotating these credentials is tedious and risky. Every rotation requires updating pipeline configurations, risking outages, and burning engineering hours. For regulated industries, auditability is critical: who accessed what, when, and why? CI/CD pipelines are particularly attractive targets because they often hold the highest privileges in the deployment chain. Static secrets stored in CI/CD systems also create attack vectors that many teams underestimate.
 
 ## Risks in CI/CD secret management
-
-[Section titled “Risks in CI/CD secret management”](#risks-in-cicd-secret-management)
 
 Keeping secrets out of code isn’t enough to protect them. Common CI/CD patterns leave credentials exposed in ways that teams often overlook.
 
@@ -31,8 +29,6 @@ Many teams version-control their GitLab CI YAML files or GitHub Actions workflow
 
 ## What Aembit solves
 
-[Section titled “What Aembit solves”](#what-aembit-solves)
-
 Aembit assigns a unique identity to each CI/CD job using [Trust Providers](../concepts/trust-providers.md), which verify that the pipeline job is authentic. Instead of storing static secrets in your pipeline configuration, jobs request [credentials dynamically](../concepts/credential-providers.md) from Aembit at runtime. Aembit issues short-lived tokens or credentials based on [Access Policies](../concepts/access-policies.md) you define.
 
 * Aembit removes static secrets from pipeline configurations, runners, and repository files, eliminating exposure through logs, version control, or compromised pipeline jobs.
@@ -42,11 +38,9 @@ Aembit assigns a unique identity to each CI/CD job using [Trust Providers](../co
 
 Example: External monitoring tools accessing GitHub APIs
 
-Your security scanning tool needs to query GitHub for repository activity, open pull requests, and workflow run results. Instead of creating a long-lived Personal Access Token**Personal Access Token (PAT)**: A long-lived authentication token used as an alternative to passwords for API access. PATs are commonly used with services like GitLab, GitHub, and Jira, and are a frequent target for credential theft. for the scanning tool, Aembit provisions short-lived tokens on-demand. If an attacker compromises the scanning tool, the blast radius**Blast radius**: The scope of damage that can result from a security breach. A smaller blast radius means a compromised credential or component affects fewer systems and less data. covers only the current token’s lifetime, not months or years.
+Your security scanning tool needs to query GitHub for repository activity, open pull requests, and workflow run results. Instead of creating a long-lived Personal Access Token for the scanning tool, Aembit provisions short-lived tokens on-demand. If an attacker compromises the scanning tool, the blast radius covers only the current token’s lifetime, not months or years.
 
 ## Reduce secrets management costs
-
-[Section titled “Reduce secrets management costs”](#reduce-secrets-management-costs)
 
 Traditional secrets managers like AWS Secrets Manager and HashiCorp Vault charge per secret stored, per API call to retrieve that secret, and per rotation operation. For large organizations running hundreds or thousands of pipeline jobs daily, this adds up fast.
 
@@ -57,8 +51,6 @@ Why secrets-per-API pricing becomes expensive
 Traditional secrets management charges per secret stored and per API call to retrieve that secret. In a CI/CD environment with hundreds of jobs running daily, each job reads multiple secrets like database credentials, API keys, and cloud provider tokens. The API call volume accumulates fast. Consider a financial services company with 50 teams each running 20 pipeline jobs per day, averaging 5 secret reads per job. That generates 5,000 secret retrievals daily—about 2 million per year. At typical pricing tiers, this becomes a substantial line item. Aembit eliminates per-secret storage costs by issuing credentials dynamically rather than storing them persistently.
 
 ## Real example: GitLab service account management
-
-[Section titled “Real example: GitLab service account management”](#real-example-gitlab-service-account-management)
 
 Suppose your team manages multiple CI/CD pipelines that need access to GitLab’s API. Each pipeline stores Personal Access Tokens (PATs) in your pipeline configuration or environment variables. Rotating these tokens is manual and error-prone, and auditing who accessed what’s difficult.
 
@@ -76,8 +68,6 @@ Next time the job runs, the process repeats with a fresh token. No manual rotati
 
 ### Why this architecture matters for CI/CD
 
-[Section titled “Why this architecture matters for CI/CD”](#why-this-architecture-matters-for-cicd)
-
 Unlike traditional secret management where static, long-lived tokens sit in pipeline configuration or environment variables, Aembit provisions short-lived credentials on-demand at job runtime.
 
 If pipeline logs, artifacts, or repository history expose a token, its short lifespan limits the window of exposure and potential damage. Revoking access happens immediately through policy changes, with no need to rotate credentials across dozens of systems or runners. An employee departure or security incident triggers access revocation with a single policy update.
@@ -85,8 +75,6 @@ If pipeline logs, artifacts, or repository history expose a token, its short lif
 Aembit also logs every credential request and usage, so security and compliance teams can determine which workload accessed which system, and when.
 
 ## Beyond CI/CD: Platform engineering and automation orchestration
-
-[Section titled “Beyond CI/CD: Platform engineering and automation orchestration”](#beyond-cicd-platform-engineering-and-automation-orchestration)
 
 GitHub and GitLab increasingly serve as automation platforms for orchestrating activities across organizations, extending beyond traditional code commit, test, and deploy workflows. Platform engineering teams use these systems to manage configuration, provision resources, and coordinate activities across enterprise systems.
 
@@ -98,18 +86,14 @@ Aembit secures credentials for both traditional CI/CD pipelines and these broade
 
 ## Supported platforms
 
-[Section titled “Supported platforms”](#supported-platforms)
-
 Aembit provides native integrations with major CI/CD platforms. Each integration uses your platform’s built-in identity capabilities for secure workload authentication:
 
 * **GitLab** (including GitLab Dedicated and Self-Managed) - Uses GitLab CI tokens for authentication
 * **GitHub** (via OIDC tokens) - Leverages GitHub’s native OIDC provider
 
-Additionally, Aembit supports CI/CD platforms through OIDC**OpenID Connect (OIDC)**: An identity layer built on top of OAuth 2.0 that lets applications verify the identity of a user or workload and obtain basic profile information using JSON Web Tokens (JWTs).[Learn more(opens in new tab)](https://openid.net/developers/how-connect-works/) ID Token Trust Providers, including Jenkins and other systems that support OpenID Connect.
+Additionally, Aembit supports CI/CD platforms through OIDC ID Token Trust Providers, including Jenkins and other systems that support OpenID Connect.
 
 ## Next steps
-
-[Section titled “Next steps”](#next-steps)
 
 **Choose your platform:**
 

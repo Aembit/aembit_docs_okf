@@ -4,9 +4,8 @@ title: "GitLab REST"
 description: "This page describes how to configure Aembit to work with the GitLab REST API Server Workload."
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/guides/gitlab-rest/
 interface: web-ui
-tags: [ci-cd, guide, server-workload, access-policy]
-timestamp: 2026-04-27T11:40:47-04:00
-type_inferred: true
+tags: ["ci-cd", "guide", "server-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # GitLab REST
@@ -16,13 +15,11 @@ type_inferred: true
 
 Below you can find the Aembit configuration required to work with the GitLab service as a Server Workload using the GitLab REST API.
 
-Prerequisites
-
-Before proceeding with the configuration, you must have a GitLab tenant (or [sign up](https://gitlab.com/users/sign_up) for one) and a user, group, or instance level owned application. If you have not generated an application yet, follow the configuration steps below. For detailed information on how to create a new application, please refer to the [official GitLab documentation](https://docs.gitlab.com/ee/integration/oauth_provider.html).
+> **Prerequisites**
+>
+> Before proceeding with the configuration, you must have a GitLab tenant (or [sign up](https://gitlab.com/users/sign_up) for one) and a user, group, or instance level owned application. If you have not generated an application yet, follow the configuration steps below. For detailed information on how to create a new application, please refer to the [official GitLab documentation](https://docs.gitlab.com/ee/integration/oauth_provider.html).
 
 ## Server Workload Configuration
-
-[Section titled “Server Workload Configuration”](#server-workload-configuration)
 
 1. Create a new Server Workload.
 
@@ -38,8 +35,6 @@ Before proceeding with the configuration, you must have a GitLab tenant (or [sig
 * **Authentication scheme** - Bearer
 
 ## Credential Provider Configuration
-
-[Section titled “Credential Provider Configuration”](#credential-provider-configuration)
 
 1. Sign in to your GitLab account.
 
@@ -86,13 +81,11 @@ Click on **URL Discovery** to populate the Authorization and Token URL fields, w
 
 ![Credential Provider - Ready State](https://docs.aembit.io/_astro/credential_providers_auth_code_status_ready.CBPCBiJg_ZBh135.webp)
 
-Caution
-
-Once the set lifetime ends, the retrieved credential will expire and no longer be active. Aembit will notify you before this happens. Please ensure you reauthorize your credential before it expires.
+> **Caution**
+>
+> Once the set lifetime ends, the retrieved credential will expire and no longer be active. Aembit will notify you before this happens. Please ensure you reauthorize your credential before it expires.
 
 ## Client Workload Configuration
-
-[Section titled “Client Workload Configuration”](#client-workload-configuration)
 
 Aembit now handles the credentials required to access the Server Workload, eliminating the need for you to manage them directly. You can safely remove any previously used credentials from the Client Workload.
 
@@ -100,13 +93,9 @@ If you access the Server Workload through an SDK or library, it is possible that
 
 ## Access Policy
 
-[Section titled “Access Policy”](#access-policy)
-
 * Create an Access Policy for a Client Workload to access the GitLab REST API Server Workload. Assign the newly created Credential Provider to this Access Policy.
 
 ## Required Features
-
-[Section titled “Required Features”](#required-features)
 
 * You will need to configure the [TLS Decrypt](../../../deploy-install/advanced-options/tls-decrypt/configure-tls-decrypt.md) feature to work with the GitLab REST API Server Workload.
 

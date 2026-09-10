@@ -1,17 +1,16 @@
 ---
-type: explanation
+type: reference
 title: "What is Aembit?"
 description: "An overview of Aembit, its core principles, and key capabilities"
 resource: https://docs.aembit.io/get-started/
-timestamp: 2026-06-18T13:15:52-04:00
-type_inferred: true
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # What is Aembit?
 
 Aembit is a cloud-native Identity and Access Management (IAM) platform: **IAM for Agentic AI & Workloads**. The name comes from ‘ambit’ (meaning boundary or scope). Where traditional *User IAM* governs how people sign in to applications, Aembit governs how **non-human identities** authenticate and reach the resources they depend on. It does this across cloud, on-premises, and SaaS environments.
 
-These non-human identities come in two forms, and Aembit secures both with one identity-first model. A workload**Workload**: Any non-human entity (application, service, automation, AI agent, etc.) that needs to access resources.[Learn more](https://docs.aembit.io/get-started/concepts/how-aembit-works/#introducing-workload-iam) is any application or program that uses computing resources to do work: a CI/CD job, a microservice, a database client, or a serverless function. An AI agent**AI Agent**: A software workload that authenticates to systems, requests credentials, and accesses resources, either on behalf of a person or on its own. Aembit secures AI agents with the same identity-first model it uses for any workload. User-driven agents such as Claude Desktop also carry a blended identity that ties access to both the user and the agent.[Learn more](use-cases/ai-agents.md) authenticates, requests credentials, and reaches resources the same way, whether it acts on a person’s behalf (a user-driven assistant like Claude Desktop) or runs on its own (an autonomous service). The difference is the workload type, not the security model.
+These non-human identities come in two forms, and Aembit secures both with one identity-first model. A workload is any application or program that uses computing resources to do work: a CI/CD job, a microservice, a database client, or a serverless function. An AI agent authenticates, requests credentials, and reaches resources the same way, whether it acts on a person’s behalf (a user-driven assistant like Claude Desktop) or runs on its own (an autonomous service). The difference is the workload type, not the security model.
 
 Both face the same core problem. Traditional approaches to workload authentication rely on static credentials embedded in code, configuration files, or environment variables. These credentials must be manually created, rotated, and protected. This creates significant security and operational challenges.
 
@@ -23,7 +22,7 @@ AI agents raise the stakes for this model. A user-driven agent acts with its ope
 
 ![](https://docs.aembit.io/aembit-icons/lightbulb-light.svg)
 
-[How Aembit works ](how-aembit-works.md)A deeper look at how Aembit works and its architecture
+[How Aembit works](how-aembit-works.md)A deeper look at how Aembit works and its architecture
 
 →
 
@@ -33,41 +32,35 @@ Whether you’re securing AI agents or traditional workloads, the model is the s
 
 Claude Desktop, MCP clients, and user-driven assistants.
 
-[Securing AI agent access](use-cases/ai-agents.md) [Blended identity](../ai-guide/blended-identity.md) [AI Guide](../ai-guide/overview.md)
+[Securing AI agent access](use-cases/ai-agents.md)[Blended identity](../ai-guide/blended-identity.md)[AI Guide](../ai-guide/overview.md)
 
 ### Workloads
 
 CI/CD jobs, microservices, databases, and APIs.
 
-[Workload use cases](use-cases/overview.md) [Access Policies](concepts/access-policies.md) [User Guide](../user-guide/overview.md)
+[Workload use cases](use-cases/overview.md)[Access Policies](concepts/access-policies.md)[User Guide](../user-guide/overview.md)
 
 ## Aembit’s core principles
 
-[Section titled “Aembit’s core principles”](#aembits-core-principles)
-
 * **Manage Access, Not Secrets** - The foundational principle of Aembit is to shift the security focus from *managing static credentials* to *managing access* based on verified workload identity and policy. Instead of relying on long-lived secrets that you must store, protect, and rotate, Aembit employs mechanisms to authenticate workloads based on their intrinsic properties and environment.
 
-  > Aembit grants access based on defined Access Policies**Access Policy**: Access Policies define, enforce, and audit access between Client and Server Workloads by cryptographically verifying workload identity and contextual factors rather than relying on static secrets.[Learn more](concepts/access-policies.md) and real-time context.
+  > Aembit grants access based on defined Access Policies and real-time context.
 
 * **Zero Trust Architecture** - Aembit’s identity-centric approach aligns with the *principles of Zero Trust* architecture, extending concepts traditionally applied to human users into the domain of non-human workloads.
 
   > Aembit never implicitly trusts access.
 
-* **Least Privilege** - Aembit verifies every access request based on a Client Workload**Client Workload**: Client Workloads represent software applications, scripts, or automated processes that initiate access requests to Server Workloads, operating autonomously without direct user interaction.[Learn more](concepts/client-workloads.md)‘s identity, the specific resource its requesting (Server Workload**Server Workload**: Server Workloads represent target services, APIs, databases, or applications that receive and respond to access requests from Client Workloads.[Learn more](concepts/server-workloads.md)), and applicable contextual constraints defined in the Access Policy. This confirms adherence to the *principle of Least Privilege*.
+* **Least Privilege** - Aembit verifies every access request based on a Client Workload‘s identity, the specific resource its requesting (Server Workload), and applicable contextual constraints defined in the Access Policy. This confirms adherence to the *principle of Least Privilege*.
 
   > Aembit grants only the necessary permissions required for a specific task at a specific time.
 
 ## What Aembit can do for you
-
-[Section titled “What Aembit can do for you”](#what-aembit-can-do-for-you)
 
 Aembit’s value proposition centers on enhancing security and operational efficiency in managing non-human identities.
 
 This offers specific benefits for different roles:
 
 ### Build applications with secretless access
-
-[Section titled “Build applications with secretless access”](#build-applications-with-secretless-access)
 
 If you’re building and deploying applications, AI agents, or MCP integrations, managing secrets is a common challenge. Aembit solves this by enabling a “secretless” approach for workload-to-workload access. Aembit lets your applications and agents dynamically obtain credentials based on their verified identity and policy, simplifying your development process by:
 
@@ -78,13 +71,11 @@ If you’re building and deploying applications, AI agents, or MCP integrations,
 
 ![](https://docs.aembit.io/aembit-icons/rocket.svg)
 
-[Aembit quickstart ](quickstart/quickstart-core.md)Start building with Aembit by checking out the quickstart guide
+[Aembit quickstart](quickstart/quickstart-core.md)Start building with Aembit by checking out the quickstart guide
 
 →
 
 ### Advance security maturity and risk reduction
-
-[Section titled “Advance security maturity and risk reduction”](#advance-security-maturity-and-risk-reduction)
 
 From a strategic perspective focused on risk and security maturity, Aembit provides a dedicated platform to secure non-human identities. They’re a significant and growing source of enterprise risk, as teams adopt AI agents alongside traditional workloads. By replacing insecure static credentials with an identity-first, secretless approach, Aembit drastically reduces the attack surface and the risk of breaches.
 
@@ -99,13 +90,11 @@ Aembit supports implementing a Zero Trust architecture for workloads, simplifies
 
 ![](https://docs.aembit.io/aembit-icons/clouds.svg)
 
-[Aembit use cases ](use-cases/overview.md)Check out Aembit's use cases to see how it can help you
+[Aembit use cases](use-cases/overview.md)Check out Aembit's use cases to see how it can help you
 
 →
 
 ### Enhance security posture and enforce access control
-
-[Section titled “Enhance security posture and enforce access control”](#enhance-security-posture-and-enforce-access-control)
 
 As a security engineer responsible for defining and enforcing controls, Aembit enhances your security posture by focusing on securing non-human identity access. Aembit provides centralized policy management and conditional access capabilities. You can enforce granular controls over workload and AI agent access alike, based on verifiable identity and live context like security posture.
 
@@ -120,13 +109,11 @@ This helps implement Zero Trust principles for workloads and reduces risk by:
 
 ![](https://docs.aembit.io/aembit-icons/lightbulb-light.svg)
 
-[Aembit security posture ](security-posture/overview.md)Check out Aembit's software architecture, threat model, and compliance
+[Aembit security posture](security-posture/overview.md)Check out Aembit's software architecture, threat model, and compliance
 
 →
 
 ### Streamline secure deployments and operations
-
-[Section titled “Streamline secure deployments and operations”](#streamline-secure-deployments-and-operations)
 
 For those focused on automating and managing infrastructure, Aembit integrates identity and access management for your workloads and AI agents directly into your operational workflows. Aembit enables you to focus on building and deploying applications through the following benefits:
 
@@ -139,29 +126,23 @@ For those focused on automating and managing infrastructure, Aembit integrates i
 
 ![](https://docs.aembit.io/aembit-icons/gear-complex-code-light.svg)
 
-[Scaling Aembit with Terraform ](concepts/scaling-terraform.md)See how Aembit integrates with Terraform to manage your infrastructure
+[Scaling Aembit with Terraform](concepts/scaling-terraform.md)See how Aembit integrates with Terraform to manage your infrastructure
 
 →
 
 ## Key capabilities
 
-[Section titled “Key capabilities”](#key-capabilities)
-
 The tables in the following sections detail Aembit’s primary capabilities, along with example use cases and what benefit Aembit provides for each:
 
 ### Blended identity for AI agents
 
-[Section titled “Blended identity for AI agents”](#blended-identity-for-ai-agents)
-
-|                      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Capability**       | For user-driven AI agents, Aembit evaluates a blended identity**Blended Identity**: An access model that combines a human user's identity (authenticated through an Identity Provider) with an AI agent's workload identity into a single access decision, enabling policies that evaluate both "who is this user" and "which agent are they using" simultaneously.[Learn more](../ai-guide/blended-identity.md) in a single Access Policy: the human user’s identity (from your identity provider) together with the agent’s workload identity. |
-| **Example Use Case** | An employee uses Claude Desktop to query Jira and search Confluence through an MCP server. Aembit authenticates the user through your IdP, identifies the agent by its workload identity, and issues a short-lived token scoped to both, so the security team can use an agent to reach the vulnerability scanner while engineering reaches only Jira and Confluence.                                                                                                                                                                       |
-| **Benefit**          | Every access event carries both the user and the agent (dual attribution), and you enforce least privilege at the agent layer. You can revoke a specific user, user-agent combination, or all agents through policy, without rotating credentials.                                                                                                                                                                                                                                                                                          |
+|                      |                                                                                                                                                                                                                                                                                                                                                                       |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Capability**       | For user-driven AI agents, Aembit evaluates a blended identity in a single Access Policy: the human user’s identity (from your identity provider) together with the agent’s workload identity.                                                                                                                                                                        |
+| **Example Use Case** | An employee uses Claude Desktop to query Jira and search Confluence through an MCP server. Aembit authenticates the user through your IdP, identifies the agent by its workload identity, and issues a short-lived token scoped to both, so the security team can use an agent to reach the vulnerability scanner while engineering reaches only Jira and Confluence. |
+| **Benefit**          | Every access event carries both the user and the agent (dual attribution), and you enforce least privilege at the agent layer. You can revoke a specific user, user-agent combination, or all agents through policy, without rotating credentials.                                                                                                                    |
 
 ### Zero-credential MCP access
-
-[Section titled “Zero-credential MCP access”](#zero-credential-mcp-access)
 
 |                      |                                                                                                                                                                                                                                                                                                                          |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -171,8 +152,6 @@ The tables in the following sections detail Aembit’s primary capabilities, alo
 
 ### Secretless workload authentication
 
-[Section titled “Secretless workload authentication”](#secretless-workload-authentication)
-
 |                      |                                                                                                                                                                                                                                                                                               |
 | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Capability**       | Aembit authenticates workloads (like applications or scripts) based on their verifiable environment attributes (workload attestation) rather than relying on stored secrets like API keys or passwords.                                                                                       |
@@ -180,8 +159,6 @@ The tables in the following sections detail Aembit’s primary capabilities, alo
 | **Benefit**          | Aembit eliminates the risk of exposing the database credentials if an attacker compromises the script’s code or configuration files. It also removes the operational overhead of rotating and managing those static secrets.                                                                  |
 
 ### Conditional Access Policies
-
-[Section titled “Conditional Access Policies”](#conditional-access-policies)
 
 |                      |                                                                                                                                                                                                                                                                                                                                                                                                |
 | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -191,8 +168,6 @@ The tables in the following sections detail Aembit’s primary capabilities, alo
 
 ### Identity brokering across heterogeneous environments
 
-[Section titled “Identity brokering across heterogeneous environments”](#identity-brokering-across-heterogeneous-environments)
-
 |                      |                                                                                                                                                                                                                                                                                              |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Capability**       | Aembit acts as a central intermediary, managing access requests between workloads that might reside in different environments (multiple public clouds, on-premises data centers, SaaS applications, third-party APIs).                                                                       |
@@ -200,8 +175,6 @@ The tables in the following sections detail Aembit’s primary capabilities, alo
 | **Benefit**          | It simplifies security management in complex, hybrid/multi-cloud setups by providing a single point of control and visibility, eliminating the need to configure and manage disparate access control mechanisms for each environment.                                                        |
 
 ### Centralized Access Policy management & auditing
-
-[Section titled “Centralized Access Policy management & auditing”](#centralized-access-policy-management--auditing)
 
 |                      |                                                                                                                                                                                                                                                                                                        |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -211,17 +184,13 @@ The tables in the following sections detail Aembit’s primary capabilities, alo
 
 ### Automation and “No-Code Auth”
 
-[Section titled “Automation and “No-Code Auth””](#automation-and-no-code-auth)
-
-|                      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Capability**       | Aembit automates the process of authenticating workloads and providing them with necessary credentials just-in-time. Its interception mechanism (via Aembit Edge**Aembit Edge**: Aembit Edge represents components deployed within your operational environments that enforce Access Policies by intercepting traffic, verifying identities, and injecting credentials just-in-time.[Learn more](concepts/aembit-edge.md)) aims to secure workload communication without requiring you to modify application code to handle authentication logic. |
-| **Example Use Case** | A development team deploys a new microservice. Instead of writing code to handle API key retrieval and injection for accessing downstream services, they deploy Aembit Edge Components alongside their service. Aembit then: 1) automatically intercepts outgoing calls, 2) handles authentication/authorization via a central Access Policy, 3) injects credentials as needed.                                                                                                                                                                             |
-| **Benefit**          | Aembit reduces developer friction, speeds up deployment cycles, and makes sure the security implementation is consistent without placing the burden of complex authentication coding on application developers. It also improves operational efficiency by automating credential lifecycle management.                                                                                                                                                                                                                                                      |
+|                      |                                                                                                                                                                                                                                                                                                                                                                                 |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Capability**       | Aembit automates the process of authenticating workloads and providing them with necessary credentials just-in-time. Its interception mechanism (via Aembit Edge) aims to secure workload communication without requiring you to modify application code to handle authentication logic.                                                                                        |
+| **Example Use Case** | A development team deploys a new microservice. Instead of writing code to handle API key retrieval and injection for accessing downstream services, they deploy Aembit Edge Components alongside their service. Aembit then: 1) automatically intercepts outgoing calls, 2) handles authentication/authorization via a central Access Policy, 3) injects credentials as needed. |
+| **Benefit**          | Aembit reduces developer friction, speeds up deployment cycles, and makes sure the security implementation is consistent without placing the burden of complex authentication coding on application developers. It also improves operational efficiency by automating credential lifecycle management.                                                                          |
 
 ## Additional resources
-
-[Section titled “Additional resources”](#additional-resources)
 
 * [How Aembit Works](how-aembit-works.md)
 * [Aembit User Guide](../user-guide/overview.md)

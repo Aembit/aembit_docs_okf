@@ -4,9 +4,8 @@ title: "Configure a Claude WIF Credential Provider"
 description: "Configure a Claude Workload Identity Federation Credential Provider so workloads call the Claude API with short-lived tokens."
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/claude-workload-identity-federation/
 interface: web-ui
-tags: [credential-provider, access-policy]
-timestamp: 2026-06-09T15:19:21-07:00
-type_inferred: true
+tags: ["credential-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Configure a Claude WIF Credential Provider
@@ -16,8 +15,6 @@ Aembit’s Credential Provider for Claude Workload Identity Federation (WIF) let
 You can configure the Claude Credential Provider using the [Aembit web UI](#create-a-credential-provider) or through the [Aembit Terraform provider](#configure-claude-wif-using-the-aembit-terraform-provider).
 
 ## Prerequisites
-
-[Section titled “Prerequisites”](#prerequisites)
 
 To configure a Claude WIF Credential Provider, you’ll need the following:
 
@@ -34,17 +31,13 @@ To configure a Claude WIF Credential Provider, you’ll need the following:
 
 ## Configure a Credential Provider for Claude
 
-[Section titled “Configure a Credential Provider for Claude”](#configure-a-credential-provider-for-claude)
-
 This section explains how to configure a Claude WIF Credential Provider in the Aembit web UI. You create the Credential Provider in Aembit, configure the matching federation trust in Claude Console, then return to Aembit to finish and verify.
 
-Tip
-
-Keep Claude Console open in another browser window alongside the Aembit web UI so you can work in both spaces.
+> **Tip**
+>
+> Keep Claude Console open in another browser window alongside the Aembit web UI so you can work in both spaces.
 
 ## Create a Credential Provider
-
-[Section titled “Create a Credential Provider”](#create-a-credential-provider)
 
 1. Log in to your Aembit Tenant and click **Credential Providers**.
 
@@ -62,8 +55,6 @@ Keep Claude Console open in another browser window alongside the Aembit web UI s
 
 ## Configure the federation trust in Claude Console
 
-[Section titled “Configure the federation trust in Claude Console”](#configure-the-federation-trust-in-claude-console)
-
 In Claude Console, use the **OIDC Issuer URL** you copied from Aembit to register Aembit as a federation issuer. Then create the service account and federation rule that Aembit’s tokens map to.
 
 Follow the Anthropic [Workload Identity Federation](https://platform.claude.com/docs/en/manage-claude/workload-identity-federation) and [WIF reference](https://platform.claude.com/docs/en/manage-claude/wif-reference) documentation to complete this setup, with two things to note for Aembit:
@@ -79,8 +70,6 @@ As you configure Claude Console, record the following values, which you’ll ent
 4. **Workspace ID** - your Claude workspace ID, which starts with `wrkspc_`.
 
 ## Complete the Credential Provider in the Aembit web UI
-
-[Section titled “Complete the Credential Provider in the Aembit web UI”](#complete-the-credential-provider-in-the-aembit-web-ui)
 
 Return to the Aembit web UI and complete the **Credential Provider** page with the values from Claude Console:
 
@@ -112,8 +101,6 @@ Return to the Aembit web UI and complete the **Credential Provider** page with t
 
 ## Verify the connection
 
-[Section titled “Verify the connection”](#verify-the-connection)
-
 To verify the connection between your Aembit Credential Provider and your Claude federation rule:
 
 1. On the **Credential Providers** page, select the Credential Provider you just created.
@@ -127,8 +114,6 @@ To verify the connection between your Aembit Credential Provider and your Claude
 You’re now ready to use your Credential Provider for Claude Workload Identity Federation with your Server Workloads in an Aembit [Access Policy](../create-access-policy.md). To configure Claude as a Server Workload, see the [Claude](../server-workloads/guides/claude.md) guide.
 
 ## Configure Claude WIF using the Aembit Terraform provider
-
-[Section titled “Configure Claude WIF using the Aembit Terraform provider”](#configure-claude-wif-using-the-aembit-terraform-provider)
 
 To configure a Claude WIF Credential Provider using the [Aembit Terraform Provider](https://registry.terraform.io/providers/Aembit/aembit/latest), follow the steps in this section.
 
@@ -171,8 +156,6 @@ The following configuration is an example. For the authoritative, current argume
 You’re now ready to use your Credential Provider for Claude Workload Identity Federation with your Server Workloads in an Aembit Access Policy.
 
 ## Claude and Credential Provider UI value mappings
-
-[Section titled “Claude and Credential Provider UI value mappings”](#claude-and-credential-provider-ui-value-mappings)
 
 The following table shows how the values in your Claude WIF configuration map to the Aembit Credential Provider web UI and Terraform provider:
 

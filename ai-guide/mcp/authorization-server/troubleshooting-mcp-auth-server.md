@@ -4,7 +4,7 @@ title: "Troubleshoot the MCP Authorization Server"
 description: "Common errors and solutions when configuring the Aembit MCP Authorization Server."
 resource: https://docs.aembit.io/ai-guide/mcp/authorization-server/troubleshooting-mcp-auth-server/
 interface: mcp
-tags: [authorization-server, mcp]
+tags: ["authorization-server", "mcp"]
 timestamp: 2026-05-19T19:12:05-07:00
 ---
 
@@ -12,15 +12,13 @@ timestamp: 2026-05-19T19:12:05-07:00
 
 This guide covers common errors you may encounter when setting up or using the Aembit Model Context Protocol (MCP) Authorization Server.
 
-Event-based troubleshooting
-
-For runtime failures that surface as generic errors in the MCP client start with [Troubleshoot MCP and AI IAM access](../../../user-guide/troubleshooting/mcp-ai-iam.md). That guide walks through Access Authorization Events, Workload Events, and MCP Authorization Tracing in order.
-
-Use this page for configuration-time errors visible to the MCP client during setup.
+> **Event-based troubleshooting**
+>
+> For runtime failures that surface as generic errors in the MCP client start with [Troubleshoot MCP and AI IAM access](../../../user-guide/troubleshooting/mcp-ai-iam.md). That guide walks through Access Authorization Events, Workload Events, and MCP Authorization Tracing in order.
+>
+> Use this page for configuration-time errors visible to the MCP client during setup.
 
 ## Quick reference
-
-[Section titled “Quick reference”](#quick-reference)
 
 | Error                               | Jump to                                                                             |
 | ----------------------------------- | ----------------------------------------------------------------------------------- |
@@ -39,13 +37,9 @@ Use this page for configuration-time errors visible to the MCP client during set
 
 ## URL mismatch errors
 
-[Section titled “URL mismatch errors”](#url-mismatch-errors)
-
 URL mismatches are among the most common configuration issues. Three URLs must align for the MCP authorization flow to succeed.
 
 ### Redirect URI mismatch
-
-[Section titled “Redirect URI mismatch”](#redirect-uri-mismatch)
 
 **Error:**
 
@@ -53,7 +47,7 @@ URL mismatches are among the most common configuration issues. Three URLs must a
 Error: redirect_uri mismatch
 ```
 
-**Cause:** The redirect URI registered in your Aembit Client Workload**Client Workload**: Client Workloads represent software applications, scripts, or automated processes that initiate access requests to Server Workloads, operating autonomously without direct user interaction.[Learn more](../../../get-started/concepts/client-workloads.md) doesn’t match the callback URL your MCP client uses.
+**Cause:** The redirect URI registered in your Aembit Client Workload doesn’t match the callback URL your MCP client uses.
 
 **Resolution:**
 
@@ -62,8 +56,6 @@ Error: redirect_uri mismatch
 3. For local development, ensure you’re consistent with `localhost` vs `127.0.0.1`
 
 ### Resource URL mismatch
-
-[Section titled “Resource URL mismatch”](#resource-url-mismatch)
 
 **Error:**
 
@@ -81,15 +73,13 @@ Error: Protected resource http://server-a:8080/mcp does not match expected http:
 
 ## No identity providers available
 
-[Section titled “No identity providers available”](#no-identity-providers-available)
-
 **Error:**
 
 ```text
 No Identity Providers Available
 ```
 
-**Cause:** The Access Policy's**Access Policy**: Access Policies define, enforce, and audit access between Client and Server Workloads by cryptographically verifying workload identity and contextual factors rather than relying on static secrets.[Learn more](../../../get-started/concepts/access-policies.md) Trust Provider**Trust Provider**: Trust Providers validate Client Workload identities through workload attestation, verifying identity claims from the workload's runtime environment rather than relying on pre-shared secrets.[Learn more](../../../get-started/concepts/trust-providers.md) doesn’t have an associated identity provider configured.
+**Cause:** The Access Policy's Trust Provider doesn’t have an associated identity provider configured.
 
 **Resolution:**
 
@@ -99,8 +89,6 @@ No Identity Providers Available
 4. Check that the IdP is correctly configured with your OIDC provider (Azure AD, Okta, Google, etc.)
 
 ## Missing scope parameter
-
-[Section titled “Missing scope parameter”](#missing-scope-parameter)
 
 **Error:**
 
@@ -116,13 +104,11 @@ No Identity Providers Available
 2. Check that you correctly configured the Trust Provider for OIDC ID Token authentication
 3. Ensure the Trust Provider’s IdP settings match your identity provider
 
-Active development
-
-This is an area of active development. Contact Aembit support if the issue persists after verifying Trust Provider configuration.
+> **Active development**
+>
+> This is an area of active development. Contact Aembit support if the issue persists after verifying Trust Provider configuration.
 
 ## MCPJam backend proxy error
-
-[Section titled “MCPJam backend proxy error”](#mcpjam-backend-proxy-error)
 
 **Error:**
 
@@ -137,17 +123,13 @@ Backend debug proxy error: 500 Internal Server Error
 1. Open your firewall to allow MCPJam’s proxy IP ranges
 2. Or use a different MCP client that performs OAuth entirely in the browser
 
-MCPJam limitation
-
-This limitation only affects MCPJam when connecting to remote MCP servers with restricted network access. Local development typically doesn’t encounter this issue.
+> **MCPJam limitation**
+>
+> This limitation only affects MCPJam when connecting to remote MCP servers with restricted network access. Local development typically doesn’t encounter this issue.
 
 ## Dynamic client registration issues
 
-[Section titled “Dynamic client registration issues”](#dynamic-client-registration-issues)
-
 ### Client registration failures
-
-[Section titled “Client registration failures”](#client-registration-failures)
 
 **Error:**
 
@@ -166,8 +148,6 @@ Error: invalid_client_metadata
 
 ### PKCE validation failures
 
-[Section titled “PKCE validation failures”](#pkce-validation-failures)
-
 **Error:**
 
 ```text
@@ -185,11 +165,7 @@ Error: invalid_grant - code_verifier doesn't match code_challenge
 
 ## Policy evaluation errors
 
-[Section titled “Policy evaluation errors”](#policy-evaluation-errors)
-
 ### Access Policy not found
-
-[Section titled “Access Policy not found”](#access-policy-not-found)
 
 **Error:**
 
@@ -208,8 +184,6 @@ Error: No matching Access Policy found
 
 ### Token exchange failures
 
-[Section titled “Token exchange failures”](#token-exchange-failures)
-
 **Error:**
 
 ```text
@@ -227,11 +201,7 @@ Error: Token exchange failed
 
 ## Identity provider issues
 
-[Section titled “Identity provider issues”](#identity-provider-issues)
-
 ### Key authentication failures
-
-[Section titled “Key authentication failures”](#key-authentication-failures)
 
 **Error:**
 
@@ -250,8 +220,6 @@ Error: invalid_client - JWT signature verification failed
 
 ### SAML attribute mapping errors
 
-[Section titled “SAML attribute mapping errors”](#saml-attribute-mapping-errors)
-
 **Error:**
 
 ```text
@@ -269,8 +237,6 @@ Error: Required SAML attribute not found
 
 ### SAML metadata errors
 
-[Section titled “SAML metadata errors”](#saml-metadata-errors)
-
 **Error:**
 
 ```text
@@ -287,8 +253,6 @@ Error: Failed to parse SAML metadata
 4. Verify your IdP’s signing certificate hasn’t expired
 
 ## Related resources
-
-[Section titled “Related resources”](#related-resources)
 
 * [MCP Authorization Server overview](overview.md)
 * [Set up the MCP Authorization Server](setup-mcp-auth-server.md)

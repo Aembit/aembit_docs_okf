@@ -1,0 +1,18 @@
+---
+type: reference
+title: "UserTokensDTO"
+resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
+interface: api
+timestamp: 2026-07-28T14:42:14-04:00
+---
+
+# UserTokensDTO
+
+**Type:** object
+
+**Properties:**
+
+- **id** *(optional)*: string (uuid)
+- **name** *(optional)*: null,string
+- **verified** *(optional)*: boolean
+- **createdAt** *(optional)*: string (date-time)

@@ -1,12 +1,11 @@
 ---
-type: how-to
+type: reference
 title: "Terraform Cloud Identity Token Trust Provider"
 description: "This page describes the steps required to configure the Terraform Cloud Identity Token Trust Provider."
 resource: https://docs.aembit.io/user-guide/access-policies/trust-providers/terraform-cloud-identity-token-trust-provider/
 interface: web-ui
-tags: [trust-provider, access-policy]
-timestamp: 2025-04-14T12:09:34-07:00
-type_inferred: true
+tags: ["trust-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Terraform Cloud Identity Token Trust Provider
@@ -15,8 +14,6 @@ type_inferred: true
 The Terraform Cloud Identity Token Trust Provider verifies the identities of Client Workloads within Terraform Cloud using identity tokens. These tokens include metadata such as organization, project, and workspace details, ensuring secure and authenticated access to resources.
 
 ## Match rules
-
-[Section titled “Match rules”](#match-rules)
 
 The following match rules are available for this Trust Provider type:
 

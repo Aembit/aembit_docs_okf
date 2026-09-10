@@ -1,11 +1,11 @@
 ---
-type: explanation
+type: reference
 title: "Advanced deployment options"
 description: "Advanced deployment options for Aembit deployments"
 resource: https://docs.aembit.io/user-guide/deploy-install/advanced-options/
-tags: [advanced-option, deploy-install]
-timestamp: 2025-05-29T11:26:12-07:00
-type_inferred: true
+interface: web-ui
+tags: ["advanced-option", "deploy-install"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Advanced deployment options
@@ -19,8 +19,6 @@ The following pages provide information about advanced deployment options:
 * [Trusting Private CAs](trusting-private-cas.md)
 
 ### TLS Decrypt
-
-[Section titled “TLS Decrypt”](#tls-decrypt)
 
 * [About TLS Decrypt](tls-decrypt/overview.md) - Overview of the TLS Decrypt feature
 * [About TLS Decrypt Standalone CA](tls-decrypt/about-tls-decrypt-standalone-ca.md)

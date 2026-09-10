@@ -4,9 +4,8 @@ title: "How to configure Single Sign On automatic user creation"
 description: "How to configure SSO automatic user creation through an identity provider"
 resource: https://docs.aembit.io/user-guide/administration/identity-providers/automatic-user-creation/
 interface: web-ui
-tags: [identity-provider, administration]
-timestamp: 2025-10-21T20:11:12-07:00
-type_inferred: true
+tags: ["identity-provider", "administration"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # How to configure Single Sign On automatic user creation
@@ -14,8 +13,6 @@ type_inferred: true
 [Automatic user creation](overview.md#about-automatic-user-creation) automatically generates new user accounts on your behalf when your users go through the SSO authenticate process. This feature provides granular control of what user roles Aembit assigns to new users it creates. For more details, see [how automatic user creation works](overview.md#how-automatic-user-creation-works).
 
 ## Technical: SAML attribute requirements
-
-[Section titled “Technical: SAML attribute requirements”](#technical-saml-attribute-requirements)
 
 For SAML 2.0 Identity Providers, Aembit looks for the presence of the following claim elements in the SAML response to create new user accounts:
 
@@ -27,8 +24,6 @@ For SAML 2.0 Identity Providers, Aembit looks for the presence of the following 
 
 ## Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites)
-
 To enable automatic user creation in your Aembit Tenant, you must have the following:
 
 * A Teams or Enterprise subscription plan.
@@ -36,8 +31,6 @@ To enable automatic user creation in your Aembit Tenant, you must have the follo
 * Your Identity Provider’s (IdP) SAML group claim information attribute names and values.
 
 ## Common IdP attribute names
-
-[Section titled “Common IdP attribute names”](#common-idp-attribute-names)
 
 Different Identity Providers use different attribute names for group claims. The following table lists common SAML attribute names for groups:
 
@@ -51,8 +44,6 @@ Different Identity Providers use different attribute names for group claims. The
 Your IdP may use different names. Check your IdP’s SAML configuration or documentation for the correct attribute names.
 
 ## Map IdP SAML attributes to Aembit user roles
-
-[Section titled “Map IdP SAML attributes to Aembit user roles”](#map-idp-saml-attributes-to-aembit-user-roles)
 
 To map the group information sent from your Identity Provider to the roles available in your tenant, follow these steps:
 
@@ -76,11 +67,11 @@ To map the group information sent from your Identity Provider to the roles avail
 
 8. In the **SAML Attribute Value** column, use the dropdown to select an existing attribute value or click ”+” to add a new one. Make sure the values correspond to the groups defined in your Identity Provider.
 
-   Tip
-
-   Refer to your Identity Provider’s configuration documentation for the correct attribute names and values.
-
-   For example, Azure uses the predefined claim name `http://schemas.microsoft.com/ws/2008/06/identity/claims/groups`, while other Identity Providers may allow customization of the claim name for group information.
+   > **Tip**
+   >
+   > Refer to your Identity Provider’s configuration documentation for the correct attribute names and values.
+   >
+   > For example, Azure uses the predefined claim name `http://schemas.microsoft.com/ws/2008/06/identity/claims/groups`, while other Identity Providers may allow customization of the claim name for group information.
 
 9. In the **Aembit Roles** column, use the dropdown to select one or more Aembit roles.
 
@@ -92,13 +83,9 @@ To map the group information sent from your Identity Provider to the roles avail
 
 ## Examples: Mapping attributes to Aembit roles
 
-[Section titled “Examples: Mapping attributes to Aembit roles”](#examples-mapping-attributes-to-aembit-roles)
-
 The following examples show how to map Identity Provider attributes to Aembit roles for both SAML and OIDC protocols.
 
 ### SAML attribute mapping example
-
-[Section titled “SAML attribute mapping example”](#saml-attribute-mapping-example)
 
 For SAML Identity Providers like Azure AD, group claims use specific attribute names:
 
@@ -118,8 +105,6 @@ This configuration means: Users in the “AembitAdmins” group in Azure AD are 
 
 ### OIDC attribute mapping example
 
-[Section titled “OIDC attribute mapping example”](#oidc-attribute-mapping-example)
-
 For OIDC Identity Providers like Azure AD with OIDC, attribute names differ from SAML:
 
 **First mapping:**
@@ -134,26 +119,24 @@ For OIDC Identity Providers like Azure AD with OIDC, attribute names differ from
 * **OIDC Claim Value**: `AembitViewers`
 * **Aembit Roles**: Viewer
 
-SAML vs OIDC attribute differences
-
-The same Identity Provider often uses different attribute names for SAML and OIDC:
-
-* **Azure AD / Entra**:
-
-  * SAML groups claim: `http://schemas.microsoft.com/ws/2008/06/identity/claims/groups`
-  * OIDC groups claim: `groups`
-  * OIDC user principal name: `upn` (often contains email address)
-
-* **Okta**:
-
-  * SAML groups claim: `groups`
-  * OIDC groups claim: `groups`
-
-Always check your IdP’s documentation for the correct claim names for your protocol.
+> **SAML vs OIDC attribute differences**
+>
+> The same Identity Provider often uses different attribute names for SAML and OIDC:
+>
+> * **Azure AD / Entra**:
+>
+>   * SAML groups claim: `http://schemas.microsoft.com/ws/2008/06/identity/claims/groups`
+>   * OIDC groups claim: `groups`
+>   * OIDC user principal name: `upn` (often contains email address)
+>
+> * **Okta**:
+>
+>   * SAML groups claim: `groups`
+>   * OIDC groups claim: `groups`
+>
+> Always check your IdP’s documentation for the correct claim names for your protocol.
 
 ## Understanding automatic user creation
-
-[Section titled “Understanding automatic user creation”](#understanding-automatic-user-creation)
 
 When users authenticate through SSO, the following scenarios can occur:
 

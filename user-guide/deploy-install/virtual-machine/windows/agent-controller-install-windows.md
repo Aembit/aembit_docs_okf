@@ -4,9 +4,8 @@ title: "How to set up Agent Controller on Windows Server"
 description: "How to set up Aembit Agent Controller on Windows Server"
 resource: https://docs.aembit.io/user-guide/deploy-install/virtual-machine/windows/agent-controller-install-windows/
 interface: web-ui
-tags: [windows, virtual-machine, deploy-install]
-timestamp: 2026-04-15T15:41:42-07:00
-type_inferred: true
+tags: ["windows", "virtual-machine", "deploy-install"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # How to set up Agent Controller on Windows Server
@@ -15,11 +14,11 @@ Aembit provides many different deployment options you can use to deploy Aembit E
 
 This page describes the process to deploy Agent Controller to a Windows Server virtual machine (VM).
 
-Note
-
-Aembit recommends deploying Agent Controller and Agent Proxy on standalone VMs and not collocating them on the same VM.
-
-See [About Colocating Aembit Edge Components](../../about-colocating-edge-components.md) for more info.
+> **Note**
+>
+> Aembit recommends deploying Agent Controller and Agent Proxy on standalone VMs and not collocating them on the same VM.
+>
+> See [About Colocating Aembit Edge Components](../../about-colocating-edge-components.md) for more info.
 
 To install Agent Controller on Windows Server, Aembit provides a Windows installer file (`.msi`).\
 See [Installation details](#installation-details) for more information about what it does.
@@ -34,8 +33,6 @@ Aembit supports three primary configurations when you install Agent Controller o
 
 ## Supported versions
 
-[Section titled “Supported versions”](#supported-versions)
-
 Use the following table to make sure that Aembit supports the operating system and platform you’re deploying to your VM:
 
 | Operating system    | Edge Component versions      |
@@ -44,8 +41,6 @@ Use the following table to make sure that Aembit supports the operating system a
 | Windows Server 2022 | Agent Controller v1.21.2101+ |
 
 ## Prerequisites
-
-[Section titled “Prerequisites”](#prerequisites)
 
 Before you install Agent Controller on Windows Server, you must have the following:
 
@@ -56,8 +51,6 @@ Before you install Agent Controller on Windows Server, you must have the followi
   * Your Agent Controller Windows Server host joined to an Active Directory (AD) domain.
 
 ## Install Agent Controller on Windows Server
-
-[Section titled “Install Agent Controller on Windows Server”](#install-agent-controller-on-windows-server)
 
 To install an Aembit Agent Controller on Windows Server:
 
@@ -94,9 +87,9 @@ To install an Aembit Agent Controller on Windows Server:
 
   3. Make sure to add the [Kerberos Trust Provider](../../../access-policies/trust-providers/kerberos-trust-provider.md) in your Aembit Tenant.
 
-     Caution
-
-     When upgrading Agent Controller and you change the value of `SERVICE_LOGON_ACCOUNT`, then you must restart the Agent Controller service once installation completes.
+     > **Caution**
+     >
+     > When upgrading Agent Controller and you change the value of `SERVICE_LOGON_ACCOUNT`, then you must restart the Agent Controller service once installation completes.
 
   4. When installing the Agent Proxy, make sure the `AEMBIT_AGENT_CONTROLLER` value uses the DNS name of the Agent Controller service principal.
 
@@ -122,23 +115,19 @@ To install an Aembit Agent Controller on Windows Server:
 
   4. Make sure to add the [Kerberos Trust Provider](../../../access-policies/trust-providers/kerberos-trust-provider.md) in your Aembit Tenant.
 
-HTTP proxy configuration
-
-If your network routes outbound traffic through an HTTP proxy, configure the `HTTP_PROXY`, `HTTPS_PROXY`, and `NO_PROXY` environment variables for Agent Controller. See [Agent Controller environment variables](../../../../reference/edge-components/edge-component-env-vars.md#http_proxy) for details.
+> **HTTP proxy configuration**
+>
+> If your network routes outbound traffic through an HTTP proxy, configure the `HTTP_PROXY`, `HTTPS_PROXY`, and `NO_PROXY` environment variables for Agent Controller. See [Agent Controller environment variables](../../../../reference/edge-components/edge-component-env-vars.md#http_proxy) for details.
 
 ### Agent Controller environment variables
 
-[Section titled “Agent Controller environment variables”](#agent-controller-environment-variables)
-
 For a list of all available environment variables for configuring the Agent Controller installer, see [Agent Controller environment variables reference](../../../../reference/edge-components/edge-component-env-vars.md#agent-controller-environment-variables).
 
-Security Best Practice
-
-Make sure the Agent Controller can accept connections on port 5000 from Agent Proxies (update your security groups if needed). Because access to Agent Controller is sensitive, *your Agent Controller’s port should not be open to the Internet*.
+> **Security Best Practice**
+>
+> Make sure the Agent Controller can accept connections on port 5000 from Agent Proxies (update your security groups if needed). Because access to Agent Controller is sensitive, *your Agent Controller’s port should not be open to the Internet*.
 
 ### (Optional) Verify the service account
-
-[Section titled “(Optional) Verify the service account”](#optional-verify-the-service-account)
 
 By default, the Agent Controller service runs as the [`LocalService` account](https://learn.microsoft.com/en-us/windows/win32/services/localservice-account).
 
@@ -152,13 +141,9 @@ If you don’t see the **Aembit Agent Controller** service running or if it’s 
 
 ## Uninstall Agent Controller
 
-[Section titled “Uninstall Agent Controller”](#uninstall-agent-controller)
-
 To uninstall Agent Controller from your Windows Server, use Windows built-in **Add/Remove Programs** feature like you’d normally uninstall any other program or app from Windows.
 
 ## Limitations
-
-[Section titled “Limitations”](#limitations)
 
 Agent Controller on Windows has the following limitations:
 
@@ -176,8 +161,6 @@ Agent Controller on Windows has the following limitations:
 
 ## Installation details
 
-[Section titled “Installation details”](#installation-details)
-
 | **Attribute**       | **Value**                                                             |
 | ------------------- | --------------------------------------------------------------------- |
 | **Service name**    | `AembitAgentController`                                               |
@@ -185,7 +168,5 @@ Agent Controller on Windows has the following limitations:
 | **Log files**       | `C:\ProgramData\Aembit\AgentController\Logs`                          |
 
 ## Additional resources
-
-[Section titled “Additional resources”](#additional-resources)
 
 * [Kerberos Trust Provider](../../../access-policies/trust-providers/kerberos-trust-provider.md)

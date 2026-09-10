@@ -1,45 +1,41 @@
 ---
-type: how-to
+type: explanation
 title: "Server Workload architecture patterns"
 description: "Understanding how different authentication methods work with Aembit Server Workloads"
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/architecture-patterns/
-interface: web-ui
-tags: [server-workload, access-policy]
-timestamp: 2026-04-13T13:05:24-07:00
-type_inferred: true
+tags: ["server-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Server Workload architecture patterns
 
-This page explains how Aembit handles different authentication methods when connecting Client Workloads**Client Workload**: Client Workloads represent software applications, scripts, or automated processes that initiate access requests to Server Workloads, operating autonomously without direct user interaction.[Learn more](../../../get-started/concepts/client-workloads.md) to Server Workloads**Server Workload**: Server Workloads represent target services, APIs, databases, or applications that receive and respond to access requests from Client Workloads.[Learn more](../../../get-started/concepts/server-workloads.md).
+This page explains how Aembit handles different authentication methods when connecting Client Workloads to Server Workloads.
 
 Understanding these patterns helps you choose the right configuration for your integration and troubleshoot issues.
 
 ## How server workloads work
 
-[Section titled “How server workloads work”](#how-server-workloads-work)
-
 All Server Workload integrations follow the same basic flow, regardless of authentication method:
 
 ![Generic server workload access flow](https://docs.aembit.io/d2/docs/user-guide/access-policies/server-workloads/architecture-patterns-0.svg)
 
-**Data flow**
+### Data flow
 
 1. **Access Request** - Client Workload initiates a request to access the target service (Server Workload)
-2. **Policy Lookup** - Aembit Edge**Aembit Edge**: Aembit Edge represents components deployed within your operational environments that enforce Access Policies by intercepting traffic, verifying identities, and injecting credentials just-in-time.[Learn more](../../../get-started/concepts/aembit-edge.md) intercepts the request and queries Aembit Cloud**Aembit Cloud**: Aembit Cloud serves as both the central control plane and management plane, making authorization decisions, evaluating policies, coordinating credential issuance, and providing administrative interfaces for configuration.[Learn more](../../../get-started/concepts/aembit-cloud.md) for the Access Policy**Access Policy**: Access Policies define, enforce, and audit access between Client and Server Workloads by cryptographically verifying workload identity and contextual factors rather than relying on static secrets.[Learn more](../../../get-started/concepts/access-policies.md) and Credential Provider**Credential Provider**: Credential Providers obtain the specific access credentials—such as API keys, OAuth tokens, or temporary cloud credentials—that Client Workloads need to authenticate to Server Workloads.[Learn more](../../../get-started/concepts/credential-providers.md) configuration
+2. **Access Policy Lookup** - Aembit Edge intercepts the request and queries Aembit Cloud for the Access Policy and Credential Provider configuration
 3. **Credentials** - Aembit Cloud returns the appropriate credentials based on the Credential Provider configuration
 4. **Authenticated Request** - Aembit Edge injects credentials into the request and forwards it to the Server Workload
 5. **Response** - The Server Workload processes the authenticated request and returns a response
 6. **Response Passthrough** - Aembit Edge forwards the response back to the Client Workload transparently
 
-**Network requirements**
+### Network requirements
 
 * **Outbound HTTPS (port 443)** from your environment to:
   * Target Server Workload (varies by service)
 * **No inbound ports** required for Aembit integration
 * **DNS resolution** must work for target service domains
 
-**Component placement**
+### Component placement
 
 * **Aembit Edge (Agent Proxy)**: Runs on the same server as your Client Workload, or as a sidecar container in Kubernetes
 * **Client Workload**: Runs in your environment (on-premises, cloud VM, container, serverless function)
@@ -48,21 +44,17 @@ All Server Workload integrations follow the same basic flow, regardless of authe
 
 ## Authentication method variations
 
-[Section titled “Authentication method variations”](#authentication-method-variations)
-
 While the basic flow remains the same, different authentication methods inject credentials into requests differently.
 
 ### OAuth flow
 
-[Section titled “OAuth flow”](#oauth-flow)
+This pattern applies to [Entra ID](guides/entra-id.md), Salesforce, GitHub (OAuth mode), and Okta (OAuth mode).
 
-**Applies to** - [Entra ID](guides/entra-id.md), Salesforce, GitHub (OAuth mode), Okta (OAuth mode)
-
-OAuth-based Server Workloads use the OAuth 2.0 protocol to obtain access tokens. Aembit intercepts OAuth token requests and replaces static client secrets with dynamically generated JWT-SVID**JWT-SVID**: A SPIFFE Verifiable Identity Document in JWT format. JWT-SVIDs are cryptographically signed, short-lived tokens that prove workload identity and enable secure authentication without static credentials.[Learn more](../credential-providers/about-spiffe-jwt-svid.md) credentials.
+OAuth-based Server Workloads use the OAuth 2.0 protocol to obtain access tokens. Aembit intercepts OAuth token requests and replaces static client secrets with dynamically generated JWT-SVID credentials.
 
 ![OAuth flow for Entra ID, Salesforce, and GitHub](https://docs.aembit.io/d2/docs/user-guide/access-policies/server-workloads/architecture-patterns-1.svg)
 
-**Flow details** -
+#### Flow details
 
 * **Credential type**: JWT-SVID (JSON Web Token - Secure Verifiable Identity Document) or `client_assertion`
 
@@ -78,14 +70,14 @@ OAuth-based Server Workloads use the OAuth 2.0 protocol to obtain access tokens.
   6. OAuth provider returns access token to the client
   7. Client uses the access token to authenticate API calls to protected resources
 
-**Special considerations** -
+#### Special considerations
 
 * **PKCE support**: Some OAuth providers require Proof Key for Code Exchange (PKCE). Aembit supports PKCE when configured in the Credential Provider.
 * **Token refresh**: OAuth SDKs automatically handle token refresh when access tokens expire. Aembit generates a new JWT-SVID for each token refresh request.
 * **Scope selection**: The scopes configured in the Server Workload determine which API permissions the access token grants. See individual guide for scope selection guidance.
 * **Token lifetime**: JWT-SVIDs are valid for 5 minutes by default. Access tokens from OAuth providers typically last 1 hour but vary by provider.
 
-**Credential lifecycle** -
+#### Credential lifecycle
 
 OAuth credentials have two lifetimes to consider:
 
@@ -96,15 +88,13 @@ When an access token expires, the OAuth SDK automatically requests a new token, 
 
 ### API key flow
 
-[Section titled “API key flow”](#api-key-flow)
-
-**Applies to** - Okta, Claude, OpenAI, GitHub (API Key mode), Stripe, Box
+This pattern applies to Okta, Claude, OpenAI, GitHub (API Key mode), Stripe, and Box.
 
 API Key-based Server Workloads inject a static API key into HTTP headers. Aembit retrieves the key from a Credential Provider and injects it transparently.
 
 ![API key flow for Okta, Claude, and OpenAI](https://docs.aembit.io/d2/docs/user-guide/access-policies/server-workloads/architecture-patterns-2.svg)
 
-**Flow details** -
+#### Flow details
 
 * **Credential type**: API key string
 
@@ -119,7 +109,7 @@ API Key-based Server Workloads inject a static API key into HTTP headers. Aembit
   5. API service validates the key and processes the request
   6. API service returns response to the client
 
-**Special considerations** -
+#### Special considerations
 
 * **Header format variations**: Different services use different header formats:
 
@@ -133,7 +123,7 @@ API Key-based Server Workloads inject a static API key into HTTP headers. Aembit
 
 * **Key lifetime**: API keys are typically long-lived (months to years). Rotate per security best practices.
 
-**Credential lifecycle** -
+#### Credential lifecycle
 
 Unlike OAuth, API keys are static and long-lived:
 
@@ -143,15 +133,13 @@ Unlike OAuth, API keys are static and long-lived:
 
 ### Database credential injection
 
-[Section titled “Database credential injection”](#database-credential-injection)
-
-**Applies to** - MySQL, PostgreSQL, Redis, Snowflake, Google BigQuery
+This pattern applies to MySQL, PostgreSQL, Redis, Snowflake, and Google BigQuery.
 
 Database workloads inject dynamic credentials into database connection strings or authentication commands.
 
 ![Database credential injection for MySQL, Postgres, and Redis](https://docs.aembit.io/d2/docs/user-guide/access-policies/server-workloads/architecture-patterns-3.svg)
 
-**Flow details** -
+#### Flow details
 
 * **Credential type**: Username/password pair or connection string
 
@@ -166,7 +154,7 @@ Database workloads inject dynamic credentials into database connection strings o
   5. Database validates credentials and establishes connection
   6. Connection is ready for queries
 
-**Special considerations** -
+#### Special considerations
 
 * **Connection pooling**: Aembit works with connection pooling. When the pool creates new connections, Aembit injects credentials.
 
@@ -179,7 +167,7 @@ Database workloads inject dynamic credentials into database connection strings o
   * **MySQL/Postgres**: Username/password in connection parameters
   * **Redis**: Authentication (AUTH) command interception
 
-**Credential lifecycle** -
+#### Credential lifecycle
 
 Database credentials can be static or dynamic:
 
@@ -188,13 +176,11 @@ Database credentials can be static or dynamic:
 
 ### Cloud provider signatures
 
-[Section titled “Cloud provider signatures”](#cloud-provider-signatures)
-
-**Applies to** - AWS (SigV4), Google Cloud Platform, Azure
+This pattern applies to AWS (SigV4), Google Cloud Platform, and Azure.
 
 Cloud provider workloads use cryptographic request signatures instead of traditional credentials.
 
-**Flow details** -
+#### Flow details
 
 * **Credential type**: Temporary credentials (access key, secret key, session token)
 
@@ -209,14 +195,14 @@ Cloud provider workloads use cryptographic request signatures instead of traditi
   5. Cloud provider validates the signature
   6. Cloud provider returns API response
 
-**Special considerations** -
+#### Special considerations
 
 * **IAM role trust relationships**: The IAM role must trust Aembit’s identity provider
 * **Session duration limits**: AWS temporary credentials expire after 15 minutes to 12 hours (configurable)
 * **Multi-region considerations**: Signatures are region-specific. Configure Credential Provider for the correct region.
 * **Service-specific signing**: Different AWS services may require different signing algorithms
 
-**Credential lifecycle** -
+#### Credential lifecycle
 
 * **Temporary credential lifetime**: 15 minutes to 12 hours (AWS default: 1 hour)
 * **Automatic refresh**: Aembit automatically obtains fresh credentials before expiration
@@ -224,13 +210,11 @@ Cloud provider workloads use cryptographic request signatures instead of traditi
 
 ### Token-based authentication
 
-[Section titled “Token-based authentication”](#token-based-authentication)
-
-**Applies to** - HashiCorp Vault, Kubernetes Service Accounts
+This pattern applies to HashiCorp Vault and Kubernetes Service Accounts.
 
 Token-based workloads use bearer tokens for authentication.
 
-**Flow details** -
+#### Flow details
 
 * **Credential type**: Bearer token (for example, Vault token, Kubernetes service account token)
 
@@ -244,22 +228,20 @@ Token-based workloads use bearer tokens for authentication.
   4. Agent Proxy injects the token into the request header
   5. Service validates the token and processes the request
 
-**Special considerations** -
+#### Special considerations
 
 * **Token TTL management**: Tokens have time-to-live (TTL) limits. Aembit handles token renewal automatically.
 * **Policy-based access control**: Policies in the target service define token permissions (for example, Vault policies)
 * **Token renewal**: Some services (like Vault) support token renewal. Aembit can renew tokens before expiration.
 * **Bidirectional dependencies**: Services like Vault may require OIDC configuration in both Vault and Aembit. See service-specific guides for setup order.
 
-**Credential lifecycle** -
+#### Credential lifecycle
 
 * **Token lifetime**: Varies by service (Vault default: 32 days, configurable)
 * **Renewal**: Automatic before expiration (when supported)
 * **Revocation**: You can revoke tokens centrally in the target service
 
 ## Choosing the right pattern
-
-[Section titled “Choosing the right pattern”](#choosing-the-right-pattern)
 
 When configuring a new Server Workload, identify which authentication method the target service uses:
 
@@ -275,9 +257,7 @@ See individual [Server Workload guides](guides/overview.md) for detailed configu
 
 ## Related resources
 
-[Section titled “Related resources”](#related-resources)
-
-* **[Developer Integration Guide](developer-integration.md)** - SDK code examples and testing patterns
+* **[Client library patterns for Agent Proxy](../../../dev-guide/integration/client-library-patterns.md)** - Integration code examples and placeholder credentials
 * **[Troubleshooting Guide](troubleshooting.md)** - Common issues and solutions
 * **[Server Workload Guides](guides/overview.md)** - Service-specific configuration guides
 * **[Understanding Server Workloads](../../../get-started/concepts/server-workloads.md)** - Conceptual overview

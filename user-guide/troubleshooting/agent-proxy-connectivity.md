@@ -4,16 +4,13 @@ title: "Agent Proxy Connectivity"
 description: "This page describes steps for investigating and troubleshooting issues with Agent Proxy connectivity."
 resource: https://docs.aembit.io/user-guide/troubleshooting/agent-proxy-connectivity/
 interface: web-ui
-tags: [troubleshooting]
-timestamp: 2025-04-14T12:09:34-07:00
-type_inferred: true
+tags: ["troubleshooting"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Agent Proxy Connectivity
 
 ### Potential culprit
-
-[Section titled “Potential culprit”](#potential-culprit)
 
 If the Aembit Agent Proxy cannot establish a connection either to the Agent Controller or to the Aembit Cloud, Agent Proxy will not be able to receive directives and credentials from the Aembit Cloud.
 
@@ -23,17 +20,15 @@ You will need to access the terminal of a Virtual Machine or a container where t
 
 Please use your preferred method to access the terminal of a Virtual Machine or container where the Aembit Agent Proxy is running.
 
-Note
-
-If your Client Workload is running in Kubernetes, the Aembit Agent Proxy will be added as a sidecar to the Client Workload container, and you can access it by executing:
-
-```shell
-kubectl exec -it <Client Workload pod name> -c aembit-agent-proxy -- bash
-```
+> **Note**
+>
+> If your Client Workload is running in Kubernetes, the Aembit Agent Proxy will be added as a sidecar to the Client Workload container, and you can access it by executing:
+>
+> ```shell
+> kubectl exec -it <Client Workload pod name> -c aembit-agent-proxy -- bash
+> ```
 
 ### Troubleshooting steps
-
-[Section titled “Troubleshooting steps”](#troubleshooting-steps)
 
 The next step is to check connectivity to the Agent Controller and Aembit Cloud by executing these commands (If necessary, telnet needs to be installed):
 

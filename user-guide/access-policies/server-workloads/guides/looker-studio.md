@@ -4,28 +4,26 @@ title: "Looker Studio"
 description: "This page describes how to configure Aembit to work with the Looker Studio Server Workload."
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/guides/looker-studio/
 interface: web-ui
-tags: [data-analytics, guide, server-workload, access-policy]
-timestamp: 2026-07-07T20:36:18-07:00
-type_inferred: true
+tags: ["data-analytics", "guide", "server-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Looker Studio
 
-[Looker Studio](https://lookerstudio.google.com/), part of Google Cloud Platform, is a data visualization tool designed for creating and managing reports and dashboards. It enables users to connect to multiple data sources, transforming raw data into interactive visual insights.
+
+[Looker Studio](https://lookerstudio.google.com/), part of Google Cloud Platform, is a data visualization tool designed for creating and managing reports and dashboards. It enables users to connect to various data sources, transforming raw data into interactive visual insights.
 
 Below you can find the Aembit configuration required to work with the Looker Studio service as a Server Workload using the Looker Studio API.
 
-Prerequisites
+> **Prerequisites**
+>
+> Before proceeding with the configuration, ensure you have the following:
+>
+> * An active Google Cloud account
+> * A GCP project with [Looker Studio API](https://console.cloud.google.com/apis/library/datastudio.googleapis.com) enabled
+> * Looker Studio assets (e.g., reports or data sources) available
 
-Before proceeding with the configuration, ensure you have the following:
-
-* An active Google Cloud account
-* A GCP project with [Looker Studio API](https://console.cloud.google.com/apis/library/datastudio.googleapis.com) enabled
-* Looker Studio assets (for example, reports or data sources) available
-
-## Server Workload configuration
-
-[Section titled “Server Workload configuration”](#server-workload-configuration)
+## Server Workload Configuration
 
 1. Create a new Server Workload.
 
@@ -40,17 +38,15 @@ Before proceeding with the configuration, ensure you have the following:
 * **Authentication method** - HTTP Authentication
 * **Authentication scheme** - Bearer
 
-## Credential Provider configuration
+## Credential Provider Configuration
 
-[Section titled “Credential Provider configuration”](#credential-provider-configuration)
-
-1. Sign in to the Google Cloud Console and navigate to the [Credentials](https://console.cloud.google.com/apis/credentials) page. Ensure you are working within a GCP project for which you have authorization.
+1. Sign in to the Google Cloud Console and navigate to the [Credentials](hhttps://console.cloud.google.com/apis/credentials) page. Ensure you are working within a GCP project for which you have authorization.
 
 2. On the **Credentials** dashboard, click **Create Credentials** located in the top left corner and select the **OAuth client ID** option.
 
 ![Create OAuth client ID](https://docs.aembit.io/_astro/gcp_create_oauth_client_id.Bslva-4Y_2chrWM.webp)
 
-3. If there is no configured Consent Screen for your project, you see **Configure Consent Screen** on the directed page. Click it to continue.
+3. If there is no configured Consent Screen for your project, you will see a **Configure Consent Screen** button on the directed page. Click the button to continue.
 
 ![Configure Consent Screen](https://docs.aembit.io/_astro/gcp_no_consent_screen.ByBGUKd3_2mifI7.webp)
 
@@ -64,7 +60,7 @@ Before proceeding with the configuration, ensure you have the following:
    * You may skip the Scopes step by clicking **Save and Continue** once again.
    * In the **Summary** step, review the details of your app and click **Back to Dashboard**.
 
-5. Navigate back to [Credentials](https://console.cloud.google.com/apis/credentials) page, click **Create Credentials**, and select the **OAuth client ID** option again.
+5. Navigate back to [Credentials](hhttps://console.cloud.google.com/apis/credentials) page, click **Create Credentials**, and select the **OAuth client ID** option again.
 
    * Choose **Web Application** for Application Type.
    * Provide a name for your web client.
@@ -72,7 +68,7 @@ Before proceeding with the configuration, ensure you have the following:
    * Return to Google Cloud Console and paste the copied URL into the **Authorized redirect URIs** field.
    * Click **Create**.
 
-6. A pop-up window appears. Copy both the **Client ID** and the **Client Secret**. Store them for later use in the tenant configuration.
+6. A pop-up window will appear. Copy both the **Client ID** and the **Client Secret**. Store them for later use in the tenant configuration.
 
 7. Edit the existing Credential Provider created in the previous steps.
 
@@ -81,40 +77,34 @@ Before proceeding with the configuration, ensure you have the following:
 * **Callback URL (Read-Only)** - Aembit auto-generates this read-only URL.
 * **Client Id** - Provide the Client ID copied from Google.
 * **Client Secret** - Provide the Secret copied from Google.
-* **Scopes** - Enter the scopes you use for Looker Studio (for example, `https://www.googleapis.com/auth/datastudio`) You can find detailed information about scopes in the [official Looker Studio documentation](https://developers.google.com/looker-studio/integrate/api#authorize-app).
+* **Scopes** - Enter the scopes you will use for Looker Studio (e.g. `https://www.googleapis.com/auth/datastudio`) Detailed information about scopes can be found at [official Looker Studio documentation](https://developers.google.com/looker-studio/integrate/api#authorize-app).
 * **OAuth URL** - `https://accounts.google.com`
 
-Click on **URL Discovery** to populate the Authorization and Token URL fields, which you can leave as populated.
+Click on **URL Discovery** to populate the Authorization and Token URL fields, which can be left as populated.
 
 * **PKCE Required** - Off
-* **Lifetime** - 1 year (Aembit recommends this value. For more information, please refer to the [official Google documentation](https://developers.google.com/identity/protocols/oauth2#expiration).)
+* **Lifetime** - 1 year (This value is recommended by Aembit. For more information, please refer to the [official Google documentation](https://developers.google.com/identity/protocols/oauth2#expiration).)
 
 8. Click **Save** to save your changes on the Credential Provider.
 
-9. In the Aembit UI, click **Authorize**. A page opens where you can review the access request. Click **Authorize** to complete the OAuth 2.0 Authorization Code flow. A success page appears, and Aembit redirects you automatically. You can also verify your flow is complete by checking the **State** value in the Credential Provider. After completion, it should be **Ready**.
+9. In the Aembit UI, click the **Authorize** button. You are directed to a page where you can review the access request. Click **Authorize** to complete the OAuth 2.0 Authorization Code flow. You should see a success page and then be redirected to Aembit automatically. You can also verify your flow is complete by checking the **State** value in the Credential Provider. After completion, it should be **Ready**.
 
 ![Credential Provider - Ready State](https://docs.aembit.io/_astro/credential_providers_auth_code_status_ready.CBPCBiJg_ZBh135.webp)
 
-Caution
+> **Caution**
+>
+> Once the set lifetime ends, the retrieved credential expires and will not work anymore. Aembit will notify you before this happens. Please ensure you reauthorize the credential before it expires.
 
-Once the set lifetime ends, the retrieved credential expires and stops working. Aembit notifies you before this happens. Please ensure you reauthorize the credential before it expires.
+## Client Workload Configuration
 
-## Client Workload configuration
+Aembit now handles the credentials required to access the Server Workload, eliminating the need for you to manage them directly. You can safely remove any previously used credentials from the Client Workload.
 
-[Section titled “Client Workload configuration”](#client-workload-configuration)
-
-Aembit now handles the credentials required to access the Server Workload, eliminating the need for you to manage them directly. You can remove any previously used credentials from the Client Workload.
-
-If you access the Server Workload through an SDK or library, it’s possible that the SDK/library may still require credentials to be present for initialization purposes. In this scenario, you can provide placeholder credentials. Aembit overwrites these placeholder credentials with the appropriate ones during the access process.
+If you access the Server Workload through an SDK or library, it is possible that the SDK/library may still require credentials to be present for initialization purposes. In this scenario, you can provide placeholder credentials. Aembit will overwrite these placeholder credentials with the appropriate ones during the access process.
 
 ## Access Policy
 
-[Section titled “Access Policy”](#access-policy)
-
 * Create an Access Policy for a Client Workload to access the Looker Studio Server Workload. Assign the newly created Credential Provider to this Access Policy.
 
-## Required features
+## Required Features
 
-[Section titled “Required features”](#required-features)
-
-* You need to configure the [TLS Decrypt](../../../deploy-install/advanced-options/tls-decrypt/configure-tls-decrypt.md) feature to work with the Looker Studio Server Workload.
+* You will need to configure the [TLS Decrypt](../../../deploy-install/advanced-options/tls-decrypt/configure-tls-decrypt.md) feature to work with the Looker Studio Server Workload.

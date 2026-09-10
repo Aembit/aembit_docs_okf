@@ -1,12 +1,11 @@
 ---
-type: troubleshooting
+type: how-to
 title: "Agent Proxy Debug Network Tracing"
 description: "This page describes how you can utilize the Agent Proxy Debug Network Tracing feature to capture and record network traffic in a Virtual Machine deployment."
 resource: https://docs.aembit.io/user-guide/troubleshooting/agent-proxy-debug-network-tracing/
 interface: web-ui
-tags: [troubleshooting]
-timestamp: 2025-05-29T11:26:12-07:00
-type_inferred: true
+tags: ["troubleshooting"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Agent Proxy Debug Network Tracing
@@ -20,13 +19,11 @@ Agent Proxy has the ability to capture a rolling window of the most recent netwo
 
 With this information, you can review network traffic information to locate the error and perform remediation steps to resolve the issue.
 
-Note
-
-Debug Network Tracing is “off by default; therefore, you must enable this feature directly.
+> **Note**
+>
+> Debug Network Tracing is “off by default; therefore, you must enable this feature directly.
 
 ## Configuring Debug Network Tracing for Agent Proxy
-
-[Section titled “Configuring Debug Network Tracing for Agent Proxy”](#configuring-debug-network-tracing-for-agent-proxy)
 
 Configuring Agent Proxy to capture network traffic information requires you to perform the steps listed below.
 

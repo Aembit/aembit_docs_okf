@@ -1,19 +1,16 @@
 ---
-type: how-to
+type: reference
 title: "How to shutdown Agent Proxy using HTTP"
 description: "How to shut down the Agent Proxy using HTTP"
 resource: https://docs.aembit.io/user-guide/deploy-install/advanced-options/agent-proxy/agent-proxy-shutdown/
 interface: web-ui
-tags: [agent-proxy, advanced-option, deploy-install]
-timestamp: 2025-05-22T22:55:26-07:00
-type_inferred: true
+tags: ["agent-proxy", "advanced-option", "deploy-install"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # How to shutdown Agent Proxy using HTTP
 
 ## Introduction
-
-[Section titled “Introduction”](#introduction)
 
 In certain scenarios, it may be necessary to manually shut down the Agent Proxy when the main container has exited but the sidecar process continues running.
 
@@ -21,13 +18,9 @@ This situation commonly occurs with Kubernetes jobs, where the main container ex
 
 ## Agent Proxy Shutdown
 
-[Section titled “Agent Proxy Shutdown”](#agent-proxy-shutdown)
-
 The Agent Proxy can be shut down by sending an HTTP `POST` request to its `/quit` endpoint.
 
 ### Example Command
-
-[Section titled “Example Command”](#example-command)
 
 An example command using `curl`:
 
@@ -38,8 +31,6 @@ curl -X POST localhost:<HEALTH_CHECK_PORT>/quit
 When the Agent Proxy is properly configured to receive this request, it will flush any remaining events to the backend before exiting gracefully.
 
 ## Configuration Flags
-
-[Section titled “Configuration Flags”](#configuration-flags)
 
 The behavior of the Agent Proxy can be controlled through specific environment variables outlined below:
 
@@ -59,20 +50,16 @@ This variable specifies the port on which the Agent Proxy responds to the diagno
 
 ### Accessibility and Security Considerations
 
-[Section titled “Accessibility and Security Considerations”](#accessibility-and-security-considerations)
+> **Note**
+>
+> Handler endpoints, including `/quit`, are only accessible via `localhost` or `127.0.0.1`. This setting is non-configurable to ensure security.
 
-Note
-
-Handler endpoints, including `/quit`, are only accessible via `localhost` or `127.0.0.1`. This setting is non-configurable to ensure security.
-
-Caution
-
-The `/quit` handler should only be enabled in fully trusted environments. When enabled, any application with network access to `127.0.0.1` can send a request to shut down the Agent Proxy.
+> **Caution**
+>
+> The `/quit` handler should only be enabled in fully trusted environments. When enabled, any application with network access to `127.0.0.1` can send a request to shut down the Agent Proxy.
 
 ## Recommended Environments
 
-[Section titled “Recommended Environments”](#recommended-environments)
-
-Note
-
-The `/quit` handler is intended for use primarily within **Kubernetes** environments.
+> **Note**
+>
+> The `/quit` handler is intended for use primarily within **Kubernetes** environments.

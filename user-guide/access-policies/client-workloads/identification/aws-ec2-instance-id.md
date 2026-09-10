@@ -4,9 +4,8 @@ title: "AWS EC2 Instance ID"
 description: "How to identify AWS workloads using the AWS EC2 Instance ID within Aembit"
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/aws-ec2-instance-id/
 interface: web-ui
-tags: [aws, identification, client-workload, access-policy]
-timestamp: 2025-06-06T13:01:11-04:00
-type_inferred: true
+tags: ["aws", "identification", "client-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # AWS EC2 Instance ID
@@ -15,19 +14,13 @@ This page explains how to use the **AWS EC2 Instance ID** identifier to uniquely
 
 ## Understanding the AWS EC2 instance ID identifier
 
-[Section titled “Understanding the AWS EC2 instance ID identifier”](#understanding-the-aws-ec2-instance-id-identifier)
-
 When you deploy applications to AWS, you often refer to specific virtual machine instances using their EC2 Instance IDs. AWS assigns a unique identifier to each EC2 instance when it launches. For more info, see [“What is Amazon EC2?”](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_InstanceStraightToIdentifiers.html) in the AWS docs.
 
 ## Applicable deployment type
 
-[Section titled “Applicable deployment type”](#applicable-deployment-type)
-
 Aembit supports the AWS EC2 Instance ID identification method for Edge-based deployments on [Virtual Machines](../../../deploy-install/virtual-machine/overview.md) deployed to AWS.
 
 ## Create a Client Workload with an AWS EC2 Instance ID identifier
-
-[Section titled “Create a Client Workload with an AWS EC2 Instance ID identifier”](#create-a-client-workload-with-an-aws-ec2-instance-id-identifier)
 
 To configure a Client Workload with an AWS EC2 Instance ID identifier, follow these steps:
 
@@ -53,15 +46,13 @@ To configure a Client Workload with an AWS EC2 Instance ID identifier, follow th
 
 ## Find EC2 instance ID
 
-[Section titled “Find EC2 instance ID”](#find-ec2-instance-id)
-
 To find your EC2 Instance ID in the AWS Console, follow these steps:
 
-Note
-
-You can also find the EC2 Instance ID using the EC2 dashboard or the AWS CLI.
-
-Be sure to enter the full instance ID exactly as displayed by AWS.
+> **Note**
+>
+> You can also find the EC2 Instance ID using the EC2 dashboard or the AWS CLI.
+>
+> Be sure to enter the full instance ID exactly as displayed by AWS.
 
 1. **Open the AWS Console**
 

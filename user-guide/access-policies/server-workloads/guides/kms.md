@@ -4,9 +4,8 @@ title: "AWS Key Management Service (KMS)"
 description: "This page describes how to configure Aembit to work with the AWS KMS server workload."
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/guides/kms/
 interface: web-ui
-tags: [security, guide, server-workload, access-policy]
-timestamp: 2025-05-29T11:26:12-07:00
-type_inferred: true
+tags: ["security", "guide", "server-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # AWS Key Management Service (KMS)
@@ -18,13 +17,9 @@ Below you can find the Aembit configuration required to work with AWS KMS as a S
 
 ## Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites)
-
 * You will need an AWS IAM role configured to access AWS KMS resources.
 
 ## Server Workload Configuration
-
-[Section titled “Server Workload Configuration”](#server-workload-configuration)
 
 1. Create a new Server Workload.
 
@@ -40,8 +35,6 @@ Below you can find the Aembit configuration required to work with AWS KMS as a S
 * **Authentication scheme** - AWS Signature v4
 
 ## Credential Provider Configuration
-
-[Section titled “Credential Provider Configuration”](#credential-provider-configuration)
 
 1. Create a new Credential Provider.
 
@@ -69,21 +62,15 @@ Below you can find the Aembit configuration required to work with AWS KMS as a S
 
 ## Client Workload Configuration
 
-[Section titled “Client Workload Configuration”](#client-workload-configuration)
-
 Aembit now handles the credentials required to access the Server Workload, eliminating the need for you to manage them directly. You can safely remove any previously used credentials from the Client Workload.
 
 If you access the Server Workload through an SDK or library, it is possible that the SDK/library may still require credentials to be present for initialization purposes. In this scenario, you can provide placeholder credentials. Aembit will overwrite these placeholder credentials with the appropriate ones during the access process.
 
 ## Access Policy
 
-[Section titled “Access Policy”](#access-policy)
-
 * Create an access policy for a Client Workload to access the KMS Server Workload and assign the newly created Credential Provider to it.
 
 ## Required Features
-
-[Section titled “Required Features”](#required-features)
 
 * You will need to configure the [TLS Decrypt](../../../deploy-install/advanced-options/tls-decrypt/configure-tls-decrypt.md) feature to work with the KMS Server Workload.
 * If you are using [AWS CLI](https://aws.amazon.com/cli/) to access KMS, you will need to set the environment variable `AWS_CA_BUNDLE` to point to the above certificate.

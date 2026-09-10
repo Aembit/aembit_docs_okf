@@ -1,11 +1,11 @@
 ---
-type: explanation
+type: reference
 title: "Access Condition integrations overview"
 description: "Overview of Access Condition integrations and how they work"
 resource: https://docs.aembit.io/user-guide/access-policies/access-conditions/integrations/
-tags: [integration, access-condition, access-policy]
-timestamp: 2025-05-29T11:26:12-07:00
-type_inferred: true
+interface: web-ui
+tags: ["integration", "access-condition", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Access Condition integrations overview

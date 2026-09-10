@@ -4,18 +4,17 @@ title: "Create a GitLab Service Account Integration for a GitLab.com plan"
 description: "How to create a GitLab Service Account Credential Provider Integration using a GitLab.com plan"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/integrations/gitlab/
 interface: web-ui
-tags: [integration, credential-provider, access-policy]
-timestamp: 2025-10-08T09:42:10-07:00
-type_inferred: true
+tags: ["integration", "credential-provider", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Create a GitLab Service Account Integration for a GitLab.com plan
 
 The GitLab Service Account Credential Provider Integration allows you to create a [Managed GitLab Account Credential Provider](../managed-gitlab-account.md), which provides credential lifecycle management and rotation capabilities for secure authentication between your GitLab instances and other Client Workloads. This page details everything you need to create a GitLab Service Account Credential Provider Integration.
 
-GitLab Free tier limitation
-
-Service accounts are only available for GitLab *Premium and Ultimate* subscription tiers. If you’re using a Free tier subscription, consider upgrading to a paid plan or using a [GitLab Dedicated or Self-Managed instance](gitlab-dedicated-self.md) instead.
+> **GitLab Free tier limitation**
+>
+> Service accounts are only available for GitLab *Premium and Ultimate* subscription tiers. If you’re using a Free tier subscription, consider upgrading to a paid plan or using a [GitLab Dedicated or Self-Managed instance](gitlab-dedicated-self.md) instead.
 
 This integration requires the use of two types of GitLab accounts:
 
@@ -27,15 +26,11 @@ See [How the GitLab Service Account integration works](overview.md#gitlab-servic
 
 ## Prerequisites
 
-[Section titled “Prerequisites”](#prerequisites)
-
 * `Owner` role access to [GitLab Admin area](https://docs.gitlab.com/administration/admin_area/) and [REST API](https://docs.gitlab.com/api/rest/)
 
 * A [GitLab Personal Access Token (PAT)](https://docs.gitlab.com/user/profile/personal_access_tokens/) for your [GitLab service account](https://docs.gitlab.com/user/profile/service_accounts/) with the `Owner` role as well as `api` and `self_rotate` [scopes](https://docs.gitlab.com/user/profile/personal_access_tokens/#personal-access-token-scopes)
 
 ## Configure a GitLab service account integration
-
-[Section titled “Configure a GitLab service account integration”](#configure-a-gitlab-service-account-integration)
 
 To create a GitLab service account integration, follow these steps:
 
@@ -58,9 +53,9 @@ To create a GitLab service account integration, follow these steps:
    * **Top Level Group ID** - Enter the numeric ID of the top-level group that contains your GitLab service account.\
      See GitLab’s [Find the Group ID](https://docs.gitlab.com/user/group/#find-the-group-id) for more details.
 
-     GitLab Free tier limitation
-
-     Service accounts are only available for GitLab *Premium and Ultimate* subscription tiers. If you’re using a Free tier subscription, consider upgrading to a paid plan or using a [GitLab Dedicated or Self-Managed instance](gitlab-dedicated-self.md) instead.
+     > **GitLab Free tier limitation**
+     >
+     > Service accounts are only available for GitLab *Premium and Ultimate* subscription tiers. If you’re using a Free tier subscription, consider upgrading to a paid plan or using a [GitLab Dedicated or Self-Managed instance](gitlab-dedicated-self.md) instead.
 
    * **Personal Access Token** - Enter the Personal Access Token that’s associated with your GitLab Service Account.
 
@@ -74,19 +69,17 @@ To create a GitLab service account integration, follow these steps:
 
    Aembit displays the new integration in the list of Credential Provider Integrations.
 
-   Security best practice
-
-   As soon as you successfully create the integration, Aembit rotates the token for the GitLab service account and continues to rotate it as long as the Credential Provider Integration exists.
+   > **Security best practice**
+   >
+   > As soon as you successfully create the integration, Aembit rotates the token for the GitLab service account and continues to rotate it as long as the Credential Provider Integration exists.
 
 ## Create a GitLab service account and PAT
 
-[Section titled “Create a GitLab service account and PAT”](#create-a-gitlab-service-account-and-pat)
-
 The service account you use for the GitLab Service Account Credential Provider Integration must be in a top-level group with the `Owner` role to have access to GitLab APIs.
 
-GitLab Free tier limitation
-
-Service accounts are only available for GitLab *Premium and Ultimate* subscription tiers. If you’re using a Free tier subscription, consider upgrading to a paid plan or using a [GitLab Dedicated or Self-Managed instance](gitlab-dedicated-self.md) instead.
+> **GitLab Free tier limitation**
+>
+> Service accounts are only available for GitLab *Premium and Ultimate* subscription tiers. If you’re using a Free tier subscription, consider upgrading to a paid plan or using a [GitLab Dedicated or Self-Managed instance](gitlab-dedicated-self.md) instead.
 
 To create a GitLab service account and PAT, use either the GitLab UI or GitLab API:
 
@@ -172,8 +165,6 @@ To create a GitLab service account and PAT, use either the GitLab UI or GitLab A
      ```
 
 ## Additional resources
-
-[Section titled “Additional resources”](#additional-resources)
 
 * [Managed GitLab Account](../managed-gitlab-account.md)
 * [Credential Provider Integrations overview](overview.md)

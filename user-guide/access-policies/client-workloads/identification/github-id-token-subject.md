@@ -4,9 +4,8 @@ title: "GitHub ID Token Subject"
 description: "This page describes how the GitHub ID Token Subject method identifies Client Workloads in Aembit."
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/github-id-token-subject/
 interface: web-ui
-tags: [cicd, identification, client-workload, access-policy]
-timestamp: 2026-01-12T11:05:32-08:00
-type_inferred: true
+tags: ["cicd", "identification", "client-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # GitHub ID Token Subject
@@ -17,17 +16,11 @@ This Client Workload identification method is specifically designed for [GitHub 
 
 ## Applicable Deployment Type
 
-[Section titled “Applicable Deployment Type”](#applicable-deployment-type)
-
 This method is suitable for GitHub-based CI/CD Workflow deployments.
 
 ## Configuration
 
-[Section titled “Configuration”](#configuration)
-
 ### Aembit Cloud
-
-[Section titled “Aembit Cloud”](#aembit-cloud)
 
 1. Create a new Client Workload.
 2. Choose **GitHub ID Token Subject** for client identification.
@@ -41,8 +34,6 @@ The GitHub ID Token Subject method provides advanced workflow identification cap
 For more subject claims and examples, refer to the [GitHub OIDC Token Documentation](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect#example-subject-claims).
 
 ### Finding the GitHub ID Token Subject:
-
-[Section titled “Finding the GitHub ID Token Subject:”](#finding-the-github-id-token-subject)
 
 You can reconstruct subject claim as follows:
 

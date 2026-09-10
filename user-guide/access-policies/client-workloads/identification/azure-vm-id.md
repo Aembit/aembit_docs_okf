@@ -4,9 +4,8 @@ title: "Azure VM ID"
 description: "How to identify Azure workloads using the Azure VM ID within Aembit"
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/azure-vm-id/
 interface: web-ui
-tags: [azure, identification, client-workload, access-policy]
-timestamp: 2025-06-06T13:01:11-04:00
-type_inferred: true
+tags: ["azure", "identification", "client-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Azure VM ID
@@ -15,19 +14,13 @@ This page explains how to use the **Azure VM ID** identifier to uniquely identif
 
 ## Understanding the Azure VM ID identifier
 
-[Section titled “Understanding the Azure VM ID identifier”](#understanding-the-azure-vm-id-identifier)
-
 When you deploy applications to Azure, you often identify specific virtual machine instances by their VM IDs. Azure assigns each virtual machine a unique identifier at creation. For more details, see the [“Understand names and instance IDs for Azure Virtual Machine Scale Set VMs](https://learn.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-instance-ids) in the Microsoft docs.
 
 ## Applicable deployment type
 
-[Section titled “Applicable deployment type”](#applicable-deployment-type)
-
 Aembit supports the Azure VM ID identification method for Edge-based deployments on [Virtual Machines](../../../deploy-install/virtual-machine/overview.md) deployed to Azure.
 
 ## Create a Client Workload with an Azure VM ID identifier
-
-[Section titled “Create a Client Workload with an Azure VM ID identifier”](#create-a-client-workload-with-an-azure-vm-id-identifier)
 
 To configure a Client Workload with an Azure VM ID identifier, follow these steps:
 
@@ -53,13 +46,9 @@ To configure a Client Workload with an Azure VM ID identifier, follow these step
 
 ## Find Azure VM ID
 
-[Section titled “Find Azure VM ID”](#find-azure-vm-id)
-
 Locate your Azure VM’s Resource group and VM name using either of the following methods:
 
 ### Azure Portal
-
-[Section titled “Azure Portal”](#azure-portal)
 
 1. Go to the [Azure Portal](https://portal.azure.com/).
 
@@ -70,8 +59,6 @@ Locate your Azure VM’s Resource group and VM name using either of the followin
    Use these values in your Aembit configuration.
 
 ### Azure CLI
-
-[Section titled “Azure CLI”](#azure-cli)
 
 1. Open your terminal or command prompt.
 

@@ -1,10 +1,10 @@
 ---
-type: explanation
+type: reference
 title: "Aembit User Guide Overview"
 description: "How to set up and use Aembit"
 resource: https://docs.aembit.io/user-guide/
-timestamp: 2026-06-18T13:15:52-04:00
-type_inferred: true
+interface: web-ui
+timestamp: 2026-09-09T15:44:57-07:00
 ---
 
 # Aembit User Guide Overview
@@ -13,9 +13,18 @@ Welcome to the Aembit User Guide!
 
 Use this guide to help you understand, deploy, and manage Aembit’s Workload Identity and Access Management Platform. This guide contains the following main sections, each focusing on different aspects of Aembit’s functionality and configuration.
 
-## Deploy and install
+## The two planes
 
-[Section titled “Deploy and install”](#deploy-and-install)
+Aembit divides its work between two planes. Both planes run in Aembit Cloud. The **management plane** is where people and automation define the configuration. They write it through the UI of your Aembit Tenant, the Cloud API, or the Terraform provider. That configuration is the Access Policies, each binding a Client Workload, Trust Provider, Credential Provider, and Server Workload. The **control plane** authorizes workload access at runtime: it verifies the workload’s identity, evaluates the Access Policy, and brokers the credential. Nobody works in the control plane directly: Aembit Edge components and the Edge SDK, Edge API, and Aembit CLI talk to it on a workload’s behalf. No workload gets a credential through the management plane, and no one configures Access Policies through the control plane.
+
+| Plane            | Who works there                                                | Interfaces                               | Responsibility                                                                 |
+| ---------------- | -------------------------------------------------------------- | ---------------------------------------- | ------------------------------------------------------------------------------ |
+| Management plane | Administrators, security engineers, and platform automation    | Tenant UI, Cloud API, Terraform provider | Define and maintain the Access Policies and their components, and audit access |
+| Control plane    | Workloads, through Aembit Edge components or the runtime paths | Agent Proxy, Edge SDK, Edge API, CLI     | Verify identity, evaluate the Access Policy, and broker the credential         |
+
+For who does what in each plane and how the planes interact at runtime, see [Planes and responsibilities](../get-started/concepts/planes-and-responsibilities.md).
+
+## Deploy and install
 
 This section covers how to deploy Aembit Edge Components in different environments and configurations. It provides detailed instructions for setting up Aembit in different infrastructure contexts.
 
@@ -24,13 +33,10 @@ This section includes topics covering:
 * [Kubernetes Deployment](deploy-install/kubernetes/kubernetes.md)
 * [Virtual Machine Deployment](deploy-install/virtual-machine/overview.md)
 * [Serverless Deployment](deploy-install/serverless/overview.md)
-* [Virtual Appliance Deployment](deploy-install/virtual-appliances/overview.md)
 
 ## Access Policies
 
-[Section titled “Access Policies”](#access-policies)
-
-This section details how to configure and manage access policies, which are the core components that define and enforce workload access controls. You’ll learn how to create and manage the different elements that make up effective access policies.
+This section details how to configure and manage Access Policies, which define and enforce workload access controls. You’ll learn how to create and manage the components that make up an effective Access Policy.
 
 This section includes topics covering:
 
@@ -39,10 +45,9 @@ This section includes topics covering:
 * [Trust Providers](access-policies/trust-providers/overview.md)
 * [Credential Providers](access-policies/credential-providers/overview.md)
 * [Access Conditions](access-policies/access-conditions/overview.md)
+* [Content Security](access-policies/content-security/overview.md)
 
 ## Administration
-
-[Section titled “Administration”](#administration)
 
 This section focuses on managing your Aembit Tenant and its administration features. It covers tasks related to user management, roles, and other administrative functions to help you maintain your Aembit environment.
 
@@ -58,8 +63,6 @@ This section includes topics covering:
 
 ## Audit and report
 
-[Section titled “Audit and report”](#audit-and-report)
-
 This section covers the reporting and auditing capabilities of Aembit. It helps you understand how to monitor access events and activities within your Aembit environment for security and compliance purposes.
 
 This section includes topics covering:
@@ -68,8 +71,6 @@ This section includes topics covering:
 * [Audit Logs](audit-report/audit-logs.md)
 
 ## Reference
-
-[Section titled “Reference”](#reference)
 
 This section provides technical reference materials such as environment variables, configuration options, and compatibility information. It serves as a quick reference guide for specific technical details about Aembit components.
 
@@ -82,8 +83,6 @@ This section includes topics covering:
 * [Support Matrix](../reference/support-matrix.md)
 
 ## Troubleshooting and support
-
-[Section titled “Troubleshooting and support”](#troubleshooting-and-support)
 
 The Troubleshooting and Support section provides practical guidance for resolving common issues and accessing help when needed because even well-designed systems occasionally encounter problems that require diagnosis and resolution. This section serves as your resource for maintaining operational continuity with Aembit.
 

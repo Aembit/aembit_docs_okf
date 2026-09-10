@@ -4,9 +4,8 @@ title: "Source IP Address"
 description: "How to identify client workloads using Source IP address within Aembit"
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/source-ip/
 interface: web-ui
-tags: [vm, identification, client-workload, access-policy]
-timestamp: 2025-06-20T10:19:18-07:00
-type_inferred: true
+tags: ["vm", "identification", "client-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Source IP Address
@@ -14,8 +13,6 @@ type_inferred: true
 This page explains how to use the **Source IP Address** identifier to uniquely identify client workloads in Aembit.
 
 ## Understanding the source IP address identifier
-
-[Section titled “Understanding the source IP address identifier”](#understanding-the-source-ip-address-identifier)
 
 The Source IP Address refers to the IP address from which a client workload initiates a connection. This approach is only suitable in environments where workloads have stable private IP addresses. For example, administrators can assign static IPs or control dynamic assignment using mechanisms like DHCP reservations or IP pools. In such setups, the Source IP Address can serve as a reliable and straightforward identifier for client workloads.
 
@@ -25,8 +22,6 @@ Note that Source IP Address-based identification is only as consistent as the ne
 
 ## Applicable deployment types
 
-[Section titled “Applicable deployment types”](#applicable-deployment-types)
-
 Aembit supports Source IP Address-based identification for multiple deployment scenarios, including:
 
 * Edge deployments in private data centers
@@ -34,8 +29,6 @@ Aembit supports Source IP Address-based identification for multiple deployment s
 * Hybrid or on-premise workloads with stable internal IP addressing
 
 ## Create a client workload with a source IP address identifier
-
-[Section titled “Create a client workload with a source IP address identifier”](#create-a-client-workload-with-a-source-ip-address-identifier)
 
 To configure a Client Workload using the Source IP Address identifier, follow these steps:
 
@@ -57,17 +50,15 @@ To configure a Client Workload using the Source IP Address identifier, follow th
 
    Aembit displays the new Client Workload on the **Client Workloads** page.
 
-Client Workload identifier uniqueness
-
-When you identify a Client Workload using a single identifier such as this one in a complex environment, this identifier may not always provide sufficient uniqueness.
-
-To avoid Aembit unintentionally matching something beyond what it’s intended to match, Aembit recommends that you set additional identifiers to compliment this one, creating a Client Workload identity that’s unique across your environment.
-
-See [Using multiple Client Workload identifiers](client-workload-multiple-ids.md) for guidance on combining this identifier with more specific identifiers such as those on the [Client Workload Identifiers overview](overview.md) page, which includes vendor- and technology-specific identifiers.
+> **Client Workload identifier uniqueness**
+>
+> When you identify a Client Workload using a single identifier such as this one in a complex environment, this identifier may not always provide sufficient uniqueness.
+>
+> To avoid Aembit unintentionally matching something beyond what it’s intended to match, Aembit recommends that you set additional identifiers to compliment this one, creating a Client Workload identity that’s unique across your environment.
+>
+> See [Using multiple Client Workload identifiers](client-workload-multiple-ids.md) for guidance on combining this identifier with more specific identifiers such as those on the [Client Workload Identifiers overview](overview.md) page, which includes vendor- and technology-specific identifiers.
 
 ## Finding the source IP address
-
-[Section titled “Finding the source IP address”](#finding-the-source-ip-address)
 
 To identify the Source IP Address of a workload, use the IP address assigned to its primary network interface. On virtual machines, this is typically the IP associated with `eth0`, `ensX`, or a similar interface.
 

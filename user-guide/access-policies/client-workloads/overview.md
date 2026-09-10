@@ -1,20 +1,20 @@
 ---
-type: explanation
+type: reference
 title: "Client Workloads"
 description: "This document provides a high-level description of Client Workloads"
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/
-tags: [client-workload, access-policy]
-timestamp: 2026-01-30T00:27:24-08:00
-type_inferred: true
+interface: web-ui
+tags: ["client-workload", "access-policy"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Client Workloads
 
 This section covers Client Workloads in Aembit, which are the applications or services that need to access Server Workloads using credentials managed by Aembit.
 
-Reuse this in another Resource Set
-
-You can copy a Client Workload to another Resource Set. See [About component copying](../../administration/resource-sets/about-component-copying.md) to learn more.
+> **Reuse this in another Resource Set**
+>
+> You can copy a Client Workload to another Resource Set. See [About component copying](../../administration/resource-sets/about-component-copying.md) to learn more.
 
 The following pages provide information about Client Workload identification methods:
 

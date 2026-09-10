@@ -1,22 +1,19 @@
 ---
-type: tutorial
+type: how-to
 title: "Quickstart: Aembit core setup"
 description: "Aembit's quickstart core guide - practical experience automating and securing access between workloads"
 resource: https://docs.aembit.io/get-started/quickstart/quickstart-core/
-tags: [quickstart]
-timestamp: 2026-06-30T13:30:29-04:00
-type_inferred: true
+tags: ["quickstart"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # Quickstart: Aembit core setup
 
-Aembit is a cloud-native, non-human identity and access management platform. It provides secure, seamless access management for workloads across diverse environments. It simplifies how organizations control and authorize access between client and Server Workloads**Server Workload**: Server Workloads represent target services, APIs, databases, or applications that receive and respond to access requests from Client Workloads.[Learn more](../concepts/server-workloads.md), ensuring that only the right workloads can access critical resources at the right time.
+Aembit is a cloud-native, non-human identity and access management platform. It provides secure, seamless access management for workloads across diverse environments. It simplifies how organizations control and authorize access between client and Server Workloads, ensuring that only the right workloads can access critical resources at the right time.
 
 Aembit shifts the focus away from long-term credential management by enabling automated, secure access management for workloads connecting to services. By concentrating on managing access rather than secrets, Aembit provides a flexible and security-first approach to non-human identity across a wide range of infrastructures.
 
 ## In this guide
-
-[Section titled “In this guide”](#in-this-guide)
 
 This quickstart guide provides a practical introduction to Aembit’s capabilities. Here’s what you’ll do:
 
@@ -32,35 +29,29 @@ By completing this quickstart guide, you’ll have practical experience creating
 
 ## Before you begin
 
-[Section titled “Before you begin”](#before-you-begin)
-
 Before starting Aembit’s quickstart guide, you must complete the following prerequisites:
 
-1. [Sign up with Aembit](#sign-up-with-aembit) and you can access your Aembit Tenant**Aembit Tenant**: Aembit Tenants serve as isolated, dedicated environments within Aembit that provide complete separation of administrative domains and security configurations.[Learn more](../concepts/administration.md) at `https://<tenant-ID>.aembit.io`.
+1. [Sign up with Aembit](#sign-up-with-aembit) and you can access your Aembit Tenant at `https://<tenant-ID>.aembit.io`.
 
 2. [Install Docker Desktop and enable Kubernetes](#install-docker-desktop-and-enable-kubernetes).
 
 3. [Install Helm](#install-helm).
 
-Note
-
-The Aembit quickstart guide doesn’t require complex network configurations, such as a static external IP, outbound connection adjustments, or firewall rule changes. Aembit has designed these prerequisites to work securely and seamlessly within your local environment.
+> **Note**
+>
+> The Aembit quickstart guide doesn’t require complex network configurations, such as a static external IP, outbound connection adjustments, or firewall rule changes. Aembit has designed these prerequisites to work securely and seamlessly within your local environment.
 
 ### Sign up with Aembit
 
-[Section titled “Sign up with Aembit”](#sign-up-with-aembit)
-
 Visit the [Sign Up page](https://useast2.aembit.io/signup) to create an account and set up your tenant for accessing the platform.
 
-A Tenant in Aembit is your organization’s dedicated workspace within the platform. It isolates your workloads, Access Policies**Access Policy**: Access Policies define, enforce, and audit access between Client and Server Workloads by cryptographically verifying workload identity and contextual factors rather than relying on static secrets.[Learn more](../concepts/access-policies.md), and configurations, enabling you to manage your environment securely and efficiently.
+A Tenant in Aembit is your organization’s dedicated workspace within the platform. It isolates your workloads, Access Policies, and configurations, enabling you to manage your environment securely and efficiently.
 
 Your Aembit Tenant ID is a unique identifier for your workspace, which you must use to access your Aembit Tenant at `https://<tenant-ID>.aembit.io`.
 
 Look for a welcome email from Aembit. It may take a few minutes; check your Junk or Spam folders if you don’t see it.
 
 ### Install Docker Desktop and enable Kubernetes
-
-[Section titled “Install Docker Desktop and enable Kubernetes”](#install-docker-desktop-and-enable-kubernetes)
 
 Docker Desktop includes Docker Engine and Kubernetes, making it easier to manage your containerized applications.
 
@@ -72,19 +63,17 @@ Docker Desktop includes Docker Engine and Kubernetes, making it easier to manage
 
    ![Enable Kubernetes in Docker](https://docs.aembit.io/_astro/quickstart_enable_kubernetes.B1yxdwOD_Z1x3sXB.webp)
 
-   Security best practice
-
-   If you get errors or warnings about permissions on your `~/.kube/config` file being too permissive, tighten up the file’s permissions by running the following command:
-
-   ```shell
-   chmod 600 ~/.kube/config
-   ```
-
-   Locking down permissions on your `~/.kube/config` file is a security best practice since the config file contains sensitive credentials for accessing Kubernetes clusters.
+   > **Security best practice**
+   >
+   > If you get errors or warnings about permissions on your `~/.kube/config` file being too permissive, tighten up the file’s permissions by running the following command:
+   >
+   > ```shell
+   > chmod 600 ~/.kube/config
+   > ```
+   >
+   > Locking down permissions on your `~/.kube/config` file is a security best practice since the config file contains sensitive credentials for accessing Kubernetes clusters.
 
 ### Install Helm
-
-[Section titled “Install Helm”](#install-helm)
 
 Helm deploys the pre-configured sandbox client and Server Workloads for this quickstart guide. A basic understanding of [Helm commands](https://helm.sh/docs/helm/) is helpful for deploying the sandbox workloads.
 
@@ -154,8 +143,6 @@ With these prerequisites complete, you are ready to deploy the sandbox workloads
 
 ## Deploying workloads
 
-[Section titled “Deploying workloads”](#deploying-workloads)
-
 Make sure that your environment is ready for deployment by verifying the following:
 
 * [Docker Desktop installed and Kubernetes enabled](#install-docker-desktop-and-enable-kubernetes).
@@ -166,23 +153,21 @@ With these steps in place, you are ready to deploy the workloads.
 
 ### Install applications
 
-[Section titled “Install applications”](#install-applications)
-
-Re-installing? Clean up first
-
-If you’ve run this quickstart before, remove the previous deployment before reinstalling to avoid conflicts. **Skip this step if this is your first time.**
-
-```shell
-helm uninstall aembit-quickstart -n aembit-quickstart
-helm uninstall aembit -n aembit
-
-
-kubectl delete namespace aembit-quickstart
-kubectl delete namespace aembit
-
-
-helm repo remove aembit
-```
+> **Re-installing? Clean up first**
+>
+> If you’ve run this quickstart before, remove the previous deployment before reinstalling to avoid conflicts. **Skip this step if this is your first time.**
+>
+> ```shell
+> helm uninstall aembit-quickstart -n aembit-quickstart
+> helm uninstall aembit -n aembit
+>
+>
+> kubectl delete namespace aembit-quickstart
+> kubectl delete namespace aembit
+>
+>
+> helm repo remove aembit
+> ```
 
 1. From your terminal, add the Aembit Helm chart repo by running:
 
@@ -199,8 +184,6 @@ helm repo remove aembit
    ```
 
 ### Set up ingress routing
-
-[Section titled “Set up ingress routing”](#set-up-ingress-routing)
 
 Docker Desktop v4.38 and later use `kind` (Kubernetes in Docker) as the default Kubernetes provisioner. Under `kind`, the sandbox’s services don’t bind to `localhost`, so you reach the client and Server Workloads through an Ingress controller instead of directly. The quickstart chart creates the Ingress for you, so you only need to install an ingress controller for it to route traffic.
 
@@ -236,8 +219,6 @@ Docker Desktop v4.38 and later use `kind` (Kubernetes in Docker) as the default 
    You can now reach the workloads at `http://client.quickstart.aembit.localhost` and `http://server.quickstart.aembit.localhost`.
 
 ### Verify deployments
-
-[Section titled “Verify deployments”](#verify-deployments)
 
 After deploying the applications, verify that everything is running correctly using the following commands:
 
@@ -279,8 +260,6 @@ These outputs help you confirm that you’ve deployed the workloads and services
 
 ### Interacting with the applications
 
-[Section titled “Interacting with the applications”](#interacting-with-the-applications)
-
 In this section, you are going to interact with the pre-configured applications. This interaction demonstrates that the Client Workload can connect to the Server Workload but lacks the credentials to authenticate to it.
 
 1. With the client and Server Workloads running, open the [**Client Workload**](http://client.quickstart.aembit.localhost)
@@ -295,17 +274,13 @@ In the next sections, you’ll deploy Aembit Edge. Making it so that Aembit auto
 
 ## Deploying Aembit Edge
 
-[Section titled “Deploying Aembit Edge”](#deploying-aembit-edge)
-
 With your workloads deployed, it’s time to integrate Aembit Edge into your system.
 
-Aembit Edge**Aembit Edge**: Aembit Edge represents components deployed within your operational environments that enforce Access Policies by intercepting traffic, verifying identities, and injecting credentials just-in-time.[Learn more](../concepts/aembit-edge.md) consists of components that customers install within their environment. These components form the core of Aembit’s Workload IAM functionality.
+Aembit Edge consists of components that customers install within their environment. These components form the core of Aembit’s Workload IAM functionality.
 
 Proceed with deploying Aembit Edge into your environment.
 
 ### Create a new Agent Controller
-
-[Section titled “Create a new Agent Controller”](#create-a-new-agent-controller)
 
 The Agent Controller is a helper component that facilitates the registration of other Aembit Edge Components.
 
@@ -323,7 +298,7 @@ The Agent Controller is a helper component that facilitates the registration of 
 
 6. Add an optional description for the controller.
 
-7. For now, ignore the Trust Provider**Trust Provider**: Trust Providers validate Client Workload identities through workload attestation, verifying identity claims from the workload's runtime environment rather than relying on pre-shared secrets.[Learn more](../concepts/trust-providers.md) section, as you don’t need it for this quickstart guide.
+7. For now, ignore the Trust Provider section, as you don’t need it for this quickstart guide.
 
    ![Create a New Agent Controller](https://docs.aembit.io/_astro/quickstart_create_new_agent_controller.BTnJT9rU_YuWPK.webp)
 
@@ -334,8 +309,6 @@ The Agent Controller is a helper component that facilitates the registration of 
    This reveals the **Install Aembit Edge Helm Chart** section.
 
 ### Deploy the Aembit Edge
-
-[Section titled “Deploy the Aembit Edge”](#deploy-the-aembit-edge)
 
 As part of Aembit Edge, the Agent Proxy is automatically injected within the Client Workload pod. It manages workload identity and securely injects credentials for communication with Server Workloads.
 
@@ -364,11 +337,11 @@ As part of Aembit Edge, the Agent Proxy is automatically injected within the Cli
      --set tenant=<tenant>,agentController.deviceCode=<deviceCode>
    ```
 
-   Tip
-
-   To reduce errors, copy the command from the Aembit Web UI for this step, as it populates your `<tenant>` and `<deviceCode>` for you.
-
-   ![Deploy Aembit Edge Generate Code button](https://docs.aembit.io/_astro/deploy_aembit_edge-generate-code.CDA9UBHb_1uPgM1.webp)
+   > **Tip**
+   >
+   > To reduce errors, copy the command from the Aembit Web UI for this step, as it populates your `<tenant>` and `<deviceCode>` for you.
+   >
+   > ![Deploy Aembit Edge Generate Code button](https://docs.aembit.io/_astro/deploy_aembit_edge-generate-code.CDA9UBHb_1uPgM1.webp)
 
    Aembit Edge is now deployed in your Kubernetes cluster!
 
@@ -412,9 +385,7 @@ As part of Aembit Edge, the Agent Proxy is automatically injected within the Cli
 
    This step confirms that Aembit has injected Agent Proxy within the Client pod, enabling Aembit to securely manage credentials for communication between Client and Server Workloads.
 
-## Configuring an Access Policy**Access Policy**: Access Policies define, enforce, and audit access between Client and Server Workloads by cryptographically verifying workload identity and contextual factors rather than relying on static secrets.[Learn more](../concepts/access-policies.md)
-
-[Section titled “Configuring an ”](#configuring-an-)
+## Configuring an Access Policy
 
 Access Policies define the conditions for granting Client Workloads access to Server Workloads. Aembit evaluates access by:
 
@@ -428,9 +399,9 @@ They enable Aembit to authenticate workloads without provisioning long-lived cre
 
 Once authorized, Aembit delivers the necessary credentials to Agent Proxy, which it then uses to authenticate the Client workload to the Server Workload.
 
-About Client Workload credentials
-
-Aembit never releases credentials directly to Client Workloads. Instead, Aembit inject credentials into the traffic destined for the target Server Workload, providing secure communication.
+> **About Client Workload credentials**
+>
+> Aembit never releases credentials directly to Client Workloads. Instead, Aembit inject credentials into the traffic destined for the target Server Workload, providing secure communication.
 
 1. From your Aembit Tenant, click **Access Policies** in the left sidebar menu.
 
@@ -441,8 +412,6 @@ Aembit never releases credentials directly to Client Workloads. Instead, Aembit 
    The Access Policy Builder displays component cards in the right panel, with an **Access Policy** status card on the left. The **Access Policy** panel opens by default so you can name and save the policy first.
 
 ### Name the Access Policy
-
-[Section titled “Name the Access Policy”](#name-the-access-policy)
 
 Before configuring the policy components, name your Access Policy. You must provide a name before you can save the policy.
 
@@ -456,9 +425,7 @@ Before configuring the policy components, name your Access Policy. You must prov
 
 ### Configure a Client Workload
 
-[Section titled “Configure a Client Workload”](#configure-a-client-workload)
-
-Client Workloads**Client Workload**: Client Workloads represent software applications, scripts, or automated processes that initiate access requests to Server Workloads, operating autonomously without direct user interaction.[Learn more](../concepts/client-workloads.md) are software applications that access services provided by Server Workloads. These could be custom apps, CI/CD pipelines, or scripts running without user intervention.
+Client Workloads are software applications that access services provided by Server Workloads. These could be custom apps, CI/CD pipelines, or scripts running without user intervention.
 
 1. In the **Client Workload** card in the right panel, click **+ Configure**.
 
@@ -475,8 +442,6 @@ Client Workloads**Client Workload**: Client Workloads represent software applica
    ![Configuring Client Workload](https://docs.aembit.io/_astro/quickstart_client_workload.K6c7Ky4B_YPHWn.webp)
 
 ### Configure a Server Workload
-
-[Section titled “Configure a Server Workload”](#configure-a-server-workload)
 
 [Server Workloads](../../user-guide/access-policies/server-workloads/guides/overview.md) serve requests from Client Workloads and can include APIs, gateways, databases, and more. The configuration settings define the Service Endpoint and Authentication methods, specifying the networking details and Aembit authenticates requests.
 
@@ -506,13 +471,11 @@ Client Workloads**Client Workload**: Client Workloads represent software applica
 
 ### Configuring a Credential Provider
 
-[Section titled “Configuring a Credential Provider”](#configuring-a-credential-provider)
+Credential Providers supply the access credentials, such as OAuth tokens or API keys, that allow Client Workloads to authenticate with Server Workloads. Aembit can also request and manage tokens from third-party services.
 
-Credential Providers**Credential Provider**: Credential Providers obtain the specific access credentials—such as API keys, OAuth tokens, or temporary cloud credentials—that Client Workloads need to authenticate to Server Workloads.[Learn more](../concepts/credential-providers.md) supply the access credentials, such as OAuth tokens or API keys, that allow Client Workloads to authenticate with Server Workloads. Aembit can also request and manage tokens from third-party services.
-
-Security Best Practice
-
-In this QuickStart, you are using the API Key option for simplicity. However, Aembit recommends using short-lived credentials whenever possible to enhance security and reduce exposure to risks associated with long-lived credentials.
+> **Security Best Practice**
+>
+> In this QuickStart, you are using the API Key option for simplicity. However, Aembit recommends using short-lived credentials whenever possible to enhance security and reduce exposure to risks associated with long-lived credentials.
 
 1. From your web browser, go to the [sandbox Server Workload](http://server.quickstart.aembit.localhost).
 
@@ -520,9 +483,9 @@ In this QuickStart, you are using the API Key option for simplicity. However, Ae
 
    This generates a unique API key you’ll use in later in this section.
 
-   Generating more than one key
-
-   Avoid clicking the button multiple times, as only one API key (the last generated) remains active at a time. Copy the API key immediately after creating it, as you need it in the next step.
+   > **Generating more than one key**
+   >
+   > Avoid clicking the button multiple times, as only one API key (the last generated) remains active at a time. Copy the API key immediately after creating it, as you need it in the next step.
 
 3. Copy the API key.
 
@@ -542,13 +505,9 @@ In this QuickStart, you are using the API Key option for simplicity. However, Ae
 
 ### Finalizing the Access Policy
 
-[Section titled “Finalizing the Access Policy”](#finalizing-the-access-policy)
-
 Once you have configured all components, click **Save Policy & Activate** in the header bar.
 
 ## Testing the Access Policy
-
-[Section titled “Testing the Access Policy”](#testing-the-access-policy)
 
 To test your newly configured Access Policy, go to the [sandbox Client Workload](http://client.quickstart.aembit.localhost) and click **Get Data**. Since you activated the Access Policy and Aembit Edge installed the necessary credential into the request, you should see a successful response.
 
@@ -561,8 +520,6 @@ With just a few steps, you have deployed workloads, configured an Access Policy,
 This quickstart guide is just the foundation of all the features that Aembit has to offer. It supports powerful capabilities for scaling, securing, and managing workload identity across many environments, providing security and efficiency as your needs grow.
 
 #### Troubleshoot
-
-[Section titled “Troubleshoot”](#troubleshoot)
 
 If you encounter any issues or don’t see a successful response, the Aembit Web UI has a useful **Troubleshooter** that can help you identify potential problems:
 
@@ -589,8 +546,6 @@ The Troubleshooter helps diagnose potential issues with your configuration. For 
 Still need help? Please [submit a support request](https://aembit.io/support/) to Aembit’s support team.
 
 ## What’s next?
-
-[Section titled “What’s next?”](#whats-next)
 
 Now that you’ve completed the basics, it’s time to explore additional features and capabilities to get the most out of Aembit.
 

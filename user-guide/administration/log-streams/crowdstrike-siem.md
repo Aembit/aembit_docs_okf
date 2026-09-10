@@ -4,9 +4,8 @@ title: "How to stream Aembit events to CrowdStrike Next-Gen SIEM"
 description: "How to create a new a Log Stream for CrowdStrike Next-Gen SIEM"
 resource: https://docs.aembit.io/user-guide/administration/log-streams/crowdstrike-siem/
 interface: web-ui
-tags: [log-stream, administration]
-timestamp: 2025-10-01T08:23:25-07:00
-type_inferred: true
+tags: ["log-stream", "administration"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # How to stream Aembit events to CrowdStrike Next-Gen SIEM
@@ -14,8 +13,6 @@ type_inferred: true
 Aembit’s Log Stream to CrowdStrike Next-Gen Security Information and Event Management (SIEM) feature enables rapid streaming of Aembit Edge event logs and audit logs directly to CrowdStrike. This integration uses the HTTP Event Collector (HEC) protocol to deliver comprehensive security data, enhancing threat detection capabilities, improving incident management, and streamlining compliance monitoring for your organization.
 
 ## Prerequisites
-
-[Section titled “Prerequisites”](#prerequisites)
 
 Before you can stream Aembit events to CrowdStrike Next-Gen SIEM, you must have an HTTP Event Collector (HEC) set up in your CrowdStrike environment with the following attributes:
 
@@ -32,8 +29,6 @@ Use your HEC **Connector name** and **API key** values in the CrowdStrike Next-G
 To configure an **HEC/HTTP Event Data Connector** in CrowdStrike, see the [HTTP Event Collector Guide](https://falcon.us-2.crowdstrike.com/documentation/page/bdded008/hec-http-event-connector-guide) in CrowdStrike’s official docs.
 
 ## Create a CrowdStrike Next-Gen SIEM Log Stream
-
-[Section titled “Create a CrowdStrike Next-Gen SIEM Log Stream”](#create-a-crowdstrike-next-gen-siem-log-stream)
 
 1. Log into your Aembit Tenant.
 
@@ -78,8 +73,6 @@ Once you save your Log Stream, you can view its details by selecting it in the l
 ![Completed CrowdStrike Next-Gen SIEM Log Stream](https://docs.aembit.io/_astro/log-stream-crowdstrike-siem-complete.BwCDQRT1_Z2qD23n.webp)
 
 ## Monitor logs in CrowdStrike SIEM
-
-[Section titled “Monitor logs in CrowdStrike SIEM”](#monitor-logs-in-crowdstrike-siem)
 
 After configuration, you can view logs that Aembit generates from the event type you selected in the CrowdStrike Next-Gen SIEM UI by doing the following:
 
@@ -130,7 +123,5 @@ source: http.AembitDev
 ```
 
 ## Failure notifications
-
-[Section titled “Failure notifications”](#failure-notifications)
 
 If your Aembit account has write privileges for Log Streams, Aembit automatically sends you and email notification when Log Stream transactions consistently fail.

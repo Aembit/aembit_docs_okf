@@ -4,9 +4,8 @@ title: "How to review Audit Logs"
 description: "How to review Audit Log information in the Reporting Dashboard"
 resource: https://docs.aembit.io/user-guide/audit-report/audit-logs/
 interface: web-ui
-tags: [audit-report]
-timestamp: 2025-06-03T16:56:07-07:00
-type_inferred: true
+tags: ["audit-report"]
+timestamp: 2026-09-08T23:32:41-07:00
 ---
 
 # How to review Audit Logs
@@ -14,8 +13,6 @@ type_inferred: true
 Your Aembit Tenant includes the ability for you to review detailed audit log information so you can troubleshoot any issues encountered in your environment. Having this data readily available can assist you in diagnosing any issues that may arise, while also providing you with detailed information about these events.
 
 ## Retrieving audit log data
-
-[Section titled “Retrieving audit log data”](#retrieving-audit-log-data)
 
 To retrieve event information from audit logs, perform the following steps:
 
@@ -41,7 +38,9 @@ To retrieve event information from audit logs, perform the following steps:
 
      Default - **All**
 
-     Options - `AccessConditions`, `AccessPolicies`, `AgentControllers`, `Agents`, `Authentication`, `CredentialProvider`, `CredentialProviderIntegrations`, `DiscoveryIntegration`, `GlobalPolicyCompliance`, `IdentityProviders`, `Integrations`, `LogStreams`, `PkiSettings`, `ResourceSets`, `Roles`, `Routing`, `SignOnPolicies`, `StandaloneCertificateAuthorities`, `Tenant`, `TrustProvider`, `Users`, `Workloads`.
+     Options - `AccessConditions`, `AccessPolicies`, `AgentControllers`, `Agents`,
+
+     `Authentication`, `CredentialProvider`, `CredentialProviderIntegrations`, `DiscoveryIntegration`, `GlobalPolicyCompliance`, `IdentityProviders`, `Integrations`, `LogStreams`, `PkiSettings`, `ResourceSets`, `Roles`, `Routing`, `SignOnPolicies`, `StandaloneCertificateAuthorities`, `Tenant`, `TrustProvider`, `Users`, `Workloads`.
 
    * **Severity** - The level of importance of the event.
 
@@ -52,8 +51,6 @@ To retrieve event information from audit logs, perform the following steps:
 5. Once you have selected your filtering options, Aembit displays the audit log information based on your selections in the table.
 
 ### Audit logs reporting example
-
-[Section titled “Audit logs reporting example”](#audit-logs-reporting-example)
 
 If you would like to review detailed audit log information for an event, select the event. This expands the window for that event, enabling you to see both a summary of the event (on the left side of the information panel), and detailed JSON output (on the right side of the information panel).
 
