@@ -5,7 +5,7 @@ description: "How to review MCP Authorization Tracing information in the Reporti
 resource: https://docs.aembit.io/user-guide/audit-report/mcp-authorization-tracing/
 interface: web-ui
 tags: ["audit-report"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-16T12:05:53-04:00
 ---
 
 # How to review MCP Authorization Tracing
@@ -14,9 +14,7 @@ timestamp: 2026-09-08T23:32:41-07:00
 
 ## When to use MCP Authorization Tracing
 
-Use MCP Authorization Tracing when an MCP error doesn’t appear in a static event record. Use it to confirm which Client Workload and
-
-Server Workload matched a specific request. It also gives immediate feedback while you verify a new Access Policy or workload configuration.
+Use MCP Authorization Tracing when an MCP error doesn’t appear in a static event record. Use it to confirm which Client Workload and Server Workload matched a specific request. It also gives immediate feedback while you verify a new Access Policy or workload configuration.
 
 For root-cause investigation of past failures, use [Access Authorization Events](access-authorization-events.md) and [Workload Events](workload-events/overview.md) instead. For end-to-end investigation of an MCP failure that spans both the Authorization Server and the Identity Gateway, see [Troubleshoot MCP and AI IAM access](../troubleshooting/mcp-ai-iam.md).
 
@@ -33,7 +31,7 @@ For each inbound authorization request handled by MCP Identity Gateway, MCP Auth
 | **Resource Server / Server Workload** | The protected resource URL the client is trying to reach, paired with the Server Workload that Aembit matched to it.          |
 | **Severity**                          | The severity of the entry: `Info`, `Warning`, or `Error`.                                                                     |
 
-When the Client Workload and Server Workload both match but no active Access Policy connects them, an entry indicates that the policy is inactive or doesn’t exist.
+When the Client Workload and Server Workload both match but no active Access Policy connects them, an entry indicates that the Access Policy is inactive or doesn’t exist.
 
 When no Client Workload or Server Workload matches, the entry indicates that explicitly so you can map the symptom back to the workload or policy configuration that needs to change.
 
@@ -57,8 +55,8 @@ To review MCP Authorization Tracing data, do the following:
 
    * The redirect URI matches the MCP client’s callback URL, and the paired Client Workload is the one you expect.
    * The resource server URL matches a Server Workload configured in Aembit, and the paired Server Workload is the one you expect for the target MCP server.
-   * An active Access Policy connects the matched Client Workload and Server Workload. If the Access Policy column indicates no match, confirm that a policy exists and is active for that workload pair.
-   * The severity is `Info`. `Warning` or `Error` indicates that MCP Identity Gateway couldn’t match the request to a workload or policy.
+   * An active Access Policy connects the matched Client Workload and Server Workload. If the Access Policy column indicates no match, confirm that an Access Policy exists and is active for that workload pair.
+   * The severity is `Info`. `Warning` or `Error` indicates that MCP Identity Gateway couldn’t match the request to a workload or Access Policy.
 
 6. Update the relevant Client Workload, Server Workload, or Access Policy when you see a mismatch. The next Tracing entry reflects the change.
 
@@ -76,4 +74,4 @@ To review MCP Authorization Tracing data, do the following:
 * [Access Authorization Events](access-authorization-events.md)
 * [Workload Events](workload-events/overview.md)
 * [Troubleshoot MCP and AI IAM access](../troubleshooting/mcp-ai-iam.md)
-* [MCP Identity Gateway](../../ai-guide/mcp/identity-gateway/overview.md)
+* [MCP Identity Gateway](../deploy-install/mcp-identity-gateway/overview.md)

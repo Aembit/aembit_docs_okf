@@ -5,7 +5,7 @@ description: "The application fields Agent Proxy records in Workload Events for 
 resource: https://docs.aembit.io/user-guide/audit-report/workload-events/supported-protocols/
 interface: web-ui
 tags: ["workload-event", "audit-report"]
-timestamp: 2026-09-09T08:20:13-07:00
+timestamp: 2026-09-16T12:05:53-04:00
 ---
 
 # Supported protocols and application fields
@@ -122,7 +122,11 @@ Example `application.mcp` block
 
 ### Content Security
 
-When the Access Policy that governs MCP Identity Gateway traffic includes a Content Security Provider, MCP workload events record the decision under `application.mcp.contentSecurity`. For the CrowdStrike AIDR provider, the `crowdStrikeAidr` object contains these fields:
+When the Access Policy that governs MCP Identity Gateway traffic includes a Content Security Provider, MCP workload events record the decision under `application.mcp.contentSecurity`. Each provider writes to its own field inside that element, so the field name identifies which provider acted.
+
+#### CrowdStrike AIDR
+
+For the CrowdStrike AIDR provider, the `crowdStrikeAidr` object contains these fields:
 
 * **`decision`** - The decision CrowdStrike AIDR returned for the inspected content.
 * **`requestId`** - CrowdStrike’s identifier for the inspection request. Use it to correlate the event with the corresponding finding in the CrowdStrike console.
@@ -206,6 +210,66 @@ CrowdStrike AIDR keeps its own findings for the content it inspects. The `reques
 To work in the other direction, start from the request ID and timestamp on a CrowdStrike AIDR finding. Filter Workload Events to the matching timespan and the MCP protocol, then match the `requestId` field.
 
 For how inspection works and how to configure it, see [CrowdStrike AIDR Content Security](../../access-policies/content-security/crowdstrike-aidr/overview.md).
+
+#### MCP Tool Access Control
+
+For the MCP Tool Access Control Content Security Provider, the `aembitMcpToolsAcl` object contains these fields:
+
+| Field           | Presence | Description                                                                               |
+| --------------- | -------- | ----------------------------------------------------------------------------------------- |
+| `decision`      | Always   | What the control did: `allowed`, `filtered`, or `blocked`.                                |
+| `control`       | Always   | Which control decided: `visible` or `invocable`.                                          |
+| `matchedRules`  | Calls    | Every rule the MCP tool name matched. Empty when no rule matched and the default decided. |
+| `toolsRemoved`  | Listings | The MCP tools dropped from the listing, as the upstream MCP server published them.        |
+| `toolsReturned` | Listings | How many MCP tools the listing still carries.                                             |
+| `reason`        | Blocked  | Text naming the MCP tool and the rule that matched it.                                    |
+
+A field is absent when it doesn’t apply. A listing evaluates many MCP tools at once, so it reports `toolsRemoved` and `toolsReturned` in place of `matchedRules`.
+
+The event’s [`outcome.result`](reference.md#result) and [`meta.severity`](reference.md#severity) follow the decision:
+
+| `decision` | `control`   | `outcome.result` | `meta.severity` | What happened                                                                              |
+| ---------- | ----------- | ---------------- | --------------- | ------------------------------------------------------------------------------------------ |
+| `allowed`  | `visible`   | `Passthrough`    | `Info`          | The control evaluated a listing and removed nothing.                                       |
+| `allowed`  | `invocable` | `Modified`       | `Info`          | The control allowed a call, and the MCP Identity Gateway rewrote it to inject credentials. |
+| `filtered` | `visible`   | `Modified`       | `Info`          | Tool Visibility removed MCP tools from a listing.                                          |
+| `blocked`  | `invocable` | `Error`          | `Error`         | Tool Invocation denied a call and returned an error to the AI agent.                       |
+| `blocked`  | `visible`   | `Error`          | `Error`         | Tool Visibility failed closed on a listing.                                                |
+
+Example `aembitMcpToolsAcl` object for a blocked tool call
+
+```json
+"contentSecurity": {
+  "aembitMcpToolsAcl": {
+    "decision": "blocked",
+    "control": "invocable",
+    "matchedRules": ["delete_*"],
+    "reason": "Tool 'delete_issue' is not invocable under this policy (matched: delete_*)"
+  }
+}
+```
+
+Example `aembitMcpToolsAcl` object for a filtered tool listing
+
+```json
+"contentSecurity": {
+  "aembitMcpToolsAcl": {
+    "decision": "filtered",
+    "control": "visible",
+    "toolsReturned": 12,
+    "toolsRemoved": ["admin_reset", "drop_table"]
+  }
+}
+```
+
+For the controls and the glob syntax for MCP tool names, see [MCP Tool Access Control](../../access-policies/content-security/mcp-tool-access-control/overview.md).
+
+#### Where MCP Tool Access Control decisions appear
+
+* A failed listing reaches the AI agent as an empty MCP tool list rather than an error, so the event is the only place it shows.
+* An invocation decision appears on one event: an allowed call on the request event, and a blocked call on the response event.
+* A visibility decision appears only on the response event.
+* The MCP Identity Gateway runs the rules for each upstream MCP server it forwards to, so a listing that spans servers reports per server.
 
 ## PostgreSQL and Amazon Redshift
 

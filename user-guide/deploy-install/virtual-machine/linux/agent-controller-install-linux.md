@@ -5,7 +5,7 @@ description: "How to set up Aembit Agent Controller on Linux"
 resource: https://docs.aembit.io/user-guide/deploy-install/virtual-machine/linux/agent-controller-install-linux/
 interface: web-ui
 tags: ["linux", "virtual-machine", "deploy-install"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-15T20:39:46-07:00
 ---
 
 # How to set up Agent Controller on Linux
@@ -91,6 +91,10 @@ To install Agent Controller, follow these steps:
    > See [About the Aembit Agent Controller](../../about-agent-controller.md) for more information.
 
    To use a Device Code, you must generate a Device Code in the Aembit website UI and replace `AEMBIT_AGENT_CONTROLLER_ID` with the `AEMBIT_DEVICE_CODE` environmental variable in the preceding command.
+
+   > **Kerberos attestation**
+   >
+   > To attest Agent Proxies on Active Directory-joined VMs, add `AEMBIT_KERBEROS_ATTESTATION_ENABLED=true` and `KRB5_KTNAME=<keytab path>` to the install command. The Agent Controller can’t register through the Kerberos Trust Provider itself; on premises, register it with a Device Code. For the Active Directory prerequisites, see [Kerberos Trust Provider](../../../access-policies/trust-providers/kerberos-trust-provider.md).
 
 > **HTTP proxy configuration**
 >

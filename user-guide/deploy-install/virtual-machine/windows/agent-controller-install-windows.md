@@ -5,7 +5,7 @@ description: "How to set up Aembit Agent Controller on Windows Server"
 resource: https://docs.aembit.io/user-guide/deploy-install/virtual-machine/windows/agent-controller-install-windows/
 interface: web-ui
 tags: ["windows", "virtual-machine", "deploy-install"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-15T20:39:46-07:00
 ---
 
 # How to set up Agent Controller on Windows Server
@@ -58,7 +58,7 @@ To install an Aembit Agent Controller on Windows Server:
 
    ```powershell
    Invoke-WebRequest `
-      -Uri https://releases.aembit.io/agent_controller/<version>/windows/amd64/aembit_agent_controller_windows_amd64_<version>.tar.gz `
+      -Uri https://releases.aembit.io/agent_controller/<version>/windows/amd64/aembit_agent_controller_windows_amd64_<version>.msi `
       -Outfile aembit_agent_controller.msi
    ```
 
@@ -76,7 +76,17 @@ To install an Aembit Agent Controller on Windows Server:
 
 * Agent Controller + Kerberos attestation
 
-  2. Install the Agent Controller, using the following command. Make sure to replace `<TenantId>` with your Aembit Tenant ID and `<AgentControllerId>` with the ID of the Agent Controller you are configuring.
+  2. Decide which hostname Agent Proxies use to reach this Agent Controller.
+
+     Each Agent Proxy requests a Kerberos ticket for the Agent Controller’s Service Principal Name (SPN) `HTTP/<hostname>`. The Agent Controller service runs as the host’s computer account by default, and when the host joins the domain, Windows registers SPN entries on that computer account that cover the host’s own name. If Agent Proxies reach the Agent Controller by a different name, such as a DNS alias, register that SPN on the Agent Controller’s computer account from a domain-joined host with AD administrator privileges:
+
+     ```powershell
+     setspn -S HTTP/<alias> <Agent Controller computer name>
+     ```
+
+     To list every SPN registered on the Agent Controller’s computer account, run `setspn -L <Agent Controller computer name>`.
+
+  3. Install the Agent Controller, using the following command. Make sure to replace `<TenantId>` with your Aembit Tenant ID and `<AgentControllerId>` with the ID of the Agent Controller you are configuring.
 
      ```powershell
      msiexec /i aembit_agent_controller.msi /l*v installer.log `
@@ -85,19 +95,29 @@ To install an Aembit Agent Controller on Windows Server:
        AEMBIT_KERBEROS_ATTESTATION_ENABLED=true
      ```
 
-  3. Make sure to add the [Kerberos Trust Provider](../../../access-policies/trust-providers/kerberos-trust-provider.md) in your Aembit Tenant.
-
      > **Caution**
      >
      > When upgrading Agent Controller and you change the value of `SERVICE_LOGON_ACCOUNT`, then you must restart the Agent Controller service once installation completes.
 
-  4. When installing the Agent Proxy, make sure the `AEMBIT_AGENT_CONTROLLER` value uses the DNS name of the Agent Controller service principal.
+  4. Make sure to add the [Kerberos Trust Provider](../../../access-policies/trust-providers/kerberos-trust-provider.md) in your Aembit Tenant.
+
+  5. When installing the Agent Proxy, set the host part of `AEMBIT_AGENT_CONTROLLER` to the hostname in the SPN, for example `AEMBIT_AGENT_CONTROLLER=http://<hostname>:5000`. An IP address doesn’t work, because no SPN matches it.
 
 * Agent Controllers + Kerberos attestation + gMSA
 
-  2. Install Agent Controller, using the following command. Run the `.msi` installer to enable Trust Provider-based Agent Controller registration, making sure to replace `<AgentControllerId>` and `<TenantId>` with the values from your Aembit Tenant.
+  2. Create a [Group Managed Service Account (gMSA)](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/group-managed-service-accounts/group-managed-service-accounts/getting-started-with-group-managed-service-accounts) in AD and allow every Agent Controller host to retrieve its password. Every Agent Controller in the cluster runs as this gMSA.
 
-     To install Agent Controller on Windows Server using a gMSA, you must also set the `SERVICE_LOGON_ACCOUNT` environment variable using [Down-Level Logon Name format](https://learn.microsoft.com/en-us/windows/win32/secauthn/user-name-formats#down-level-logon-name) `SERVICE_LOGON_ACCOUNT=<NetBIOS domain name>\\<sAMAccountName of gMSA>`.
+  3. Register the SPN `HTTP/<Load Balancer hostname>` on the gMSA:
+
+     ```powershell
+     setspn -S HTTP/<Load Balancer hostname> <gMSA name>
+     ```
+
+     You don’t need an SPN for each individual Agent Controller host.
+
+  4. Install Agent Controller on each host, using the following command. Run the `.msi` installer to enable Trust Provider-based Agent Controller registration, making sure to replace `<AgentControllerId>` and `<TenantId>` with the values from your Aembit Tenant.
+
+     To install Agent Controller on Windows Server using a gMSA, you must also set the `SERVICE_LOGON_ACCOUNT` environment variable using [Down-Level Logon Name format](https://learn.microsoft.com/en-us/windows/win32/secauthn/user-name-formats#down-level-logon-name) `SERVICE_LOGON_ACCOUNT=<NetBIOS domain name>\\<sAMAccountName of gMSA>`. Use the same gMSA on every host.
 
      ```powershell
      msiexec /i aembit_agent_controller.msi /l*v installer.log `
@@ -107,13 +127,21 @@ To install an Aembit Agent Controller on Windows Server:
        SERVICE_LOGON_ACCOUNT=<NetBIOS domain name>\<sAMAccountName of gMSA>$
      ```
 
-     If the account supplied in `SERVICE_LOGON_ACCOUNT` is not valid, you will receive the following message:
+     > **Note**
+     >
+     > If the account in `SERVICE_LOGON_ACCOUNT` isn’t valid, the installer shows the following message:
+     >
+     > ```text
+     > An error occurred while applying security settings. <SERVICE_LOGON_ACCOUNT value> is not a valid user or group.
+     > This could be a problem with the package, or a problem connecting to a domain controller on the network.
+     > Check your network connection and click Retry, or Cancel to end the install.
+     > ```
+     >
+     > If the gMSA exists but the host can’t retrieve its password yet, click **Retry** after the host has contacted the Domain Controller.
 
-     > An error occurred while applying security settings. <`SERVICE_LOGON_ACCOUNT` value> is not a valid user or group. This could be a problem with the package, or a problem connecting to a domain controller on the network. Check your network connection and click Retry, or Cancel to end the install.
+  5. When installing the Agent Proxy, set the host part of `AEMBIT_AGENT_CONTROLLER` to the load balancer hostname in the SPN, for example `AEMBIT_AGENT_CONTROLLER=http://<Load Balancer hostname>:5000`.
 
-  3. When installing the Agent Proxy, make sure to set the `AEMBIT_AGENT_CONTROLLER` value as the DNS name component of the gMSA service principal.
-
-  4. Make sure to add the [Kerberos Trust Provider](../../../access-policies/trust-providers/kerberos-trust-provider.md) in your Aembit Tenant.
+  6. Make sure to add the [Kerberos Trust Provider](../../../access-policies/trust-providers/kerberos-trust-provider.md) in your Aembit Tenant and select every Agent Controller in the cluster in its **Agent Controller** field.
 
 > **HTTP proxy configuration**
 >
@@ -125,7 +153,7 @@ For a list of all available environment variables for configuring the Agent Cont
 
 > **Security Best Practice**
 >
-> Make sure the Agent Controller can accept connections on port 5000 from Agent Proxies (update your security groups if needed). Because access to Agent Controller is sensitive, *your Agent Controller’s port should not be open to the Internet*.
+> Make sure the Agent Controller can accept connections on port 5000 from Agent Proxies (update your security groups if needed). Because access to Agent Controller is sensitive, *your Agent Controller’s port shouldn’t be open to the Internet*.
 
 ### (Optional) Verify the service account
 
@@ -146,6 +174,10 @@ To uninstall Agent Controller from your Windows Server, use Windows built-in **A
 ## Limitations
 
 Agent Controller on Windows has the following limitations:
+
+* **The Kerberos Trust Provider can’t register the Agent Controller** -
+
+  The Agent Controller attests Agent Proxies for the Kerberos Trust Provider and can’t attest itself the same way. Register a domain-joined Agent Controller on premises with a Device Code. When the host runs in AWS, Azure, or Kubernetes, register it with an AWS Role, AWS Metadata Service, Azure Metadata Service, or Kubernetes Service Account Trust Provider instead.
 
 * **Changing the service logon account after installation isn’t supported** -
 

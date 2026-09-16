@@ -3,7 +3,7 @@ type: explanation
 title: "How Aembit works"
 description: "A simplified description of how Aembit works, including its architecture and components"
 resource: https://docs.aembit.io/get-started/how-aembit-works/
-timestamp: 2026-09-09T08:20:13-07:00
+timestamp: 2026-09-15T18:18:13-07:00
 ---
 
 # How Aembit works
@@ -21,7 +21,7 @@ Most organizations secure workload access using static, long-lived secrets (API 
 * Hard to rotate
 * A significant security risk when compromised
 
-AI agents compound this problem in two ways. First, the MCP servers that connect agents to your systems often store long-lived credentials. Second, a user-driven agent inherits its operator’s full rights, with no least-privilege boundary at the agent layer. Aembit resolves this with [blended identity](../ai-guide/blended-identity.md), evaluating the user and the agent together in every access decision.
+AI agents compound this problem in two ways. First, the MCP servers that connect agents to your systems often store long-lived credentials. Second, a user-driven agent inherits its operator’s full rights, with no least-privilege boundary at the agent layer. Aembit resolves this with [blended identity](../user-guide/access-policies/blended-identity.md), evaluating the user and the agent together in every access decision.
 
 ## Introducing Agentic AI and Workload IAM
 
@@ -31,7 +31,7 @@ Aembit solves these challenges with its Workload Identity and Access Management 
 
 **AI agents** are a form of non-human identity in their own right. A user-driven assistant like Claude Desktop or an autonomous agent reaches tools and data through APIs, databases, and MCP servers.
 
-Both forms interact the same way: one workload (a Client Workload) initiates a request to access another workload or service (a Server Workload). A Client Workload might be a microservice calling a payments API or an AI agent calling an MCP server, and the Server Workload is whatever it needs to reach.
+Both forms interact the same way: one workload (a Client Workload) initiates a request to access another workload or service (a Server Workload). A Client Workload might be a microservice calling a payments API or an AI agent calling an MCP server. The Server Workload is whatever it needs to reach.
 
 Aembit shifts authentication away from what a workload knows (static secrets) toward who a workload verifiably is, using evidence from its environment and context. Instead of using a traditional password or API key, Aembit verifies a workload’s identity cryptographically using evidence from its runtime environment, such as:
 
@@ -77,11 +77,11 @@ Server Workloads are the target of Client Workload requests. A Server Workload c
 
 ### Blended identity for AI agents
 
-An AI agent acts as a Client Workload, so Aembit’s model already secures it. User-driven agents add one dimension: a second identity in every request, the human operating the agent. Aembit’s blended identity model combines the user’s identity (validated through your identity provider by a Trust Provider) with the agent’s workload identity. It then evaluates both in a single Access Policy. This lets a policy express not just “is this a trusted agent?” but “is this specific user, using this specific agent, allowed to access this resource?” Aembit treats autonomous agents that run without a human as standard workloads, securing them with the same model as any other Client Workload.
+An AI agent acts as a Client Workload, so Aembit’s model already secures it. User-driven agents add a second identity to every request: the human operating the agent. Aembit’s blended identity model combines that user identity with the agent’s workload identity. It then evaluates both in a single Access Policy. This lets a policy express not just “is this a trusted agent?” but “is this specific user, using this specific agent, allowed to access this resource?” Aembit treats autonomous agents that run without a human as standard workloads, securing them with the same model as any other Client Workload.
 
 ![](https://docs.aembit.io/aembit-icons/lightbulb-light.svg)
 
-[Understanding blended identity](../ai-guide/blended-identity.md)See the AI Guide
+[Understanding blended identity](../user-guide/access-policies/blended-identity.md)See the User Guide
 
 →
 
@@ -260,13 +260,13 @@ For MCP traffic, an Access Policy can also include a Content Security Provider. 
 
 ![](https://docs.aembit.io/aembit-icons/shield-keyhole-solid.svg)
 
-[MCP Authorization Server](../ai-guide/mcp/authorization-server/overview.md)OAuth 2.1 authorization for MCP clients
+[MCP Authorization Server](../user-guide/deploy-install/mcp-authorization-server/overview.md)OAuth 2.1 authorization for MCP clients
 
 →
 
 ![](https://docs.aembit.io/aembit-icons/aembit-edge.svg)
 
-[MCP Identity Gateway](../ai-guide/mcp/identity-gateway/overview.md)Transparent proxy for MCP traffic
+[MCP Identity Gateway](../user-guide/deploy-install/mcp-identity-gateway/overview.md)Transparent proxy for MCP traffic
 
 →
 
@@ -286,7 +286,7 @@ You can export logs using **Log Streams** to external destinations like **AWS S3
 
 Aembit’s logging directly supports **compliance requirements**, by generating detailed, identity-based audit records. It also aids **security incident response and forensic analysis** by providing clear context and attribution for workload activities.
 
-For AI-agent use cases, each access event carries both the agent’s workload identity and the user’s identity, so you can separate what an agent did from who directed it. See [blended identity and audit](../ai-guide/blended-identity.md#blended-identity-and-audit).
+For AI-agent use cases, each access event carries both the agent’s workload identity and the user’s identity, so you can separate what an agent did from who directed it. See [blended identity and audit](../user-guide/access-policies/blended-identity.md#blended-identity-and-audit).
 
 ![](https://docs.aembit.io/aembit-icons/lightbulb-light.svg)
 
@@ -324,7 +324,7 @@ The following diagram is a simplified illustration of the Access Policy evaluati
 
 ![End-to-end Access Policy evaluation flow from Client Workload request through Aembit Edge and Cloud to authenticated Server Workload access](https://docs.aembit.io/d2/docs/get-started/how-aembit-works-8.svg)
 
-AI-agent and MCP access follows this same policy model, with one addition. Before issuing a credential, the Access Policy evaluates both the agent’s workload identity and the user’s identity. The agent-specific flow is already diagrammed in [securing AI agent access](use-cases/ai-agents.md) and the [MCP Identity Gateway concepts](../ai-guide/mcp/identity-gateway/concepts-mcp-gateway.md).
+AI-agent and MCP access follows this same policy model, with one addition. Before issuing a credential, the Access Policy evaluates both the agent’s workload identity and the user’s identity. The agent-specific flow is already diagrammed in [securing AI agent access](use-cases/ai-agents.md) and the [MCP Identity Gateway concepts](../user-guide/deploy-install/mcp-identity-gateway/concepts-mcp-gateway.md).
 
 ## Additional resources
 

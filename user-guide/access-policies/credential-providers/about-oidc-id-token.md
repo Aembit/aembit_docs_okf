@@ -4,7 +4,7 @@ title: "About the OIDC ID Token Credential Provider"
 description: "This page describes the OIDC ID Token Credential Provider and how it works"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/about-oidc-id-token/
 tags: ["credential-provider", "access-policy"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-15T18:18:13-07:00
 ---
 
 # About the OIDC ID Token Credential Provider
@@ -76,9 +76,9 @@ Aembit manages signing keys on a per-tenant basis and has the following characte
 
 ### Refresh token support
 
-The OIDC ID Token Credential Provider supports optional refresh token configuration for [MCP Authorization Server](../../../ai-guide/mcp/authorization-server/overview.md) use cases. When you enable refresh token support, MCP clients can maintain longer-lived sessions through token rotation without completing a new authorization flow.
+The OIDC ID Token Credential Provider supports optional refresh token configuration for [MCP Authorization Server](../../deploy-install/mcp-authorization-server/overview.md) use cases. When you enable refresh token support, MCP clients can maintain longer-lived sessions through token rotation without completing a new authorization flow.
 
-For details on how refresh tokens work, see [Token refresh](../../../ai-guide/mcp/authorization-server/concepts-mcp-auth-server.md#token-refresh). For configuration steps, see [Create an OIDC ID Token Credential Provider](oidc-id-token.md).
+For details on how refresh tokens work, see [Token refresh](../../deploy-install/mcp-authorization-server/concepts-mcp-auth-server.md#token-refresh). For configuration steps, see [Create an OIDC ID Token Credential Provider](oidc-id-token.md).
 
 ### Identity broker integration
 

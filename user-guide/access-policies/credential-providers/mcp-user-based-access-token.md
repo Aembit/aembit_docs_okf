@@ -5,14 +5,14 @@ description: "How to create and use an MCP User-Based Access Token Credential Pr
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/mcp-user-based-access-token/
 interface: web-ui
 tags: ["credential-provider", "access-policy"]
-timestamp: 2026-08-19T10:25:24-07:00
+timestamp: 2026-09-15T18:18:13-07:00
 ---
 
 # Configure MCP User-Based Access Token Credential Provider
 
-The MCP User-Based Access Token Credential Provider retrieves and manages OAuth 2.0 credentials on a per-user basis for [Model Context Protocol (MCP)](../../../ai-guide/mcp/overview.md) server access. The standard [OAuth 2.0 Authorization Code](oauth-authorization-code.md) Credential Provider stores tokens for the Aembit administrator who authorizes the integration. This type stores tokens for each end user who authenticates through the MCP authorization flow.
+The MCP User-Based Access Token Credential Provider retrieves and manages OAuth 2.0 credentials on a per-user basis for [Model Context Protocol (MCP)](../../deploy-install/about-mcp.md) server access. The standard [OAuth 2.0 Authorization Code](oauth-authorization-code.md) Credential Provider stores tokens for the Aembit administrator who authorizes the integration. This type stores tokens for each end user who authenticates through the MCP authorization flow.
 
-Use this Credential Provider with the [MCP Identity Gateway](../../../ai-guide/mcp/identity-gateway/overview.md), where multiple users access MCP servers through a shared Gateway. Each user completes their own OAuth consent flow, and Aembit stores and rotates their tokens individually.
+Use this Credential Provider with the [MCP Identity Gateway](../../deploy-install/mcp-identity-gateway/overview.md), where multiple users access MCP servers through a shared Gateway. Each user completes their own OAuth consent flow, and Aembit stores and rotates their tokens individually.
 
 For background on how this type works and when to use it, see [About MCP User-Based Access Tokens](about-mcp-user-based-access-token.md).
 
@@ -77,7 +77,7 @@ To create an MCP User-Based Access Token Credential Provider, follow these steps
 ## Related topics
 
 * [About MCP User-Based Access Tokens](about-mcp-user-based-access-token.md) - How this Credential Provider works and when to use it
-* [MCP Identity Gateway setup](../../../ai-guide/mcp/identity-gateway/setup-mcp-gateway.md) - How to configure Gateway-to-Server Access Policies that use this Credential Provider
-* [MCP Identity Gateway concepts](../../../ai-guide/mcp/identity-gateway/concepts-mcp-gateway.md) - How the MCP Identity Gateway uses per-user credentials
+* [MCP Identity Gateway setup](../mcp-identity-gateway/setup-mcp-gateway.md) - How to configure Gateway-to-Server Access Policies that use this Credential Provider
+* [MCP Identity Gateway concepts](../../deploy-install/mcp-identity-gateway/concepts-mcp-gateway.md) - How the MCP Identity Gateway uses per-user credentials
 * [OAuth 2.0 Authorization Code](oauth-authorization-code.md) - The standard OAuth flow for administrator-authorized credentials
 * [Credential Providers overview](overview.md) - All available Credential Provider types

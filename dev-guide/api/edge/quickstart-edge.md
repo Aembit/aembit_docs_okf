@@ -5,7 +5,7 @@ description: "Learn how to integrate Aembit Edge API into your cloud-native appl
 resource: https://docs.aembit.io/dev-guide/api/edge/quickstart-edge/
 interface: api
 tags: ["edge", "api"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-11T18:17:53-07:00
 ---
 
 # Get started with Aembit Edge API
@@ -717,7 +717,7 @@ First, authenticate your GitLab CI job with Aembit using your identity token:
 >
 > As you may notice, this is different from most API calls where you would pass a `bearerToken` in the `Authorization` header. This is because Aembit Edge API uses the `identityToken` or JWT to verify the identity of your CI/CD job.
 >
-> If you get any unexpected 401 errors, double-check that you are not setting the `Authorization` header with a `Bearer` token. Instead, ensure you are passing the `identityToken` in the request body as the preceding examples show.
+> If you get any unexpected 401 errors, double-check that you aren’t setting the `Authorization` header with a `Bearer` token. Instead, ensure you are passing the `identityToken` in the request body as the preceding examples show.
 
 You’ll receive an access token response:
 

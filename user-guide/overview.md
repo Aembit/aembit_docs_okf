@@ -4,7 +4,7 @@ title: "Aembit User Guide Overview"
 description: "How to set up and use Aembit"
 resource: https://docs.aembit.io/user-guide/
 interface: web-ui
-timestamp: 2026-09-09T15:44:57-07:00
+timestamp: 2026-09-15T18:18:13-07:00
 ---
 
 # Aembit User Guide Overview
@@ -33,6 +33,8 @@ This section includes topics covering:
 * [Kubernetes Deployment](deploy-install/kubernetes/kubernetes.md)
 * [Virtual Machine Deployment](deploy-install/virtual-machine/overview.md)
 * [Serverless Deployment](deploy-install/serverless/overview.md)
+* [MCP Identity Gateway](deploy-install/mcp-identity-gateway/overview.md)
+* [MCP Authorization Server](deploy-install/mcp-authorization-server/overview.md)
 
 ## Access Policies
 
@@ -46,6 +48,20 @@ This section includes topics covering:
 * [Credential Providers](access-policies/credential-providers/overview.md)
 * [Access Conditions](access-policies/access-conditions/overview.md)
 * [Content Security](access-policies/content-security/overview.md)
+* [Blended Identity](access-policies/blended-identity.md)
+* [Set up the MCP Identity Gateway](access-policies/mcp-identity-gateway/setup-mcp-gateway.md)
+* [Set up the MCP Authorization Server](access-policies/mcp-authorization-server/setup-mcp-auth-server.md)
+
+## Aembit MCP Server
+
+This section covers the Aembit MCP Server, which exposes your Tenant’s configuration to an MCP client so you can query and manage Aembit from an AI assistant. It covers connecting supported clients and the prompts Aembit publishes for them.
+
+This section includes topics covering:
+
+* [About the Aembit MCP Server](mcp-server/about-mcp-server.md)
+* [Connect an MCP Client](mcp-server/connect/overview.md)
+* [Prompt Library](mcp-server/prompt-library/overview.md)
+* [MCP Server Reference](mcp-server/reference-mcp-server.md)
 
 ## Administration
 

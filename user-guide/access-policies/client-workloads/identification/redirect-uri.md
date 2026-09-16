@@ -5,7 +5,7 @@ description: "How to identify MCP client workloads using a Redirect URI within A
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/redirect-uri/
 interface: web-ui
 tags: ["mcp", "identification", "client-workload", "access-policy"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-15T18:18:13-07:00
 ---
 
 # Redirect URI
@@ -20,11 +20,11 @@ In Aembit, the redirect URI serves a dual purpose: it’s both the OAuth callbac
 
 For example, if Gemini CLI registers with `http://localhost:7777/oauth/callback`, you configure a Client Workload with the Redirect URI identifier set to that value. This ensures only authorized MCP clients can obtain access tokens for your protected MCP servers.
 
-For more about how redirect URIs work in MCP authorization flows, see [Redirect URIs](../../../../ai-guide/mcp/authorization-server/concepts-mcp-auth-server.md#redirect-uris).
+For more about how redirect URIs work in MCP authorization flows, see [Redirect URIs](../../../deploy-install/mcp-authorization-server/concepts-mcp-auth-server.md#redirect-uris).
 
 ## Applicable deployment type
 
-This method is for [MCP Authorization Server](../../../../ai-guide/mcp/authorization-server/overview.md) deployments. It identifies MCP clients that connect to MCP servers protected by Aembit’s MCP Authorization Server.
+This method is for [MCP Authorization Server](../../../deploy-install/mcp-authorization-server/overview.md) deployments. It identifies MCP clients that connect to MCP servers protected by Aembit’s MCP Authorization Server.
 
 ## Create a Client Workload with a Redirect URI identifier
 
@@ -57,7 +57,7 @@ To configure a Client Workload using the Redirect URI identifier, follow these s
    * **On** (default) - Users must authenticate through a configured identity provider during the OAuth flow. When Enforce SSO is on, a multi-select dropdown appears listing the SSO identity providers configured for your tenant. By default, Aembit selects all identity providers. Deselect any that you don’t want to appear on the MCP authentication page for this Client Workload.
    * **Off** - The OAuth flow completes without user authentication.
 
-   For architecture diagrams comparing these flows, see [MCP Authorization Server architecture](../../../../ai-guide/mcp/authorization-server/concepts-mcp-auth-server.md#mcp-authorization-server-architecture).
+   For architecture diagrams comparing these flows, see [MCP Authorization Server architecture](../../../deploy-install/mcp-authorization-server/concepts-mcp-auth-server.md#mcp-authorization-server-architecture).
 
 7. Click **Save**.
 

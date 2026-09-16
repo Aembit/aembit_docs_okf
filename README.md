@@ -37,9 +37,8 @@ A typical question resolves in the root index, one folder index, and two or thre
 |---|---|
 | `index.md` | Navigation guide and guide map. Start here. |
 | `get-started/` | What Aembit is, core concepts, quickstarts, tutorials, and use cases. |
-| `user-guide/` | Configuring Aembit in the web UI: access policies, workloads, trust and credential providers, Edge deployment, administration, audit, discovery, and troubleshooting. |
+| `user-guide/` | Configuring Aembit in the web UI: access policies, workloads, trust and credential providers, blended identities, Edge deployment, the MCP Identity Gateway and Authorization Server, the MCP Server and its prompt library, administration, audit, discovery, and troubleshooting. |
 | `dev-guide/` | Integrating with Aembit from code: the CLI, the Cloud and Edge APIs, the SDKs, and integration patterns. |
-| `ai-guide/` | Aembit for AI: blended identities, the MCP Identity Gateway, Authorization Server, and MCP Server, and a prompt library. |
 | `reference/` | The identifier reference, the support matrix, and Edge Component compatibility. |
 | `glossary/` | One file per term. |
 | `log.md` | The documentation changelog. |
@@ -50,5 +49,5 @@ This repository is a generated artifact. Every documentation release rebuilds th
 
 ## Provenance
 
-- **Source:** `aembit/aembit_docs_astro` @ [`1ff7ad14bfa3d68c7e21190878113b4f4c03353a`](https://github.com/aembit/aembit_docs_astro/commit/1ff7ad14bfa3d68c7e21190878113b4f4c03353a)
-- **Synced:** 2026-09-09
+- **Source:** `aembit/aembit_docs_astro` @ [`9b4b9799df35cb424e9a4a9b6f933bc27ca6361b`](https://github.com/aembit/aembit_docs_astro/commit/9b4b9799df35cb424e9a4a9b6f933bc27ca6361b)
+- **Synced:** 2026-09-16

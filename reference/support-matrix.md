@@ -3,7 +3,7 @@ type: reference
 title: "Support matrix"
 description: "Supported features for each deployment type"
 resource: https://docs.aembit.io/reference/support-matrix/
-timestamp: 2026-09-09T15:44:57-07:00
+timestamp: 2026-09-15T20:39:46-07:00
 ---
 
 # Support matrix
@@ -81,7 +81,7 @@ Aembit Edge supports multiple types of deployments:
 | Azure Instance Metadata Service | ✅\*        | ⚪️              | ⚪️              | ✅\*             | ⚪️                    | ⚪️         |
 | GCP Identity Token              | ✅\*        | ⚪️              | ⚪️              | ✅\*             | ⚪️                    | ⚪️         |
 | Kubernetes Service Account      | ✅          | ✅               | ⚪️              | ⚪️              | ⚪️                    | ⚪️         |
-| Kerberos                        | ⚪️         | ⚪️              | ⚪️              | ⚪️              | ⚪️                    | ⚪️         |
+| Kerberos                        | ⚪️         | ⚪️              | ⚪️              | ❌               | ⚪️                    | ⚪️         |
 
 > \* *Aembit tailors the Trust Providers available in Kubernetes and VM environments specifically for their respective cloud platforms*.
 
@@ -94,7 +94,7 @@ Aembit Edge supports multiple types of deployments:
 | Azure Instance Metadata Service | ✅\*        | ⚪️              | ⚪️              | ✅\*                     | ✅\*                       | ✅\*                   | ⚪️         |
 | GCP Identity Token              | ⚪️         | ⚪️              | ⚪️              | ❌                       | ❌                         | ❌                     | ⚪️         |
 | Kubernetes Service Account      | ✅          | ✅               | ⚪️              | ⚪️                      | ⚪️                        | ⚪️                    | ⚪️         |
-| Kerberos                        | ❌          | ❌               | ❌               | ✅                       | ✅                         | ✅                     | ⚪️         |
+| Kerberos                        | ❌          | ❌               | ❌               | ✅                       | ✅                         | ❌                     | ⚪️         |
 
 > \* *Aembit tailors the Trust Providers available in Kubernetes and VM environments specifically for their respective cloud platforms*.\
 > \*\* *The AWS Role Trust Provider supports only EC2 instances with an attached IAM role*.

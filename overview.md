@@ -3,7 +3,7 @@ type: reference
 title: "Aembit Docs"
 description: "Attest. Authenticate. Accelerate."
 resource: https://docs.aembit.io/
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-15T18:18:13-07:00
 ---
 
 # Aembit Docs
@@ -18,33 +18,33 @@ Aembit now offers Edge SDKs for TypeScript and Python, so your application can a
 
 ## Choose your path
 
-### [AI Guide](ai-guide/overview.md)
+### [User Guide](user-guide/overview.md)
 
-Connect AI agents to protected resources through MCP servers, identity gateways, and OAuth flows—no static credentials required.
+Deploy Aembit Edge and the MCP Identity Gateway, build Access Policies for workloads and AI agents, and monitor access.
 
-[MCP Server](ai-guide/mcp/mcp-server/overview.md)
+[Deploy & Install](user-guide/deploy-install/overview.md)
 
-Expose Aembit capabilities to AI agents via Model Context Protocol.
+Install Edge Components on Kubernetes, virtual machines, serverless, and CI/CD platforms.
 
-[Overview](ai-guide/mcp/mcp-server/overview.md)[MCP Overview](ai-guide/mcp/overview.md)[AI Guide](ai-guide/overview.md)
+[Agent Controller](user-guide/deploy-install/about-agent-controller.md)[Kubernetes](user-guide/deploy-install/kubernetes/overview.md)[Virtual Machines](user-guide/deploy-install/virtual-machine/overview.md)
 
-[Identity Gateway](ai-guide/mcp/identity-gateway/overview.md)
+[Manage Access Policies](user-guide/access-policies/overview.md)
 
-Secure MCP tool calls with workload identity and access policies.
+Define which Client Workloads reach which Server Workloads, and with what credentials.
 
-[Overview](ai-guide/mcp/identity-gateway/overview.md)[MCP Overview](ai-guide/mcp/overview.md)[AI Guide](ai-guide/overview.md)
+[Client Workloads](user-guide/access-policies/client-workloads/overview.md)[Trust Providers](user-guide/access-policies/trust-providers/overview.md)[Blended Identity](user-guide/access-policies/blended-identity.md)
 
-[Authorization Server](ai-guide/mcp/authorization-server/overview.md)
+[MCP Identity Gateway](user-guide/deploy-install/mcp-identity-gateway/overview.md)
+
+Secure AI agent access to MCP servers with Access Policies and credential exchange.
+
+[Overview](user-guide/deploy-install/mcp-identity-gateway/overview.md)[Set up the Gateway](user-guide/access-policies/mcp-identity-gateway/setup-mcp-gateway.md)[Supported servers](user-guide/deploy-install/mcp-identity-gateway/supported-servers/overview.md)
+
+[MCP Authorization Server](user-guide/deploy-install/mcp-authorization-server/overview.md)
 
 OAuth 2.0 authorization for AI agent credential flows.
 
-[Concepts](ai-guide/mcp/authorization-server/concepts-mcp-auth-server.md)[Setup](ai-guide/mcp/authorization-server/setup-mcp-auth-server.md)[Reference](ai-guide/mcp/authorization-server/reference-mcp-auth-server.md)
-
-[Aembit MCP Topics](ai-guide/overview.md)
-
-Interesting and helpful topics.
-
-[Prompts Library](ai-guide/prompt-library/overview.md)[MCP Overview](ai-guide/mcp/overview.md)[About Blended Identities](ai-guide/blended-identity.md)
+[Concepts](user-guide/deploy-install/mcp-authorization-server/concepts-mcp-auth-server.md)[Setup](user-guide/access-policies/mcp-authorization-server/setup-mcp-auth-server.md)[Reference](user-guide/deploy-install/mcp-authorization-server/reference-mcp-auth-server.md)
 
 NEW
 
@@ -82,11 +82,11 @@ Learn what Aembit does, how workload identity works, and set up your first secur
 
 [What is Aembit?](get-started/overview.md)[Core concepts](get-started/concepts/overview.md)[Quickstart](get-started/quickstart/overview.md)
 
-### [User Guide](user-guide/overview.md)
+### [Reference](reference/overview.md)
 
-Deploy Aembit Edge, configure access policies, manage credentials, and monitor workload activity.
+Look up supported platforms, identifier formats, and Edge Component versions.
 
-[Deploy & Install](user-guide/deploy-install/overview.md)[Manage Access Policies](user-guide/access-policies/overview.md)[Audit & Report](user-guide/audit-report/overview.md)
+[Support Matrix](reference/support-matrix.md)[Identifiers](reference/identifiers.md)[Edge Component versions](reference/edge-components/edge-component-supported-versions.md)
 
 ## Find your focus
 
@@ -100,7 +100,7 @@ Security policies, compliance monitoring, and audit tools
 
 #### Access Control
 
-[Access Policies](user-guide/access-policies/overview.md)[Agentic AI Blended Identities](ai-guide/blended-identity.md)[MCP Identity Gateway](ai-guide/mcp/identity-gateway/overview.md)[Client Workloads](user-guide/access-policies/client-workloads/overview.md)[Server Workloads](user-guide/access-policies/server-workloads/overview.md)[Trust Providers](user-guide/access-policies/trust-providers/overview.md)[Credential Providers](user-guide/access-policies/credential-providers/overview.md)
+[Access Policies](user-guide/access-policies/overview.md)[Agentic AI Blended Identities](user-guide/access-policies/blended-identity.md)[MCP Identity Gateway](user-guide/deploy-install/mcp-identity-gateway/overview.md)[Client Workloads](user-guide/access-policies/client-workloads/overview.md)[Server Workloads](user-guide/access-policies/server-workloads/overview.md)[Trust Providers](user-guide/access-policies/trust-providers/overview.md)[Credential Providers](user-guide/access-policies/credential-providers/overview.md)
 
 #### Monitoring
 
@@ -120,7 +120,7 @@ Infrastructure deployment, scaling, and operations
 
 #### Deployment
 
-[Kubernetes](user-guide/deploy-install/kubernetes/overview.md)[AWS ECS Fargate](user-guide/deploy-install/serverless/aws-ecs-fargate.md)[AWS Lambda](user-guide/deploy-install/serverless/overview.md)[VM Installation](user-guide/deploy-install/virtual-machine/overview.md)[MCP Identity Gateway Setup](ai-guide/mcp/identity-gateway/setup-mcp-gateway.md)
+[Kubernetes](user-guide/deploy-install/kubernetes/overview.md)[AWS ECS Fargate](user-guide/deploy-install/serverless/aws-ecs-fargate.md)[AWS Lambda](user-guide/deploy-install/serverless/overview.md)[VM Installation](user-guide/deploy-install/virtual-machine/overview.md)[MCP Identity Gateway Setup](user-guide/access-policies/mcp-identity-gateway/setup-mcp-gateway.md)
 
 #### Infrastructure
 
@@ -152,7 +152,7 @@ SDKs, APIs, and integration guides for developers
 
 #### AI Integration
 
-[AI Guide](ai-guide/overview.md)[MCP Server](ai-guide/mcp/mcp-server/overview.md)[MCP Authorization Server](ai-guide/mcp/authorization-server/overview.md)[MCP Identity Gateway](ai-guide/mcp/identity-gateway/overview.md)[Agentic AI Blended Identities](ai-guide/blended-identity.md)
+[MCP Server](user-guide/mcp-server/overview.md)[MCP Authorization Server](user-guide/deploy-install/mcp-authorization-server/overview.md)[MCP Identity Gateway](user-guide/deploy-install/mcp-identity-gateway/overview.md)[Agentic AI Blended Identities](user-guide/access-policies/blended-identity.md)
 
 ### Manage & Configure
 
@@ -160,7 +160,7 @@ User management, SSO, and tenant configuration
 
 #### User Management
 
-[Users](user-guide/administration/users/overview.md)[Roles](user-guide/administration/roles/overview.md)[Identity Providers](user-guide/administration/identity-providers/overview.md)[Agentic AI Blended Identities](ai-guide/blended-identity.md)
+[Users](user-guide/administration/users/overview.md)[Roles](user-guide/administration/roles/overview.md)[Identity Providers](user-guide/administration/identity-providers/overview.md)[Agentic AI Blended Identities](user-guide/access-policies/blended-identity.md)
 
 #### Tenant
 
@@ -206,15 +206,15 @@ WorkloadsIdentity & TrustPolicy EvaluationCredential Injection
 
 #### Start building
 
-[Configure Client Workloads](user-guide/access-policies/client-workloads/overview.md)[MCP Server setup](ai-guide/mcp/mcp-server/overview.md)
+[Configure Client Workloads](user-guide/access-policies/client-workloads/overview.md)[MCP Server setup](user-guide/mcp-server/overview.md)
 
 #### Learn more
 
-[Blended Identity](ai-guide/blended-identity.md)[Trust Providers](get-started/concepts/trust-providers.md)
+[Blended Identity](user-guide/access-policies/blended-identity.md)[Trust Providers](get-started/concepts/trust-providers.md)
 
 #### Start building
 
-[MCP Authorization Server](ai-guide/mcp/authorization-server/overview.md)
+[MCP Authorization Server](user-guide/deploy-install/mcp-authorization-server/overview.md)
 
 #### Learn more
 

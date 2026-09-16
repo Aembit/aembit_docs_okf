@@ -5,7 +5,7 @@ description: "How to identify workloads using the subject claim from an OIDC ID 
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/oidc-id-token-subject/
 interface: web-ui
 tags: ["generic", "identification", "client-workload", "access-policy"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-15T18:18:13-07:00
 ---
 
 # OIDC ID Token Subject
@@ -25,7 +25,7 @@ Use this identifier when your Client Workload authenticates using an OIDC ID tok
 Supported environments include:
 
 * CI/CD pipelines (GitLab CI/CD, GitHub Actions, Terraform Cloud)
-* Workloads using the [Aembit MCP Identity Gateway](../../../../ai-guide/mcp/identity-gateway/overview.md)
+* Workloads using the [Aembit MCP Identity Gateway](../../../deploy-install/mcp-identity-gateway/overview.md)
 * Any workload that presents a standards-compliant OIDC token to the Aembit Edge Component
 
 > **Note**

@@ -5,7 +5,7 @@ description: "How to set up Aembit Agent Proxy on a Linux virtual machine (VM)"
 resource: https://docs.aembit.io/user-guide/deploy-install/virtual-machine/linux/agent-proxy-install-linux/
 interface: web-ui
 tags: ["linux", "virtual-machine", "deploy-install"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-15T20:39:46-07:00
 ---
 
 # How to set up Agent Proxy on a Linux VM
@@ -71,7 +71,11 @@ To install Agent Proxy on Linux, follow these steps:
 
    Optionally, add any other [Agent Proxy environment variables reference](../../../../reference/edge-components/edge-component-env-vars.md#agent-proxy-environment-variables) in the format `ENV_VAR_NAME=myvalue`.
 
-7. (Optional) You may optionally use the additional installation environment variable `AEMBIT_DOCKER_CONTAINER_CIDR`. This variable may be set to the CIDR block of the Docker container bridge network to allow handling workloads running in containers on your VM.
+   > **Kerberos attestation**
+   >
+   > To attest this VM with the [Kerberos Trust Provider](../../../access-policies/trust-providers/kerberos-trust-provider.md), add `AEMBIT_KERBEROS_ATTESTATION_ENABLED=true` and either `AEMBIT_PRIVILEGED_KEYTAB=true` or `AEMBIT_AGENT_PROXY_KERBEROS_PRINCIPAL=<principal>` to the install command. The host part of `AEMBIT_AGENT_CONTROLLER` must match the hostname in the Agent Controller’s service principal name.
+
+7. (Optional) You may optionally use the additional installation environment variable `AEMBIT_DOCKER_CONTAINER_CIDR`. Set this variable to the CIDR block of the Docker container bridge network so Agent Proxy can handle workloads running in containers on your VM.
 
    Your Client Workloads running on your virtual machine should now be able to access server workloads.
 

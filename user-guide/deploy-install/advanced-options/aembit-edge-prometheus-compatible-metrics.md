@@ -5,7 +5,7 @@ description: "How to view Aembit Edge Prometheus-compatible metrics"
 resource: https://docs.aembit.io/user-guide/deploy-install/advanced-options/aembit-edge-prometheus-compatible-metrics/
 interface: web-ui
 tags: ["advanced-option", "deploy-install"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-15T18:18:13-07:00
 ---
 
 # Aembit Edge Prometheus-compatible metrics
@@ -117,7 +117,7 @@ scrape_configs:
 Pass these environment variables to Agent Controller installer to manage metrics functionality.
 
 * **AEMBIT\_METRICS\_ENABLED** - enabled for both Agent Controller and Agent Proxy
-* **AEMBIT\_METRICS\_PORT** - available only for Agent Proxy, not Agent Controller. The self-hosted MCP Identity Gateway accepts this variable on its own installer. See [MCP Identity Gateway environment variables](../../../ai-guide/mcp/identity-gateway/env-vars-mcp-gateway.md#aembit_metrics_port).
+* **AEMBIT\_METRICS\_PORT** - available only for Agent Proxy, not Agent Controller. The self-hosted MCP Identity Gateway accepts this variable on its own installer. See [MCP Identity Gateway environment variables](../mcp-identity-gateway/env-vars-mcp-gateway.md#aembit_metrics_port).
 
 ## Aembit Edge Prometheus metrics
 
@@ -245,7 +245,7 @@ The MCP Identity Gateway exposes a Prometheus-compatible metrics endpoint for in
 
 #### Endpoint
 
-The metrics endpoint is available at `/metrics` on a configurable port (default `9091`). To override the port, set `AEMBIT_METRICS_PORT` during installation. See [MCP Identity Gateway environment variables](../../../ai-guide/mcp/identity-gateway/env-vars-mcp-gateway.md) for details.
+The metrics endpoint is available at `/metrics` on a configurable port (default `9091`). To override the port, set `AEMBIT_METRICS_PORT` during installation. See [MCP Identity Gateway environment variables](../mcp-identity-gateway/env-vars-mcp-gateway.md) for details.
 
 The default port is 9091 to avoid a collision with the Agent Controller, which exposes its metrics on port 9090 on the same host.
 

@@ -4,7 +4,7 @@ title: "About the Aembit Agent Controller"
 description: "Understanding the Agent Controller's role as a critical Edge component that facilitates secure registration and communication between Agent Proxies and Aembit Cloud"
 resource: https://docs.aembit.io/user-guide/deploy-install/about-agent-controller/
 tags: ["deploy-install"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-15T20:39:46-07:00
 ---
 
 # About the Aembit Agent Controller
@@ -93,7 +93,7 @@ Agent Controller supports the following registration methods, each with its own 
 
 * Trust Provider-based
 
-  Agent Controller uses [Trust Providers](../../get-started/concepts/trust-providers.md) which automate identity attestation through cloud provider metadata services or other trusted systems in your environment. Ideal for production and high-availability deployments.
+  Agent Controller uses [Trust Providers](../../get-started/concepts/trust-providers.md) which automate identity attestation through cloud provider metadata services or other trusted systems in your environment. Ideal for production and high-availability deployments. An Agent Controller can register with an AWS Role, AWS Metadata Service, Azure Metadata Service, or Kubernetes Service Account Trust Provider. The [Kerberos Trust Provider](../access-policies/trust-providers/kerberos-trust-provider.md) attests Agent Proxies only, so on-premises Agent Controllers register with a Device Code.
 
   1. **Agent Controller attestation** - Agent Controller retrieves an attestation document from its local environment. Trust Providers exist in Aembit Cloud and can verify that Agent Controller has provided an attestation document that matches the Trust Provider configured for that Agent Controller.
   2. **Agent Controller registration** - Using the attestation, Agent Controller obtains an access token from Aembit Cloud and completes its secure registration

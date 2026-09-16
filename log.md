@@ -1,5 +1,27 @@
 # Aembit Changelog
 
+## 2026-09-15
+
+### MCP Identity Gateway 1.34.5794 release
+
+Aembit has released [MCP Identity Gateway](user-guide/deploy-install/mcp-identity-gateway/overview.md) version 1.34.5794.
+
+For the latest available versions of these components, see the [Edge Components Supported Versions](reference/edge-components/edge-component-supported-versions.md) page.
+
+Key Updates:
+
+* **MCP Tool Access Control enforcement**: The Gateway now enforces [MCP Tool Access Control](user-guide/access-policies/content-security/mcp-tool-access-control/overview.md), a Content Security Provider you add to an Access Policy. The Tool Visibility control decides which MCP tools an AI agent discovers, and the Tool Invocation control decides which MCP tools an AI agent can call.
+* **Glob patterns for MCP tool names**: An entry in either control takes an exact MCP tool name or a glob pattern, and matching is case-sensitive. A pattern matches the name the MCP server publishes, not the prefixed name an AI agent displays. See [MCP Tool Access Control tool name reference](user-guide/access-policies/content-security/mcp-tool-access-control/reference.md).
+* **Tool filtering decisions in your events**: [MCP workload events](user-guide/audit-report/workload-events/supported-protocols.md#content-security) record which control decided an MCP tool’s fate, which rules matched, which MCP tools a listing removed, and how many it returned, under `application.mcp.contentSecurity`.
+
+A [security update](https://docs.aembit.io/changelog/entry/2026-09-15-mcp-identity-gateway-dependency-security-updates) also shipped in this build.
+
+### MCP Identity Gateway security updates
+
+MCP Identity Gateway version 1.34.5794 includes security updates.
+
+For the latest available versions of these components, see the [Edge Components Supported Versions](reference/edge-components/edge-component-supported-versions.md) page.
+
 ## 2026-08-27
 
 ### Developer Guide combines the API, CLI, and SDK documentation
@@ -93,19 +115,19 @@ For the audience formats, match rule attributes, and configuration steps, see [G
 
 ### MCP Identity Gateway 1.34.5733 release
 
-Aembit has released [MCP Identity Gateway](ai-guide/mcp/identity-gateway/overview.md) version 1.34.5733.
+Aembit has released [MCP Identity Gateway](user-guide/deploy-install/mcp-identity-gateway/overview.md) version 1.34.5733.
 
 For the latest available versions of these components, see the [Edge Components Supported Versions](reference/edge-components/edge-component-supported-versions.md) page.
 
 Key Updates:
 
-* **Higher fanout timeout defaults**: The Gateway now waits longer for your assigned MCP servers on most of the MCP methods it fans out, which gives a server that is still starting up, or one answering from a cold cache, room to respond. A self-hosted Gateway can override any of these timeouts as a last resort; see [MCP Identity Gateway raises fanout timeout defaults](https://docs.aembit.io/changelog/entry/2026-08-18-mcp-identity-gateway-raises-fanout-timeout-defaults).
+* **Higher fanout timeout defaults**: The Gateway now waits longer for your assigned MCP servers on most of the MCP methods it fans out, which gives a server that’s still starting up, or one answering from a cold cache, room to respond. A self-hosted Gateway can override any of these timeouts as a last resort; see [MCP Identity Gateway raises fanout timeout defaults](https://docs.aembit.io/changelog/entry/2026-08-18-mcp-identity-gateway-raises-fanout-timeout-defaults).
 * **Nine new Prometheus metrics**: The Gateway’s metrics endpoint reports on upstream fanout behavior, authentication failures, JWKS refreshes, session cleanup, and readiness probe stability.
-* **Every Gateway metric documented**: The metrics reference now lists all 20 MCP-specific metrics the Gateway exposes, with the type and labels for each and the values each label takes. See [Prometheus metrics](ai-guide/mcp/identity-gateway/reference-mcp-gateway.md#prometheus-metrics).
+* **Every Gateway metric documented**: The metrics reference now lists all 20 MCP-specific metrics the Gateway exposes, with the type and labels for each and the values each label takes. See [Prometheus metrics](user-guide/deploy-install/mcp-identity-gateway/reference-mcp-gateway.md#prometheus-metrics).
 
 ### MCP Identity Gateway raises fanout timeout defaults
 
-[MCP Identity Gateway](ai-guide/mcp/identity-gateway/overview.md) 1.34.5733 raises how long the Gateway waits for your assigned MCP servers when it fans a request out to them. The earlier defaults were short enough that a server still starting up, or one answering from a cold cache, could run past them.
+[MCP Identity Gateway](user-guide/deploy-install/mcp-identity-gateway/overview.md) 1.34.5733 raises how long the Gateway waits for your assigned MCP servers when it fans a request out to them. The earlier defaults were short enough that a server still starting up, or one answering from a cold cache, could run past them.
 
 | Timeout                            | 1.33.5654 | 1.34.5733 |
 | ---------------------------------- | --------- | --------- |
@@ -120,9 +142,9 @@ Key Updates:
 
 `reinit_initialize` is the one timeout this build leaves unchanged.
 
-The new defaults require no configuration and apply to both deployment models as soon as you upgrade. They are high enough that an AI client usually reaches its own timeout before the Gateway reaches one of these, so most deployments never need to change them.
+The new defaults require no configuration and apply to both deployment models as soon as you upgrade. They’re high enough that an AI client typically reaches its own timeout before the Gateway reaches one of these, so most deployments never need to change them.
 
-A self-hosted Gateway can override any of these timeouts as a last resort, using the `AEMBIT_MCP_GATEWAY_TIMEOUT` environment variable. The installer doesn’t forward this variable to the running service, so setting it takes a systemd drop-in. For the accepted names, the value format, and the drop-in, see [MCP Identity Gateway environment variables](ai-guide/mcp/identity-gateway/env-vars-mcp-gateway.md#aembit_mcp_gateway_timeout). Aembit sets these values for you on the Aembit-managed service.
+A self-hosted Gateway can override any of these timeouts as a last resort, using the `AEMBIT_MCP_GATEWAY_TIMEOUT` environment variable. The installer doesn’t forward this variable to the running service, so setting it takes a systemd drop-in. For the accepted names, the value format, and the drop-in, see [MCP Identity Gateway environment variables](user-guide/deploy-install/mcp-identity-gateway/env-vars-mcp-gateway.md#aembit_mcp_gateway_timeout). Aembit sets these values for you on the Aembit-managed service.
 
 These updates shipped in the same build as the [MCP Identity Gateway 1.34.5733 release](https://docs.aembit.io/changelog/entry/2026-08-18-mcp-identity-gateway-1-34-5733-release).
 
@@ -148,7 +170,7 @@ See [Configure TLS Decrypt](user-guide/deploy-install/advanced-options/tls-decry
 
 ### Content Security now available
 
-Aembit now offers [Content Security](user-guide/access-policies/content-security/overview.md), an Access Policy component that inspects content and enforces the verdict an inspection service returns. Content Security inspects Model Context Protocol (MCP) traffic that flows through the Aembit [MCP Identity Gateway](ai-guide/mcp/identity-gateway/overview.md).
+Aembit now offers [Content Security](user-guide/access-policies/content-security/overview.md), an Access Policy component that inspects content and enforces the verdict an inspection service returns. Content Security inspects Model Context Protocol (MCP) traffic that flows through the Aembit [MCP Identity Gateway](user-guide/deploy-install/mcp-identity-gateway/overview.md).
 
 In the Access Policy Builder, Content Security is an optional component positioned between Access Conditions and Credential Providers. It adds inspection to the request path without changing how the policy’s other components authorize access.
 
@@ -164,7 +186,7 @@ To add the component to a policy, see [Add CrowdStrike AIDR to a policy](user-gu
 
 ### MCP Identity Gateway 1.33.5654 release
 
-Aembit has released [MCP Identity Gateway](ai-guide/mcp/identity-gateway/overview.md) version 1.33.5654.
+Aembit has released [MCP Identity Gateway](user-guide/deploy-install/mcp-identity-gateway/overview.md) version 1.33.5654.
 
 For the latest available versions of these components, see the [Edge Components Supported Versions](reference/edge-components/edge-component-supported-versions.md) page.
 
@@ -204,14 +226,14 @@ For the match rule attributes, configuration steps, and troubleshooting, see [AW
 
 ### MCP Identity Gateway 1.33.5547 release
 
-Aembit has released [MCP Identity Gateway](ai-guide/mcp/identity-gateway/overview.md) version 1.33.5547.
+Aembit has released [MCP Identity Gateway](user-guide/deploy-install/mcp-identity-gateway/overview.md) version 1.33.5547.
 
 For the latest available versions of these components, see the [Edge Components Supported Versions](reference/edge-components/edge-component-supported-versions.md) page.
 
 Key Updates:
 
 * **More reliable upstream reconnection**: When the Gateway reestablishes a connection to an MCP server, it now refreshes the available tools as part of that reconnection, and reports a clear error if the reconnection doesn’t succeed.
-* **Deployment modes documented**: The MCP Identity Gateway concepts page now describes the two ways to run the Gateway: self-hosted on your own host, or managed by Aembit at your per-Tenant endpoint. The traffic flow and policy model are identical in both. See [MCP Identity Gateway concepts](ai-guide/mcp/identity-gateway/concepts-mcp-gateway.md).
+* **Deployment modes documented**: The MCP Identity Gateway concepts page now describes the two ways to run the Gateway: self-hosted on your own host, or managed by Aembit at your per-Tenant endpoint. The traffic flow and policy model are identical in both. See [MCP Identity Gateway concepts](user-guide/deploy-install/mcp-identity-gateway/concepts-mcp-gateway.md).
 
 Dependency security updates also shipped in this build; see [MCP Identity Gateway dependency security updates](https://docs.aembit.io/changelog/entry/2026-07-28-mcp-identity-gateway-dependency-security-updates).
 
@@ -245,13 +267,13 @@ For setup instructions, see [Configure an OpenAI WIF Credential Provider](user-g
 
 ### MCP Identity Gateway sessions can persist across restarts
 
-A self-hosted [MCP Identity Gateway](ai-guide/mcp/identity-gateway/overview.md) can now keep its MCP sessions in Valkey instead of in process memory. Persisted sessions survive a service restart or an upgrade, and more than one Gateway instance can share them.
+A self-hosted [MCP Identity Gateway](user-guide/deploy-install/mcp-identity-gateway/overview.md) can now keep its MCP sessions in Valkey instead of in process memory. Persisted sessions survive a service restart or an upgrade, and more than one Gateway instance can share them.
 
 Set `AEMBIT_VALKEY_URL` on the install command to enable it. The Gateway keeps sessions in memory when you leave that variable unset, which remains the default. An in-memory store ends every open session on restart. `AEMBIT_MCP_SESSION_IDLE_TTL_SECS` sets how long an unused session lives, and it defaults to 12 hours for both store types.
 
 Sessions hold MCP protocol state, not authentication state. The Gateway still validates every request’s token and evaluates Access Policies per request, so persistence doesn’t extend anyone’s access.
 
-This change requires no configuration if you use the Aembit-managed service or want the in-memory default. It ships in MCP Identity Gateway 1.32.5098, alongside the session ID binding in this build; see the [session IDs bound to the authenticated user](https://docs.aembit.io/changelog/entry/2026-06-30-mcp-identity-gateway-session-ids-are-now-bound-to-the-authenticated-user) entry. For configuration and operational detail, see [Session persistence](ai-guide/mcp/identity-gateway/session-persistence-mcp-gateway.md).
+This change requires no configuration if you use the Aembit-managed service or want the in-memory default. It ships in MCP Identity Gateway 1.32.5098, alongside the session ID binding in this build; see the [session IDs bound to the authenticated user](https://docs.aembit.io/changelog/entry/2026-06-30-mcp-identity-gateway-session-ids-are-now-bound-to-the-authenticated-user) entry. For configuration and operational detail, see [Session persistence](user-guide/deploy-install/mcp-identity-gateway/session-persistence-mcp-gateway.md).
 
 ### Client ID Metadata Document (CIMD) identification now available
 
@@ -261,13 +283,13 @@ CIMD has reached general availability, and Aembit enables it by default. To iden
 
 ### MCP Identity Gateway session IDs are now bound to the authenticated user
 
-[MCP Identity Gateway](ai-guide/mcp/identity-gateway/overview.md) now binds each session ID to the authenticated user, closing a privilege-escalation gap where one user’s session could carry over to another identity.
+[MCP Identity Gateway](user-guide/deploy-install/mcp-identity-gateway/overview.md) now binds each session ID to the authenticated user, closing a privilege-escalation gap where one user’s session could carry over to another identity.
 
 This change requires no configuration. It ships in MCP Identity Gateway 1.32.5098, alongside the workload event correlation and platform fixes in this build; see the [event correlation and platform fixes entry](https://docs.aembit.io/changelog/entry/2026-06-30-mcp-identity-gateway-event-correlation-and-platform-fixes).
 
 ### MCP Identity Gateway event correlation and platform fixes
 
-This update brings event correlation to [MCP Identity Gateway](ai-guide/mcp/identity-gateway/overview.md) workload events, along with fixes across Credential Provider, Access Policy, and Client Workload workflows.
+This update brings event correlation to [MCP Identity Gateway](user-guide/deploy-install/mcp-identity-gateway/overview.md) workload events, along with fixes across Credential Provider, Access Policy, and Client Workload workflows.
 
 This update includes:
 
@@ -392,7 +414,7 @@ Key Updates:
 
 ### MCP Identity Gateway 1.32.5006 release
 
-Aembit has released [MCP Identity Gateway](ai-guide/mcp/identity-gateway/overview.md) version 1.32.5006.
+Aembit has released [MCP Identity Gateway](user-guide/deploy-install/mcp-identity-gateway/overview.md) version 1.32.5006.
 
 For the latest available versions of these components, see the [Edge Components Supported Versions](reference/edge-components/edge-component-supported-versions.md) page.
 
@@ -486,7 +508,7 @@ For an end-to-end investigation flow that uses these reporting surfaces together
 
 ### MCP Identity Gateway 1.31.4955 release
 
-Aembit has released [MCP Identity Gateway](ai-guide/mcp/identity-gateway/overview.md) version 1.31.4955.
+Aembit has released [MCP Identity Gateway](user-guide/deploy-install/mcp-identity-gateway/overview.md) version 1.31.4955.
 
 For the latest available versions of these components, see the [Edge Components Supported Versions](reference/edge-components/edge-component-supported-versions.md) page.
 
@@ -521,12 +543,12 @@ Key capabilities in this release:
 
 ### MCP Identity Gateway 1.31 release
 
-Aembit has released [MCP Identity Gateway](ai-guide/mcp/identity-gateway/overview.md) version 1.31.
+Aembit has released [MCP Identity Gateway](user-guide/deploy-install/mcp-identity-gateway/overview.md) version 1.31.
 
 Key Updates:
 
-* **User identity on workload events**: The `userId` field now appears on `mcp.request` and `mcp.response` [workload events](ai-guide/mcp/identity-gateway/reference-mcp-gateway.md#workload-events) when the MCP client is identified, making it easier to attribute MCP activity to authenticated users in audit reports.
-* **Client-initiated session termination**: MCP clients can now end their session with the Gateway by sending an HTTP `DELETE` request to the `/mcp` endpoint, per [MCP specification section 2.5.5](https://modelcontextprotocol.io/specification/2025-03-26/basic/transports#session-management). See [Session management](ai-guide/mcp/identity-gateway/reference-mcp-gateway.md#session-management) for the request contract.
+* **User identity on workload events**: The `userId` field now appears on `mcp.request` and `mcp.response` [workload events](user-guide/deploy-install/mcp-identity-gateway/reference-mcp-gateway.md#workload-events) when the MCP client is identified, making it easier to attribute MCP activity to authenticated users in audit reports.
+* **Client-initiated session termination**: MCP clients can now end their session with the Gateway by sending an HTTP `DELETE` request to the `/mcp` endpoint, per [MCP specification section 2.5.5](https://modelcontextprotocol.io/specification/2025-03-26/basic/transports#session-management). See [Session management](user-guide/deploy-install/mcp-identity-gateway/reference-mcp-gateway.md#session-management) for the request contract.
 
 ## 2026-05-02
 
@@ -633,7 +655,7 @@ For details, see [Agent Controller environment variables](reference/edge-compone
 
 ### Refresh token support for MCP authorization flows
 
-OIDC ID Token and Aembit Access Token Credential Providers now support refresh tokens for [MCP Authorization Server](ai-guide/mcp/authorization-server/overview.md) flows. This feature applies exclusively to MCP Authorization Server use cases.
+OIDC ID Token and Aembit Access Token Credential Providers now support refresh tokens for [MCP Authorization Server](user-guide/deploy-install/mcp-authorization-server/overview.md) flows. This feature applies exclusively to MCP Authorization Server use cases.
 
 **What’s new:**
 
@@ -641,31 +663,31 @@ OIDC ID Token and Aembit Access Token Credential Providers now support refresh t
 * An **Absolute Token Lifetime** setting that controls how long refresh tokens remain valid for exchanging for new access tokens after initial issuance.
 * Refresh tokens are single-use. Each exchange returns a new refresh token.
 
-When enabled, the MCP Authorization Server returns refresh tokens alongside access tokens during OAuth token requests. MCP clients can exchange a refresh token for a new access token and a new refresh token, maintaining an active session without completing a new authorization flow. Other credential flows, such as Agent Proxy, are not affected by this setting.
+When enabled, the MCP Authorization Server returns refresh tokens alongside access tokens during OAuth token requests. MCP clients can exchange a refresh token for a new access token and a new refresh token, maintaining an active session without completing a new authorization flow. This setting doesn’t affect other credential flows, such as Agent Proxy.
 
 **To use this feature**, edit your Credential Provider, toggle **Enable Refresh Token Support** to on, and set the **Absolute Token Lifetime**.
 
-For details, see [Token refresh](ai-guide/mcp/authorization-server/concepts-mcp-auth-server.md#token-refresh), [OIDC ID Token](user-guide/access-policies/credential-providers/oidc-id-token.md), and [Aembit Access Token](user-guide/access-policies/credential-providers/aembit-access-token.md).
+For details, see [Token refresh](user-guide/deploy-install/mcp-authorization-server/concepts-mcp-auth-server.md#token-refresh), [OIDC ID Token](user-guide/access-policies/credential-providers/oidc-id-token.md), and [Aembit Access Token](user-guide/access-policies/credential-providers/aembit-access-token.md).
 
 ## 2026-04-03
 
 ### MCP Identity Gateway 1.30 release
 
-Aembit has released [MCP Identity Gateway](ai-guide/mcp/identity-gateway/overview.md) version 1.30.4549.
+Aembit has released [MCP Identity Gateway](user-guide/deploy-install/mcp-identity-gateway/overview.md) version 1.30.4549.
 
 For the latest available versions of these components, see the [Edge Components Supported Versions](reference/edge-components/edge-component-supported-versions.md) page.
 
 Key Updates:
 
-* The Gateway now [authenticates requests before proxying](ai-guide/mcp/identity-gateway/concepts-mcp-gateway.md#security-model) them to upstream MCP servers (new default behavior)
-* [Tool annotations](ai-guide/mcp/identity-gateway/reference-mcp-gateway.md#tool-methods) are included in MCP responses
+* The Gateway now [authenticates requests before proxying](user-guide/deploy-install/mcp-identity-gateway/concepts-mcp-gateway.md#security-model) them to upstream MCP servers (new default behavior)
+* MCP responses include [tool annotations](user-guide/deploy-install/mcp-identity-gateway/reference-mcp-gateway.md#tool-methods)
 * The Gateway returns HTTP 405 for GET requests to the MCP endpoint
 * Unauthorized (401) responses now include additional metadata for easier troubleshooting
-* Errors from upstream MCP servers are forwarded to MCP clients
-* The Gateway honors the [`AEMBIT_TRUSTED_ISSUER_DOMAINS`](ai-guide/mcp/identity-gateway/env-vars-mcp-gateway.md#aembit_trusted_issuer_domains) environment variable for trusted issuer configuration
-* A new [metrics endpoint](ai-guide/mcp/identity-gateway/env-vars-mcp-gateway.md#aembit_metrics_port) provides Gateway operational metrics on a configurable port
+* The Gateway forwards errors from upstream MCP servers to MCP clients
+* The Gateway honors the [`AEMBIT_TRUSTED_ISSUER_DOMAINS`](user-guide/deploy-install/mcp-identity-gateway/env-vars-mcp-gateway.md#aembit_trusted_issuer_domains) environment variable for trusted issuer configuration
+* A new [metrics endpoint](user-guide/deploy-install/mcp-identity-gateway/env-vars-mcp-gateway.md#aembit_metrics_port) provides Gateway operational metrics on a configurable port
 * Improved compatibility with Claude Desktop and other MCP clients
-* Improved handling of MCP servers that don’t support [resources](ai-guide/mcp/identity-gateway/concepts-mcp-gateway.md#mcp-resource-support)
+* Improved handling of MCP servers that don’t support [resources](user-guide/deploy-install/mcp-identity-gateway/concepts-mcp-gateway.md#mcp-resource-support)
 * General improvements to session management, installer reliability, and internal performance
 
 ## 2026-03-31
@@ -677,13 +699,13 @@ Aembit’s MCP Authorization Server now supports OAuth flows that don’t requir
 **What’s new:**
 
 * An **Enforce SSO** option on Client Workloads with the [Redirect URI](user-guide/access-policies/client-workloads/identification/redirect-uri.md) identifier type. Enforce SSO is on by default, preserving the current behavior of requiring user authentication.
-* When **Enforce SSO is on**, a multi-select dropdown lets you choose which SSO identity providers appear on the MCP authentication page. By default, all configured identity providers are selected.
-* When **Enforce SSO is off**, the MCP Authorization Server issues access tokens without redirecting users to an identity provider. No Trust Provider is needed, but a Credential Provider is still required.
+* When **Enforce SSO is on**, a multi-select dropdown lets you choose which SSO identity providers appear on the MCP authentication page. By default, the dropdown selects all configured identity providers.
+* When **Enforce SSO is off**, the MCP Authorization Server issues access tokens without redirecting users to an identity provider. The flow needs no Trust Provider, but a Credential Provider is still required.
 * Access Policies still apply as an authorization control. You can turn off policies or entities to block token issuance.
 
 **To use this feature**, edit your Client Workload, select the Redirect URI client identifier, and configure **Enforce SSO** under **MCP Authorization Configuration**.
 
-For details, see [Authentication support](ai-guide/mcp/authorization-server/overview.md#authentication-support) and [MCP Authorization Server architecture](ai-guide/mcp/authorization-server/concepts-mcp-auth-server.md#mcp-authorization-server-architecture).
+For details, see [Authentication support](user-guide/deploy-install/mcp-authorization-server/overview.md#authentication-support) and [MCP Authorization Server architecture](user-guide/deploy-install/mcp-authorization-server/concepts-mcp-auth-server.md#mcp-authorization-server-architecture).
 
 ## 2026-03-17
 
@@ -697,7 +719,7 @@ Key Updates:
 
 ***
 
-The MCP Identity Gateway now proxies **MCP resource requests** in addition to tool requests. MCP servers that expose resources (such as files, database schemas, or application data) are now accessible through the Gateway with the same identity-aware access policies, credential isolation, and audit logging that govern tool invocations.
+The MCP Identity Gateway now proxies **MCP resource requests** alongside tool requests. MCP servers that expose resources, such as files, database schemas, or application data, are now accessible through the Gateway. The same identity-aware access policies, credential isolation, and audit logging that govern tool invocations apply.
 
 **What’s new:**
 
@@ -706,7 +728,7 @@ The MCP Identity Gateway now proxies **MCP resource requests** in addition to to
 
 **No action required.** Resource support is available automatically after upgrading to MCP Identity Gateway 1.29.4419. Your existing access policies, Trust Providers, and Credential Providers apply to resource requests with no configuration changes.
 
-For details, see [MCP resource support](ai-guide/mcp/identity-gateway/concepts-mcp-gateway.md#mcp-resource-support).
+For details, see [MCP resource support](user-guide/deploy-install/mcp-identity-gateway/concepts-mcp-gateway.md#mcp-resource-support).
 
 ## 2026-03-11
 
@@ -790,7 +812,7 @@ Aembit now offers an **MCP Identity Gateway** (Beta) that sits between AI agents
 * Logs agent identity, user identity, and policy decisions for auditability
 * Fail-closed behavior—denies access by default unless explicitly allowed
 
-For setup instructions and architecture details, see [MCP Identity Gateway](ai-guide/mcp/identity-gateway/overview.md).
+For setup instructions and architecture details, see [MCP Identity Gateway](user-guide/deploy-install/mcp-identity-gateway/overview.md).
 
 ***
 
@@ -804,7 +826,7 @@ Aembit now provides an **MCP Server** that enables AI agents and users to query 
 * Read-only access—no create, update, or delete operations
 * Full audit trail of all MCP Server queries
 
-For setup and connection guides, see [Aembit MCP Server](ai-guide/mcp/mcp-server/overview.md).
+For setup and connection guides, see [Aembit MCP Server](user-guide/mcp-server/overview.md).
 
 ***
 
@@ -887,7 +909,7 @@ Key Updates:
 
 ### GitHub Action, MCP Authorization Server beta, and Access Policy Builder now available
 
-Aembit now provides an official [GitHub Action](https://github.com/marketplace/actions/aembit-get-credentials) for injecting credentials into your CI/CD workflows. The action retrieves credentials from Aembit and makes them available to subsequent steps in your workflow.
+Aembit now provides an official [GitHub Action](https://github.com/marketplace/actions/aembit-credentials) for injecting credentials into your CI/CD workflows. The action retrieves credentials from Aembit and makes them available to subsequent steps in your workflow.
 
 **Key capabilities:**
 
@@ -912,10 +934,6 @@ For configuration details, see [Private Network Access for Credential Providers]
 ***
 
 Aembit has released the MCP Authorization Server (beta), which secures Model Context Protocol (MCP) workloads using OAuth 2.1 authorization flows. This enables you to apply Aembit Access Policies to AI agents and MCP clients, controlling which users can access which MCP servers.
-
-Beta feature
-
-The MCP Authorization Server is currently in beta. Contact your Aembit representative to request access.
 
 **Key capabilities:**
 

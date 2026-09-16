@@ -3,18 +3,18 @@ type: reference
 title: "AI Assistant Integration Resources"
 description: "Machine-readable documentation resources for AI coding assistants and LLMs integrating with Aembit."
 resource: https://docs.aembit.io/llm-resources/
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-15T18:18:13-07:00
 ---
 
 # AI Assistant Integration Resources
 
 Aembit publishes its documentation in two machine-readable formats for AI coding assistants and large language models (LLMs). The [Open Knowledge Format](https://openknowledgeformat.org) (OKF) bundle is a file tree your agent clones and navigates with file tools. The [llms.txt](https://llmstxt.org/) files are flat text you feed directly into a model’s context. Both cover the same material: workload identity concepts, Client Workload configuration, Access Policies, Trust Providers, and Credential Providers.
 
-> **This page vs. the AI Guide**
+> **This page vs. the MCP Server**
 >
 > This page provides **machine-readable documentation** that you feed to AI coding assistants (Claude, Copilot, ChatGPT). It helps them generate code that integrates with Aembit.
 >
-> The [AI Guide](ai-guide/overview.md) documents **Aembit’s MCP integrations**—tools that let AI assistants directly query Aembit event logs, authorization events, and audit data.
+> The [Aembit MCP Server](user-guide/mcp-server/overview.md) documentation covers **Aembit’s MCP integrations**—tools that let AI assistants directly query Aembit event logs, authorization events, and audit data.
 
 > **Looking for human-readable docs?**
 >

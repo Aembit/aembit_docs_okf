@@ -5,7 +5,7 @@ description: "How to review Audit Log information in the Reporting Dashboard"
 resource: https://docs.aembit.io/user-guide/audit-report/audit-logs/
 interface: web-ui
 tags: ["audit-report"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-16T12:05:53-04:00
 ---
 
 # How to review Audit Logs
@@ -40,7 +40,7 @@ To retrieve event information from audit logs, perform the following steps:
 
      Options - `AccessConditions`, `AccessPolicies`, `AgentControllers`, `Agents`,
 
-     `Authentication`, `CredentialProvider`, `CredentialProviderIntegrations`, `DiscoveryIntegration`, `GlobalPolicyCompliance`, `IdentityProviders`, `Integrations`, `LogStreams`, `PkiSettings`, `ResourceSets`, `Roles`, `Routing`, `SignOnPolicies`, `StandaloneCertificateAuthorities`, `Tenant`, `TrustProvider`, `Users`, `Workloads`.
+     `Authentication`, `ContentSecurity`, `CredentialProvider`, `CredentialProviderIntegrations`, `DiscoveryIntegration`, `GlobalPolicyCompliance`, `IdentityProviders`, `Integrations`, `LogStreams`, `PkiSettings`, `ResourceSets`, `Roles`, `Routing`, `SignOnPolicies`, `StandaloneCertificateAuthorities`, `Tenant`, `TrustProvider`, `Users`, `Workloads`.
 
    * **Severity** - The level of importance of the event.
 

@@ -5,7 +5,7 @@ description: "Overview of Aembit Edge API auth endpoint and its structure"
 resource: https://docs.aembit.io/dev-guide/api/edge/endpoints/auth/
 interface: api
 tags: ["endpoint", "edge", "api"]
-timestamp: 2026-09-09T13:57:06-07:00
+timestamp: 2026-09-11T18:09:42-07:00
 ---
 
 # Edge API - /edge/v1/auth

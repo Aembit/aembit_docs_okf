@@ -5,7 +5,7 @@ description: "How to identify MCP client workloads using a Client ID Metadata Do
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/cimd-client-id/
 interface: web-ui
 tags: ["identification", "client-workload", "access-policy"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-15T18:18:13-07:00
 ---
 
 # CIMD Client ID
@@ -14,11 +14,11 @@ A Client ID Metadata Document (CIMD) is a JSON file that an MCP client hosts at 
 
 Aembit fetches and processes a metadata document only when an administrator has explicitly added its URL to a Client Workload’s identity configuration. This ensures only MCP clients you register can obtain access tokens through your MCP Authorization Server.
 
-For more about how MCP authorization flows work, see [MCP Authorization Server concepts](../../../../ai-guide/mcp/authorization-server/concepts-mcp-auth-server.md).
+For more about how MCP authorization flows work, see [MCP Authorization Server concepts](../../../deploy-install/mcp-authorization-server/concepts-mcp-auth-server.md).
 
 ## Applicable deployment type
 
-This method is for [MCP Authorization Server](../../../../ai-guide/mcp/authorization-server/overview.md) deployments. It identifies MCP clients that connect to MCP servers protected by Aembit’s MCP Authorization Server.
+This method is for [MCP Authorization Server](../../../deploy-install/mcp-authorization-server/overview.md) deployments. It identifies MCP clients that connect to MCP servers protected by Aembit’s MCP Authorization Server.
 
 > **Authentication scope**
 >

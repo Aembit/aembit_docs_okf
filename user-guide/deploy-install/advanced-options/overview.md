@@ -5,7 +5,7 @@ description: "Advanced deployment options for Aembit deployments"
 resource: https://docs.aembit.io/user-guide/deploy-install/advanced-options/
 interface: web-ui
 tags: ["advanced-option", "deploy-install"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-16T07:24:16-07:00
 ---
 
 # Advanced deployment options
@@ -17,6 +17,7 @@ The following pages provide information about advanced deployment options:
 * [Aembit Edge Prometheus-Compatible Metrics](aembit-edge-prometheus-compatible-metrics.md)
 * [Changing Agent Log Levels](changing-agent-log-levels.md)
 * [Trusting Private CAs](trusting-private-cas.md)
+* [Running Edge Components behind TLS-inspecting proxies](running-behind-secure-web-gateways.md)
 
 ### TLS Decrypt
 

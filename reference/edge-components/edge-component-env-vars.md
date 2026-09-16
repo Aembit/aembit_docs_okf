@@ -4,7 +4,7 @@ title: "Edge Component environment variables reference"
 description: "Reference for environment variables of Edge Components categorized by deployment type"
 resource: https://docs.aembit.io/reference/edge-components/edge-component-env-vars/
 tags: ["edge-component"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-16T07:24:16-07:00
 ---
 
 # Edge Component environment variables reference
@@ -18,6 +18,8 @@ The following sections list and describe the environment variables available for
 * [Agent Injector](#agent-injector-environment-variables)
 
 * [Aembit CLI](#aembit-cli-environment-variables)
+
+To see how the proxy, trust, and keep-alive variables fit together on a network fronted by a Secure Web Gateway, see [Running Edge Components behind TLS-inspecting proxies](../../user-guide/deploy-install/advanced-options/running-behind-secure-web-gateways.md).
 
 ## Agent Controller environment variables
 
@@ -87,9 +89,9 @@ OS-All
 
 When `true`, enables Kerberos-based attestation.
 
-**For Linux:** You must set `KRB5_KTNAME` with the Agent Controller keytab path. If you have Kerberos installed, `KRB5_KTNAME` defaults to `/etc/krb5.keytab`.
+**For Linux:** Set `KRB5_KTNAME` to the Agent Controller keytab path. When you don’t set it, Kerberos uses `/etc/krb5.keytab`.
 
-**For Windows:** Agent Controller inherits Kerberos information from the user it runs as.
+**For Windows:** Agent Controller uses the credentials of the account the service runs as, `LocalService` by default.
 
 *Example*:\
 `true`
@@ -204,7 +206,7 @@ Aembit guarantees the following patterns match:
 Other patterns may cause unexpected behavior. For more information or help, contact [Aembit Support](../../support-overview.md).
 
 *Example*:\
-`169.254.169.254,fd00:ec2::254,metadata.google.internal`
+`169.254.169.254,metadata.google.internal`
 
 ***
 
@@ -214,7 +216,7 @@ Default - not set
 
 OS-Windows
 
-When set, this runs the Agent Controller as a different user which is useful for High Availability deployments. The name you provide must be the fully qualified sAMAccount name.
+Runs the Agent Controller service as the named account instead of `LocalService`. Use it for high availability deployments that share a Group Managed Service Account (gMSA) across Agent Controller hosts. Provide the account in Down-Level Logon Name format, `<NetBIOS domain name>\<sAMAccountName>$`. The installer accepts a built-in account or a gMSA. It can’t run the service as a domain user that requires a password.
 
 *Example*:\
 `myDomain\MyServiceAccount$`
@@ -281,10 +283,23 @@ Default - not set
 
 OS-All
 
-The location (scheme, host, and port) of the Agent Controller that the Agent Proxy should use.
+The location (scheme, host, and port) of the Agent Controller that the Agent Proxy should use. With Kerberos attestation enabled, the host must be the fully qualified domain name (FQDN) carried by the Agent Controller’s Service Principal Name (SPN).
 
 *Example*:\
 `http://agentcontroller.local:5000`
+
+***
+
+### `AEMBIT_AGENT_PROXY_KERBEROS_PRINCIPAL`
+
+Default - not set
+
+OS-Linux
+
+The Kerberos principal Agent Proxy authenticates as when `AEMBIT_KERBEROS_ATTESTATION_ENABLED` is `true`. Agent Proxy reads the principal’s key from the keytab named by `KRB5_CLIENT_KTNAME` or `KRB5_KTNAME`. The `aembit_agent_proxy` Linux user must be able to read that keytab. The default, `/etc/krb5.keytab`, is root-only on most hosts, so either name a keytab you’ve made readable or set `AEMBIT_PRIVILEGED_KEYTAB=true` instead of this variable. When `AEMBIT_PRIVILEGED_KEYTAB` is `true`, the installer sets this variable from the host keytab and you don’t need to.
+
+*Example*:\
+`webapp01$@EXAMPLE.COM`
 
 ***
 
@@ -384,9 +399,13 @@ Specifies the port the Agent Proxy uses to manage HTTP traffic directed to it vi
 
 Default - not set
 
-OS-Linux
+OS-All
 
-Enable Kerberos-based attestation. This value isn’t set by default. To enable it, set this value to true.
+When `true`, enables Kerberos-based attestation through the [Kerberos Trust Provider](../../user-guide/access-policies/trust-providers/kerberos-trust-provider.md).
+
+**For Linux:** Also set `AEMBIT_PRIVILEGED_KEYTAB` or `AEMBIT_AGENT_PROXY_KERBEROS_PRINCIPAL`.
+
+**For Windows:** You don’t need any other variable. Agent Proxy authenticates as the host’s computer account.
 
 *Example*:\
 `true`
@@ -466,7 +485,9 @@ Default - `false`
 
 OS-Linux
 
-Set the configuration flag to enable the Agent Proxy to access a Kerberos principal located in a keytab file with root-only read permissions. Mandatory if `AEMBIT_KERBEROS_ATTESTATION_ENABLED` is enabled.
+When `true`, lets Agent Proxy authenticate as the computer account principal in `/etc/krb5.keytab` while that file keeps root-only read permissions. The installer grants the Agent Proxy read access through `sudo` and records the principal it finds.
+
+When `AEMBIT_KERBEROS_ATTESTATION_ENABLED` is `true` on Linux, set either this variable or `AEMBIT_AGENT_PROXY_KERBEROS_PRINCIPAL`. Don’t combine this variable with `KRB5_KTNAME` or `KRB5_CLIENT_KTNAME`; it reads `/etc/krb5.keytab` only. Windows ignores this variable.
 
 *Example*:\
 `true`
@@ -520,7 +541,7 @@ OS-All v1.34.5755
 
 Sets how often, in seconds, Agent Proxy sends gRPC keep-alive messages over its connection to your Aembit Tenant. This setting is off by default. During normal operation, Agent Proxy already exchanges messages over this connection every 60 seconds.
 
-Set this only for unconventional networks, such as a Secure Web Gateway (SWG) that drops or stalls an idle connection without closing it. In those cases, the keep-alive messages let Agent Proxy detect a dead connection and reconnect sooner. Accepts any whole number of seconds greater than 0. Use together with `AEMBIT_TENANT_GRPC_PING_TIMEOUT_SECS`.
+Set this only for unconventional networks, such as a Secure Web Gateway (SWG) that drops or stalls an idle connection without closing it. In those cases, the keep-alive messages let Agent Proxy detect a dead connection and reconnect sooner. Accepts any whole number of seconds greater than 0. Use together with `AEMBIT_TENANT_GRPC_PING_TIMEOUT_SECS`. Set the interval shorter than the gateway’s idle timeout, as described in [Running Edge Components behind TLS-inspecting proxies](../../user-guide/deploy-install/advanced-options/running-behind-secure-web-gateways.md).
 
 Linux honors this variable from Agent Proxy 1.32.4999 on. The Windows installer applies it as an MSI property from Agent Proxy 1.34.5755 on.
 
@@ -552,9 +573,13 @@ Default - not set
 
 OS-All
 
-The path to a PEM-encoded CA certificate or trust bundle that the Agent Proxy trusts when establishing its TLS connection to the Aembit Cloud.
+The path to a file holding a single PEM-encoded CA certificate that the Agent Proxy trusts when establishing its TLS connection to the Aembit Cloud.
 
 Set this when the Agent Proxy’s connection to the Aembit Cloud presents a certificate signed by a private or internal certificate authority. This can happen when an inspecting proxy terminates TLS on the Agent Proxy’s outbound traffic. Without the issuing CA in its trust store, the Agent Proxy rejects the connection with an `invalid peer certificate: UnknownIssuer` error. When this variable isn’t set, the Agent Proxy uses its default system trust store.
+
+Agent Proxy reads only the first certificate in the file. Point this variable at a file holding the inspecting proxy’s root CA certificate alone.
+
+For the full configuration of an Edge Component behind an inspecting proxy, see [Running Edge Components behind TLS-inspecting proxies](../../user-guide/deploy-install/advanced-options/running-behind-secure-web-gateways.md).
 
 *Example*:\
 `/etc/aembit/cloud-ca.pem`, `C:\aembit\cloud-ca.pem`
@@ -582,7 +607,7 @@ Default - not set
 
 OS-All v1.31.4670
 
-Specifies an upstream HTTP proxy for Agent Proxy outbound HTTP connections. When set, Agent Proxy routes outbound HTTP traffic through the specified proxy. Both `HTTP_PROXY` and `http_proxy` are honored on Linux via `reqwest`’s system-proxy support.
+Specifies an upstream HTTP proxy for Agent Proxy outbound HTTP connections. When set, Agent Proxy routes outbound HTTP traffic through the specified proxy. Both `HTTP_PROXY` and `http_proxy` are honored on every platform.
 
 *Example*:\
 `http://proxy.example.com:8080`
@@ -595,7 +620,7 @@ Default - not set
 
 OS-All v1.31.4670
 
-Specifies an upstream HTTPS proxy for Agent Proxy outbound HTTPS connections. When set, Agent Proxy routes outbound HTTPS traffic through the specified proxy. Both `HTTPS_PROXY` and `https_proxy` are honored on Linux via `reqwest`’s system-proxy support.
+Specifies an upstream HTTPS proxy for Agent Proxy outbound HTTPS connections. When set, Agent Proxy routes outbound HTTPS traffic through the specified proxy. Both `HTTPS_PROXY` and `https_proxy` are honored on every platform.
 
 Agent Proxy supports only the `http` scheme for the proxy URL. For example, `HTTPS_PROXY=https://proxy.example.com:8080` is not valid.
 
@@ -638,6 +663,32 @@ When set, this variable is always available for use in [dynamic claims](../../us
 
 ***
 
+### `KRB5_CLIENT_KTNAME`
+
+Default - not set
+
+OS-Linux
+
+The keytab Agent Proxy reads for its Kerberos principal. Takes precedence over `KRB5_KTNAME`. When you set neither, Agent Proxy reads `/etc/krb5.keytab`. Don’t set it together with `AEMBIT_PRIVILEGED_KEYTAB=true`.
+
+*Example*:\
+`/etc/aembit/agent-proxy.keytab`
+
+***
+
+### `KRB5_KTNAME`
+
+Default - `/etc/krb5.keytab`
+
+OS-Linux
+
+The keytab Agent Proxy reads for its Kerberos principal when `KRB5_CLIENT_KTNAME` isn’t set. The `aembit_agent_proxy` Linux user must be able to read it; the default is root-only on most hosts. Don’t set it together with `AEMBIT_PRIVILEGED_KEYTAB=true`.
+
+*Example*:\
+`/etc/aembit/agent-proxy.keytab`
+
+***
+
 ### `KUBERNETES_PROVIDER_ID`
 
 Default - not set
@@ -666,16 +717,15 @@ Default - not set
 
 OS-All v1.31.4670
 
-A comma-separated list of hosts or domains that should bypass the upstream proxy. Use this to exclude the Agent Controller, cloud metadata endpoints, and other local services from proxy routing. Both `NO_PROXY` and `no_proxy` are honored on Linux via `reqwest`’s system-proxy support.
+A comma-separated list of hosts or domains that should bypass the upstream proxy. Use this to exclude the Agent Controller, cloud metadata endpoints, and other local services from proxy routing. Both `NO_PROXY` and `no_proxy` are honored on every platform.
 
-The `NO_PROXY` environment variable must contain all the following entries so that Agent Proxy routes its traffic correctly. Aembit uses Instance Metadata Service (IMDS) addresses to attest workloads on AWS, Azure, and GCP.
+Include the following entries so that Agent Proxy reaches the Instance Metadata Service (IMDS) endpoints it uses to attest workloads on AWS, Azure, and GCP.
 
-| Entry                      | Purpose                               |
-| -------------------------- | ------------------------------------- |
-| `169.254.169.254`          | AWS, Azure, and GCP instance metadata |
-| `fd00:ec2::254`            | AWS instance metadata via IPv6        |
-| `metadata.google.internal` | GCP instance metadata                 |
-| `fd20:ce::254`             | GCP instance metadata via IPv6        |
+| Entry                      | Purpose                                                           |
+| -------------------------- | ----------------------------------------------------------------- |
+| `169.254.169.254`          | AWS, Azure, and GCP instance metadata                             |
+| `169.254.170.2`            | AWS Elastic Container Service (ECS) task metadata and credentials |
+| `metadata.google.internal` | GCP instance metadata                                             |
 
 You may need to include additional hosts, depending on your deployment.
 
@@ -689,7 +739,7 @@ Aembit guarantees the following patterns match:
 Other patterns may cause unexpected behavior. For more information or help, contact [Aembit Support](../../support-overview.md).
 
 *Example*:\
-`aembit.io,169.254.169.254,fd00:ec2::254,metadata.google.internal`
+`aembit.io,169.254.169.254,metadata.google.internal`
 
 ## Agent Injector environment variables
 

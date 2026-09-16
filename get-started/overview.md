@@ -1,16 +1,16 @@
 ---
 type: reference
-title: "What is Aembit?"
+title: "What's Aembit?"
 description: "An overview of Aembit, its core principles, and key capabilities"
 resource: https://docs.aembit.io/get-started/
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-15T18:18:13-07:00
 ---
 
-# What is Aembit?
+# What's Aembit?
 
 Aembit is a cloud-native Identity and Access Management (IAM) platform: **IAM for Agentic AI & Workloads**. The name comes from ‘ambit’ (meaning boundary or scope). Where traditional *User IAM* governs how people sign in to applications, Aembit governs how **non-human identities** authenticate and reach the resources they depend on. It does this across cloud, on-premises, and SaaS environments.
 
-These non-human identities come in two forms, and Aembit secures both with one identity-first model. A workload is any application or program that uses computing resources to do work: a CI/CD job, a microservice, a database client, or a serverless function. An AI agent authenticates, requests credentials, and reaches resources the same way, whether it acts on a person’s behalf (a user-driven assistant like Claude Desktop) or runs on its own (an autonomous service). The difference is the workload type, not the security model.
+These non-human identities come in two forms, and Aembit secures both with one identity-first model. A workload is any application or program that uses computing resources to do work: a CI/CD job, a microservice, a database client, or a serverless function. An AI agent authenticates, requests credentials, and reaches resources the same way whether it acts on a person’s behalf or runs on its own. The first is a user-driven assistant like Claude Desktop, and the second an autonomous service. The difference is the workload type, not the security model.
 
 Both face the same core problem. Traditional approaches to workload authentication rely on static credentials embedded in code, configuration files, or environment variables. These credentials must be manually created, rotated, and protected. This creates significant security and operational challenges.
 
@@ -18,7 +18,7 @@ Aembit takes a fundamentally different approach by shifting from managing static
 
 ![Without Aembit, a workload pulls a long-lived secret from a store; with Aembit, it receives a just-in-time credential after verifying its identity](https://docs.aembit.io/d2/docs/get-started/index-0.svg)
 
-AI agents raise the stakes for this model. A user-driven agent acts with its operator’s full rights, which breaks attribution (you can’t tell whether the user or the agent took an action). The MCP servers that connect agents to your systems also hold long-lived credentials. Aembit closes this gap by giving the agent a verifiable identity that Access Policies evaluate alongside the user’s. See [blended identity](../ai-guide/blended-identity.md) and [securing AI agent access](use-cases/ai-agents.md) for the full story.
+AI agents raise the stakes for this model. A user-driven agent acts with its operator’s full rights, which breaks attribution (you can’t tell whether the user or the agent took an action). The MCP servers that connect agents to your systems also hold long-lived credentials. Aembit closes this gap by giving the agent a verifiable identity that Access Policies evaluate alongside the user’s. See [blended identity](../user-guide/access-policies/blended-identity.md) and [securing AI agent access](use-cases/ai-agents.md) for the full story.
 
 ![](https://docs.aembit.io/aembit-icons/lightbulb-light.svg)
 
@@ -32,7 +32,7 @@ Whether you’re securing AI agents or traditional workloads, the model is the s
 
 Claude Desktop, MCP clients, and user-driven assistants.
 
-[Securing AI agent access](use-cases/ai-agents.md)[Blended identity](../ai-guide/blended-identity.md)[AI Guide](../ai-guide/overview.md)
+[Securing AI agent access](use-cases/ai-agents.md)[Blended identity](../user-guide/access-policies/blended-identity.md)[MCP Identity Gateway](../user-guide/deploy-install/mcp-identity-gateway/overview.md)
 
 ### Workloads
 
@@ -196,4 +196,4 @@ The tables in the following sections detail Aembit’s primary capabilities, alo
 * [Aembit User Guide](../user-guide/overview.md)
 * [Use cases](use-cases/overview.md)
 * [Security posture](security-posture/overview.md)
-* [AI Guide](../ai-guide/overview.md)
+* [MCP Identity Gateway](../user-guide/deploy-install/mcp-identity-gateway/overview.md)

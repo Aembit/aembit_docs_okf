@@ -16,9 +16,8 @@ This is an Open Knowledge Format (OKF) bundle of the Aembit documentation, struc
 * [Aembit Docs](overview.md) - Attest. Authenticate. Accelerate.
 * [AI Assistant Integration Resources](llm-resources.md) - Machine-readable documentation resources for AI coding assistants and LLMs integrating with Aembit.
 * [Getting support for Aembit](support-overview.md) - Overview of Aembit's support process
-* [AI Guide](ai-guide/index.md) - Aembit's AI and MCP ecosystem documentation
 * [Developer Guide](dev-guide/index.md) - Every path for integrating with Aembit. Choose how your workload gets credentials at runtime and how you manage configuration.
-* [What is Aembit?](get-started/index.md) - An overview of Aembit, its core principles, and key capabilities
+* [What's Aembit?](get-started/index.md) - An overview of Aembit, its core principles, and key capabilities
 * [Glossary](glossary/index.md)
 * [Aembit reference documentation](reference/index.md) - Reference documentation for Aembit features and functionality
 * [Aembit User Guide Overview](user-guide/index.md) - How to set up and use Aembit

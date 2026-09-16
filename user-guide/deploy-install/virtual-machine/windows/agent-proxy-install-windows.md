@@ -5,7 +5,7 @@ description: "How to set up Aembit Agent Proxy on Windows Server"
 resource: https://docs.aembit.io/user-guide/deploy-install/virtual-machine/windows/agent-proxy-install-windows/
 interface: web-ui
 tags: ["windows", "virtual-machine", "deploy-install"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-15T20:39:46-07:00
 ---
 
 # How to set up Agent Proxy on Windows Server
@@ -46,6 +46,10 @@ To install Agent Proxy on Windows Server, follow these steps:
    ```powershell
    msiexec /i aembit_agent_proxy_windows_amd64_<version>.msi /l*v install.log <ENV_VAR_NAME=myvalue>
    ```
+
+   > **Kerberos attestation**
+   >
+   > To attest this VM with the [Kerberos Trust Provider](../../../access-policies/trust-providers/kerberos-trust-provider.md), join the host to the Active Directory domain first. Then add `AEMBIT_KERBEROS_ATTESTATION_ENABLED=true` to the install command. Agent Proxy authenticates as the host’s computer account. The host part of `AEMBIT_AGENT_CONTROLLER` must match the hostname in the Agent Controller’s Service Principal Name.
 
 3. Configure an explicit proxy on your Windows Server VM. Common methods include Group Policy Objects (GPO), Proxy Auto-Configuration (PAC) files, system-level proxy settings, and many others.
 

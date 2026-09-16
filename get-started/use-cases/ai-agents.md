@@ -4,7 +4,7 @@ title: "Securing AI agent access to your resources"
 description: "How Aembit secures AI agent access to enterprise resources through the Model Context Protocol (MCP)"
 resource: https://docs.aembit.io/get-started/use-cases/ai-agents/
 tags: ["use-case"]
-timestamp: 2026-06-15T10:19:43-07:00
+timestamp: 2026-09-15T18:18:13-07:00
 ---
 
 # Securing AI agent access to your resources
@@ -21,7 +21,7 @@ Both traditional applications and AI agents follow the same path: authenticate w
 
 ### User-driven AI agents
 
-AI assistants like Claude Desktop or Gemini CLI that act on behalf of an authenticated user. These agents have a blended identity: access ties to both the user’s identity (from your IdP) and the agent’s workload identity, so policies can scope permissions based on “who is using which agent to do what.”
+AI assistants like Claude Desktop or Gemini CLI that act on behalf of an authenticated user. These agents have a blended identity: access ties to both the user’s identity and the agent’s workload identity. Policies can then scope permissions by who is using which agent to do what.
 
 The rest of this page focuses on user-driven agents, the most mature category and the one organizations are deploying today.
 
@@ -29,7 +29,7 @@ The rest of this page focuses on user-driven agents, the most mature category an
 
 Organizations want to deploy AI agents, but security and compliance requirements block progress. Without centralized identity controls, teams wait on security reviews, agents lack access to internal systems, and long-lived API keys distributed as workarounds create unmonitored risk.
 
-Aembit’s Model Context Protocol (MCP) integrations bring identity-based access control to AI agents through [blended identity](../../ai-guide/blended-identity.md), combining the user’s identity with the agent’s workload identity in every access decision. Instead of distributing static credentials to each agent, Aembit authenticates the user behind the agent and identifies which agent they’re using. It then issues short-lived tokens based on your access policies.
+Aembit’s Model Context Protocol (MCP) integrations bring identity-based access control to AI agents through [blended identity](../../user-guide/access-policies/blended-identity.md), combining the user’s identity with the agent’s workload identity in every access decision. Instead of distributing static credentials to each agent, Aembit authenticates the user behind the agent and identifies which agent they’re using. It then issues short-lived tokens based on your access policies.
 
 Static API keys can’t scope per-agent or revoke access without rotation. Virtual Private Network (VPN)-based access doesn’t distinguish agents from users. AI vendor built-in auth is provider-specific and not unified across systems. Aembit treats AI agents as workload identities with the same attestation, policy, and audit capabilities used for any other workload.
 
@@ -54,7 +54,7 @@ With Aembit, this flow looks different:
 
 ![Claude Desktop MCP authorization flow showing user authentication through identity provider, policy evaluation in Aembit, and token-based access to enterprise resources](https://docs.aembit.io/d2/docs/get-started/use-cases/ai-agents-1.svg)
 
-When a user opens Claude Desktop and connects to your MCP server, the [MCP Authorization Server](../../ai-guide/mcp/authorization-server/overview.md) intercepts the connection. Aembit redirects the user to your identity provider to authenticate. Once authenticated, Aembit evaluates your [Access Policies](../concepts/access-policies.md) to determine if this user, at this time, from this location, should have access.
+When a user opens Claude Desktop and connects to your MCP server, the [MCP Authorization Server](../../user-guide/deploy-install/mcp-authorization-server/overview.md) intercepts the connection. Aembit redirects the user to your identity provider to authenticate. Once authenticated, Aembit evaluates your [Access Policies](../concepts/access-policies.md) to determine if this user, at this time, from this location, should have access.
 
 If approved, Aembit issues a short-lived token that the MCP server validates. The user’s Claude Desktop session can now access Jira and Confluence through MCP. The actual API credentials never leave Aembit’s control.
 
@@ -76,7 +76,7 @@ Aembit offers two components for securing MCP traffic:
 
 **MCP Identity Gateway** Proxies all MCP traffic through Aembit, so the AI agent never holds any credential, not even the short-lived token. Every MCP request flows through the Identity Gateway, which validates the user’s identity and injects credentials on the fly. Extends blended identity across two policy hops, enabling per-user credential isolation for each downstream MCP server.
 
-The Identity Gateway model provides the strongest security (zero credential exposure to the agent and per-user credential scoping) but introduces latency and a single point of failure. The authorization server model is simpler and sufficient for most use cases, as the short-lived tokens expire fast and scope to specific resources. Both models implement [blended identity](../../ai-guide/blended-identity.md), combining user and workload identity in every access decision.
+The Identity Gateway model provides the strongest security (zero credential exposure to the agent and per-user credential scoping) but introduces latency and a single point of failure. The authorization server model is simpler and sufficient for most use cases, as the short-lived tokens expire fast and scope to specific resources. Both models implement [blended identity](../../user-guide/access-policies/blended-identity.md), combining user and workload identity in every access decision.
 
 ### Why this architecture matters for AI agents
 
@@ -122,12 +122,12 @@ Aembit’s MCP Authorization Server supports OAuth 2.1 with dynamic client regis
 
 ### Start with the MCP Authorization Server
 
-* [MCP Authorization Server overview](../../ai-guide/mcp/authorization-server/overview.md) covers how OAuth 2.1 authorization works for MCP clients
-* [Set up the MCP Authorization Server](../../ai-guide/mcp/authorization-server/setup-mcp-auth-server.md) walks through configuring Aembit as your MCP authorization provider
+* [MCP Authorization Server overview](../../user-guide/deploy-install/mcp-authorization-server/overview.md) covers how OAuth 2.1 authorization works for MCP clients
+* [Set up the MCP Authorization Server](../../user-guide/access-policies/mcp-authorization-server/setup-mcp-auth-server.md) walks through configuring Aembit as your MCP authorization provider
 
 ### Understand blended identity
 
-* [Blended identity](../../ai-guide/blended-identity.md) explains how Aembit combines user and workload identity for AI agent access control
+* [Blended identity](../../user-guide/access-policies/blended-identity.md) explains how Aembit combines user and workload identity for AI agent access control
 
 ### Configure identity and policies
 
