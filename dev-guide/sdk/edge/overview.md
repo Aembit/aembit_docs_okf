@@ -5,7 +5,7 @@ description: "Language libraries that let your application authenticate workload
 resource: https://docs.aembit.io/dev-guide/sdk/edge/
 interface: sdk
 tags: ["edge", "sdk"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-16T18:21:40-07:00
 ---
 
 # Aembit Edge SDKs
@@ -28,7 +28,7 @@ An SDK covers the same three steps you’d otherwise implement yourself against 
 
 * **Workload attestation.** The SDK collects identity evidence from the environment it runs in, such as a cloud instance identity document or an OIDC token, and presents that evidence to Aembit. Aembit verifies it against the Trust Provider you configured.
 * **Token lifecycle.** The SDK caches the resulting access token in memory and refreshes it before it expires, so repeated calls don’t re-authenticate.
-* **Credential retrieval.** The SDK requests a credential for the service your application needs to reach. Aembit returns one only if an Access Policy permits that access.
+* **Credential retrieval.** The SDK requests a credential for the service your application needs to reach. Aembit returns one only if an Access Policy permits that access. When the Access Policy holds more than one AWS STS Federation Credential Provider, pass an Access Key ID selector as connection metadata to [select one](multiple-credential-providers.md).
 
 The SDKs use the same Aembit primitives as every other access path, so the console-side configuration is familiar. You configure a Trust Provider to verify the workload’s identity and a Credential Provider to supply the credential. An Access Policy then authorizes a specific Client Workload to reach a specific Server Workload, using those providers.
 

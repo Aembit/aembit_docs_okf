@@ -5,7 +5,7 @@ description: "How to add and use the AWS Security Token Service (STS) Federation
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/aws-security-token-service-federation/
 interface: web-ui
 tags: ["credential-provider", "access-policy"]
-timestamp: 2026-06-30T13:30:29-04:00
+timestamp: 2026-09-16T18:21:40-07:00
 ---
 
 # Configure an AWS STS Federation Credential Provider
@@ -129,7 +129,7 @@ To configure multiple AWS STS Credential Providers within a single Access Policy
 
 ### Application configuration
 
-Configure your application to use the appropriate Access Key ID selector for each AWS service request. Agent Proxy extracts the Access Key ID from the AWS SigV4 Authorization header and routes the request to the matching Credential Provider.
+Configure your application to use the appropriate Access Key ID selector for each AWS service request. Behind Agent Proxy, the application sets the selector as its AWS Access Key ID, and Agent Proxy extracts it from the AWS SigV4 Authorization header. Without Agent Proxy, the Aembit GitHub Action, the Edge SDKs, and the Edge API take the selector as a parameter of the credential request.
 
 #### AWS CLI example
 
@@ -152,6 +152,38 @@ Change `AWS_ACCESS_KEY_ID` to switch between Credential Providers. For example:
 
 * `AKIADUMMYFORROLEA` → Uses Credential Provider configured for S3 access
 * `AKIADUMMYFORROLEB` → Uses Credential Provider configured for DynamoDB access
+
+#### GitHub Actions example
+
+In a GitHub Actions workflow, set the `aws-access-key-id` input on the `Aembit/get-credentials` step. The input requires version 1.3.0 or later of the action:
+
+```yaml
+      - name: Get AWS credentials from Aembit
+        id: aembit
+        uses: Aembit/get-credentials@v1.3.0
+        with:
+          client-id: '${{ secrets.AEMBIT_CLIENT_ID }}'
+          credential-type: 'AwsStsFederation'
+          server-host: 's3.amazonaws.com'
+          server-port: '443'
+          aws-access-key-id: 'AKIADUMMYFORROLEA'
+```
+
+For the full workflow, including how to pass the outputs to the AWS CLI, see [Retrieve credentials with the Aembit GitHub Action](../../deploy-install/ci-cd/github/github-actions-how-to.md#configure-the-action).
+
+#### Edge SDK example
+
+In application code that uses the Edge SDK, pass the selector as connection metadata on the credential request:
+
+```typescript
+const credential = await client.getCredential({
+  server: { host: "s3.amazonaws.com", port: 443 },
+  credentialType: "AwsStsFederation",
+  connectionMetadata: { accessKeyId: "AKIADUMMYFORROLEA" },
+});
+```
+
+For the Python equivalent and the returned fields, see [Select among multiple Credential Providers](../../../dev-guide/sdk/edge/multiple-credential-providers.md).
 
 ### Verify your configuration
 

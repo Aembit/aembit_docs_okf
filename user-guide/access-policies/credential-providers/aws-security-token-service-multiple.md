@@ -4,14 +4,14 @@ title: "Using Multiple AWS STS Credential Providers in a Single Access Policy"
 description: "How to add and use multiple AWS Security Token Service (STS) Credential Providers to an Access Policy"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/aws-security-token-service-multiple/
 tags: ["credential-provider", "access-policy"]
-timestamp: 2026-03-12T14:33:26-07:00
+timestamp: 2026-09-16T18:21:40-07:00
 ---
 
 # Using Multiple AWS STS Credential Providers in a Single Access Policy
 
-This page explains how Aembit enables the use of multiple [AWS Security Token Service (STS) Credential Providers](aws-security-token-service-federation.md) within a single Access Policy, allowing flexible and scalable access to AWS resources.
+This page explains how Aembit routes requests to multiple [AWS Security Token Service (STS) Credential Providers](aws-security-token-service-federation.md) within a single Access Policy.
 
-Unlike when using [multiple JWT-based Credential Providers](multiple-credential-providers.md) that use username or HTTP header mapping, AWS STS Credential Providers use **Access Key ID selectors** for Credential Provider matching. Each AWS STS Credential Provider that you configure in an Access Policy must have a unique **Access Key ID** that your application uses as a placeholder in requests.
+Unlike when using [multiple JWT-based Credential Providers](multiple-credential-providers.md) that use username or HTTP header mapping, AWS STS Credential Providers use **Access Key ID selectors** for Credential Provider matching. Each AWS STS Credential Provider that you configure in an Access Policy must have a unique **Access Key ID** that your application uses as a placeholder in requests. How that selector reaches Aembit depends on the integration path. Agent Proxy reads it from the intercepted request. The Aembit GitHub Action, the Edge SDKs, and the Edge API send it as a parameter of the credential request.
 
 > **Pre-signed URLs**
 >
@@ -19,14 +19,16 @@ Unlike when using [multiple JWT-based Credential Providers](multiple-credential-
 
 In complex AWS environments, applications often need to assume different IAM roles to access AWS services securely. Traditionally, this required creating separate access policies for each role, increasing operational overhead.
 
-Aembit supports configuring multiple AWS STS Credential Providers within a single Access Policy. This enables a single Client Workload identity to seamlessly access multiple AWS resources, each with its own IAM role, by selecting the appropriate Credential Provider based on the AWS Access Key ID.
+You can add multiple AWS STS Credential Providers to one Access Policy. This enables a single Client Workload identity to seamlessly access multiple AWS resources, each with its own IAM role, by selecting the appropriate Credential Provider based on the AWS Access Key ID.
 
 > **Edge Component minimum versions**
 >
-> Using multiple AWS STS Credential Providers requires the following Aembit Edge Component minimum versions:
+> Using multiple AWS STS Credential Providers through Agent Proxy requires the following Aembit Edge Component minimum versions:
 >
 > * Agent Proxy 1.27.3865
 > * Agent Controller 1.27.2906
+>
+> The GitHub Action, Edge SDK, and Edge API paths don’t use these components.
 
 ## Benefits
 
@@ -38,11 +40,28 @@ Aembit supports configuring multiple AWS STS Credential Providers within a singl
 
 After you [configure multiple AWS STS Credential Providers](aws-security-token-service-federation.md#configure-multiple-aws-sts-credential-providers) in an Access Policy (each with a unique Access Key ID selector), Aembit handles requests as follows:
 
-1. **Request interception** - When an application makes an AWS request, the Agent Proxy intercepts it and extracts the Access Key ID from the [AWS SigV4 Authorization header](aws-sigv4.md).
+1. **Selector delivery** - The Client Workload’s integration path delivers the Access Key ID selector to Aembit Cloud as part of the credential request. See [Selector paths](#selector-paths) for where each path takes the selector from.
 
-2. **Credential Provider matching** - The Agent Proxy sends the Access Key ID to Aembit Cloud, which matches it to the corresponding Credential Provider configured in the Access Policy.
+2. **Credential Provider matching** - Aembit Cloud matches the Access Key ID to the corresponding Credential Provider configured in the Access Policy.
 
-3. **Credential issuance and injection** - Aembit Cloud assumes the IAM role via the selected Credential Provider and returns temporary AWS credentials. The Agent Proxy then injects or uses these credentials to fulfill the application’s request.
+3. **Credential issuance** - Aembit Cloud assumes the IAM role via the selected Credential Provider and returns temporary AWS credentials. Agent Proxy injects them into the application’s request. The GitHub Action and the Edge SDKs hand them to your workflow or code directly.
+
+### Selector paths
+
+| Integration path     | Where the selector comes from                                      |
+| -------------------- | ------------------------------------------------------------------ |
+| Agent Proxy          | The Access Key ID in the AWS SigV4 Authorization header            |
+| Aembit GitHub Action | The `aws-access-key-id` input on the `Aembit/get-credentials` step |
+| Edge API             | The `connectionMetadata.accessKeyId` field in the request body     |
+| Edge SDK             | The `accessKeyId` connection metadata on the credential request    |
+
+Behind Agent Proxy, your application sets the selector as its AWS Access Key ID and needs no other change. Agent Proxy extracts it from the [AWS SigV4 Authorization header](aws-sigv4.md). Without Agent Proxy, your workflow or code names the selector when it requests the credential. For each path, see:
+
+* [Retrieve credentials with the Aembit GitHub Action](../../deploy-install/ci-cd/github/github-actions-how-to.md#configure-the-action)
+* [Edge API: Connection metadata](../../../dev-guide/api/edge/endpoints/credentials.md#connection-metadata)
+* [Edge SDK: Select among multiple Credential Providers](../../../dev-guide/sdk/edge/multiple-credential-providers.md)
+
+The same Access Policy serves every path, so a workload behind Agent Proxy and a GitHub workflow can select the same Credential Providers with the same selector values.
 
 ### Example scenario
 
@@ -60,7 +79,7 @@ Your application uses the appropriate placeholder Access Key ID to select the de
 
 ### High-level workflow
 
-The following diagram shows how the Agent Proxy routes requests through Aembit Cloud to select the appropriate Credential Provider:
+The following diagram shows the Agent Proxy path. Agent Proxy extracts the selector from the application’s request, and Aembit Cloud selects the matching Credential Provider:
 
 ![Sequence diagram showing how the Agent Proxy routes AWS requests through Aembit Cloud to select the appropriate Credential Provider based on Access Key ID](https://docs.aembit.io/d2/docs/user-guide/access-policies/credential-providers/aws-security-token-service-multiple-0.svg)
 
@@ -170,8 +189,10 @@ Notice the differences between the two Credential Providers:
 
 The following rules apply when handling requests with multiple AWS STS Credential Providers:
 
-* If the Access Key ID in a request doesn’t match any configured Credential Provider, the request fails with a `403 Forbidden` error.
-* If Aembit can’t extract the Access Key ID (for example, a malformed request), credentials aren’t injected and the request fails.
+* Behind Agent Proxy, an Access Key ID that matches no configured Credential Provider fails the request with a `403 Forbidden` error.
+* On the Edge API path, an Access Key ID that matches no configured Credential Provider returns `404 Not Found` with `credentialType` set to `Unknown`.
+* On the Edge API path, a request that sends no Access Key ID at all returns `400 Bad Request` when the Access Policy holds more than one Credential Provider.
+* If Agent Proxy can’t extract the Access Key ID (for example, a malformed request), credentials aren’t injected and the request fails.
 * Access Key ID selector values must use uppercase characters only. Lowercase selectors won’t match.
 
 ## Related topics

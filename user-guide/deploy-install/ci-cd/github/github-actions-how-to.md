@@ -5,7 +5,7 @@ description: "Configure the Aembit GitHub Action to retrieve different credentia
 resource: https://docs.aembit.io/user-guide/deploy-install/ci-cd/github/github-actions-how-to/
 interface: web-ui
 tags: ["github", "ci-cd", "deploy-install"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-16T18:21:40-07:00
 ---
 
 # How to retrieve credentials with the Aembit GitHub Action
@@ -23,7 +23,7 @@ Before configuring the action, ensure you have an active Access Policy linking t
 
 ## Configure the action
 
-Add the Aembit GitHub Action to your workflow with the appropriate configuration for your credential type:
+Add the Aembit GitHub Action to your workflow with the appropriate configuration for your credential type. The `credential-type` input names the Credential Provider type in your Access Policy and decides which step outputs the action sets.
 
 Optionally, add the `resource-set-id` input if your Trust Provider lives in a custom [Resource Set](../../../administration/resource-sets/overview.md).
 
@@ -44,6 +44,7 @@ Optionally, add the `resource-set-id` input if your Trust Provider lives in a cu
           uses: Aembit/get-credentials@v1
           with:
             client-id: '${{ secrets.AEMBIT_CLIENT_ID }}'
+            credential-type: 'ApiKey'
             server-host: 'api.example.com'
             server-port: '443'
 
@@ -75,6 +76,7 @@ Optionally, add the `resource-set-id` input if your Trust Provider lives in a cu
           uses: Aembit/get-credentials@v1
           with:
             client-id: '${{ secrets.AEMBIT_CLIENT_ID }}'
+            credential-type: 'OAuthToken'
             server-host: 'oauth.example.com'
             server-port: '443'
 
@@ -106,6 +108,7 @@ Optionally, add the `resource-set-id` input if your Trust Provider lives in a cu
           uses: Aembit/get-credentials@v1
           with:
             client-id: '${{ secrets.AEMBIT_CLIENT_ID }}'
+            credential-type: 'UsernamePassword'
             server-host: 'service.example.com'
             server-port: '443'
 
@@ -120,6 +123,61 @@ Optionally, add the `resource-set-id` input if your Trust Provider lives in a cu
   ```
 
   The action provides username/password credentials as the `username` and `password` [step outputs](github-actions-reference.md).
+
+* AWS STS Federation
+
+  ```yaml
+  permissions:
+    id-token: write
+    contents: read
+
+
+  jobs:
+    call-aws:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Get AWS credentials from Aembit
+          id: aembit
+          uses: Aembit/get-credentials@v1
+          with:
+            client-id: '${{ secrets.AEMBIT_CLIENT_ID }}'
+            credential-type: 'AwsStsFederation'
+            server-host: 's3.amazonaws.com'
+            server-port: '443'
+
+
+        - name: Configure AWS credentials
+          uses: aws-actions/configure-aws-credentials@v4
+          with:
+            aws-access-key-id: ${{ steps.aembit.outputs.aws-access-key-id }}
+            aws-secret-access-key: ${{ steps.aembit.outputs.aws-secret-access-key }}
+            aws-session-token: ${{ steps.aembit.outputs.aws-session-token }}
+            aws-region: us-east-1
+
+
+        - name: Use the credentials
+          run: aws sts get-caller-identity
+  ```
+
+  The action provides temporary AWS credentials as the `aws-access-key-id`, `aws-secret-access-key`, and `aws-session-token` [step outputs](github-actions-reference.md). Pass them to `aws-actions/configure-aws-credentials` so that later steps in the job use them through the AWS CLI and AWS SDKs.
+
+  #### Select among multiple AWS STS Credential Providers
+
+  An Access Policy can hold multiple AWS STS Federation Credential Providers, each with its own **Access Key ID selector**. For how Aembit uses the selector, see [Using multiple AWS STS Credential Providers](../../../access-policies/credential-providers/aws-security-token-service-multiple.md). To choose one, add the `aws-access-key-id` input with the selector of the Credential Provider you want. The input requires version 1.3.0 or later of the action:
+
+  ```yaml
+        - name: Get AWS credentials from Aembit
+          id: aembit
+          uses: Aembit/get-credentials@v1.3.0
+          with:
+            client-id: '${{ secrets.AEMBIT_CLIENT_ID }}'
+            credential-type: 'AwsStsFederation'
+            server-host: 's3.amazonaws.com'
+            server-port: '443'
+            aws-access-key-id: 'AKIADUMMYFORROLEA'
+  ```
+
+  Selector values use uppercase characters only. Omit the input when the Access Policy has a single AWS STS Credential Provider. A selector that matches no Credential Provider in the Access Policy fails the step. Omitting the input when the Access Policy holds more than one also fails the step, because Aembit returns no credential rather than choosing for you.
 
 ## Verify it works
 
@@ -201,6 +259,7 @@ jobs:
         with:
           # Client ID from your Trust Provider (store as repository secret)
           client-id: '${{ secrets.AEMBIT_CLIENT_ID }}'
+          credential-type: 'OAuthToken'
           # Server workload details passed from the calling workflow
           server-host: '${{ inputs.server-host }}'
           server-port: '${{ inputs.server-port }}'
@@ -262,7 +321,15 @@ permissions:
 
 **Cause:** Your Trust Provider is in a custom Resource Set, but the action isn’t configured to use it.
 
-**Solution:** Add the `resource-set-id` input — see [Configure the action](#configure-the-action).
+**Solution:** Add the `resource-set-id` input. See [Configure the action](#configure-the-action).
+
+### Wrong AWS role assumed
+
+**Symptom:** The step succeeds, but `aws sts get-caller-identity` reports an IAM role you didn’t expect. Or, the step fails when the Access Policy has more than one AWS STS Credential Provider.
+
+**Cause:** The `aws-access-key-id` input is missing, or its value doesn’t match the **Access Key ID selector** of the Credential Provider you want.
+
+**Solution:** Set `aws-access-key-id` to the selector shown on the Credential Provider, in uppercase, and pin `Aembit/get-credentials@v1.3.0` or later. See [Select among multiple AWS STS Credential Providers](#select-among-multiple-aws-sts-credential-providers).
 
 ### Credential format mismatch
 
@@ -275,6 +342,7 @@ permissions:
 * API Key: `api-key`
 * Username/Password: `username` and `password`
 * OAuth: `token`
+* AWS STS Federation: `aws-access-key-id`, `aws-secret-access-key`, and `aws-session-token`
 
 See the [Action output reference](github-actions-reference.md) for the complete list.
 

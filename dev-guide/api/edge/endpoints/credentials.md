@@ -5,7 +5,7 @@ description: "Overview of Aembit Edge API credentials endpoint and its structure
 resource: https://docs.aembit.io/dev-guide/api/edge/endpoints/credentials/
 interface: api
 tags: ["endpoint", "edge", "api"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-16T18:21:40-07:00
 ---
 
 # Edge API - /edge/v1/credentials
@@ -37,7 +37,8 @@ The following is the base structure of the credentials endpoint, including heade
 ├─Request: ApiCredentialsRequest {}
 │  ├─client: ClientWorkloadDetails {} [Requesting workload identity]
 │  ├─server: ServerWorkloadDetails {} [Target server information]
-│  └─credentialType (enum) [Type of credential requested]
+│  ├─credentialType (enum) [Type of credential requested]
+│  └─connectionMetadata: ConnectionMetadata {} [Optional - selects among multiple Credential Providers]
 └─Response: ApiCredentialsResponse {}
    ├─credentialType (enum) [Type of credential returned]
    ├─expiresAt (string, date-time, nullable) [When credentials expire]
@@ -113,6 +114,33 @@ server: ServerWorkloadDetails {} [Target server information]
 └─port (number) [Target server port number]
 ```
 
+## Connection metadata
+
+The optional `connectionMetadata` field selects a Credential Provider when the matching Access Policy holds [multiple Credential Providers](../../../../user-guide/access-policies/credential-providers/multiple-credential-providers.md). Set the field that matches the Credential Provider type, and leave `connectionMetadata` out when the Access Policy has a single Credential Provider. The HTTP header and HTTP body selectors take a pair of fields: `headerName` with `headerValue`, or `httpBodyFieldPath` with `httpBodyFieldValue`.
+
+```shell
+connectionMetadata: ConnectionMetadata {} [Selector values for Access Policies with multiple Credential Providers]
+├─accessKeyId (string, nullable) [Access Key ID selector of an AWS STS Federation Credential Provider]
+├─accountName (string, nullable) [Snowflake username mapped to a JWT Credential Provider]
+├─headerName (string, nullable) [HTTP header name mapped to a JWT Credential Provider]
+├─headerValue (string, nullable) [HTTP header value mapped to a JWT Credential Provider]
+├─httpBodyFieldPath (string, nullable) [HTTP body field path mapped to a JWT Credential Provider]
+└─httpBodyFieldValue (string, nullable) [HTTP body field value mapped to a JWT Credential Provider]
+```
+
+For example, the following request selects the AWS STS Federation Credential Provider whose Access Key ID selector is `AKIADUMMYFORROLEA`:
+
+```json
+{
+  "client": { "github": { "identityToken": "eyJ..." } },
+  "server": { "host": "s3.amazonaws.com", "port": 443 },
+  "credentialType": "AwsStsFederation",
+  "connectionMetadata": { "accessKeyId": "AKIADUMMYFORROLEA" }
+}
+```
+
+Access Key ID selector values use uppercase characters only. A selector that matches no Credential Provider in the Access Policy, or that matches more than one, returns `404 Not Found` with `credentialType` set to `Unknown`. A request that omits `connectionMetadata` altogether returns `400 Bad Request` when the Access Policy holds more than one Credential Provider. For how Aembit uses each selector, see [Using multiple AWS STS Credential Providers](../../../../user-guide/access-policies/credential-providers/aws-security-token-service-multiple.md) and [Using multiple JWT Credential Providers](../../../../user-guide/access-policies/credential-providers/json-web-token-multiple.md).
+
 ## Credential type specific responses
 
 The `credentialType` field in both the request and response specifies what type of credentials the Client Workload is requesting and what Aembit returns. The `data` field structure varies based on this type:
@@ -142,9 +170,19 @@ credentialType: OAuthToken
    └─token (string) [Bearer token for target service]
 ```
 
+### AWS STS federation credentials
+
+```shell
+credentialType: AwsStsFederation
+└─data: EdgeCredentials {}
+   ├─awsAccessKeyId (string) [AWS access key ID]
+   ├─awsSecretAccessKey (string) [AWS secret access key]
+   └─awsSessionToken (string, nullable) [AWS session token for temporary credentials]
+```
+
 > **About Access Policy mismatches**
 >
-> Aembit Edge API expects specific values for each Access Policy. When any part of a `credentials` request doesn’t match those values, you’ll get the following in the `200 OK` response:
+> Aembit Edge API expects specific values for each Access Policy. When any part of a `credentials` request doesn’t match those values, you’ll get the following response body:
 >
 > ```shell
 > {
@@ -153,7 +191,7 @@ credentialType: OAuthToken
 > }
 > ```
 >
-> This indicates that there may be a typo or other misconfiguration in the request. Review your request and make sure that all the parameters in the request match what Aembit Edge API expects.
+> Check `credentialType` rather than the status code. Aembit returns `404 Not Found` when it matches no Access Policy or Credential Provider, and `200 OK` when the matched Credential Provider returns no credentials. This indicates that there may be a typo or other misconfiguration in the request. Review your request and make sure that all the parameters in the request match what Aembit Edge API expects.
 
 ## Key considerations
 

@@ -1,5 +1,37 @@
 # Aembit Changelog
 
+## 2026-09-16
+
+### GitHub Actions now selects among multiple AWS STS Credential Providers
+
+The Aembit GitHub Action can now choose which AWS Security Token Service (STS) Federation Credential Provider to use when an Access Policy holds more than one.
+
+An Access Policy can hold more than one AWS STS Federation Credential Provider, each with its own Access Key ID selector. Until now, a GitHub Actions workflow needed a self-hosted runner running Aembit Edge to reach more than one IAM role from a single Access Policy. The alternative was a direct call to the Edge API.
+
+**Key capabilities:**
+
+* The `aws-access-key-id` input names the Access Key ID selector of the Credential Provider you want, so a workflow on a GitHub-hosted runner reaches any IAM role in the Access Policy. See [Retrieve credentials in GitHub Actions](user-guide/deploy-install/ci-cd/github/github-actions-how-to.md).
+* The Edge API credentials endpoint carries the same selector as connection metadata, alongside the selectors for multiple JSON Web Token (JWT) Credential Providers. See the [Edge API credentials endpoint](dev-guide/api/edge/endpoints/credentials.md).
+* The Edge SDKs for TypeScript and Python pass the selector as connection metadata on the credential request. See [Select among multiple Credential Providers with the Edge SDK](dev-guide/sdk/edge/multiple-credential-providers.md).
+
+**Minimum version required:**
+
+* Aembit GitHub Action 1.3.0
+* Edge SDK 1.34.0
+
+For how Aembit matches a selector to a Credential Provider, see [Using multiple AWS STS Credential Providers](user-guide/access-policies/credential-providers/aws-security-token-service-multiple.md).
+
+### Aembit Cloud configuration updates
+
+Aembit Cloud corrects configuration workflows across Content Security, Client Workloads, Trust Providers, and authorization event reporting.
+
+Key Updates:
+
+* **Content Security tool lists**: Switching between **Allow** and **Block** in a [Content Security](user-guide/access-policies/content-security/overview.md) Provider keeps the tool list you configured, and **Remove Tools** clears the whole list in a separate step that asks you to confirm.
+* **Redirect URI fields**: A [Redirect URI](user-guide/access-policies/client-workloads/identification/redirect-uri.md) field on a Client Workload accepts a pasted value in every position, inserts a long pasted value rather than overwriting the text around it, and shows one validation message at a time. Copying the full contents of a field leaves the browser responsive.
+* **Trust Provider secrets in custom Resource Sets**: Terraform reads the state of a Trust Provider secret when that Trust Provider belongs to a custom [Resource Set](user-guide/administration/resource-sets/overview.md).
+* **Authorization event timespan filters**: The date filters on [Access Authorization Events](user-guide/audit-report/access-authorization-events.md) offer a maximum timespan of 24 hours, the window over which the Aembit Tenant UI makes authorization events available.
+
 ## 2026-09-15
 
 ### MCP Identity Gateway 1.34.5794 release
