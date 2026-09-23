@@ -5,7 +5,7 @@ description: "How to configure Access Policies and register MCP clients for the 
 resource: https://docs.aembit.io/user-guide/access-policies/mcp-authorization-server/setup-mcp-auth-server/
 interface: mcp
 tags: ["mcp-authorization-server", "access-policy"]
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-09-22T11:51:31-07:00
 ---
 
 # Set up the MCP Authorization Server
@@ -162,10 +162,10 @@ Optionally configure Access Conditions to add additional security requirements s
 
 ### Create a Credential Provider
 
-Create a Credential Provider to configure how Aembit issues tokens that MCP servers use to authenticate requests. The Credential Provider type depends on your identity provider protocol:
+Create a Credential Provider to configure how Aembit issues tokens that MCP servers use to authenticate requests. Use an OIDC ID Token Credential Provider for either protocol; only the Subject expression differs:
 
 * **OIDC identity providers:** Use an OIDC ID Token Credential Provider. For configuration details, see [Create an OIDC ID Token Credential Provider](../credential-providers/oidc-id-token.md).
-* **SAML identity providers:** Use an OIDC ID Token Credential Provider. Aembit translates the SAML response into an OIDC-compatible token for downstream MCP servers.
+* **SAML identity providers:** Use an OIDC ID Token Credential Provider. Aembit translates the SAML response into an OIDC-compatible token for downstream MCP servers. To carry each user’s identity into that token, set the Subject to `${saml.response.subject.nameId}`. A bare NameID is unique within one Identity Provider. If you authenticate users from more than one, qualify it with the issuer, for example `${saml.response.issuer}/${saml.response.subject.nameId}`. For the expression syntax, see [SAML assertion claims](../credential-providers/advanced-options/dynamic-claims.md#saml-assertion-claims).
 
 1. In Aembit, go to **Credential Providers** in the left sidebar.
 
@@ -177,7 +177,7 @@ Create a Credential Provider to configure how Aembit issues tokens that MCP serv
 
 5. Configure the following fields:
 
-   * **Subject** - Select `Dynamic` or `Literal`. Use Dynamic to extract the subject from the incoming identity token. For details, see [Dynamic Claims](../credential-providers/advanced-options/dynamic-claims-oidc.md).
+   * **Subject** - Select `Dynamic` or `Literal`. Use Dynamic to extract the subject from the validated identity evidence. For details, see [Dynamic Claims](../credential-providers/advanced-options/dynamic-claims.md).
    * **Audience** - Your MCP server’s base URL (for example, `https://mcp.acme-corp.example.com`). Must match the [token audience](../../deploy-install/mcp-authorization-server/concepts-mcp-auth-server.md#token-audience) your server expects.
    * **Lifetime** - Token validity in minutes, for example `60` (1 hour). Adjust based on security requirements.
    * **Signing Algorithm Type** - Select `ES256` or RSA.

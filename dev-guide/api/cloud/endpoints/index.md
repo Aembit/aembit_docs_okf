@@ -3,6 +3,7 @@
 * [DELETE /api/v1/agent-controllers/{id}](delete-agent-controller.md) - Delete an Agent Controller
 * [DELETE /api/v1/certificate-authorities/{id}](delete-standalone-certificate-authority.md) - Delete a Standalone Certificate Authority
 * [DELETE /api/v1/client-workloads/{id}](delete-client-workload.md) - Delete a Client Workload
+* [DELETE /api/v1/content-security/{csId}/mcp-tool-rules/{ruleId}](delete-mcp-tool-rule.md) - Delete an MCP Tool Access Rule
 * [DELETE /api/v1/content-security/{id}](delete-content-security.md) - Delete a Content Security
 * [DELETE /api/v1/credential-integrations/{id}](delete-credential-provider-integration.md) - Delete a Credential Provider Integration
 * [DELETE /api/v1/credential-providers/{id}](delete-credential-provider.md) - Delete a Credential Provider
@@ -40,6 +41,8 @@
 * [GET /api/v1/client-workloads/identifiers](get-client-identifiers.md) - Get Client Identifier List
 * [GET /api/v1/compliance-settings](get-compliance-settings.md) - Gets global compliance settings
 * [GET /api/v1/content-security](get-content-security-list.md) - Get a page of Content Security
+* [GET /api/v1/content-security/{csId}/mcp-tool-rules](get-mcp-tool-rules.md) - Get a page of MCP Tool Access Rules
+* [GET /api/v1/content-security/{csId}/mcp-tool-rules/{ruleId}](get-mcp-tool-rule.md) - Get an MCP Tool Access Rule
 * [GET /api/v1/content-security/{id}](get-content-security.md) - Get a Content Security
 * [GET /api/v1/credential-integrations](get-credential-provider-integrations.md) - Get a page of Credential Provider Integrations
 * [GET /api/v1/credential-integrations/{id}](get-credential-provider-integration.md) - Get a Credential Provider Integration
@@ -67,6 +70,7 @@
 * [GET /api/v1/signin-policies](get-signon-policy.md) - Get a SignOn Policy
 * [GET /api/v1/sso-idps](get-identity-providers.md) - Get a page of SSO Identity Providers
 * [GET /api/v1/sso-idps/{id}](get-identity-provider.md) - Get a SSO Identity Provider
+* [GET /api/v1/sso-idps/{id}/user-sessions](get-sso-idp-user-sessions.md) - Get active and revoked user sessions for an SSO Identity Provider
 * [GET /api/v1/sso-idps/{id}/verification](get-identity-provider-verification.md) - Verify the SSO Identity Provider
 * [GET /api/v1/trust-providers](get-trust-providers.md) - Get a page of Trust Providers
 * [GET /api/v1/trust-providers/{id}](get-trust-provider.md) - Get a Trust Provider
@@ -119,6 +123,7 @@
 * [POST /api/v1/certificate-authorities](post-standalone-certificate-authority.md) - Create a Standalone Certificate Authority
 * [POST /api/v1/client-workloads](post-client-workload.md) - Create a Client Workload
 * [POST /api/v1/content-security](post-content-security.md) - Create a Content Security
+* [POST /api/v1/content-security/{csId}/mcp-tool-rules](post-mcp-tool-rule.md) - Create or Update an MCP Tool Access Rule
 * [POST /api/v1/credential-integrations](post-credential-provider-integration.md) - Create a Credential Provider Integration
 * [POST /api/v1/credential-providers](post-credential-provider.md) - Create a Credential Provider
 * [POST /api/v1/discovery-integrations](post-discovery-integration.md) - Create an Integration
@@ -129,6 +134,7 @@
 * [POST /api/v1/routings](post-routing.md) - Create a Routing
 * [POST /api/v1/server-workloads](post-server-workload.md) - Create a Server Workload
 * [POST /api/v1/sso-idps](post-identity-provider.md) - Create a SSO Identity Provider
+* [POST /api/v1/sso-idps/{id}/user-sessions/revoke](revoke-sso-idp-user-sessions.md) - Revoke user sessions for an SSO Identity Provider
 * [POST /api/v1/trust-providers](post-trust-provider.md) - Create a Trust Provider
 * [POST /api/v1/trust-providers/{tpId}/secrets](post-trust-provider-secret.md) - Create a Trust Provider Secret
 * [POST /api/v1/users](post-user.md) - Create a User

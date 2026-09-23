@@ -14,7 +14,7 @@
 * [AuditLogDTO](audit-log-dto.md) - DTO for an individual Aembit Audit Log
 * [AuditLogListDTO](audit-log-list-dto.md) - Page of Aembit Audit Logs
 * [AuditOutcomeDTO](audit-outcome-dto.md) - DTO for the Outcome of an individual Aembit Audit Log
-* [AuthorizationEventAtttestationResultDTO](authorization-event-atttestation-result-dto.md) - Individual Access Entity Attestation Result of an Aembit Access Authorization Event
+* [AuthorizationEventAttestationResultDTO](authorization-event-attestation-result-dto.md) - Individual Access Entity Attestation Result of an Aembit Access Authorization Event
 * [AuthorizationEventCPResultDTO](authorization-event-cp-result-dto.md) - Individual Credential Provider Result of an Aembit Access Authorization Event
 * [AuthorizationEventDataMetaDTO](authorization-event-data-meta-dto.md) - Metadata DTO for an individual Aembit Access Authorization Event
 * [AuthorizationEventDTO](authorization-event-dto.md) - An individual Aembit Access Authorization Event
@@ -101,6 +101,9 @@
 * [LogStreamListDTO](log-stream-list-dto.md) - Page of Log Streams
 * [LogStreamPatchDTO](log-stream-patch-dto.md) - Patch Request for an individual of Log Stream
 * [LogStreamSplunkDestinationDTO](log-stream-splunk-destination-dto.md) - Individual Log Stream
+* [McpToolAccessControlContentSecurityDTO](mcp-tool-access-control-content-security-dto.md) - Individual Content Security
+* [McpToolAccessControlRuleDTO](mcp-tool-access-control-rule-dto.md)
+* [McpToolAccessControlRuleDTOListDTO](mcp-tool-access-control-rule-dto-list-dto.md)
 * [MFASignInPolicyDTO](mfa-sign-in-policy-dto.md)
 * [NetworkDTO](network-dto.md)
 * [OidcClientAuthType](oidc-client-auth-type.md)
@@ -134,6 +137,7 @@
 * [ResourceSetDTO](resource-set-dto.md) - Individual Resource Set
 * [ResourceSetDTOListDTO](resource-set-dto-list-dto.md)
 * [ResourceSetPatchDTO](resource-set-patch-dto.md) - Patch Request for an Individual Resource Set
+* [RevokeUserSessionRequestDTO](revoke-user-session-request-dto.md) - Request payload to revoke SSO Identity Provider user sessions
 * [RoleDTO](role-dto.md) - Individual Role
 * [RoleListDTO](role-list-dto.md) - Page of Roles
 * [RolePatchDTO](role-patch-dto.md) - Patch request for an individual Role
@@ -147,6 +151,7 @@
 * [SSOIdentityProviderDTO](sso-identity-provider-dto.md) - Individual SSO Identity Provider
 * [SSOIdentityProviderDTOListDTO](sso-identity-provider-dto-list-dto.md)
 * [SSOIdentityProviderPatchDTO](sso-identity-provider-patch-dto.md) - Patch request for an individual SSO Identity Provider
+* [SsoIdpUserSessionDTO](sso-idp-user-session-dto.md) - SSO Identity Provider User Session
 * [SSOSignInPolicyDTO](sso-sign-in-policy-dto.md)
 * [SsoStatementRoleMappingDTO](sso-statement-role-mapping-dto.md) - Represents a mapping of an SSO attribute to an Aembit role
 * [StandaloneCertificatePatchDTO](standalone-certificate-patch-dto.md) - Patch Request for an Individual Standalone Certificate Authority
@@ -159,6 +164,8 @@
 * [TimeAccessConditionScheduleDTO](time-access-condition-schedule-dto.md)
 * [TimeAccessConditionTimezoneDTO](time-access-condition-timezone-dto.md)
 * [TimeIntegrationDTO](time-integration-dto.md) - Integration details for 3rd party data used by Access Conditions
+* [ToolRuleBehaviour](tool-rule-behaviour.md)
+* [ToolVisibilityMode](tool-visibility-mode.md)
 * [TrustProviderDTO](trust-provider-dto.md) - Individual Trust Provider
 * [TrustProviderItemDTO](trust-provider-item-dto.md)
 * [TrustProviderListDTO](trust-provider-list-dto.md) - Page of Trust Providers

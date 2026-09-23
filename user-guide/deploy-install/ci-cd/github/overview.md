@@ -5,7 +5,7 @@ description: "Securely deliver credentials to GitHub Actions workflows without s
 resource: https://docs.aembit.io/user-guide/deploy-install/ci-cd/github/
 interface: web-ui
 tags: ["github", "ci-cd", "deploy-install"]
-timestamp: 2026-09-16T18:21:40-07:00
+timestamp: 2026-09-22T15:17:29-07:00
 ---
 
 # Aembit with GitHub Actions
@@ -146,4 +146,4 @@ Choose based on your experience:
 * **New to Aembit?** Follow the [Guided tutorial](github-actions-tutorial.md) for step-by-step setup
 * **Experienced user?** Jump to the [How-To Guide](github-actions-how-to.md) for quick configuration
 * **Need parameter reference?** See the [Reference](github-actions-reference.md) for all action inputs and outputs
-* **Reaching more than one AWS role from one Access Policy?** See [Select among multiple AWS STS Credential Providers](github-actions-how-to.md#select-among-multiple-aws-sts-credential-providers) for the `aws-access-key-id` input
+* **Reaching more than one AWS role from one Access Policy?** See [Select among multiple AWS STS Federation Credential Providers](github-actions-how-to.md#select-among-multiple-aws-sts-credential-providers) for the `aws-access-key-id` input

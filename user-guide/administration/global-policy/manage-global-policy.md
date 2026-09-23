@@ -5,7 +5,7 @@ description: "How to configure Aembit's Global Policy Compliance"
 resource: https://docs.aembit.io/user-guide/administration/global-policy/manage-global-policy/
 interface: web-ui
 tags: ["global-policy", "administration"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-22T13:47:38-07:00
 ---
 
 # Managing Global Policy Compliance
@@ -17,7 +17,7 @@ This topic details how you can manage Global Policy Compliance in your Aembit Te
 To configure Global Policy Compliance settings, your users must have the **Global Policy Compliance** permission with write access. You can set this permission in the [Users page](../users/overview.md) to any of the following:
 
 * **No Access** - Can’t view or modify settings
-* **Read-Only** - Can view settings but not modify them
+* **Read Only** - Can view settings but not modify them
 * **Read/Write** - Can view and modify settings
 
 ## Configure Global Policy Compliance settings

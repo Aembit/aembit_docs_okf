@@ -4,7 +4,7 @@ title: "TrustProviderDTO"
 description: "Individual Trust Provider"
 resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
 interface: api
-timestamp: 2026-07-28T14:42:14-04:00
+timestamp: 2026-09-22T20:22:25-07:00
 ---
 
 # TrustProviderDTO
@@ -26,12 +26,13 @@ Individual Trust Provider
 - **modifiedBy** *(optional)*: null,string
 - **resourceSet** *(required)*: string (uuid) - ID of the Resource Set in which this Access Entity exists
 - **id** *(optional)*: integer (int32) - Trust Provider Id
-- **provider** *(required)*: string - Trust Provider Type
+- **provider** *(required)*: string - Trust Provider Type. Valid values: AWSMetadataService, KubernetesServiceAccount, AzureKubernetesService, AmazonElasticKubernetesService, GoogleKubernetesEngine, AzureMetadataService, GcpIdentityToken, Kerberos, GitHubIdentityToken, TerraformIdentityToken, GitLabIdentityToken, AWSRole, OidcIdToken, CertificateSignedAttestation, Samlv2Response, UserIdentityProvider, AWSAlbJwt, GcpIapJwt.
 - **matchRules** *(optional)*: null,array - Trust Provider Match Rules
 - **certificate** *(optional)*: null,string - Trust Provider Certificate or Public Key for cryptographic attestation
 - **jwks** *(optional)*: null,string - Jwks Content for cryptographic attestation
 - **publicKeyValidation** *(optional)*: [PublicKeyValidationDTO](public-key-validation-dto.md) - Response to a request for Public Key Validation
 - **oidcUrl** *(optional)*: null,string - OIDC URL to use for retrieving JWKS Public Keys
+- **oidcUrls** *(optional)*: null,array - OIDC URLs to use for retrieving JWKS Public Keys
 - **pemType** *(optional)*: null,string - PEM Input Type
 - **accessPolicyCount** *(optional)*: integer (int32) - Access Policies associated with this Trust Provider
 - **agentControllersCount** *(optional)*: integer (int32) - Agent Controllers associated with this Trust Provider

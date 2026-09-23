@@ -4,7 +4,7 @@ title: "MCP Identity Gateway concepts"
 description: "Architecture, token handling, access policies, and deployment patterns for the MCP Identity Gateway."
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/concepts-mcp-gateway/
 tags: ["mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-09-22T15:44:57-07:00
 ---
 
 # MCP Identity Gateway concepts
@@ -72,9 +72,9 @@ You configure one Client-to-Gateway policy per MCP Identity Gateway and one Gate
 
 This policy handles blended access: both the AI agent identity and the user identity.
 
-**Gateway-to-Server policy** - Authorizes the Gateway to access MCP servers on behalf of authenticated users. The Credential Provider manages access to the MCP server, with optional Access Conditions for time or GeoIP restrictions. Use [MCP User-Based Access Token](../../access-policies/credential-providers/about-mcp-user-based-access-token.md) when the MCP server requires per-user OAuth credentials (most SaaS MCP servers). Use [OAuth 2.0 Authorization Code](../../access-policies/credential-providers/oauth-authorization-code.md) when the server accepts a shared, administrator-authorized token.
+**Gateway-to-Server policy** - Authorizes the Gateway to access MCP servers on behalf of authenticated users. The Credential Provider manages access to the MCP server, with optional Access Conditions for time or GeoIP restrictions. Use [MCP User-Based Access Token](../../access-policies/credential-providers/about-mcp-user-based-access-token.md) when the MCP server requires per-user OAuth credentials (most SaaS MCP servers). Use [OAuth 2.0 Authorization Code](../../access-policies/credential-providers/oauth-authorization-code.md) when the server accepts a shared, administrator-authorized token. Use [MCP Enterprise Managed Access Token](../../access-policies/credential-providers/about-mcp-enterprise-managed-access-token.md) when the MCP server and your OIDC Identity Provider both support Enterprise-Managed Authorization, so users never see a consent prompt for the server.
 
-Each user completes an OAuth flow once per MCP server. If unauthorized, the Gateway denies the request and logs the event.
+With MCP User-Based Access Token, each user completes an OAuth flow once per MCP server. If unauthorized, the Gateway denies the request and logs the event.
 
 ### Left-side and right-side auth
 
@@ -91,6 +91,8 @@ A central design principle: the MCP Identity Gateway scopes credentials to where
 
 * **Agent → MCP Identity Gateway** - The AI agent holds a token that identifies the agent and user. This token is only valid against the MCP Identity Gateway.
 * **MCP Identity Gateway → MCP server** - The MCP Identity Gateway holds a token that’s valid against the MCP server. The MCP Identity Gateway never exposes this token to the AI agent.
+
+With MCP Enterprise Managed Access Token, Aembit Cloud obtains the server-side token by exchanging the user’s SSO identity. It requests an identity assertion from the corporate identity provider, then an access token from the MCP server’s authorization server. The corporate identity provider must support token exchange, and Okta is the only one Aembit has verified. No user completes a consent flow; see [About the MCP Enterprise Managed Access Token Credential Provider](../../access-policies/credential-providers/about-mcp-enterprise-managed-access-token.md).
 
 This separation allows you to:
 
@@ -164,4 +166,6 @@ For more on the distinction between MCP servers and MCP apps, see [MCP servers a
 * [Reference](reference-mcp-gateway.md) - Networking, logging, and operational details
 * [MCP User-Based Access Tokens](../../access-policies/credential-providers/about-mcp-user-based-access-token.md) - When to use this Credential Provider and how it works
 * [Set up MCP User-Based Access Tokens](../../access-policies/credential-providers/mcp-user-based-access-token.md) - Step-by-step configuration guide
+* [MCP Enterprise Managed Access Tokens](../../access-policies/credential-providers/about-mcp-enterprise-managed-access-token.md) - When to use this Credential Provider and how the token exchange works
+* [Set up MCP Enterprise Managed Access Tokens](../../access-policies/credential-providers/mcp-enterprise-managed-access-token.md) - Step-by-step configuration guide
 * [MCP Authorization Server concepts](../mcp-authorization-server/concepts-mcp-auth-server.md) - How left-side and right-side auth apply in the Authorization Server context

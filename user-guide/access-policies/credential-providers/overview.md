@@ -5,7 +5,7 @@ description: "This document provides a high-level description of Credential Prov
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/
 interface: web-ui
 tags: ["credential-provider", "access-policy"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-22T15:44:57-07:00
 ---
 
 # Credential Providers
@@ -30,6 +30,7 @@ The following pages provide information about different Credential Provider type
 * [JSON Web Token (JWT)](json-web-token.md)
 * [JWT-SVID Token](spiffe-jwt-svid.md)
 * [Managed GitLab Account](managed-gitlab-account.md)
+* [MCP Enterprise Managed Access Token](mcp-enterprise-managed-access-token.md)
 * [MCP User-Based Access Token](mcp-user-based-access-token.md)
 * [OAuth 2.0 Authorization Code](oauth-authorization-code.md)
 * [OAuth 2.0 Client Credentials](oauth-client-credentials.md)
@@ -42,6 +43,7 @@ The following pages provide information about different Credential Provider type
 ### About Credential Providers
 
 * [About JWT-SVID Tokens](about-spiffe-jwt-svid.md)
+* [About MCP Enterprise Managed Access Tokens](about-mcp-enterprise-managed-access-token.md)
 * [About MCP User-Based Access Tokens](about-mcp-user-based-access-token.md)
 * [About OIDC ID Tokens](about-oidc-id-token.md)
 * [About X.509-SVID](about-spiffe-x509-svid.md)
@@ -51,7 +53,7 @@ The following pages provide information about different Credential Provider type
 * [Private Network Access](private-network-access.md)
 * [Multiple Credential Providers](multiple-credential-providers.md)
 * [HashiCorp Vault Dynamic Claims](advanced-options/dynamic-claims-vault.md)
-* [OIDC ID Token Dynamic Claims](advanced-options/dynamic-claims-oidc.md)
+* [Dynamic Claims](advanced-options/dynamic-claims.md)
 * [Multiple Credential Providers Terraform](advanced-options/multiple-credential-providers-terraform.md)
 
 ### Integrations

@@ -5,7 +5,7 @@ description: "Retrieve credentials from a Lambda function using the Edge SDK and
 resource: https://docs.aembit.io/dev-guide/sdk/edge/integrations/aws-lambda/
 interface: sdk
 tags: ["integration", "edge", "sdk"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-22T13:47:38-07:00
 ---
 
 # Use the Edge SDK in an AWS Lambda function
@@ -16,13 +16,13 @@ An AWS Lambda function authenticates to Aembit through the AWS Role Trust Provid
 
 AWS injects temporary credentials for the function’s execution role into the runtime environment. The Edge SDK uses those credentials to sign an AWS Security Token Service (STS) [GetCallerIdentity](https://docs.aws.amazon.com/STS/latest/APIReference/API_GetCallerIdentity.html) request with [AWS Signature Version 4](../../../../user-guide/access-policies/credential-providers/aws-sigv4.md), then sends the signed request data to Aembit.
 
-Aembit calls `GetCallerIdentity` with that signed request. AWS answers with the identity behind the signature, and Aembit evaluates that identity against the match rules on your AWS Role Trust Provider. Because AWS performs the verification, the signature is what establishes the function’s identity, and the SDK never sends the role credentials themselves.
+Aembit calls `GetCallerIdentity` with that signed request. AWS answers with the identity behind the signature. Aembit evaluates that identity against the match rules on your AWS Role Trust Provider. Because AWS performs the verification, the signature is what establishes the function’s identity, and the SDK never sends the role credentials themselves.
 
 For the request and response shapes behind that exchange, see [Edge API authentication with AWS Lambda](../../../api/edge/auth/aws-lambda.md).
 
 ## Before you start
 
-* An Aembit Tenant with at least Read-Only permission for Trust Providers.
+* An Aembit Tenant with at least Read Only permission for Trust Providers.
 * An Access Policy for the service your function reaches.
 * An [AWS Role Trust Provider](../../../../user-guide/access-policies/trust-providers/aws-role-trust-provider.md) with match rules that identify your function’s execution role.
 * A Lambda function on a Node.js 20 or later runtime, with an execution role attached.

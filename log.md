@@ -1,5 +1,71 @@
 # Aembit Changelog
 
+## 2026-09-23
+
+### Aembit Cloud security updates
+
+Enhanced security for the [OAuth 2.0 Authorization Code Credential Provider](user-guide/access-policies/credential-providers/oauth-authorization-code.md).
+
+### Dynamic claims now support SAML assertions
+
+Dynamic claims can now read values from a SAML 2.0 response, so a Credential Provider can issue a credential bound to each SAML user’s own identity.
+
+Aembit receives SAML responses when users sign in through the MCP Authorization Server or the MCP Identity Gateway. A SAMLv2 Response Trust Provider validates each response, and three expressions read values from its assertion:
+
+* `${saml.response.subject.nameId}` returns the Subject NameID that identifies the user.
+* `${saml.response.issuer}` returns the identity provider that issued the assertion.
+* `${saml.response.attributes['<name>']}` returns a named attribute, such as a user’s groups.
+
+If a SAML expression can’t resolve to a value, Aembit denies the request and issues no credential. The Credential Provider form in the Aembit Tenant UI shows the SAML syntax with examples. See [SAML assertion claims](user-guide/access-policies/credential-providers/advanced-options/dynamic-claims.md#saml-assertion-claims).
+
+### Kubernetes Service Account Trust Provider now supports multiple OIDC endpoints
+
+A Kubernetes Service Account Trust Provider now accepts more than one OpenID Connect (OIDC) endpoint. One Trust Provider can then attest a Client Workload that runs active-active across two or more clusters.
+
+Each cluster signs its Service Account tokens with its own key. Add one **OIDC Endpoint** for each cluster’s issuer URL with **Add an Endpoint**, and the Trust Provider validates a token signed by any of them. See [Attest one workload across multiple clusters](user-guide/access-policies/trust-providers/kubernetes-service-account-trust-provider.md#attest-one-workload-across-multiple-clusters).
+
+### MCP Enterprise Managed Access Token Credential Provider now available
+
+The MCP Enterprise Managed Access Token Credential Provider is now available in the Aembit Tenant UI. It obtains each user’s MCP server access token through your corporate identity provider, so users reach MCP servers behind the MCP Identity Gateway without a per-user consent prompt.
+
+Aembit Cloud makes two token requests on the user’s behalf. The first asks your identity provider for an identity assertion that vouches for the user to one MCP server. The second presents that assertion to the MCP server’s authorization server in exchange for an access token, which the MCP Identity Gateway injects into the request.
+
+To get started, [prepare your identity provider for enterprise-managed access](user-guide/access-policies/credential-providers/mcp-enterprise-managed-access-token-idp.md), then [configure the Credential Provider](user-guide/access-policies/credential-providers/mcp-enterprise-managed-access-token.md). For how the exchange works, see [About the MCP Enterprise Managed Access Token Credential Provider](user-guide/access-policies/credential-providers/about-mcp-enterprise-managed-access-token.md).
+
+## 2026-09-17
+
+### Aembit Secrets Operator dependency security updates
+
+Aembit Secrets Operator 1.34.358 updates its Go toolchain and bundled Go libraries to fix published vulnerabilities that container image scanning reported in the earlier versions. The update requires no configuration change. Upgrade to 1.34.358 or later to pick up the fixes.
+
+These updates shipped in the same build as [Aembit Secrets Operator now delivers X.509-SVID certificates](https://docs.aembit.io/changelog/entry/2026-09-17-aembit-secrets-operator-now-delivers-x509-svid-certificates). For the latest available versions, see the [Edge Components Supported Versions](reference/edge-components/edge-component-supported-versions.md) page.
+
+### Agent Controller dependency security updates
+
+Agent Controller 1.34.3725 container images bundle the latest patched .NET runtime libraries, which fixes published high-severity .NET vulnerabilities that earlier container builds carried. The same build refreshes the .NET SDK base image and NuGet package dependencies. The update requires no configuration change. Upgrade to 1.34.3725 or later to pick up the fixes.
+
+These updates shipped in the same build as the [Agent Controller 1.34.3725 release](https://docs.aembit.io/changelog/entry/2026-09-17-agent-controller-1-34-3725-release). For the latest available versions, see the [Edge Components Supported Versions](reference/edge-components/edge-component-supported-versions.md) page.
+
+### Aembit Secrets Operator now delivers X.509-SVID certificates
+
+**Aembit Secrets Operator 1.34.358** and **Aembit Secrets Operator Helm chart 1.34.358** are now available.
+
+[Secrets Operator](user-guide/deploy-install/kubernetes/aso/overview.md) now delivers X.509-SVID certificates to your Kubernetes workloads. When an `AembitSecretRefreshSchedule` sets `credentialType: X509Svid`, Secrets Operator generates a private key inside the cluster and obtains a signed certificate from Aembit. It writes both to a `kubernetes.io/tls` Secret that your workload uses for mutual TLS. See [Deliver X.509-SVID certificates with Secrets Operator](user-guide/deploy-install/kubernetes/aso/x509-svid.md).
+
+* **New `X509Svid` credential type**: The Secret holds `tls.crt` with the signed certificate chain and `tls.key` with the private key. Secrets Operator sends Aembit only a certificate signing request, so the private key never leaves the cluster.
+* **Automatic renewal**: Secrets Operator refreshes the certificate before it expires.
+* **TLS Secret type**: `X509Svid` writes a `kubernetes.io/tls` Secret, while every other credential type writes a generic Secret, so switching a schedule to or from `X509Svid` deletes and recreates the target Secret. See [Credential types and Secret data keys](user-guide/deploy-install/kubernetes/aso/reference.md#credential-types-and-secret-data-keys).
+
+### Agent Controller 1.34.3725 release
+
+Aembit has released [Agent Controller](user-guide/deploy-install/about-agent-controller.md) version 1.34.3725 for Linux and Windows. For the latest available versions, see the [Edge Components Supported Versions](reference/edge-components/edge-component-supported-versions.md) page.
+
+* **Kerberos attestation on AWS EC2**: An Agent Controller running on an AWS EC2 instance now completes [Kerberos Trust Provider](user-guide/access-policies/trust-providers/kerberos-trust-provider.md) attestation requests from Agent Proxy. Agent Controller 1.32.3541 on EC2 answered those requests with an HTTP 500 error. Upgrade any Agent Controller that runs on EC2 and serves Kerberos attestation to 1.34.3725 or later.
+* **Windows certificate chain validation**: On Windows, Agent Controller now installs the intermediate CA certificates from its TLS certificate chain into the LocalMachine certificate store, so Windows TLS clients can validate the full chain.
+* **Windows service logon account on reinstall**: When you uninstall Agent Controller on Windows and reinstall it with a different `SERVICE_LOGON_ACCOUNT`, the installer now grants the new account access to the existing log file before the service starts, so logging continues. Changing the logon account of an installed service is still unsupported.
+* **TLS certificate status reporting**: Agent Controller reports its TLS certificate status to Aembit Cloud consistently during certificate renewal.
+* **Container base image**: The container image uses updated base image digests so it starts on newer container runtimes.
+
 ## 2026-09-16
 
 ### GitHub Actions now selects among multiple AWS STS Credential Providers
@@ -593,7 +659,7 @@ Custom environment variables on Agent Proxy and Aembit CLI can now feed into OID
 * **`AEMBIT_ENV_VAR_ALLOWLIST`**: A new environment variable that defines which custom variables Agent Proxy and Aembit CLI may capture for use in dynamic claims. By default, Agent Proxy and Aembit CLI capture no custom variables.
 * **Always-available Kubernetes variables**: `K8S_POD_NAME`, `K8S_NAMESPACE`, and `KUBERNETES_PROVIDER_ID` are now usable in dynamic claims regardless of the allowlist.
 
-For setup instructions, see [Configure custom environment variables for Agent Proxy](user-guide/deploy-install/advanced-options/agent-proxy/configure-custom-env-vars.md). For the dynamic claims expression syntax, see [OIDC and JWT-SVID dynamic claims](user-guide/access-policies/credential-providers/advanced-options/dynamic-claims-oidc.md#environment-variables).
+For setup instructions, see [Configure custom environment variables for Agent Proxy](user-guide/deploy-install/advanced-options/agent-proxy/configure-custom-env-vars.md). For the dynamic claims expression syntax, see [OIDC and JWT-SVID dynamic claims](user-guide/access-policies/credential-providers/advanced-options/dynamic-claims.md#environment-variables).
 
 ### Edge components release with Oracle GA and HTTP proxy support
 
@@ -1214,7 +1280,7 @@ The Aembit Edge GitLab CI/CD Component is now available to simplify Aembit integ
 
 The OIDC ID Token Credential Provider now supports dynamic claims, allowing you to extract and use values from OIDC tokens in the credential data. This feature creates personalized and context-aware credentials that reflect the workload’s identity and attributes from their original OIDC token.
 
-See [OIDC ID Token Dynamic Claims](user-guide/access-policies/credential-providers/advanced-options/dynamic-claims-oidc.md) for more information.
+See [OIDC ID Token Dynamic Claims](user-guide/access-policies/credential-providers/advanced-options/dynamic-claims.md) for more information.
 
 ***
 

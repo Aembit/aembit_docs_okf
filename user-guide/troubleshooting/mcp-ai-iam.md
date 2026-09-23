@@ -5,7 +5,7 @@ description: "Investigate MCP and AI IAM failures end-to-end across Aembit's aut
 resource: https://docs.aembit.io/user-guide/troubleshooting/mcp-ai-iam/
 interface: web-ui
 tags: ["troubleshooting"]
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-09-22T15:44:57-07:00
 ---
 
 # Troubleshoot MCP and AI IAM access
@@ -75,6 +75,7 @@ The following matrix maps MCP failure modes to the event that surfaces them and 
 | Server Workload mismatch                    | `access.request` event, severity Error        | Resource URL in the request doesn’t match any registered Server Workload.                                                       | Verify the resource URL on the Server Workload matches the MCP server URL the client is trying to reach.                                                                                                                               |
 | Trust Provider attestation failure          | `access.authorization` event, severity Error  | Trust Provider `result` is `Unauthorized` with a `reason` such as `MatchRuleFailed` or `InvalidSignature`.                      | Confirm the identity token’s claims match the Trust Provider match rules. See [Authorization failure](../audit-report/access-authorization-events.md#authorization-failure).                                                    |
 | Credential Provider failure                 | `access.credential` event, severity Error     | Credential Provider `result` is not `Retrieved`. Common reasons include `Token expired` and upstream identity-provider errors.  | The expired-credential explanation in the event now describes which token expired and at which step. Re-authenticate the user or refresh the credential.                                                                               |
+| Enterprise-managed token exchange failure   | `access.credential` event, severity Error     | Credential Provider `result` is `Error` and `reason` is generic. The event doesn’t say which of the two token requests failed.  | Work through [Enterprise-managed token exchange failures](#enterprise-managed-token-exchange-failures).                                                                                                                                |
 | No matching Client Workload                 | `access.discovery` event, severity Error      | Discovery enumerates the Client Workloads considered for the Gateway-to-Server Access Policy and indicates that none matched.   | Verify the Client Workload identifying the Gateway is present in the Gateway-to-Server Access Policy.                                                                                                                                  |
 | No matching Server Workload                 | `access.discovery` event, severity Error      | Discovery enumerates the Server Workloads considered and indicates that none matched the target MCP server.                     | Verify the Server Workload for the target MCP server exists and the Gateway-to-Server Access Policy includes it.                                                                                                                       |
 | Trust Provider attestation failure          | `access.authorization` event, severity Error  | Same shape as the Client-to-Gateway Access Policy Trust Provider failure, but with the Gateway-to-Server Access Policy context. | Confirm the Aembit-issued JWT presented by the Gateway is valid for the target MCP server.                                                                                                                                             |
@@ -83,6 +84,18 @@ The following matrix maps MCP failure modes to the event that surfaces them and 
 | MCP server unreachable                      | `mcp.response` Workload Event, severity Error | The Gateway couldn’t connect to the upstream MCP server. The reason describes the network or TLS failure.                       | Verify the Gateway can reach the MCP server over the network and confirm any required TLS configuration.                                                                                                                               |
 | Non-2xx response from the MCP server        | `mcp.response` Workload Event, severity Error | The MCP server returned a non-2xx HTTP status code. The reason includes the status code and any upstream error detail.          | Investigate the MCP server logs for the cause of the upstream error.                                                                                                                                                                   |
 | `tools/call` failure                        | `mcp.response` Workload Event, severity Error | The Gateway forwarded the tool invocation, and the MCP server returned a tool-call error.                                       | Inspect the upstream MCP server response. The Gateway records the failure with Error severity so SIEM alerting can trigger on it.                                                                                                      |
+
+## Enterprise-managed token exchange failures
+
+The [MCP Enterprise Managed Access Token](../access-policies/credential-providers/about-mcp-enterprise-managed-access-token.md) Credential Provider follows Enterprise-Managed Authorization and obtains a token in two requests, an identity assertion request to the corporate identity provider and an access token request to the MCP server’s authorization server. When either request fails, the `access.credential` event records result `Error` with a generic reason, so the following checklist is the diagnostic path.
+
+* **The `offline_access` scope is missing.** The OIDC Identity Provider’s **Identity Provider Scopes** field must include `offline_access`, or Aembit receives no refresh token for the user.
+* **The user hasn’t signed in since you added the scope.** Aembit captures the refresh token at sign-in. The user signs out of Aembit and signs in again through the Identity Provider.
+* **The identity provider refused the identity assertion request.** Check the application’s grant types, its Cross-app access settings, and the AI agent’s Resource Connection in the identity provider, as described in [Prepare the Identity Provider for enterprise-managed access](../access-policies/credential-providers/mcp-enterprise-managed-access-token-idp.md).
+* **The MCP server’s authorization server refused the access token request.** Confirm the Credential Provider’s **OIDC Issuer URL** matches the issuer the identity provider trusts for the server, and that the **Client ID** is the one the server issued for Aembit.
+* **The MCP server’s endpoints changed after Discover ran.** Endpoints are static after **Discover**. Open the Credential Provider, click **Discover** again, and save.
+
+After you fix the cause, the user sends a new request through the MCP Identity Gateway and the next `access.credential` event shows result `Retrieved`.
 
 ## Match events across surfaces
 
@@ -158,4 +171,6 @@ The MCP Identity Gateway emits two events per request on the single-server path 
 * [Workload Events](../audit-report/workload-events/overview.md)
 * [MCP Authorization Tracing](../audit-report/mcp-authorization-tracing.md)
 * [Troubleshoot the MCP Authorization Server](../deploy-install/mcp-authorization-server/troubleshooting-mcp-auth-server.md)
+* [About the MCP Enterprise Managed Access Token Credential Provider](../access-policies/credential-providers/about-mcp-enterprise-managed-access-token.md)
+* [Prepare the Identity Provider for enterprise-managed access](../access-policies/credential-providers/mcp-enterprise-managed-access-token-idp.md)
 * [Log Streams](../administration/log-streams/overview.md)

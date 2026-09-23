@@ -5,7 +5,7 @@ description: "Overview of Aembit Edge API credentials endpoint and its structure
 resource: https://docs.aembit.io/dev-guide/api/edge/endpoints/credentials/
 interface: api
 tags: ["endpoint", "edge", "api"]
-timestamp: 2026-09-16T18:21:40-07:00
+timestamp: 2026-09-22T15:17:29-07:00
 ---
 
 # Edge API - /edge/v1/credentials
@@ -139,7 +139,7 @@ For example, the following request selects the AWS STS Federation Credential Pro
 }
 ```
 
-Access Key ID selector values use uppercase characters only. A selector that matches no Credential Provider in the Access Policy, or that matches more than one, returns `404 Not Found` with `credentialType` set to `Unknown`. A request that omits `connectionMetadata` altogether returns `400 Bad Request` when the Access Policy holds more than one Credential Provider. For how Aembit uses each selector, see [Using multiple AWS STS Credential Providers](../../../../user-guide/access-policies/credential-providers/aws-security-token-service-multiple.md) and [Using multiple JWT Credential Providers](../../../../user-guide/access-policies/credential-providers/json-web-token-multiple.md).
+Access Key ID selector values contain uppercase letters and numbers only, up to 256 characters, and must match the value saved in the Credential Provider’s mapping exactly. A selector that matches no Credential Provider in the Access Policy, or that matches more than one, returns `404 Not Found` with `credentialType` set to `Unknown`. A request that omits `connectionMetadata` altogether returns `400 Bad Request` when the Access Policy holds more than one Credential Provider. For how Aembit uses each selector, see [Using multiple AWS STS Federation Credential Providers](../../../../user-guide/access-policies/credential-providers/aws-security-token-service-multiple.md) and [Using multiple JWT Credential Providers](../../../../user-guide/access-policies/credential-providers/json-web-token-multiple.md).
 
 ## Credential type specific responses
 

@@ -3,7 +3,7 @@ type: reference
 title: "Support matrix"
 description: "Supported features for each deployment type"
 resource: https://docs.aembit.io/reference/support-matrix/
-timestamp: 2026-09-15T20:39:46-07:00
+timestamp: 2026-09-21T11:29:36-04:00
 ---
 
 # Support matrix
@@ -119,6 +119,7 @@ The following sections contain the operating system versions that Aembit Agent P
 | Ubuntu             | 20.04   |
 | Ubuntu             | 22.04   |
 | Ubuntu             | 24.04   |
+| Ubuntu             | 26.04   |
 | Red Hat            | 8.6     |
 | Red Hat            | 8.9     |
 | Red Hat            | 9.3     |

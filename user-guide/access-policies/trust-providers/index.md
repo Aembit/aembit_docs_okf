@@ -11,7 +11,7 @@
 * [Google Cloud Identity-Aware Proxy (IAP) JWT Trust Provider](gcp-iap-jwt-trust-provider.md) - How to configure a Google Cloud Identity-Aware Proxy (IAP) JWT Trust Provider to validate signed tokens forwarded by IAP
 * [How to add a Trust Provider](add-trust-provider.md) - How to configure a Trust Provider for Client Workload identity attestation
 * [Kerberos Trust Provider](kerberos-trust-provider.md) - How to configure a Kerberos Trust Provider
-* [Kubernetes Service Account trust provider](kubernetes-service-account-trust-provider.md) - This page describes the steps required to configure the Kubernetes Service Account Trust Provider.
+* [Kubernetes Service Account Trust Provider](kubernetes-service-account-trust-provider.md) - How to configure a Kubernetes Service Account Trust Provider to attest workloads running in Kubernetes
 * [OIDC ID Token Trust Provider](oidc-id-token-trust-provider.md) - How to configure an OIDC ID Token Trust Provider
 * [SAMLv2 Response Trust Provider](saml-response-trust-provider.md) - How to configure a SAMLv2 Response Trust Provider
 * [Terraform Cloud Identity Token Trust Provider](terraform-cloud-identity-token-trust-provider.md) - This page describes the steps required to configure the Terraform Cloud Identity Token Trust Provider.

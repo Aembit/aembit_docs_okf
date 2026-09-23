@@ -4,7 +4,7 @@ title: "Client Workload annotation reference"
 description: "Reference for Kubernetes annotations you can apply to Client Workload pod specs to configure Agent Proxy behavior"
 resource: https://docs.aembit.io/reference/edge-components/cw-annotations/
 tags: ["edge-component"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-22T14:07:28-07:00
 ---
 
 # Client Workload annotation reference
@@ -21,6 +21,9 @@ For deployment steps, see [Deploy Aembit to Kubernetes](../../user-guide/deploy-
 | [`aembit.io/agent-proxy-env-<ENV_VAR_NAME>`](cw-annotations.md#aembitioagent-proxy-env-env_var_name) | Sets a specific environment variable on Agent Proxy container for pods in this deployment. *Example*: `"false"`                                 |
 | [`aembit.io/agent-configmap`](cw-annotations.md#aembitioagent-configmap)                             | Mounts Kubernetes ConfigMap data into Agent Proxy container for pods in this deployment. *Example*: `'["agent-controller-config:device_code"]'` |
 | [`aembit.io/steering-mode`](cw-annotations.md#aembitiosteering-mode)                                 | Sets the steering mode for Agent Proxy. Required on OpenShift. *Example*: `"explicit"`                                                          |
+| [`aembit.io/metrics-scrape`](cw-annotations.md#aembitiometrics-scrape)                               | Tells Prometheus whether to scrape metrics from Agent Proxy. *Example*: `"false"`                                                               |
+| [`aembit.io/metrics-path`](cw-annotations.md#aembitiometrics-path)                                   | Sets the path Prometheus requests when it scrapes Agent Proxy metrics. *Example*: `"/metrics"`                                                  |
+| [`aembit.io/metrics-port`](cw-annotations.md#aembitiometrics-port)                                   | Sets the port on which Agent Proxy exposes metrics. *Example*: `"9100"`                                                                         |
 
 ## `aembit.io/agent-inject` Required
 
@@ -155,3 +158,61 @@ template:
 ```
 
 For more information, see [Steering](../../user-guide/deploy-install/advanced-options/agent-proxy/steering.md) and [Explicit steering](../../user-guide/deploy-install/advanced-options/agent-proxy/explicit-steering.md).
+
+***
+
+## Agent Proxy metrics annotations
+
+Agent Injector adds the three `aembit.io/metrics-*` annotations unless you turn off Agent Proxy metrics. The `agentProxy.metrics.enabled` Helm value turns Agent Proxy metrics on or off, and defaults to `true`.
+
+Set any of these annotations yourself to keep your own value. Agent Injector skips an annotation the pod already has.
+
+For scrape configuration and the metrics Agent Proxy exposes, see [Aembit Edge Prometheus-compatible metrics](../../user-guide/deploy-install/advanced-options/aembit-edge-prometheus-compatible-metrics.md).
+
+***
+
+## `aembit.io/metrics-scrape`
+
+Value - `"true"` | `"false"`
+
+Tells Prometheus whether to scrape metrics from Agent Proxy. Agent Injector adds this annotation with the value `"true"` unless you turn off Agent Proxy metrics.
+
+*Example*:
+
+```yaml
+template:
+  metadata:
+    annotations:
+      aembit.io/agent-inject: "enabled"
+      aembit.io/metrics-scrape: "false"
+```
+
+***
+
+## `aembit.io/metrics-path`
+
+Value - HTTP path
+
+Sets the path Prometheus requests when it scrapes Agent Proxy metrics. Agent Injector adds this annotation with the value `/metrics` unless you turn off Agent Proxy metrics.
+
+Agent Proxy serves metrics at `/metrics` and at no other path, so leave this annotation at its default value. The scrape configuration on the Prometheus-compatible metrics page copies this annotation into `__metrics_path__`, so any other value makes the scrape return 404.
+
+***
+
+## `aembit.io/metrics-port`
+
+Value - Port number
+
+Sets the port on which Agent Proxy exposes metrics. Agent Injector adds this annotation with the value `9099` unless you turn off Agent Proxy metrics, and passes the value to the Agent Proxy container as the `AEMBIT_METRICS_PORT` environment variable. Agent Injector also declares this port on the Agent Proxy container in the pod spec.
+
+Set this annotation when port `9099` conflicts with a port your Client Workload already uses.
+
+*Example*:
+
+```yaml
+template:
+  metadata:
+    annotations:
+      aembit.io/agent-inject: "enabled"
+      aembit.io/metrics-port: "9100"
+```

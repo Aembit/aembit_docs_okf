@@ -5,7 +5,7 @@ description: "How to create an OIDC 1.0 Identity Provider for Single Sign-On"
 resource: https://docs.aembit.io/user-guide/administration/identity-providers/create-idp-oidc/
 interface: web-ui
 tags: ["identity-provider", "administration"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-22T15:44:57-07:00
 ---
 
 # How to create an OIDC 1.0 Identity Provider
@@ -73,6 +73,8 @@ To configure an OIDC 1.0 IdP to work with Aembit, follow these steps:
      Aembit provides a default set of required scopes: `openid profile email`.
 
      You can add additional scopes, such as `groups`, if your IdP supports them and you want to enable automatic user creation based on group membership. See [Configure automatic user creation](automatic-user-creation.md) for more information.
+
+     Add `offline_access` if you use the [MCP Enterprise Managed Access Token](../../access-policies/credential-providers/mcp-enterprise-managed-access-token.md) Credential Provider, so that Aembit receives a refresh token for each user. See [Prepare the Identity Provider for enterprise-managed access](../../access-policies/credential-providers/mcp-enterprise-managed-access-token-idp.md).
 
    * **PKCE Required** - Enable this checkbox to require Proof Key for Code Exchange (PKCE), an additional security layer for OAuth 2.0 flows. Aembit recommends leaving this enabled for enhanced security.
 

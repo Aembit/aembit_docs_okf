@@ -5,7 +5,7 @@ description: "Configure the Atlassian MCP Server to work with AI agents through 
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/supported-servers/atlassian/
 interface: mcp
 tags: ["supported-server", "mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-09-22T15:44:57-07:00
 ---
 
 # Atlassian MCP Server
@@ -36,10 +36,33 @@ Before you configure Atlassian, review these requirements and behaviors specific
 
 ## Choose an authentication approach
 
-Aembit supports two authentication approaches for Atlassian. The tabs in the following sections stay in sync with the approach you choose.
+Aembit supports three authentication approaches for Atlassian. The tabs in the following sections cover the first two and stay in sync with the approach you choose. The third approach has its own section, [Set up enterprise-managed authentication](#set-up-enterprise-managed-authentication).
 
 * **User-Based**: each user authenticates with their own Atlassian identity, and the Gateway injects that user’s token into MCP requests. Aembit stores and refreshes each user’s tokens individually.
 * **Admin-Based**: an administrator completes the OAuth flow once during setup, and all users who access Atlassian through the Gateway share the resulting tokens.
+* **[Enterprise-Managed](../../../access-policies/credential-providers/about-mcp-enterprise-managed-access-token.md)**: the corporate identity provider vouches for each user, and Aembit exchanges that assertion for the user’s Atlassian token with no consent prompt. Each user still receives their own token.
+
+## Set up enterprise-managed authentication
+
+Atlassian supports Enterprise-Managed Authorization for its MCP server, and Okta is the identity provider Atlassian names for it. Okta is also the only OIDC Identity Provider Aembit has verified for this flow. With this approach, the MCP Identity Gateway obtains each user’s Atlassian token through the corporate identity provider. No user sees an Atlassian consent prompt, and this Credential Provider type has no administrator authorization step.
+
+1. In Atlassian Administration, select your organization if you have more than one, then select **Rovo** and **Rovo MCP server**, and open the **Authentication** tab.
+
+2. Select **Edit URL** and enter your Okta issuer as the **trusted identity provider URL**. This is the same issuer your Aembit OIDC Identity Provider uses to sign users in. The [Atlassian enterprise-managed authentication documentation](https://support.atlassian.com/security-and-access-policies/docs/configuring-enterprise-managed-authentication/) covers this step in detail.
+
+3. Complete the [`offline_access` scope](../../../access-policies/credential-providers/mcp-enterprise-managed-access-token-idp.md#add-the-offline_access-scope-in-aembit) and [token exchange](../../../access-policies/credential-providers/mcp-enterprise-managed-access-token-idp.md#enable-token-exchange-on-the-okta-application) sections of [Prepare the Identity Provider for enterprise-managed access](../../../access-policies/credential-providers/mcp-enterprise-managed-access-token-idp.md).
+
+4. Complete [Allowlist your Aembit tenant](#allowlist-your-aembit-tenant) before you create the Credential Provider. **Discover** registers your Aembit tenant’s redirect URLs with Atlassian, so add the allowlist entry first.
+
+5. Create the Credential Provider by following [Configure MCP Enterprise Managed Access Token](../../../access-policies/credential-providers/mcp-enterprise-managed-access-token.md). Enter `https://mcp.atlassian.com/v1/mcp/authv2` as the **MCP Server URL**, click **Discover**, and select the Okta Identity Provider as the **Corporate Identity Provider**.
+
+6. Complete [Register the AI agent in Okta](../../../access-policies/credential-providers/mcp-enterprise-managed-access-token-idp.md#register-the-ai-agent-in-okta) with the Credential Provider’s **Client ID**, and then follow [Have users sign in again](../../../access-policies/credential-providers/mcp-enterprise-managed-access-token-idp.md#have-users-sign-in-again).
+
+7. Continue with the following sections, [Create the Server Workload](#create-the-server-workload) and [Create an Access Policy](#create-an-access-policy), and attach this Credential Provider to the Access Policy.
+
+> **Atlassian MCP V2 scopes**
+>
+> Atlassian has announced that MCP V2 ships with OAuth scopes that differ from V1. An organization that restricts Cross App Access scopes in Okta must add the V2 scopes after that release. For the current scope list, see the [Atlassian enterprise-managed authentication documentation](https://support.atlassian.com/security-and-access-policies/docs/configuring-enterprise-managed-authentication/).
 
 ## Allowlist your Aembit tenant
 
@@ -161,6 +184,8 @@ Before OAuth works, an Atlassian organization administrator must add your Aembit
    | **URL Path**              | `/v1/mcp`            |
    | **Authentication method** | HTTP Authentication  |
    | **Authentication scheme** | Bearer               |
+
+   If you use enterprise-managed authentication, enter the `/v1/mcp/authv2` path as the **URL Path** instead.
 
 3. Click **Save**.
 

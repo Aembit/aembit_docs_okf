@@ -5,7 +5,7 @@ description: "Configure your Aembit Tenant for the managed MCP Identity Gateway.
 resource: https://docs.aembit.io/user-guide/access-policies/mcp-identity-gateway/setup-mcp-gateway/
 interface: mcp
 tags: ["mcp-identity-gateway", "access-policy"]
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-09-22T15:44:57-07:00
 ---
 
 # Set up the MCP Identity Gateway
@@ -57,7 +57,7 @@ The MCP Identity Gateway needs both: it validates *which* MCP client is connecti
 
 In this model, you configure identity once at the tenant level. Many users can share the same set of policies, while the per-user credentials the Credential Provider manages isolate their individual access.
 
-In your Aembit Tenant, go to **Administration -> Identity Providers** and configure your IdP using [OIDC](../../administration/identity-providers/create-idp-oidc.md) or [SAML](../../administration/identity-providers/create-idp-saml.md).
+In your Aembit Tenant, go to **Administration -> Identity Providers** and configure your IdP using [OIDC](../../administration/identity-providers/create-idp-oidc.md) or [SAML](../../administration/identity-providers/create-idp-saml.md). The MCP Enterprise Managed Access Token Credential Provider requires an OIDC Identity Provider with the `offline_access` scope; see [Prepare the Identity Provider for enterprise-managed access](../credential-providers/mcp-enterprise-managed-access-token-idp.md).
 
 > **Automating configuration**
 >
@@ -178,7 +178,9 @@ Create a Credential Provider that issues tokens for MCP clients to authenticate 
 >
 > Replace `<user_claim>` with a claim from your IdP that uniquely identifies users (for example, `email`, `sub`, or `preferred_username`). The exact claim name depends on your Identity Provider. Check your IdP’s token documentation to find available claims.
 >
-> Unlike typical workload-to-workload scenarios, MCP traffic involves a human user. This dynamic claim identifies *who* is using the AI agent, enabling per-user access control. See [User identity in MCP traffic](../../deploy-install/mcp-identity-gateway/concepts-mcp-gateway.md#user-identity-in-mcp-traffic) for details, or [OIDC Dynamic Claims](../credential-providers/advanced-options/dynamic-claims-oidc.md) for the full syntax reference.
+> If your Identity Provider uses SAML, set **Subject** to `${saml.response.subject.nameId}` instead. See [SAML assertion claims](../credential-providers/advanced-options/dynamic-claims.md#saml-assertion-claims).
+>
+> Unlike typical workload-to-workload scenarios, MCP traffic involves a human user. This dynamic claim identifies *who* is using the AI agent, enabling per-user access control. See [User identity in MCP traffic](../../deploy-install/mcp-identity-gateway/concepts-mcp-gateway.md#user-identity-in-mcp-traffic) for details, or [Dynamic Claims](../credential-providers/advanced-options/dynamic-claims.md) for the full syntax reference.
 
 The token contains the authenticated user’s identity (for example, an email claim) and targets **only** the MCP Identity Gateway. See [Credential Providers](../credential-providers/overview.md) for additional configuration options.
 
@@ -193,7 +195,7 @@ The second policy governs the MCP Identity Gateway’s access to each MCP server
 
 > **Per-user access control**
 >
-> In this policy, the **Client Workload** is the MCP Identity Gateway itself, not individual users. The Credential Provider enforces per-user access: each user completes an OAuth authorization flow once per MCP server, and Aembit stores their tokens individually. Optional Access Conditions can add Time or GeoIP restrictions.
+> In this policy, the **Client Workload** is the MCP Identity Gateway itself, not individual users. The Credential Provider enforces per-user access: with MCP User-Based Access Token, each user completes an OAuth authorization flow once per MCP server, and Aembit stores their tokens individually. With MCP Enterprise Managed Access Token, Aembit exchanges each user’s SSO identity for the MCP server token, and no user sees a consent prompt. Optional Access Conditions can add Time or GeoIP restrictions.
 
 ### Name the Access Policy
 
@@ -271,18 +273,18 @@ See [Trust Providers](../trust-providers/overview.md) for additional configurati
 
 ### Credential Provider
 
-Create a Credential Provider that retrieves credentials for the MCP server. The MCP Identity Gateway supports two credential provider types for this policy, depending on how the MCP server issues credentials.
+Create a Credential Provider that retrieves credentials for the MCP server. The MCP Identity Gateway supports three credential provider types for this policy, depending on how the MCP server issues credentials.
 
 #### Choosing a credential type
 
-|                        | MCP User-Based Access Token                                                                     | OAuth 2.0 Authorization Code                                                        |
-| ---------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| **Token storage**      | Per user. Aembit stores and refreshes each user’s tokens individually.                          | Per credential provider. One set of tokens, shared across all users.                |
-| **Authorization flow** | Each user completes their own OAuth consent flow on first access through the Gateway.           | An administrator clicks **Authorize** in the Aembit UI during setup.                |
-| **Best for**           | SaaS MCP servers that issue credentials scoped to individual users (most common).               | MCP servers that accept a shared service account or administrator-authorized token. |
-| **Discovery**          | **MCP Server URL** field with **Discover** auto-populates OAuth endpoints from server metadata. | **OAuth URL** field with **URL Discovery** auto-populates endpoints.                |
+|                        | MCP User-Based Access Token                                                                     | MCP Enterprise Managed Access Token                                                                                                                               | OAuth 2.0 Authorization Code                                                        |
+| ---------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| **Token storage**      | Per user. Aembit stores and refreshes each user’s tokens individually.                          | Per user. Aembit stores each user’s SSO identity at sign-in and caches the exchanged MCP server token for up to five minutes.                                     | Per credential provider. One set of tokens, shared across all users.                |
+| **Authorization flow** | Each user completes their own OAuth consent flow on first access through the Gateway.           | None for the user. The corporate identity provider authorizes the exchange, and no consent prompt appears.                                                        | An administrator clicks **Authorize** in the Aembit UI during setup.                |
+| **Best for**           | SaaS MCP servers that issue credentials scoped to individual users (most common).               | MCP servers that support Enterprise-Managed Authorization, with an OIDC Identity Provider that supports token exchange. Okta is the only one Aembit has verified. | MCP servers that accept a shared service account or administrator-authorized token. |
+| **Discovery**          | **MCP Server URL** field with **Discover** auto-populates OAuth endpoints from server metadata. | **MCP Server URL** field with **Discover** fills the OAuth endpoints and the Client ID from server metadata.                                                      | **OAuth URL** field with **URL Discovery** auto-populates endpoints.                |
 
-Most SaaS MCP servers require per-user credentials. Use **MCP User-Based Access Token** unless the MCP server explicitly accepts shared credentials.
+Most SaaS MCP servers require per-user credentials. Use **MCP User-Based Access Token** unless the MCP server explicitly accepts shared credentials. When the MCP server and your OIDC Identity Provider both support Enterprise-Managed Authorization, use **MCP Enterprise Managed Access Token** instead, so users never see a consent prompt.
 
 > **Where to find OAuth client settings**
 >
@@ -326,6 +328,49 @@ Most SaaS MCP servers require per-user credentials. Use **MCP User-Based Access 
   >
   > Unlike the OAuth 2.0 Authorization Code Credential Provider, this type doesn’t require an administrator to click **Authorize** during setup. Instead, each user completes their own OAuth consent flow the first time they access the MCP server through the Gateway. Aembit stores and refreshes each user’s tokens individually.
 
+* MCP Enterprise Managed Access Token
+
+  Before you start, complete the [`offline_access` scope](../credential-providers/mcp-enterprise-managed-access-token-idp.md#add-the-offline_access-scope-in-aembit) and [token exchange](../credential-providers/mcp-enterprise-managed-access-token-idp.md#enable-token-exchange-on-the-okta-application) sections of [Prepare the Identity Provider for enterprise-managed access](../credential-providers/mcp-enterprise-managed-access-token-idp.md).
+
+  1. In the **Credential Provider** card in the right panel, click **+ Configure**.
+
+  2. Select the **Add New** tab.
+
+  3. Configure the Credential Provider with the following settings:
+
+     | Field           | Value                                                                                                   |
+     | --------------- | ------------------------------------------------------------------------------------------------------- |
+     | Name            | A descriptive name (for example, `Finance MCP Enterprise Token`)                                        |
+     | Credential Type | Select **MCP Enterprise Managed Access Token**                                                          |
+     | OIDC Issuer URL | The issuer identifier of the MCP server’s authorization server (for example, `https://mcp.example.com`) |
+     | MCP Server URL  | The MCP server’s base URL (for example, `https://mcp.example.com/mcp`)                                  |
+
+  4. Click **Discover** to fill the Client ID, Scopes, Authorization URL, Token URL, and Introspection URL from the MCP server’s metadata.
+
+     If the MCP server doesn’t support discovery, enter them manually using values from the MCP server vendor’s documentation.
+
+  5. Enter the remaining fields:
+
+     | Field                          | Value                                                                                                                                                           |
+     | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+     | Client ID                      | The OAuth client identifier the MCP server’s authorization server issued for Aembit. **Discover** fills it when the server supports dynamic client registration |
+     | Scopes                         | Required scopes, which **Discover** may fill                                                                                                                    |
+     | Introspection URL              | (Optional) The MCP server’s token introspection endpoint                                                                                                        |
+     | Identity Assertion Issuer Mode | Leave at the default, **Corporate Identity Provider**                                                                                                           |
+     | Corporate Identity Provider    | Select the OIDC Identity Provider your users sign in to Aembit through                                                                                          |
+
+  6. If your Corporate Identity Provider is Okta, remove the `email` and `offline_access` scopes from this Credential Provider’s **Scopes** field.
+
+     **Discover** adds both scopes, and the token exchange with Okta fails while they’re present.
+
+  7. Click **Save**.
+
+  8. Complete [Register the AI agent in Okta](../credential-providers/mcp-enterprise-managed-access-token-idp.md#register-the-ai-agent-in-okta) with the Credential Provider’s **Client ID**.
+
+  > **Per-user authorization without a consent prompt**
+  >
+  > Unlike MCP User-Based Access Token, this type shows no consent prompt to the user. Aembit exchanges the user’s SSO identity for the MCP server token when the user first sends a request through the Gateway. Users who signed in to Aembit before you added the `offline_access` scope must sign out and sign in again; see [Configure MCP Enterprise Managed Access Token](../credential-providers/mcp-enterprise-managed-access-token.md) for the full field reference.
+
 * OAuth 2.0 Authorization Code
 
   1. In the **Credential Provider** card in the right panel, click **+ Configure**.
@@ -368,6 +413,8 @@ For more information, see:
 
 * [MCP User-Based Access Tokens](../credential-providers/about-mcp-user-based-access-token.md) for guidance on when each type is appropriate
 * [Configure MCP User-Based Access Token](../credential-providers/mcp-user-based-access-token.md) for the full MCP User-Based configuration reference
+* [MCP Enterprise Managed Access Tokens](../credential-providers/about-mcp-enterprise-managed-access-token.md) for when the enterprise-managed type fits
+* [Configure MCP Enterprise Managed Access Token](../credential-providers/mcp-enterprise-managed-access-token.md) for the full MCP Enterprise Managed configuration reference
 * [OAuth 2.0 Authorization Code](../credential-providers/oauth-authorization-code.md) for the full OAuth 2.0 configuration reference
 * [Credential Providers](../credential-providers/overview.md) for all available Credential Provider types
 
@@ -407,6 +454,8 @@ For MCP servers that require user authorization (for example, via OAuth 2.0 flow
 3. After the user completes the flow, Aembit obtains credentials from the MCP server’s authorization infrastructure and associates those credentials with that user and MCP server.
 
 Subsequent access for that user and server proceeds without repeated consent, subject to token expiration and revocation policies.
+
+This consent flow applies to MCP User-Based Access Token. With [MCP Enterprise Managed Access Token](../credential-providers/about-mcp-enterprise-managed-access-token.md) no consent flow runs, because Aembit exchanges the user’s SSO identity for the token.
 
 ## Verify the connection
 
@@ -461,7 +510,7 @@ To use the MCP Identity Gateway, you only configure:
   * Client-to-Gateway (AI agent → MCP Gateway)
   * Gateway-to-Server (MCP Gateway → MCP server),
 
-* One **Credential Provider** for each MCP server. Use [MCP User-Based Access Token](../credential-providers/mcp-user-based-access-token.md) when the server requires per-user OAuth credentials, or [OAuth 2.0 Authorization Code](../credential-providers/oauth-authorization-code.md) for shared credentials.
+* One **Credential Provider** for each MCP server. Use [MCP User-Based Access Token](../credential-providers/mcp-user-based-access-token.md) when the server requires per-user OAuth credentials, [MCP Enterprise Managed Access Token](../credential-providers/mcp-enterprise-managed-access-token.md) when the server and your OIDC Identity Provider support Enterprise-Managed Authorization, or [OAuth 2.0 Authorization Code](../credential-providers/oauth-authorization-code.md) for shared credentials.
 
 You **shouldn’t** follow the “Set up the MCP Authorization Server” steps unless you’re explicitly using Aembit as a standalone MCP Authorization Server for your own MCP servers.
 

@@ -5,7 +5,7 @@ description: "Create a Trust Provider Secret"
 resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
 interface: api
 tags: ["trust-provider-secret"]
-timestamp: 2026-07-28T14:42:14-04:00
+timestamp: 2026-09-22T20:22:25-07:00
 ---
 
 # POST /api/v1/trust-providers/{tpId}/secrets
@@ -27,7 +27,9 @@ TrustProviderDTO
 
 **Responses:**
 
-- **200**: Created Trust Provider Secret
+- **200**: Updated Trust Provider Secret
+  - `application/json`: [TrustProviderSecretDTO](../schemas/trust-provider-secret-dto.md)
+- **201**: Created Trust Provider Secret
   - `application/json`: [TrustProviderSecretDTO](../schemas/trust-provider-secret-dto.md)
 - **400**: Bad Request
 - **401**: Not Authenticated

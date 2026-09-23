@@ -5,7 +5,7 @@ description: "Identity federation for MCP clients connecting to MCP servers thro
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/
 interface: mcp
 tags: ["mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-09-22T15:44:57-07:00
 ---
 
 # MCP Identity Gateway
@@ -16,9 +16,9 @@ The **Aembit Model Context Protocol (MCP) Identity Gateway** is a data-plane gat
 
 * **Proxies MCP traffic** - AI agents connect to the MCP Identity Gateway as if it were an MCP server. The Gateway connects to downstream MCP servers and relays requests and responses, including both tool invocations and resource access.
 
-* **Enforces identity-aware policies** - The Gateway validates the AI agent’s access token on every MCP request and requests evaluation of the Gateway-to-Server policy from Aembit Cloud to authorize access to the target MCP server. Aembit Cloud evaluates the Client-to-Gateway policy when the AI agent initially connects and obtains an access token. A Trust Provider validates user identity, and OAuth 2.0 Authorization Code Credential Providers manage per-user credentials.
+* **Enforces identity-aware policies** - The Gateway validates the AI agent’s access token on every MCP request and requests evaluation of the Gateway-to-Server policy from Aembit Cloud to authorize access to the target MCP server. Aembit Cloud evaluates the Client-to-Gateway policy when the AI agent initially connects and obtains an access token. A Trust Provider validates user identity, and Credential Providers manage per-user credentials.
 
-* **Performs secure token exchange** - The Gateway obtains and manages credentials for MCP servers so that AI agents never hold direct credentials for enterprise systems. Supported credential types include OAuth 2.0 tokens (via Authorization Code flow) and API keys. The Gateway obtains credentials per-request and caches them for 60 seconds—it never persists them to disk. For details on the token exchange flow, see [MCP Identity Gateway concepts](concepts-mcp-gateway.md).
+* **Performs secure token exchange** - The Gateway obtains and manages credentials for MCP servers so that AI agents never hold direct credentials for enterprise systems. Supported credential types include OAuth 2.0 tokens (via Authorization Code flow), API keys, and tokens that Aembit Cloud obtains by exchanging an identity assertion from the corporate identity provider. The Gateway obtains credentials per-request and caches them for 60 seconds—it never persists them to disk. For details on the token exchange flow, see [MCP Identity Gateway concepts](concepts-mcp-gateway.md).
 
 * **Governs MCP tool traffic** - When the Gateway-to-Server Access Policy includes a Content Security Provider, the Gateway applies that provider’s decision to each MCP tool message the policy matches. See [Content Security in the MCP Identity Gateway](../../access-policies/mcp-identity-gateway/content-security-mcp-gateway.md).
 

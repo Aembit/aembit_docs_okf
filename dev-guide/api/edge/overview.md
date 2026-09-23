@@ -5,7 +5,7 @@ description: "Learn how to integrate Aembit Edge API into your cloud-native appl
 resource: https://docs.aembit.io/dev-guide/api/edge/
 interface: api
 tags: ["edge", "api"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-22T16:15:36-07:00
 ---
 
 # Get started with Aembit Edge API
@@ -36,12 +36,18 @@ Aembit Edge API uses a two-step authentication flow:
 
 The Edge API supports identity attestation from:
 
-* **GitLab CI/CD**: Uses `$GITLAB_OIDC_TOKEN` identity tokens with custom audience
-* **GitHub Actions**: Uses OIDC identity tokens
-* **AWS Lambda**: Uses instance identity documents
-* **Azure Functions**: Uses managed identity tokens
-* **Kubernetes**: Uses service account tokens
-* **And more**: GCP, traditional hosts, and containerized environments
+* **AWS EC2**: Uses the instance identity document from the Instance Metadata Service (IMDS) through the [AWS Metadata Service Trust Provider](../../../user-guide/access-policies/trust-providers/aws-metadata-service-trust-provider.md), or a signed AWS Security Token Service (STS) `GetCallerIdentity` request from the instance’s attached IAM role through the [AWS Role Trust Provider](../../../user-guide/access-policies/trust-providers/aws-role-trust-provider.md)
+* **AWS Lambda**: Uses a signed AWS STS `GetCallerIdentity` request from the function’s execution role through the AWS Role Trust Provider
+* **AWS ECS**: Uses a signed AWS STS `GetCallerIdentity` request from the task’s IAM role through the AWS Role Trust Provider
+* **Azure VMs**: Uses the signed attested data document from the Azure Instance Metadata Service (IMDS)
+* **Google Cloud**: Uses an identity token that the GCP metadata server mints for the workload’s service account
+* **Kubernetes**: Uses a service account token
+* **GitHub Actions**: Uses a GitHub-issued OIDC identity token
+* **GitLab Jobs**: Uses a GitLab-issued OIDC identity token
+* **Terraform Cloud**: Uses a Terraform Cloud OIDC identity token
+* **Any OIDC provider**: Uses an ID token from any OpenID Connect provider, for platforms with no dedicated method of their own
+
+For the request each method sends, see [Edge API authentication methods](auth/overview.md).
 
 ### Token expiration and caching
 

@@ -5,7 +5,7 @@ description: "How to set up Aembit Agent Proxy on Windows Server"
 resource: https://docs.aembit.io/user-guide/deploy-install/virtual-machine/windows/agent-proxy-install-windows/
 interface: web-ui
 tags: ["windows", "virtual-machine", "deploy-install"]
-timestamp: 2026-09-15T20:39:46-07:00
+timestamp: 2026-09-22T11:51:31-07:00
 ---
 
 # How to set up Agent Proxy on Windows Server
@@ -131,7 +131,7 @@ This configuration enables the Agent Proxy to support Client Workloads in this R
 
 ### Custom environment variables for dynamic claims
 
-To make custom environment variables available to [OIDC and JWT-SVID dynamic claims](../../../access-policies/credential-providers/advanced-options/dynamic-claims-oidc.md), set them as machine-level environment variables. For example, you can use PowerShell’s `[Environment]::SetEnvironmentVariable(..., 'Machine')` method. You must also list each variable name in [`AEMBIT_ENV_VAR_ALLOWLIST`](../../../../reference/edge-components/edge-component-env-vars.md#aembit_env_var_allowlist). Agent Proxy MSI installer accepts `AEMBIT_ENV_VAR_ALLOWLIST` as an MSI property at install time.
+To make custom environment variables available to [dynamic claims](../../../access-policies/credential-providers/advanced-options/dynamic-claims.md), set them as machine-level environment variables. For example, you can use PowerShell’s `[Environment]::SetEnvironmentVariable(..., 'Machine')` method. You must also list each variable name in [`AEMBIT_ENV_VAR_ALLOWLIST`](../../../../reference/edge-components/edge-component-env-vars.md#aembit_env_var_allowlist). Agent Proxy MSI installer accepts `AEMBIT_ENV_VAR_ALLOWLIST` as an MSI property at install time.
 
 For step-by-step instructions, see [Configure custom environment variables for Agent Proxy](../../advanced-options/agent-proxy/configure-custom-env-vars.md#configure-by-deployment).
 

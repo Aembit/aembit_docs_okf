@@ -3,7 +3,7 @@ type: reference
 title: "CPTypeOAuth2AuthorizationCodeUIV2DTO"
 resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
 interface: api
-timestamp: 2026-07-28T14:42:14-04:00
+timestamp: 2026-09-22T20:22:25-07:00
 ---
 
 # CPTypeOAuth2AuthorizationCodeUIV2DTO
@@ -38,6 +38,6 @@ timestamp: 2026-07-28T14:42:14-04:00
 - **introspectionUrl** *(optional)*: null,string - Introspection Url of the OAuth 2.0 introspection endpoint, used to validate and obtain metadata about access tokens
 - **isPkceRequired** *(optional)*: boolean - Indicates if Proof Key for Code Exchange (PKCE) protocol flow must be used
 - **callBackUrl** *(optional)*: null,string () - The callback URL where the Authorization Server sends the Authorization Code
-- **finalCallbackUrl** *(optional)*: null,string - Redirect URL after Aembit successfully completes OAuth authorization. Only available to Tenants which are entitled - contact Aembit support if you require this functionality.
+- **finalCallbackUrl** *(optional)*: null,string - Redirect URL after Aembit successfully completes OAuth authorization. Contact Aembit support (https://aembit.io/contact) to enable this feature.
 - **userAuthorizationUrl** *(optional)*: null,string - Authorization URL to be used for authorization of the Credential Provider by a privileged user
 - **state** *(optional)*: null,string - State parameter to maintain state between the authorization request and callback

@@ -5,7 +5,7 @@ description: "Configure the Aembit GitHub Action to retrieve different credentia
 resource: https://docs.aembit.io/user-guide/deploy-install/ci-cd/github/github-actions-how-to/
 interface: web-ui
 tags: ["github", "ci-cd", "deploy-install"]
-timestamp: 2026-09-16T18:21:40-07:00
+timestamp: 2026-09-22T15:17:29-07:00
 ---
 
 # How to retrieve credentials with the Aembit GitHub Action
@@ -161,9 +161,9 @@ Optionally, add the `resource-set-id` input if your Trust Provider lives in a cu
 
   The action provides temporary AWS credentials as the `aws-access-key-id`, `aws-secret-access-key`, and `aws-session-token` [step outputs](github-actions-reference.md). Pass them to `aws-actions/configure-aws-credentials` so that later steps in the job use them through the AWS CLI and AWS SDKs.
 
-  #### Select among multiple AWS STS Credential Providers
+  #### Select among multiple AWS STS Federation Credential Providers
 
-  An Access Policy can hold multiple AWS STS Federation Credential Providers, each with its own **Access Key ID selector**. For how Aembit uses the selector, see [Using multiple AWS STS Credential Providers](../../../access-policies/credential-providers/aws-security-token-service-multiple.md). To choose one, add the `aws-access-key-id` input with the selector of the Credential Provider you want. The input requires version 1.3.0 or later of the action:
+  An Access Policy can hold multiple AWS STS Federation Credential Providers, each with its own **Access Key ID selector**. For how Aembit uses the selector, see [Using multiple AWS STS Federation Credential Providers](../../../access-policies/credential-providers/aws-security-token-service-multiple.md). To choose one, add the `aws-access-key-id` input with the selector of the Credential Provider you want. The input requires version 1.3.0 or later of the action:
 
   ```yaml
         - name: Get AWS credentials from Aembit
@@ -177,7 +177,7 @@ Optionally, add the `resource-set-id` input if your Trust Provider lives in a cu
             aws-access-key-id: 'AKIADUMMYFORROLEA'
   ```
 
-  Selector values use uppercase characters only. Omit the input when the Access Policy has a single AWS STS Credential Provider. A selector that matches no Credential Provider in the Access Policy fails the step. Omitting the input when the Access Policy holds more than one also fails the step, because Aembit returns no credential rather than choosing for you.
+  Selector values contain uppercase letters and numbers only, up to 256 characters, and must match the value saved in the Credential Provider’s mapping exactly. Omit the input when the Access Policy has a single AWS STS Federation Credential Provider. A selector that matches no Credential Provider in the Access Policy fails the step. Omitting the input when the Access Policy holds more than one also fails the step, because Aembit returns no credential rather than choosing for you.
 
 ## Verify it works
 
@@ -325,11 +325,11 @@ permissions:
 
 ### Wrong AWS role assumed
 
-**Symptom:** The step succeeds, but `aws sts get-caller-identity` reports an IAM role you didn’t expect. Or, the step fails when the Access Policy has more than one AWS STS Credential Provider.
+**Symptom:** The step succeeds, but `aws sts get-caller-identity` reports an IAM role you didn’t expect. Or, the step fails when the Access Policy has more than one AWS STS Federation Credential Provider.
 
 **Cause:** The `aws-access-key-id` input is missing, or its value doesn’t match the **Access Key ID selector** of the Credential Provider you want.
 
-**Solution:** Set `aws-access-key-id` to the selector shown on the Credential Provider, in uppercase, and pin `Aembit/get-credentials@v1.3.0` or later. See [Select among multiple AWS STS Credential Providers](#select-among-multiple-aws-sts-credential-providers).
+**Solution:** Set `aws-access-key-id` to the **AWS Access Key Id** value saved in that Credential Provider’s mapping in the Access Policy Builder, exactly as saved, and pin `Aembit/get-credentials@v1.3.0` or later. See [Select among multiple AWS STS Federation Credential Providers](#select-among-multiple-aws-sts-credential-providers).
 
 ### Credential format mismatch
 

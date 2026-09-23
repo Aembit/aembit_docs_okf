@@ -5,14 +5,14 @@ description: "Configure dynamic claims for Vault Client Token Credential Provide
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/advanced-options/dynamic-claims-vault/
 interface: web-ui
 tags: ["advanced-option", "credential-provider", "access-policy"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-22T11:51:31-07:00
 ---
 
 # Vault Dynamic Claims
 
 > **Note**
 >
-> This page describes dynamic claims for **Vault Client Token Credential Providers** only. For OIDC ID Token dynamic claims, see [OIDC Dynamic Claims](dynamic-claims-oidc.md).
+> This page describes dynamic claims for **Vault Client Token Credential Providers** only. For OIDC ID Token, JWT-SVID, and SAML dynamic claims, see [Dynamic Claims](dynamic-claims.md).
 
 Dynamic claims allow you to make Vault credential configuration dynamic in nature, enabling workloads to specify workload-specific claim values outside of the Aembit Tenant UI.
 

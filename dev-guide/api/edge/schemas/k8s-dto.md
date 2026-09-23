@@ -4,7 +4,7 @@ title: "K8sDTO"
 description: "Kubernetes-specific attestation data for Kubernetes pod identification"
 resource: https://docs.aembit.io/dev-guide/api/edge/api-reference-edge/
 interface: api
-timestamp: 2026-09-09T13:57:06-07:00
+timestamp: 2026-09-22T20:31:55-07:00
 ---
 
 # K8sDTO

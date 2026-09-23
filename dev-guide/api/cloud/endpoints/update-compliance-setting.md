@@ -5,7 +5,7 @@ description: "Updates a global compliance setting"
 resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
 interface: api
 tags: ["compliance"]
-timestamp: 2026-07-28T14:42:14-04:00
+timestamp: 2026-09-22T20:22:25-07:00
 ---
 
 # PUT /api/v1/compliance-settings

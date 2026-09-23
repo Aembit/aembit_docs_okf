@@ -5,24 +5,24 @@ description: "Retrieve credentials from an EC2 instance using the Edge SDK and t
 resource: https://docs.aembit.io/dev-guide/sdk/edge/integrations/aws-ec2/
 interface: sdk
 tags: ["integration", "edge", "sdk"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-22T13:47:38-07:00
 ---
 
 # Use the Edge SDK on an AWS EC2 instance
 
-An application running on an AWS EC2 instance authenticates to Aembit through the AWS Metadata Service Trust Provider, which verifies the signed instance identity document that the AWS Instance Metadata Service (IMDS) provides. The Edge SDK reads that document and runs the authentication exchange. You configure the SDK client and request a credential.
+An application on an AWS EC2 instance authenticates to Aembit through the AWS Metadata Service Trust Provider for that instance. That Trust Provider verifies the signed instance identity document that the AWS Instance Metadata Service (IMDS) provides. The Edge SDK reads that document and runs the authentication exchange. You configure the SDK client and request a credential.
 
 ## How an EC2 instance proves its identity
 
 An EC2 instance reads a signed instance identity document from IMDS over a link-local HTTP request. The document describes the instance, including its account, region, and instance ID. AWS signs the document, so the signature proves it came from AWS rather than from the workload.
 
-The Edge SDK reads both the document and its signature over IMDSv2 and sends them to Aembit. Aembit validates the signature and then evaluates the document’s fields against the match rules on your AWS Metadata Service Trust Provider. Because the signed document is the evidence, no credential or token has to exist on the instance ahead of time.
+The Edge SDK reads both the document and its signature over IMDSv2 and sends them to Aembit. Aembit validates the signature. It then evaluates the document’s fields against the match rules on your AWS Metadata Service Trust Provider. Because the signed document is the evidence, no credential or token has to exist on the instance ahead of time.
 
 For the request and response shapes behind that exchange, see [Edge API authentication with AWS Metadata Service](../../../api/edge/auth/aws-metadata-service.md).
 
 ## Before you start
 
-* An Aembit Tenant with at least Read-Only permission for Trust Providers.
+* An Aembit Tenant with at least Read Only permission for Trust Providers.
 * An Access Policy for the service your application reaches.
 * An [AWS Metadata Service Trust Provider](../../../../user-guide/access-policies/trust-providers/aws-metadata-service-trust-provider.md) with match rules that identify your EC2 instance.
 * An EC2 instance with IMDSv2 enabled and reachable at `169.254.169.254`, running Node.js 20 or later.

@@ -5,7 +5,7 @@ description: "How to create an OIDC ID Token Credential Provider"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/oidc-id-token/
 interface: web-ui
 tags: ["credential-provider", "access-policy"]
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-09-22T11:51:31-07:00
 ---
 
 # Create an OIDC ID Token Credential Provider
@@ -83,7 +83,7 @@ To create an OIDC ID Token Credential Provider, follow these steps:
    * Environment variable: `${os.environment.K8S_POD_NAME}`
    * Combine values: `${oidc.identityToken.decode.payload.user_login}_custom_suffix`
 
-   For detailed information on dynamic claims syntax and examples, see [OIDC Dynamic Claims](advanced-options/dynamic-claims-oidc.md).
+   For detailed information on dynamic claims syntax and examples, see [Dynamic Claims](advanced-options/dynamic-claims.md).
 
 9. (Optional) Repeat the preceding step for each additional Claim.
 

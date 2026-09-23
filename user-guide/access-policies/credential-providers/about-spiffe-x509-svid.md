@@ -4,7 +4,7 @@ title: "About the X.509-SVID Credential Provider"
 description: "This page describes the X.509-SVID Credential Provider and how it works"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/about-spiffe-x509-svid/
 tags: ["credential-provider", "access-policy"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-22T11:51:31-07:00
 ---
 
 # About the X.509-SVID Credential Provider
@@ -84,7 +84,7 @@ These paths aren’t mutually exclusive. For example, Agent Proxy can serve a si
 2. **SPIFFE ID configuration** - Aembit Cloud sets the URI Subject Alternative Name using your configured SPIFFE ID:
 
    * **Literal** - Uses a fixed SPIFFE ID value that you provide (must start with `spiffe://`).
-   * **Dynamic** - Derives the SPIFFE ID from workload attributes using template expressions. For details, see [Dynamic Claims for OIDC ID Token, JWT-SVID Token, and X.509-SVID Credential Providers](advanced-options/dynamic-claims-oidc.md).
+   * **Dynamic** - Derives the SPIFFE ID from workload attributes using template expressions. For details, see [Dynamic Claims](advanced-options/dynamic-claims.md).
 
 3. **Certificate consumption** - How the certificate reaches your TLS stack depends on which consumer you use:
 

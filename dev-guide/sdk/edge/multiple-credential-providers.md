@@ -5,12 +5,12 @@ description: "Pass an Access Key ID selector as connection metadata so the Edge 
 resource: https://docs.aembit.io/dev-guide/sdk/edge/multiple-credential-providers/
 interface: sdk
 tags: ["edge", "sdk"]
-timestamp: 2026-09-16T18:21:40-07:00
+timestamp: 2026-09-22T15:17:29-07:00
 ---
 
 # Select among multiple Credential Providers with the Edge SDK
 
-An Access Policy can hold multiple AWS STS Federation Credential Providers, each with its own **Access Key ID selector**. For how Aembit uses the selector, see [Using multiple AWS STS Credential Providers](../../../user-guide/access-policies/credential-providers/aws-security-token-service-multiple.md). Pass the selector as connection metadata when you request the credential, and Aembit returns temporary AWS credentials for the IAM role of the matching Credential Provider. Connection metadata requires Edge SDK 1.34.0 or later.
+An Access Policy can hold multiple AWS STS Federation Credential Providers, each with its own **Access Key ID selector**. For how Aembit uses the selector, see [Using multiple AWS STS Federation Credential Providers](../../../user-guide/access-policies/credential-providers/aws-security-token-service-multiple.md). Pass the selector as connection metadata when you request the credential, and Aembit returns temporary AWS credentials for the IAM role of the matching Credential Provider. Connection metadata requires Edge SDK 1.34.0 or later.
 
 * TypeScript
 
@@ -48,6 +48,6 @@ An Access Policy can hold multiple AWS STS Federation Credential Providers, each
   aws_session_token = result.data["awsSessionToken"]
   ```
 
-Selector values use uppercase characters only. Omit the connection metadata when the Access Policy has a single AWS STS Credential Provider. A selector that matches no Credential Provider in the Access Policy fails the request.
+Selector values contain uppercase letters and numbers only, up to 256 characters, and must match the value saved in the Credential Provider’s mapping exactly. Omit the connection metadata when the Access Policy has a single AWS STS Federation Credential Provider. A selector that matches no Credential Provider in the Access Policy fails the request.
 
 Connection metadata also carries the selectors for [multiple JSON Web Token (JWT) Credential Providers](../../../user-guide/access-policies/credential-providers/json-web-token-multiple.md). The [Edge API credentials endpoint](../../api/edge/endpoints/credentials.md#connection-metadata) lists every field.

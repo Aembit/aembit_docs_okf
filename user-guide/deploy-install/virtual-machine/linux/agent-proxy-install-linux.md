@@ -5,7 +5,7 @@ description: "How to set up Aembit Agent Proxy on a Linux virtual machine (VM)"
 resource: https://docs.aembit.io/user-guide/deploy-install/virtual-machine/linux/agent-proxy-install-linux/
 interface: web-ui
 tags: ["linux", "virtual-machine", "deploy-install"]
-timestamp: 2026-09-15T20:39:46-07:00
+timestamp: 2026-09-22T11:51:31-07:00
 ---
 
 # How to set up Agent Proxy on a Linux VM
@@ -29,6 +29,7 @@ Use the following table to make sure that Aembit supports the operating system a
 | Ubuntu 20.04 LTS | Agent Proxy v1.11.1551+ |
 | Ubuntu 22.04 LTS | Agent Proxy v1.11.1551+ |
 | Ubuntu 24.04 LTS | Agent Proxy v1.11.1551+ |
+| Ubuntu 26.04 LTS | Agent Proxy v1.34.5960+ |
 | Red Hat 8.9 \*   | Agent Proxy v1.11.1551+ |
 
 \* See [How to configure Agent Proxy on SELinux or RHEL](agent-proxy-selinux-config.md) for more info.
@@ -133,7 +134,7 @@ This configuration enables the Agent Proxy to support Client Workloads in this R
 
 ### Custom environment variables for dynamic claims
 
-To make custom environment variables available to [OIDC and JWT-SVID dynamic claims](../../../access-policies/credential-providers/advanced-options/dynamic-claims-oidc.md), add them to a `systemd` drop-in for Agent Proxy service and list each variable name in [`AEMBIT_ENV_VAR_ALLOWLIST`](../../../../reference/edge-components/edge-component-env-vars.md#aembit_env_var_allowlist).
+To make custom environment variables available to [dynamic claims](../../../access-policies/credential-providers/advanced-options/dynamic-claims.md), add them to a `systemd` drop-in for Agent Proxy service and list each variable name in [`AEMBIT_ENV_VAR_ALLOWLIST`](../../../../reference/edge-components/edge-component-env-vars.md#aembit_env_var_allowlist).
 
 For step-by-step instructions (including the recommended `systemctl edit` workflow), see [Configure custom environment variables for Agent Proxy](../../advanced-options/agent-proxy/configure-custom-env-vars.md#configure-by-deployment).
 

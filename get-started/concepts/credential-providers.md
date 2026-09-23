@@ -4,7 +4,7 @@ title: "About Credential Providers"
 description: "Understanding Credential Providers and their role in secure access credential management"
 resource: https://docs.aembit.io/get-started/concepts/credential-providers/
 tags: ["concept"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-22T11:51:31-07:00
 ---
 
 # About Credential Providers
@@ -96,7 +96,7 @@ Aembit offers multiple types of Credential Providers to accommodate the varied a
 Aembit supports sophisticated configurations for complex scenarios:
 
 * **[Multiple Credential Providers](../../user-guide/access-policies/credential-providers/multiple-credential-providers.md)** - Associate multiple providers with a single Access Policy for different authentication paths.
-* **[OIDC Dynamic Claims](../../user-guide/access-policies/credential-providers/advanced-options/dynamic-claims-oidc.md)** - Customize token claims based on workload context.
+* **[Dynamic Claims](../../user-guide/access-policies/credential-providers/advanced-options/dynamic-claims.md)** - Customize token claims based on workload context.
 * **[Vault Dynamic Claims](../../user-guide/access-policies/credential-providers/advanced-options/dynamic-claims-vault.md)** - Use dynamic claims to configure HashiCorp Vault roles based on workload attributes.
 * **[Integration Options](../../user-guide/access-policies/credential-providers/integrations/overview.md)** - Extended integration capabilities for specialized platforms.
 

@@ -5,7 +5,7 @@ description: "Create an Integration"
 resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
 interface: api
 tags: ["integration-v2"]
-timestamp: 2026-07-28T14:42:14-04:00
+timestamp: 2026-09-22T20:22:25-07:00
 ---
 
 # POST /api/v2/integrations

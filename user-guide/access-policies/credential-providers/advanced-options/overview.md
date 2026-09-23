@@ -5,7 +5,7 @@ description: "Overview of advanced configuration options for Aembit Credential P
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/advanced-options/
 interface: web-ui
 tags: ["advanced-option", "credential-provider", "access-policy"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-22T11:51:31-07:00
 ---
 
 # Advanced Credential Provider Options
@@ -16,15 +16,15 @@ This section covers advanced configuration options and features for Aembit Crede
 
 Dynamic claims allow you to create personalized and context-aware credentials by extracting values from tokens or environment variables at runtime.
 
-### OIDC ID Token dynamic claims
+### Dynamic claims
 
-Configure dynamic claims for [OIDC ID Token Credential Providers](../oidc-id-token.md) to extract and use values from incoming OIDC tokens.
+Configure dynamic claims for [OIDC ID Token](../oidc-id-token.md), [JWT-SVID Token](../spiffe-jwt-svid.md), and [X.509-SVID](../spiffe-x509-svid.md) Credential Providers to place values from the requesting identity in the credential.
 
-* Extract claims from OIDC token payloads using `${oidc.identityToken.decode.payload.claim_name}` syntax
+* Extract values from OIDC tokens, SAML assertions, or SPIFFE identities using `${...}` expressions
 * Access environment variables with `${os.environment.VARIABLE_NAME}`
 * Combine values to create custom claim formats
 
-[Learn more about OIDC Dynamic Claims](dynamic-claims-oidc.md)
+[Learn more about Dynamic Claims](dynamic-claims.md)
 
 ### Vault dynamic claims
 

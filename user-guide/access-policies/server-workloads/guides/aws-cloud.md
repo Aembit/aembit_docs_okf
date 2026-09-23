@@ -5,7 +5,7 @@ description: "How to configure Aembit to work with AWS Cloud services using STS 
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/guides/aws-cloud/
 interface: web-ui
 tags: ["guide", "server-workload", "access-policy"]
-timestamp: 2026-08-27T18:01:41-07:00
+timestamp: 2026-09-22T15:17:29-07:00
 ---
 
 # Create an AWS Server Workload
@@ -157,11 +157,11 @@ Select the tab for the AWS service you want to configure:
 
 1. Create an AWS IAM Role in AWS with the necessary permissions to access the desired AWS services. Then, create an AWS IAM Role Integration in your Aembit Tenant. See [Create an AWS IAM Role Integration](../../credential-providers/integrations/aws-iam-role.md).
 
-2. Create an AWS Security Token Service (STS) Credential Provider. See [Configure an AWS STS Federation Credential Provider](../../credential-providers/aws-security-token-service-federation.md).
+2. Create an AWS Security Token Service (STS) Federation Credential Provider. See [Configure an AWS STS Federation Credential Provider](../../credential-providers/aws-security-token-service-federation.md).
 
 ## Access Policy configuration
 
-Create an Access Policy linking your Client Workload, the AWS STS Credential Provider, and the Server Workload. See [Access Policies](../../overview.md) for details.
+Create an Access Policy linking your Client Workload, the AWS STS Federation Credential Provider, and the Server Workload. See [Access Policies](../../overview.md) for details.
 
 ## Client Workload configuration
 
@@ -337,7 +337,7 @@ If you no longer need this integration, remove components in this order:
 3. **Delete the Credential Provider in Aembit** -
 
    * Go to **Credential Providers**
-   * Select the associated AWS STS Credential Provider and click **Delete**
+   * Select the associated AWS STS Federation Credential Provider and click **Delete**
 
 4. **Delete the AWS IAM Role Integration in Aembit** -
 
@@ -354,7 +354,7 @@ Deleting the Server Workload immediately stops credential provisioning. Ensure n
 ## Related resources
 
 * [How Aembit uses AWS SigV4 and SigV4a](../../credential-providers/aws-sigv4.md) - Understanding AWS request signing
-* [AWS STS Credential Provider](../../credential-providers/aws-security-token-service-federation.md) - Detailed Credential Provider setup
+* [AWS STS Federation Credential Provider](../../credential-providers/aws-security-token-service-federation.md) - Detailed Credential Provider setup
 * [AWS IAM Role Integration](../../credential-providers/integrations/aws-iam-role.md) - IAM Role configuration
 * [Credential Lifecycle Management](../credential-lifecycle.md) - How Aembit manages credential rotation and security
 * [Integrate through Agent Proxy](../../../../dev-guide/integration/agent-proxy.md) - Integration patterns and placeholder credentials

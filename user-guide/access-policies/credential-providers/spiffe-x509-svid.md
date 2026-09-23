@@ -5,7 +5,7 @@ description: "How to create an X.509-SVID Credential Provider"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/spiffe-x509-svid/
 interface: web-ui
 tags: ["credential-provider", "access-policy"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-22T11:51:31-07:00
 ---
 
 # Create an X.509-SVID Credential Provider
@@ -74,7 +74,7 @@ To create an X.509-SVID Credential Provider, follow these steps:
        * `spiffe://your-domain/ns/${oidc.identityToken.decode.payload.namespace}/sa/${oidc.identityToken.decode.payload.service_account}` for Kubernetes
        * `spiffe://your-domain/aws/account/${aws.account}/role/${aws.role}` for AWS
 
-     For detailed dynamic-expression syntax, see [Dynamic Claims for OIDC ID Token, JWT-SVID Token, and X.509-SVID Credential Providers](advanced-options/dynamic-claims-oidc.md).
+     For detailed dynamic-expression syntax, see [Dynamic Claims](advanced-options/dynamic-claims.md).
 
    * **Lifetime** - Enter the certificate lifetime in minutes (default 15).
 

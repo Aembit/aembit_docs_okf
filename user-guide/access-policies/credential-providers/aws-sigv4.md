@@ -1,15 +1,15 @@
 ---
 type: explanation
 title: "How Aembit uses AWS SigV4 and SigV4a"
-description: "How Aembit's Credential Provider for AWS STS works with the AWS SigV4 and Sigv4a request signing protocols"
+description: "How Aembit's AWS STS Federation Credential Provider works with the AWS SigV4 and Sigv4a request signing protocols"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/aws-sigv4/
 tags: ["credential-provider", "access-policy"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-22T15:17:29-07:00
 ---
 
 # How Aembit uses AWS SigV4 and SigV4a
 
-AWS Signature Version 4 (SigV4) and Signature Version 4a (SigV4a) are AWS request signing protocols. Aembit uses these protocols to sign HTTP requests from Client Workloads to AWS services. Credentials come from Aembit’s [AWS STS Credential Provider](aws-security-token-service-federation.md). During authentication, SigV4 ensures requests are authentic, unaltered in transit, and not replayed.
+AWS Signature Version 4 (SigV4) and Signature Version 4a (SigV4a) are AWS request signing protocols. Aembit uses these protocols to sign HTTP requests from Client Workloads to AWS services. Credentials come from Aembit’s [AWS STS Federation Credential Provider](aws-security-token-service-federation.md). During authentication, SigV4 ensures requests are authentic, unaltered in transit, and not replayed.
 
 ## SigV4 versions
 
@@ -21,13 +21,13 @@ SigV4 has two versions:
 
 ## SigV4 version selection
 
-Aembit automatically determines whether to use SigV4 or SigV4a when a Client Workload uses an AWS STS Credential Provider to access AWS services. It works like this:
+Aembit automatically determines whether to use SigV4 or SigV4a when a Client Workload uses an AWS STS Federation Credential Provider to access AWS services. It works like this:
 
 * Aembit uses **SigV4** when a Server Workload's hostname includes a region (such as `us-east-1` or `us-east-2`), scoping the signature to only that region.
 
 * Aembit uses **SigV4a** when the Server Workload’s hostname doesn’t include a region (S3 Multi-Region Access Points or other global AWS services), which allows the signature to work across AWS regions.
 
-Aembit performs this selection automatically based on the hostname structure, following AWS’s standard endpoint formats. You don’t need to make configuration changes to benefit from this. Your existing AWS STS Credential Providers automatically gain support for SigV4a where applicable.
+Aembit performs this selection automatically based on the hostname structure, following AWS’s standard endpoint formats. You don’t need to make configuration changes to benefit from this. Your existing AWS STS Federation Credential Providers automatically gain support for SigV4a where applicable.
 
 ## Workload identity and service access separation in AWS
 
@@ -37,7 +37,7 @@ Credential Providers in AWS environments, it’s important to understand the rol
 
 1. Trust Providers (like the [AWS Role Trust Provider](../trust-providers/aws-role-trust-provider.md)) verify who a workload is by confirming the AWS environment it’s running in and the IAM Role it’s using.
 
-2. Once Aembit verifies the workload’s identity, the [AWS STS Credential Provider](aws-security-token-service-federation.md) retrieves temporary AWS credentials for the workload, tied to the IAM Role verified by the Trust Provider.
+2. Once Aembit verifies the workload’s identity, the [AWS STS Federation Credential Provider](aws-security-token-service-federation.md) retrieves temporary AWS credentials for the workload, tied to the IAM Role verified by the Trust Provider.
 
 3. When the workload makes API requests to AWS services like S3, Lambda, or SQS, Aembit’s Agent Proxy automatically signs those requests using AWS SigV4 for regional services, or SigV4a for global or multi-region services.
 
@@ -149,6 +149,6 @@ Agent Proxy has the following limitations when processing S3 upload requests.
 
 ### Pre-signed URLs
 
-Aembit doesn’t support AWS pre-signed URLs. Pre-signed URLs include signing parameters in the URL query string rather than in HTTP headers, which is a different signing mechanism than the header-based SigV4/SigV4a signing that Aembit’s Agent Proxy handles.
+Aembit doesn’t support AWS pre-signed URLs. Pre-signed URLs include signing parameters in the URL query string rather than in HTTP headers. That’s a different signing mechanism than the header-based SigV4/SigV4a signing that Aembit’s Agent Proxy handles.
 
-If your application requires pre-signed URLs for use cases like generating shareable S3 download links, you must generate those URLs using AWS credentials obtained outside of Aembit’s credential injection flow.
+If your application requires pre-signed URLs, for example to generate shareable S3 download links, generate those URLs with AWS credentials obtained outside of Aembit’s credential injection flow.

@@ -5,7 +5,7 @@ description: "How to create a JWT-SVID Token Credential Provider"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/spiffe-jwt-svid/
 interface: web-ui
 tags: ["credential-provider", "access-policy"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-22T11:51:31-07:00
 ---
 
 # Create a JWT-SVID Token Credential Provider
@@ -107,7 +107,7 @@ To create a JWT-SVID Token Credential Provider, follow these steps:
    * Environment variable: `${os.environment.CLUSTER_NAME}`
    * Combine values: `${namespace}_${environment}`
 
-   For detailed information on dynamic claims syntax and examples, see [Dynamic Claims for OIDC and JWT-SVID Tokens](advanced-options/dynamic-claims-oidc.md).
+   For detailed information on dynamic claims syntax and examples, see [Dynamic Claims](advanced-options/dynamic-claims.md).
 
 8. (Optional) Repeat the preceding step for each additional Claim.
 

@@ -5,7 +5,7 @@ description: "Learn how to integrate Aembit Edge API into your cloud-native appl
 resource: https://docs.aembit.io/dev-guide/api/edge/quickstart-edge/
 interface: api
 tags: ["edge", "api"]
-timestamp: 2026-09-11T18:17:53-07:00
+timestamp: 2026-09-22T11:51:31-07:00
 ---
 
 # Get started with Aembit Edge API
@@ -928,6 +928,6 @@ Congratulations on completing your first Aembit Edge API integration! 🚀
 > * **See more about each endpoint** in the [Endpoints section](endpoints/overview.md)
 > * **Set up additional workload types** like AWS Lambda or Kubernetes pods
 > * **Configure different credential types** for other target services
-> * **Use dynamic claims** in your OIDC tokens with [OIDC Dynamic Claims](../../../user-guide/access-policies/credential-providers/advanced-options/dynamic-claims-oidc.md)
+> * **Use dynamic claims** in your OIDC tokens with [Dynamic Claims](../../../user-guide/access-policies/credential-providers/advanced-options/dynamic-claims.md)
 > * **Implement error handling and retry logic** for production deployments
 > * **Review the API reference** for detailed parameter specifications

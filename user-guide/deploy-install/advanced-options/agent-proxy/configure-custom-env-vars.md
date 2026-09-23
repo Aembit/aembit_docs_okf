@@ -5,12 +5,12 @@ description: "How to inject custom environment variables into Agent Proxy and Ae
 resource: https://docs.aembit.io/user-guide/deploy-install/advanced-options/agent-proxy/configure-custom-env-vars/
 interface: web-ui
 tags: ["agent-proxy", "advanced-option", "deploy-install"]
-timestamp: 2026-06-05T14:13:51-07:00
+timestamp: 2026-09-22T11:51:31-07:00
 ---
 
 # Configure custom environment variables for Agent Proxy
 
-[OIDC and JWT-SVID dynamic claims](../../../access-policies/credential-providers/advanced-options/dynamic-claims-oidc.md) can include values from environment variables present in **Agent Proxy** or **Aembit CLI** process environments. By default, Agent Proxy and Aembit CLI capture no custom variables. To enable capture, you must set an allowlist and make sure the variables are present in the process environment.
+[Dynamic claims](../../../access-policies/credential-providers/advanced-options/dynamic-claims.md) can include values from environment variables present in **Agent Proxy** or **Aembit CLI** process environments. By default, Agent Proxy and Aembit CLI capture no custom variables. To enable capture, you must set an allowlist and make sure the variables are present in the process environment.
 
 This page describes how to inject custom variables and configure the allowlist on each supported platform.
 
@@ -297,7 +297,7 @@ Aembit captures custom environment variables on:
 
 ## Related docs
 
-* [OIDC and JWT-SVID dynamic claims](../../../access-policies/credential-providers/advanced-options/dynamic-claims-oidc.md)
+* [Dynamic claims](../../../access-policies/credential-providers/advanced-options/dynamic-claims.md)
 * [Edge Component environment variables reference](../../../../reference/edge-components/edge-component-env-vars.md)
 * [How to set up Agent Proxy on a Linux VM](../../virtual-machine/linux/agent-proxy-install-linux.md)
 * [How to set up Agent Proxy on Windows Server](../../virtual-machine/windows/agent-proxy-install-windows.md)

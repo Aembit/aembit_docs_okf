@@ -5,6 +5,7 @@
 * [Databricks MCP Server](databricks.md) - Configure the Databricks MCP Server to work with AI agents through the Aembit MCP Identity Gateway.
 * [FactSet MCP Server](factset.md) - Configure the FactSet MCP Server to work with AI agents through the Aembit MCP Identity Gateway.
 * [GitHub MCP Server](github.md) - Configure the GitHub MCP Server to work with AI agents through the Aembit MCP Identity Gateway.
+* [GitLab MCP Server](gitlab.md) - Configure the GitLab MCP Server to work with AI agents through the Aembit MCP Identity Gateway.
 * [Google Workspace MCP Servers](google-workspace.md) - Configure the Google Workspace MCP Servers (Drive, Calendar, People, and Chat) to work with AI agents through the Aembit MCP Identity Gateway.
 * [Kensho MCP Server](kensho.md) - Configure the Kensho MCP Server to work with AI agents through the Aembit MCP Identity Gateway.
 * [Microsoft Enterprise MCP Server](microsoft-enterprise.md) - Configure the Microsoft Enterprise MCP Server to work with AI agents through the Aembit MCP Identity Gateway.

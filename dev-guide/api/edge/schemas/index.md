@@ -5,7 +5,7 @@
 * [AwsEcsDTO](aws-ecs-dto.md) - AWS ECS container and task metadata for workload attestation
 * [AzureAttestationDTO](azure-attestation-dto.md) - Azure-specific attestation data for Client Workload identification
 * [AzureAttestedDocumentDTO](azure-attested-document-dto.md) - Azure Instance Metadata Service (IMDS) Attested Data document.
-* [ClientWorkloadDetails](client-workload-details.md) - Identity and attestation information for a Client Workload requesting credentials
+* [ClientWorkloadDetails](client-workload-details.md) - Identity and attestation information for a Client Workload. 
 * [ConnectionMetadata](connection-metadata.md) - Filter for multi-credential provider access policy credential request
 * [CredentialProviderTypes](credential-provider-types.md) - Type of credential being requested from your configured Credential Provider.
 * [CrowdStrikeDTO](crowd-strike-dto.md) - CrowdStrike agent information for endpoint security attestation
@@ -21,7 +21,7 @@
 * [OsDTO](os-dto.md) - Operating system environment information for Client Workload attestation
 * [ProcessDTO](process-dto.md) - Process information for Client Workload identification
 * [SensorsDTO](sensors-dto.md) - Security sensor data for enhanced Client Workload attestation
-* [ServerWorkloadDetails](server-workload-details.md) - Target resource details for which the credential is being requested. These fields are used to match the request against your configured Access Policies.
+* [ServerWorkloadDetails](server-workload-details.md) - Target resource details for which the credential is being requested. 
 * [StsGetCallerIdentityDTO](sts-get-caller-identity-dto.md) - AWS STS GetCallerIdentity request data for identity verification
 * [TokenDTO](token-dto.md) - OAuth2-style access token response with expiration details
 * [TransportProtocol](transport-protocol.md)

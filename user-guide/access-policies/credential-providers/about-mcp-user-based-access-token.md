@@ -42,6 +42,8 @@ This is the standard Credential Provider type for Gateway-to-Server policies. Mo
 * The MCP server accepts a single shared credential (for example, a service account)
 * Per-user credential isolation isn’t needed
 
+**Also per-user, without a consent prompt**—Use **[MCP Enterprise Managed Access Token](about-mcp-enterprise-managed-access-token.md)** instead when the MCP server and your OIDC Identity Provider both support Enterprise-Managed Authorization. With that type, the identity provider decides access rather than each user.
+
 ## Role in MCP Identity Gateway
 
 The [MCP Identity Gateway](../../deploy-install/mcp-identity-gateway/overview.md) requires a Credential Provider for its Gateway-to-Server Access Policy. Which type you use depends on whether the MCP server issues credentials per user or accepts a shared credential:

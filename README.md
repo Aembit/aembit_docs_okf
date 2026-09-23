@@ -49,5 +49,5 @@ This repository is a generated artifact. Every documentation release rebuilds th
 
 ## Provenance
 
-- **Source:** `aembit/aembit_docs_astro` @ [`4f418d36a7688a9af19bb0066d2743463d6d3ca4`](https://github.com/aembit/aembit_docs_astro/commit/4f418d36a7688a9af19bb0066d2743463d6d3ca4)
-- **Synced:** 2026-09-16
+- **Source:** `aembit/aembit_docs_astro` @ [`5b748c6c6272547e8fc5e811895f3d77656474b5`](https://github.com/aembit/aembit_docs_astro/commit/5b748c6c6272547e8fc5e811895f3d77656474b5)
+- **Synced:** 2026-09-22

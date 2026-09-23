@@ -4,7 +4,7 @@ title: "About the JWT-SVID Token Credential Provider"
 description: "This page describes the JWT-SVID Token Credential Provider and how it works"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/about-spiffe-jwt-svid/
 tags: ["credential-provider", "access-policy"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-22T11:51:31-07:00
 ---
 
 # About the JWT-SVID Token Credential Provider
@@ -94,7 +94,7 @@ Configure standard and custom claims in your JWT-SVIDs:
 * Pass authorization attributes
 * Support for both literal and dynamic claim values
 
-For detailed syntax and examples of dynamic claims, see [Dynamic Claims for OIDC and JWT-SVID Tokens](advanced-options/dynamic-claims-oidc.md).
+For detailed syntax and examples of dynamic claims, see [Dynamic Claims](advanced-options/dynamic-claims.md).
 
 ### Signing configuration
 
@@ -143,7 +143,7 @@ The following table describes standard SPIFFE JWT-SVID claims and their configur
 | `aws_account`     | **AWS Account** - AWS account ID                 | Dynamic         | `${aws.account}`                                                                                                                  |
 | `environment`     | **Environment** - Deployment environment         | Literal/Dynamic | **Literal**: `production` **Dynamic**: `${os.environment.ENV}`                                                                    |
 
-For more information on using dynamic expressions in these claims, see [Dynamic Claims for OIDC and JWT-SVID Tokens](advanced-options/dynamic-claims-oidc.md).
+For more information on using dynamic expressions in these claims, see [Dynamic Claims](advanced-options/dynamic-claims.md).
 
 ## Additional resources
 

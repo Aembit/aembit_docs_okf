@@ -1,17 +1,17 @@
 ---
 type: explanation
-title: "Using Multiple AWS STS Credential Providers in a Single Access Policy"
-description: "How to add and use multiple AWS Security Token Service (STS) Credential Providers to an Access Policy"
+title: "Using multiple AWS STS Federation Credential Providers in a single Access Policy"
+description: "How to add and use multiple AWS Security Token Service (STS) Federation Credential Providers to an Access Policy"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/aws-security-token-service-multiple/
 tags: ["credential-provider", "access-policy"]
-timestamp: 2026-09-16T18:21:40-07:00
+timestamp: 2026-09-22T15:17:29-07:00
 ---
 
-# Using Multiple AWS STS Credential Providers in a Single Access Policy
+# Using multiple AWS STS Federation Credential Providers in a single Access Policy
 
-This page explains how Aembit routes requests to multiple [AWS Security Token Service (STS) Credential Providers](aws-security-token-service-federation.md) within a single Access Policy.
+This page explains how Aembit routes requests to multiple [AWS Security Token Service (STS) Federation Credential Providers](aws-security-token-service-federation.md) within a single Access Policy.
 
-Unlike when using [multiple JWT-based Credential Providers](multiple-credential-providers.md) that use username or HTTP header mapping, AWS STS Credential Providers use **Access Key ID selectors** for Credential Provider matching. Each AWS STS Credential Provider that you configure in an Access Policy must have a unique **Access Key ID** that your application uses as a placeholder in requests. How that selector reaches Aembit depends on the integration path. Agent Proxy reads it from the intercepted request. The Aembit GitHub Action, the Edge SDKs, and the Edge API send it as a parameter of the credential request.
+Unlike when using [multiple JWT-based Credential Providers](multiple-credential-providers.md) that use username or HTTP header mapping, AWS STS Federation Credential Providers use **Access Key ID selectors** for Credential Provider matching. You assign the selector when you map the Credential Provider in the Access Policy, and each selector must be unique within that Access Policy. Your application sends the selector as its AWS Access Key ID, in place of a real key, to choose the Credential Provider. How that selector reaches Aembit depends on the integration path. Agent Proxy reads it from the intercepted request. The Aembit GitHub Action, the Edge SDKs, and the Edge API send it as a parameter of the credential request.
 
 > **Pre-signed URLs**
 >
@@ -19,11 +19,11 @@ Unlike when using [multiple JWT-based Credential Providers](multiple-credential-
 
 In complex AWS environments, applications often need to assume different IAM roles to access AWS services securely. Traditionally, this required creating separate access policies for each role, increasing operational overhead.
 
-You can add multiple AWS STS Credential Providers to one Access Policy. This enables a single Client Workload identity to seamlessly access multiple AWS resources, each with its own IAM role, by selecting the appropriate Credential Provider based on the AWS Access Key ID.
+You can add multiple AWS STS Federation Credential Providers to one Access Policy. This enables a single Client Workload identity to seamlessly access multiple AWS resources, each with its own IAM role, by selecting the appropriate Credential Provider based on the AWS Access Key ID.
 
 > **Edge Component minimum versions**
 >
-> Using multiple AWS STS Credential Providers through Agent Proxy requires the following Aembit Edge Component minimum versions:
+> Using multiple AWS STS Federation Credential Providers through Agent Proxy requires the following Aembit Edge Component minimum versions:
 >
 > * Agent Proxy 1.27.3865
 > * Agent Controller 1.27.2906
@@ -38,7 +38,7 @@ You can add multiple AWS STS Credential Providers to one Access Policy. This ena
 
 ## How it works
 
-After you [configure multiple AWS STS Credential Providers](aws-security-token-service-federation.md#configure-multiple-aws-sts-credential-providers) in an Access Policy (each with a unique Access Key ID selector), Aembit handles requests as follows:
+After you [configure multiple AWS STS Federation Credential Providers](aws-security-token-service-federation.md#configure-multiple-aws-sts-credential-providers) in an Access Policy (each mapped to a unique Access Key ID selector), Aembit handles requests as follows:
 
 1. **Selector delivery** - The Client Workload’s integration path delivers the Access Key ID selector to Aembit Cloud as part of the credential request. See [Selector paths](#selector-paths) for where each path takes the selector from.
 
@@ -85,7 +85,7 @@ The following diagram shows the Agent Proxy path. Agent Proxy extracts the selec
 
 ## Access authorization events
 
-The following are example [access authorization events](../../audit-report/access-authorization-events.md) with the Event Type `access.credential` showing the use of different AWS STS Credential Providers within an Access Policy when handling requests:
+The following are example [access authorization events](../../audit-report/access-authorization-events.md) with the Event Type `access.credential` showing the use of different AWS STS Federation Credential Providers within an Access Policy when handling requests:
 
 Notice the differences between the two Credential Providers:
 
@@ -187,19 +187,19 @@ Notice the differences between the two Credential Providers:
 
 ## Error handling
 
-The following rules apply when handling requests with multiple AWS STS Credential Providers:
+The following rules apply when handling requests with multiple AWS STS Federation Credential Providers:
 
 * Behind Agent Proxy, an Access Key ID that matches no configured Credential Provider fails the request with a `403 Forbidden` error.
 * On the Edge API path, an Access Key ID that matches no configured Credential Provider returns `404 Not Found` with `credentialType` set to `Unknown`.
 * On the Edge API path, a request that sends no Access Key ID at all returns `400 Bad Request` when the Access Policy holds more than one Credential Provider.
 * If Agent Proxy can’t extract the Access Key ID (for example, a malformed request), credentials aren’t injected and the request fails.
-* Access Key ID selector values must use uppercase characters only. Lowercase selectors won’t match.
+* Access Key ID selectors contain uppercase letters and numbers only, so a lowercase Access Key ID from the application won’t match.
 
 ## Related topics
 
-* [Configure an AWS STS Federation Credential Provider](aws-security-token-service-federation.md) - Set up a single AWS STS Credential Provider
+* [Configure an AWS STS Federation Credential Provider](aws-security-token-service-federation.md) - Set up a single AWS STS Federation Credential Provider
 * [Configure multiple Credential Providers](multiple-credential-providers.md) - Overview of multiple Credential Provider support
-* [How Aembit uses AWS SigV4 and SigV4a](aws-sigv4.md) - Learn how Aembit’s AWS STS Credential Provider works with AWS request signing
+* [How Aembit uses AWS SigV4 and SigV4a](aws-sigv4.md) - Learn how Aembit’s AWS STS Federation Credential Provider works with AWS request signing
 * [Credential Providers overview](overview.md) - Overview of all available Credential Provider types
 * [Access Policies](../overview.md) - Learn about Aembit Access Policies and how they work
 * [Access Authorization Events](../../audit-report/access-authorization-events.md) - Review access authorization event information in the Reporting Dashboard

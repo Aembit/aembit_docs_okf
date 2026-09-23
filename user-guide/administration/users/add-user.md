@@ -5,7 +5,7 @@ description: "How to add a user to your Aembit Tenant"
 resource: https://docs.aembit.io/user-guide/administration/users/add-user/
 interface: web-ui
 tags: ["user", "administration"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-09-22T13:47:38-07:00
 ---
 
 # How to add a user
@@ -30,7 +30,7 @@ To add a user to your Aembit Tenant, perform the following steps:
    * **Email** - The email address associated with the user
    * **Country Code (optional)** - The country code associated with the user
    * **Phone Number (optional)** - The phone number associated with the user.
-   * **Role Assignments** - Select the specific role assignments for the user from a list of available roles.
+   * **Role Assignments** - Select the specific role assignments for the user from a list of available roles. When you assign more than one role, the user gets the highest permission level that any of those roles grants. See [How permissions combine across roles](../roles/overview.md#how-permissions-combine-across-roles).
 
    ![Completed Users pop out menu](https://docs.aembit.io/_astro/administration_users_dialog_window_completed.D0QPPxoo_1kqz96.webp)
 

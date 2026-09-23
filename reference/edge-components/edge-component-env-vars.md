@@ -4,7 +4,7 @@ title: "Edge Component environment variables reference"
 description: "Reference for environment variables of Edge Components categorized by deployment type"
 resource: https://docs.aembit.io/reference/edge-components/edge-component-env-vars/
 tags: ["edge-component"]
-timestamp: 2026-09-16T07:24:16-07:00
+timestamp: 2026-09-22T11:51:31-07:00
 ---
 
 # Edge Component environment variables reference
@@ -356,7 +356,7 @@ Default - not set (empty)
 
 OS-All v1.31.4764
 
-A comma-separated list of environment variable names that Agent Proxy may capture for use in [dynamic claims](../../user-guide/access-policies/credential-providers/advanced-options/dynamic-claims-oidc.md). By default, the allowlist is empty, so Agent Proxy captures no custom environment variables.
+A comma-separated list of environment variable names that Agent Proxy may capture for use in [dynamic claims](../../user-guide/access-policies/credential-providers/advanced-options/dynamic-claims.md). By default, the allowlist is empty, so Agent Proxy captures no custom environment variables.
 
 If Aembit Cloud requests an environment variable that’s not on this list, Agent Proxy logs a warning (`requested env variable <name> is not in allow list`) and omits the variable from the response. The credential request still proceeds, but without that claim value.
 
@@ -639,7 +639,7 @@ The Kubernetes namespace where Agent Proxy runs.
 
 The Aembit Helm chart sets this automatically via the Kubernetes downward API (`fieldRef: metadata.namespace` in the chart’s webhook template).
 
-When set, this variable is always available for use in [dynamic claims](../../user-guide/access-policies/credential-providers/advanced-options/dynamic-claims-oidc.md), regardless of whether it appears in `AEMBIT_ENV_VAR_ALLOWLIST`.
+When set, this variable is always available for use in [dynamic claims](../../user-guide/access-policies/credential-providers/advanced-options/dynamic-claims.md), regardless of whether it appears in `AEMBIT_ENV_VAR_ALLOWLIST`.
 
 *Example*:\
 `my-namespace`
@@ -656,7 +656,7 @@ The Kubernetes pod name where Agent Proxy runs.
 
 The Aembit Helm chart sets this automatically via the Kubernetes downward API (`fieldRef: metadata.name` in the chart’s webhook template).
 
-When set, this variable is always available for use in [dynamic claims](../../user-guide/access-policies/credential-providers/advanced-options/dynamic-claims-oidc.md), regardless of whether it appears in `AEMBIT_ENV_VAR_ALLOWLIST`.
+When set, this variable is always available for use in [dynamic claims](../../user-guide/access-policies/credential-providers/advanced-options/dynamic-claims.md), regardless of whether it appears in `AEMBIT_ENV_VAR_ALLOWLIST`.
 
 *Example*:\
 `my-app-pod-12345`
@@ -695,7 +695,7 @@ Default - not set
 
 Kubernetes only
 
-A customer-defined identifier for the Kubernetes cluster where Agent Proxy runs. Used by integrations such as the [Wiz access conditions integration](../../user-guide/access-policies/access-conditions/integrations/wiz.md) and available for use in [dynamic claims](../../user-guide/access-policies/credential-providers/advanced-options/dynamic-claims-oidc.md), regardless of whether it appears in `AEMBIT_ENV_VAR_ALLOWLIST`.
+A customer-defined identifier for the Kubernetes cluster where Agent Proxy runs. Used by integrations such as the [Wiz access conditions integration](../../user-guide/access-policies/access-conditions/integrations/wiz.md) and available for use in [dynamic claims](../../user-guide/access-policies/credential-providers/advanced-options/dynamic-claims.md), regardless of whether it appears in `AEMBIT_ENV_VAR_ALLOWLIST`.
 
 Set this value through your Aembit Helm chart deployment by setting `agentProxy.env.KUBERNETES_PROVIDER_ID` to your cluster identifier.
 
@@ -798,7 +798,7 @@ Default - not set (empty)
 
 OS-All v1.31.4764
 
-A comma-separated list of environment variable names that Aembit CLI may capture for use in [dynamic claims](../../user-guide/access-policies/credential-providers/advanced-options/dynamic-claims-oidc.md). By default, the allowlist is empty, so Aembit CLI captures no custom environment variables.
+A comma-separated list of environment variable names that Aembit CLI may capture for use in [dynamic claims](../../user-guide/access-policies/credential-providers/advanced-options/dynamic-claims.md). By default, the allowlist is empty, so Aembit CLI captures no custom environment variables.
 
 The CLI inherits the shell environment automatically; you only need to set the allowlist itself explicitly.
 
