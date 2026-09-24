@@ -2,6 +2,12 @@
 
 ## 2026-09-23
 
+### Automatic user creation reads user names from more claims
+
+When Aembit creates a user through single sign-on, it now reads the user’s first and last names from standard OpenID Connect (OIDC) profile claims, including `given_name` and `family_name`. If a first or last name claim is missing, Aembit takes that name from the `name` claim.
+
+For the full list of claims, see [User name claims](user-guide/administration/identity-providers/automatic-user-creation.md#user-name-claims).
+
 ### Aembit Cloud security updates
 
 Enhanced security for the [OAuth 2.0 Authorization Code Credential Provider](user-guide/access-policies/credential-providers/oauth-authorization-code.md).

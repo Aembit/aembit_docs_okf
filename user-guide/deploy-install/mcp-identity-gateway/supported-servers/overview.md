@@ -5,7 +5,7 @@ description: "Configuration guides for connecting third-party MCP servers to AI 
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/supported-servers/
 interface: mcp
 tags: ["supported-server", "mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-09-22T15:44:57-07:00
+timestamp: 2026-09-23T12:32:31-07:00
 ---
 
 # Supported MCP Servers
@@ -44,7 +44,6 @@ Configuration guides are available for the following servers:
 ### Financial
 
 * [Stripe](stripe.md)
-* [FactSet](factset.md)
 * [Kensho](kensho.md)
 
 ### Productivity
