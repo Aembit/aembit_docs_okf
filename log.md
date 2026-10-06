@@ -1,5 +1,32 @@
 # Aembit Changelog
 
+## 2026-10-05
+
+### Edge components dependency security updates
+
+Agent Proxy 1.34.6014 fixes the published Rust advisory [RUSTSEC-2026-0258](https://rustsec.org/advisories/RUSTSEC-2026-0258.html) in the bundled `h2` HTTP/2 library. Aembit CLI has included the same fix since version 1.34.5772.
+
+This update shipped in the same build as the [Edge components release with Ubuntu 26.04 support](https://docs.aembit.io/changelog/entry/2026-10-05-edge-components-release-with-ubuntu-26-04-support).
+
+### Edge components release with Ubuntu 26.04 support
+
+Aembit has released new versions of the following components and packages:
+
+* Agent Proxy 1.34.6014
+* Aembit CLI 1.34.6014
+* AWS Lambda Extension 1.34.185
+* Helm Chart 1.34.571
+* AWS ECS Terraform 1.34.4
+
+For the latest available versions of these components, see the [Edge Components Supported Versions](reference/edge-components/edge-component-supported-versions.md) page.
+
+Key Updates:
+
+* **Agent Proxy installs on Ubuntu 26.04 LTS**: The Linux installer now completes on Ubuntu 26.04 LTS hosts. See [Supported versions](user-guide/deploy-install/virtual-machine/linux/agent-proxy-install-linux.md#supported-versions).
+* **Private Network Access credential retrieval**: Agent Proxy retrieves and injects credentials for Access Policies whose Credential Provider uses [Private Network Access](user-guide/access-policies/credential-providers/private-network-access.md). Agent Proxy 1.34.5755 could fail credential retrieval for these Access Policies.
+
+A dependency security fix also shipped in this build. See [Edge components dependency security updates](https://docs.aembit.io/changelog/entry/2026-10-05-edge-components-dependency-security-updates).
+
 ## 2026-09-23
 
 ### Automatic user creation reads user names from more claims

@@ -90,12 +90,12 @@ cosign verify --key <path-to-public-key> aembit/aembit_agent_controller:1.34.372
 
 **Docker Hub repo**: [`aembit/aembit_agent_proxy`](https://hub.docker.com/r/aembit/aembit_agent_proxy)
 
-**Latest version**: `1.34.5755`
+**Latest version**: `1.34.6014`
 
 **Verification command**:
 
 ```shell
-cosign verify --key <path-to-public-key> aembit/aembit_agent_proxy:1.34.5755
+cosign verify --key <path-to-public-key> aembit/aembit_agent_proxy:1.34.6014
 ```
 
 ### Agent Injector
@@ -118,12 +118,12 @@ cosign verify --key <path-to-public-key> aembit/aembit_agent_injector:1.34.433
 
 **Docker Hub repo**: [`aembit/aembit_aws_lambda_extension`](https://hub.docker.com/r/aembit/aembit_aws_lambda_extension)
 
-**Latest version**: `1.34.175`
+**Latest version**: `1.34.185`
 
 **Verification command**:
 
 ```shell
-cosign verify --key <path-to-public-key> aembit/aembit_aws_lambda_extension:1.34.175
+cosign verify --key <path-to-public-key> aembit/aembit_aws_lambda_extension:1.34.185
 ```
 
 ### Sidecar Init

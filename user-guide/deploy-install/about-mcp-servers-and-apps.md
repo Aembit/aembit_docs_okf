@@ -4,7 +4,7 @@ title: "MCP servers and MCP apps"
 description: "How Aembit handles MCP servers and MCP apps differently, and what to expect when connecting each through the MCP Identity Gateway."
 resource: https://docs.aembit.io/user-guide/deploy-install/about-mcp-servers-and-apps/
 tags: ["deploy-install"]
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-10-05T15:25:07-07:00
 ---
 
 # MCP servers and MCP apps

@@ -5,7 +5,7 @@ description: "Identity federation for MCP clients connecting to MCP servers thro
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/
 interface: mcp
 tags: ["mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-09-22T15:44:57-07:00
+timestamp: 2026-10-05T15:25:07-07:00
 ---
 
 # MCP Identity Gateway

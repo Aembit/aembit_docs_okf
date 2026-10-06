@@ -5,7 +5,7 @@ description: "Environment variables for configuring a self-hosted MCP Identity G
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/env-vars-mcp-gateway/
 interface: mcp
 tags: ["mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-10-05T15:25:07-07:00
 ---
 
 # MCP Identity Gateway environment variables (self-hosted only)

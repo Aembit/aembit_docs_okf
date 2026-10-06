@@ -4,7 +4,7 @@ title: "Edge Component environment variables reference"
 description: "Reference for environment variables of Edge Components categorized by deployment type"
 resource: https://docs.aembit.io/reference/edge-components/edge-component-env-vars/
 tags: ["edge-component"]
-timestamp: 2026-09-22T11:51:31-07:00
+timestamp: 2026-09-25T09:44:34-07:00
 ---
 
 # Edge Component environment variables reference
@@ -296,7 +296,7 @@ Default - not set
 
 OS-Linux
 
-The Kerberos principal Agent Proxy authenticates as when `AEMBIT_KERBEROS_ATTESTATION_ENABLED` is `true`. Agent Proxy reads the principal’s key from the keytab named by `KRB5_CLIENT_KTNAME` or `KRB5_KTNAME`. The `aembit_agent_proxy` Linux user must be able to read that keytab. The default, `/etc/krb5.keytab`, is root-only on most hosts, so either name a keytab you’ve made readable or set `AEMBIT_PRIVILEGED_KEYTAB=true` instead of this variable. When `AEMBIT_PRIVILEGED_KEYTAB` is `true`, the installer sets this variable from the host keytab and you don’t need to.
+Agent Proxy authenticates as this Kerberos principal when `AEMBIT_KERBEROS_ATTESTATION_ENABLED` is `true`. Agent Proxy reads the principal’s key from the keytab named by `KRB5_CLIENT_KTNAME` or `KRB5_KTNAME`. The `aembit_agent_proxy` Linux user must be able to read that keytab. The default, `/etc/krb5.keytab`, is root-only on most hosts. Name a keytab you’ve made readable, or set `AEMBIT_PRIVILEGED_KEYTAB=true` instead of this variable. When `AEMBIT_PRIVILEGED_KEYTAB` is `true`, the installer sets this variable from the host keytab and you don’t need to.
 
 *Example*:\
 `webapp01$@EXAMPLE.COM`
@@ -358,7 +358,7 @@ OS-All v1.31.4764
 
 A comma-separated list of environment variable names that Agent Proxy may capture for use in [dynamic claims](../../user-guide/access-policies/credential-providers/advanced-options/dynamic-claims.md). By default, the allowlist is empty, so Agent Proxy captures no custom environment variables.
 
-If Aembit Cloud requests an environment variable that’s not on this list, Agent Proxy logs a warning (`requested env variable <name> is not in allow list`) and omits the variable from the response. The credential request still proceeds, but without that claim value.
+If Aembit Cloud requests an environment variable that’s not on this list, Agent Proxy logs a warning (`requested env variable <name> is not in allow list`) and omits the variable from the response. Without that value, Aembit Cloud denies the request with `Incorrect dynamic claim configuration`.
 
 Allowlist matching is case-sensitive. On Windows, OS-level environment variable lookups are typically case-insensitive, so a process may resolve `my_var` from a system-level `MY_VAR`. Aembit’s allowlist match itself is still case-sensitive and must match the exact case Agent Proxy sees.
 

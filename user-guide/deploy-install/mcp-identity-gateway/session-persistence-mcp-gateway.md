@@ -4,7 +4,7 @@ title: "Session persistence in the MCP Identity Gateway"
 description: "How the MCP Identity Gateway stores MCP sessions, and how to persist them across restarts with Valkey."
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/session-persistence-mcp-gateway/
 tags: ["mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-10-05T15:25:07-07:00
 ---
 
 # Session persistence in the MCP Identity Gateway

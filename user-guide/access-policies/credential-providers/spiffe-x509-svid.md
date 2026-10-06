@@ -5,7 +5,7 @@ description: "How to create an X.509-SVID Credential Provider"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/spiffe-x509-svid/
 interface: web-ui
 tags: ["credential-provider", "access-policy"]
-timestamp: 2026-09-22T11:51:31-07:00
+timestamp: 2026-09-25T09:44:34-07:00
 ---
 
 # Create an X.509-SVID Credential Provider
@@ -69,10 +69,11 @@ To create an X.509-SVID Credential Provider, follow these steps:
 
      * **Dynamic** - Use template expressions that resolve at issuance time using values from the Client Workload’s attestation. Use the syntax `${expression}`.
 
-       For example:
+       For example, for Kubernetes workloads attested by OIDC ID Tokens:
 
-       * `spiffe://your-domain/ns/${oidc.identityToken.decode.payload.namespace}/sa/${oidc.identityToken.decode.payload.service_account}` for Kubernetes
-       * `spiffe://your-domain/aws/account/${aws.account}/role/${aws.role}` for AWS
+       ```text
+       spiffe://your-domain/ns/${oidc.identityToken.decode.payload.kubernetes\.io.namespace}/sa/${oidc.identityToken.decode.payload.kubernetes\.io.serviceaccount.name}
+       ```
 
      For detailed dynamic-expression syntax, see [Dynamic Claims](advanced-options/dynamic-claims.md).
 

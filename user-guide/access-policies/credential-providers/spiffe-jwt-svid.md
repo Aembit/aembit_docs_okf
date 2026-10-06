@@ -5,7 +5,7 @@ description: "How to create a JWT-SVID Token Credential Provider"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/spiffe-jwt-svid/
 interface: web-ui
 tags: ["credential-provider", "access-policy"]
-timestamp: 2026-09-22T11:51:31-07:00
+timestamp: 2026-09-25T09:44:34-07:00
 ---
 
 # Create a JWT-SVID Token Credential Provider
@@ -57,10 +57,13 @@ To create a JWT-SVID Token Credential Provider, follow these steps:
 
      * **Dynamic** - Use variables to generate SPIFFE IDs at runtime. Use the syntax `${expression}` to create dynamic values.
 
-       For example:
+       For example, for a Kubernetes workload:
 
-       * `spiffe://your-domain/ns/${namespace}/sa/${serviceaccount}` for Kubernetes
-       * `spiffe://your-domain/aws/account/${account}/role/${role}` for AWS
+       ```text
+       spiffe://your-domain/ns/${os.environment.K8S_NAMESPACE}/pod/${os.environment.K8S_POD_NAME}
+       ```
+
+       For the expressions each claim source supports, see [Dynamic Claims](advanced-options/dynamic-claims.md).
 
    * **Issuer** - Aembit automatically generates this value based on your tenant information. The issuer URL identifies who created and signed the token.
 
@@ -85,7 +88,6 @@ To create a JWT-SVID Token Credential Provider, follow these steps:
 
    * `namespace` - Kubernetes namespace
    * `service_account` - Kubernetes service account name
-   * `aws_account` - AWS account ID
    * `environment` - Deployment environment (production, staging, etc.)
    * `region` - Geographic or cloud region
    * `cluster` - Kubernetes cluster name
@@ -101,11 +103,10 @@ To create a JWT-SVID Token Credential Provider, follow these steps:
 
    Dynamic claims examples for SPIFFE
 
-   * Extract Kubernetes namespace: `${oidc.identityToken.decode.payload.namespace}`
-   * Extract service account: `${oidc.identityToken.decode.payload.service_account}`
-   * Extract AWS account: `${aws.account}`
+   * Extract Kubernetes namespace: `${oidc.identityToken.decode.payload.kubernetes\.io.namespace}`
+   * Extract service account: `${oidc.identityToken.decode.payload.kubernetes\.io.serviceaccount.name}`
    * Environment variable: `${os.environment.CLUSTER_NAME}`
-   * Combine values: `${namespace}_${environment}`
+   * Combine values: `${os.environment.K8S_NAMESPACE}_${os.environment.K8S_POD_NAME}`
 
    For detailed information on dynamic claims syntax and examples, see [Dynamic Claims](advanced-options/dynamic-claims.md).
 

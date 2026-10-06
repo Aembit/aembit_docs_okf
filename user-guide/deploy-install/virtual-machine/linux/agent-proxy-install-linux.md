@@ -5,7 +5,7 @@ description: "How to set up Aembit Agent Proxy on a Linux virtual machine (VM)"
 resource: https://docs.aembit.io/user-guide/deploy-install/virtual-machine/linux/agent-proxy-install-linux/
 interface: web-ui
 tags: ["linux", "virtual-machine", "deploy-install"]
-timestamp: 2026-09-22T11:51:31-07:00
+timestamp: 2026-10-05T18:58:06-07:00
 ---
 
 # How to set up Agent Proxy on a Linux VM
@@ -29,7 +29,7 @@ Use the following table to make sure that Aembit supports the operating system a
 | Ubuntu 20.04 LTS | Agent Proxy v1.11.1551+ |
 | Ubuntu 22.04 LTS | Agent Proxy v1.11.1551+ |
 | Ubuntu 24.04 LTS | Agent Proxy v1.11.1551+ |
-| Ubuntu 26.04 LTS | Agent Proxy v1.34.5960+ |
+| Ubuntu 26.04 LTS | Agent Proxy v1.34.6014+ |
 | Red Hat 8.9 \*   | Agent Proxy v1.11.1551+ |
 
 \* See [How to configure Agent Proxy on SELinux or RHEL](agent-proxy-selinux-config.md) for more info.

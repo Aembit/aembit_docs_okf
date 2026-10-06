@@ -4,7 +4,7 @@ title: "About the JWT-SVID Token Credential Provider"
 description: "This page describes the JWT-SVID Token Credential Provider and how it works"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/about-spiffe-jwt-svid/
 tags: ["credential-provider", "access-policy"]
-timestamp: 2026-09-22T11:51:31-07:00
+timestamp: 2026-09-25T09:44:34-07:00
 ---
 
 # About the JWT-SVID Token Credential Provider
@@ -58,11 +58,7 @@ spiffe://<trust_domain>/<workload_path>
 
 Aembit supports multiple strategies for SPIFFE ID generation:
 
-* **Dynamic Generation** - Automatically derives SPIFFE IDs from existing workload attributes:
-
-  * Kubernetes: `spiffe://your-domain/ns/${namespace}/sa/${serviceaccount}`
-  * AWS: `spiffe://your-domain/aws/account/${account}/role/${role}`
-  * Custom patterns using workload identity attributes
+* **Dynamic Generation** - Derives SPIFFE IDs at issuance time from [dynamic claims](advanced-options/dynamic-claims.md). For example, `spiffe://your-domain/ns/${os.environment.K8S_NAMESPACE}/pod/${os.environment.K8S_POD_NAME}` for a Kubernetes workload.
 
 * **Literal Configuration** - Set a fixed SPIFFE ID for specific use cases where dynamic generation isn’t suitable
 
@@ -130,18 +126,17 @@ Aembit exposes a public JWKS endpoint for JWT-SVID verification:
 
 The following table describes standard SPIFFE JWT-SVID claims and their configuration:
 
-| Claim             | Description                                      | Type            | Configuration Examples                                                                                                            |
-| ----------------- | ------------------------------------------------ | --------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `sub`             | **Subject** - SPIFFE ID of the workload          | Dynamic/Literal | **Dynamic**: `spiffe://example.com/ns/${namespace}/sa/${serviceaccount}` **Literal**: `spiffe://example.com/workload/api-service` |
-| `iss`             | **Issuer** - Trust domain-based issuer URL       | Auto-generated  | Automatically set based on trust domain configuration                                                                             |
-| `aud`             | **Audience** - Target system expecting the token | Literal         | Single: `my-service.example.com`                                                                                                  |
-| `exp`             | **Expiration** - Token validity end time         | Auto-generated  | Set via **Lifetime** field in minutes (for example, `60` for `1` hour)                                                            |
-| `iat`             | **Issued At** - Token creation timestamp         | Auto-generated  | Automatically set by Aembit upon token issuance                                                                                   |
-| `jti`             | **JWT ID** - Unique token identifier             | Auto-generated  | Automatically generated to prevent replay attacks                                                                                 |
-| `namespace`       | **Namespace** - Kubernetes namespace             | Dynamic         | `${oidc.identityToken.decode.payload.namespace}`                                                                                  |
-| `service_account` | **Service Account** - Kubernetes service account | Dynamic         | `${oidc.identityToken.decode.payload.service_account}`                                                                            |
-| `aws_account`     | **AWS Account** - AWS account ID                 | Dynamic         | `${aws.account}`                                                                                                                  |
-| `environment`     | **Environment** - Deployment environment         | Literal/Dynamic | **Literal**: `production` **Dynamic**: `${os.environment.ENV}`                                                                    |
+| Claim             | Description                                      | Type            | Configuration Examples                                                                                                                                             |
+| ----------------- | ------------------------------------------------ | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `sub`             | **Subject** - SPIFFE ID of the workload          | Dynamic/Literal | **Dynamic**: `spiffe://example.com/ns/${os.environment.K8S_NAMESPACE}/pod/${os.environment.K8S_POD_NAME}` **Literal**: `spiffe://example.com/workload/api-service` |
+| `iss`             | **Issuer** - Trust domain-based issuer URL       | Auto-generated  | Automatically set based on trust domain configuration                                                                                                              |
+| `aud`             | **Audience** - Target system expecting the token | Literal         | Single: `my-service.example.com`                                                                                                                                   |
+| `exp`             | **Expiration** - Token validity end time         | Auto-generated  | Set via **Lifetime** field in minutes (for example, `60` for `1` hour)                                                                                             |
+| `iat`             | **Issued At** - Token creation timestamp         | Auto-generated  | Automatically set by Aembit upon token issuance                                                                                                                    |
+| `jti`             | **JWT ID** - Unique token identifier             | Auto-generated  | Automatically generated to prevent replay attacks                                                                                                                  |
+| `namespace`       | **Namespace** - Kubernetes namespace             | Dynamic         | `${oidc.identityToken.decode.payload.kubernetes\.io.namespace}`                                                                                                    |
+| `service_account` | **Service Account** - Kubernetes service account | Dynamic         | `${oidc.identityToken.decode.payload.kubernetes\.io.serviceaccount.name}`                                                                                          |
+| `environment`     | **Environment** - Deployment environment         | Literal/Dynamic | **Literal**: `production` **Dynamic**: `${os.environment.ENV}`                                                                                                     |
 
 For more information on using dynamic expressions in these claims, see [Dynamic Claims](advanced-options/dynamic-claims.md).
 

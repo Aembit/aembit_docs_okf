@@ -4,7 +4,7 @@ title: "GenericResponseDTO"
 description: "DTO for a Generic API Response"
 resource: https://docs.aembit.io/dev-guide/api/edge/api-reference-edge/
 interface: api
-timestamp: 2026-09-22T20:31:55-07:00
+timestamp: 2026-09-25T10:20:14-07:00
 ---
 
 # GenericResponseDTO
@@ -15,6 +15,6 @@ DTO for a Generic API Response
 
 **Properties:**
 
-- **success** *(optional)*: boolean - True if the API call was successful, False otherwise
-- **message** *(optional)*: null,string - Message to indicate why the API call failed
-- **id** *(optional)*: integer (int32) - Unique identifier of the API response
+- **success** *(required)*: boolean - True if the API call was successful, False otherwise
+- **message** *(required)*: string - Message to indicate why the API call failed
+- **id** *(optional)*: integer (int32) - Optional internal error code or entity identifier associated with the response (defaults to 0 when not applicable)

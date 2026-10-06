@@ -5,7 +5,7 @@ description: "Create a Routing"
 resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
 interface: api
 tags: ["routing"]
-timestamp: 2026-09-22T20:22:25-07:00
+timestamp: 2026-09-25T10:20:24-07:00
 ---
 
 # POST /api/v1/routings

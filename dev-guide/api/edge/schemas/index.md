@@ -9,7 +9,7 @@
 * [ConnectionMetadata](connection-metadata.md) - Filter for multi-credential provider access policy credential request
 * [CredentialProviderTypes](credential-provider-types.md) - Type of credential being requested from your configured Credential Provider.
 * [CrowdStrikeDTO](crowd-strike-dto.md) - CrowdStrike agent information for endpoint security attestation
-* [EdgeCredentials](edge-credentials.md) -     Credential data returned to Client Workloads based on your configured Credential Providers
+* [EdgeCredentials](edge-credentials.md) -     Credential data returned to Client Workloads based on your configured Credential Providers:
 * [EnvironmentDTO](environment-dto.md) - Environment variables available to the Client Workload
 * [GcpAttestationDTO](gcp-attestation-dto.md) - GCP-specific attestation data for Client Workload identification
 * [GenericResponseDTO](generic-response-dto.md) - DTO for a Generic API Response
@@ -17,11 +17,11 @@
 * [IdentityTokenAttestationDTO](identity-token-attestation-dto.md) - JWT-based identity token attestation for CI/CD platforms
 * [K8sDTO](k8s-dto.md) - Kubernetes-specific attestation data for Kubernetes pod identification
 * [LambdaDTO](lambda-dto.md) - AWS Lambda function information for serverless workload attestation
-* [NetworkInterfacesDTO](network-interfaces-dto.md)
+* [NetworkInterfacesDTO](network-interfaces-dto.md) - Network interface details for host network adapter identification
 * [OsDTO](os-dto.md) - Operating system environment information for Client Workload attestation
 * [ProcessDTO](process-dto.md) - Process information for Client Workload identification
 * [SensorsDTO](sensors-dto.md) - Security sensor data for enhanced Client Workload attestation
-* [ServerWorkloadDetails](server-workload-details.md) - Target resource details for which the credential is being requested. 
+* [ServerWorkloadDetails](server-workload-details.md) - Target resource details for which the credential is being requested. These fields provide the server-side context used to match the request against your configured Aembit Access Policies.
 * [StsGetCallerIdentityDTO](sts-get-caller-identity-dto.md) - AWS STS GetCallerIdentity request data for identity verification
 * [TokenDTO](token-dto.md) - OAuth2-style access token response with expiration details
-* [TransportProtocol](transport-protocol.md)
+* [TransportProtocol](transport-protocol.md) - Network transport protocol used to communicate with the target server workload (TCP).

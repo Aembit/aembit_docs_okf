@@ -5,7 +5,7 @@ description: "Learn how to use dynamic claims to extract and use values from wor
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/advanced-options/dynamic-claims/
 interface: web-ui
 tags: ["advanced-option", "credential-provider", "access-policy"]
-timestamp: 2026-09-22T11:51:31-07:00
+timestamp: 2026-09-25T09:44:34-07:00
 ---
 
 # Dynamic Claims
@@ -90,14 +90,14 @@ Configure dynamic claims in a [JWT-SVID Token Credential Provider](../spiffe-jwt
 #### Subject field (SPIFFE ID)
 
 ```plaintext
-spiffe://your-domain/ns/${oidc.identityToken.decode.payload.namespace}/sa/${oidc.identityToken.decode.payload.service_account}
+spiffe://your-domain/ns/${oidc.identityToken.decode.payload.kubernetes\.io.namespace}/sa/${oidc.identityToken.decode.payload.kubernetes\.io.serviceaccount.name}
 ```
 
 #### Custom claims
 
 * **Claim Name**: `namespace`
 
-* **Value**: `${oidc.identityToken.decode.payload.namespace}`
+* **Value**: `${oidc.identityToken.decode.payload.kubernetes\.io.namespace}`
 
 * **Claim Name**: `cluster`
 
@@ -117,13 +117,7 @@ Unlike OIDC ID Tokens and JWT-SVID Tokens, X.509-SVID certificates do not carry 
 For Kubernetes workloads attested by OIDC ID Tokens:
 
 ```text
-spiffe://example.com/ns/${oidc.identityToken.decode.payload.namespace}/sa/${oidc.identityToken.decode.payload.service_account}
-```
-
-For AWS workloads attested by AWS Role:
-
-```text
-spiffe://example.com/aws/account/${aws.account}/role/${aws.role}
+spiffe://example.com/ns/${oidc.identityToken.decode.payload.kubernetes\.io.namespace}/sa/${oidc.identityToken.decode.payload.kubernetes\.io.serviceaccount.name}
 ```
 
 The expression syntax and supported claim sources documented below apply identically to the Subject and Spiffe ID fields on an X.509-SVID Credential Provider.
@@ -160,6 +154,12 @@ Extract any claim from the incoming OIDC token’s payload:
 
 ```text
 ${oidc.identityToken.decode.payload.<CLAIM_NAME>}
+```
+
+To read a nested claim, separate each level with a period. When a claim name contains a period, such as `kubernetes.io` in a Kubernetes service account token, escape that period with a backslash:
+
+```text
+${oidc.identityToken.decode.payload.kubernetes\.io.namespace}
 ```
 
 **Common GitLab CI OIDC claims**
@@ -222,11 +222,14 @@ For platform-specific guidance on injecting environment variables and the allowl
 
 Dynamic claims can read the following variables regardless of `AEMBIT_ENV_VAR_ALLOWLIST`, provided each one exists in Agent Proxy or Aembit CLI process environment:
 
+* [`AEMBIT_RESOURCE_SET_ID`](../../../../reference/edge-components/edge-component-env-vars.md#aembit_resource_set_id)
+* [`CLIENT_WORKLOAD_ID`](../../../../reference/edge-components/edge-component-env-vars.md#client_workload_id)
+
+When Agent Proxy runs on Kubernetes, dynamic claims can also read the following variables without the allowlist. The Aembit Helm chart sets `K8S_POD_NAME` and `K8S_NAMESPACE` in Agent Proxy container for you. In every other deployment, add these variables to `AEMBIT_ENV_VAR_ALLOWLIST` to read them:
+
 * [`K8S_POD_NAME`](../../../../reference/edge-components/edge-component-env-vars.md#k8s_pod_name)
 * [`K8S_NAMESPACE`](../../../../reference/edge-components/edge-component-env-vars.md#k8s_namespace)
 * [`KUBERNETES_PROVIDER_ID`](../../../../reference/edge-components/edge-component-env-vars.md#kubernetes_provider_id)
-* [`AEMBIT_RESOURCE_SET_ID`](../../../../reference/edge-components/edge-component-env-vars.md#aembit_resource_set_id)
-* [`CLIENT_WORKLOAD_ID`](../../../../reference/edge-components/edge-component-env-vars.md#client_workload_id)
 
 #### Common examples
 
@@ -272,7 +275,7 @@ Aembit reads environment variables only from the **Agent Proxy** or **Aembit CLI
 
 ### Behavior on missing or non-allowlisted variables
 
-When a Credential Provider references a variable that’s absent from both [`AEMBIT_ENV_VAR_ALLOWLIST`](../../../../reference/edge-components/edge-component-env-vars.md#aembit_env_var_allowlist) and the [always-available variables](#always-available-variables), Agent Proxy logs a warning (`requested env variable <name> is not in allow list`) and omits the variable from the credential request. The request still proceeds, but without that claim value.
+When a Credential Provider references a variable that’s absent from both [`AEMBIT_ENV_VAR_ALLOWLIST`](../../../../reference/edge-components/edge-component-env-vars.md#aembit_env_var_allowlist) and the [always-available variables](#always-available-variables), Agent Proxy logs a warning (`requested env variable <name> is not in allow list`) and omits the variable from the credential request. Without that value, Aembit Cloud denies the request with `Incorrect dynamic claim configuration`. Aembit Cloud also denies the request when the variable exists but its value is empty.
 
 ### Supported platforms
 
@@ -297,10 +300,10 @@ The following best practices help you use dynamic claims in every Credential Pro
 
 ### Troubleshooting
 
-* **Missing claims** - If a referenced claim doesn’t exist in the source OIDC or JWT-SVID token, the expression may result in an empty value. For `${saml.response.*}` expressions, Aembit denies the request instead; see [SAML assertion claims](#saml-assertion-claims).
+* **Missing claims** - If an expression references a value that the identity evidence doesn’t contain, Aembit denies the request and issues no credential. The error reads `Incorrect dynamic claim configuration`. Check each expression’s source prefix and claim name against the evidence your Trust Provider validates.
 * **Token format** - Ensure your OIDC token follows proper formatting and contains the expected payload structure
 * **Permissions** - Verify your OIDC provider includes the necessary claims in the token
-* **Environment variable not in the allowlist** - If a Credential Provider references an environment variable that isn’t listed in [`AEMBIT_ENV_VAR_ALLOWLIST`](../../../../reference/edge-components/edge-component-env-vars.md#aembit_env_var_allowlist) (and isn’t one of the [always-available variables](#always-available-variables)), Agent Proxy logs a warning to the effect of `requested env variable <name> is not in allow list` and omits the variable from the credential request. Add the variable name to the allowlist and restart Agent Proxy or Aembit CLI process so the claim resolves.
+* **Environment variable not in the allowlist** - If a Credential Provider references an environment variable that isn’t listed in [`AEMBIT_ENV_VAR_ALLOWLIST`](../../../../reference/edge-components/edge-component-env-vars.md#aembit_env_var_allowlist) (and isn’t one of the [always-available variables](#always-available-variables)), Agent Proxy logs a warning to the effect of `requested env variable <name> is not in allow list` and omits the variable from the credential request, so Aembit denies the request. Add the variable name to the allowlist and restart Agent Proxy or Aembit CLI process so the claim resolves.
 * **Environment variable missing from the process** - Agent Proxy or Aembit CLI only sees variables in its own process environment. See [Configure custom environment variables for Agent Proxy](../../../deploy-install/advanced-options/agent-proxy/configure-custom-env-vars.md) for platform-specific injection guidance.
 
 ## Related docs

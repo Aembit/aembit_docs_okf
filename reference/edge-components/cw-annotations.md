@@ -4,7 +4,7 @@ title: "Client Workload annotation reference"
 description: "Reference for Kubernetes annotations you can apply to Client Workload pod specs to configure Agent Proxy behavior"
 resource: https://docs.aembit.io/reference/edge-components/cw-annotations/
 tags: ["edge-component"]
-timestamp: 2026-09-22T14:07:28-07:00
+timestamp: 2026-09-25T09:44:34-07:00
 ---
 
 # Client Workload annotation reference
@@ -120,7 +120,7 @@ Mounts Kubernetes ConfigMap data into Agent Proxy container for pods in this dep
 
 The Edge Component mounts ConfigMap data to `/mnt/agent-proxy/<ConfigMapName>/<KeyName>` inside Agent Proxy container. This is primarily used with the [Vault dynamic claims](../../user-guide/access-policies/credential-providers/advanced-options/dynamic-claims-vault.md) feature, where Agent Proxy reads ConfigMap values and includes them in workload assessments.
 
-ConfigMaps must be in the same namespace as the Client Workload pod. If a referenced ConfigMap doesn’t exist, Agent Proxy still starts, but the dynamic claim value resolves to an empty string.
+ConfigMaps must be in the same namespace as the Client Workload pod. If a referenced ConfigMap doesn’t exist, Agent Proxy still starts, but Aembit Cloud denies each credential request whose dynamic claim reads that ConfigMap.
 
 *Example*:
 

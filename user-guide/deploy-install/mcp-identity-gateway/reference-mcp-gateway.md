@@ -5,7 +5,7 @@ description: "Reference for the MCP Identity Gateway—token formats, proxied me
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/reference-mcp-gateway/
 interface: mcp
 tags: ["mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-09-16T12:05:53-04:00
+timestamp: 2026-10-05T15:25:07-07:00
 ---
 
 # MCP Identity Gateway reference
