@@ -5,7 +5,7 @@ description: "Environment variables for configuring a self-hosted MCP Identity G
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/env-vars-mcp-gateway/
 interface: mcp
 tags: ["mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-10-07T18:20:48-07:00
+timestamp: 2026-10-08T13:12:21-07:00
 ---
 
 # MCP Identity Gateway environment variables (self-hosted only)
@@ -136,14 +136,14 @@ The value is a comma-separated list of `<name>=<duration>` pairs. Durations take
 
 The following names tune the fan-out cap, upstream calls, upstream sessions, and Multi Round-Trip Request backoff.
 
-| Name                            | Also accepted            | Default | Applies to                                                                                                                                                                                                                                           |
-| ------------------------------- | ------------------------ | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fanout_max`                    | `fanout/max`             | `30s`   | Upper limit on a fan-out timeout that MCP Identity Gateway extends to leave time for CrowdStrike AIDR. MCP Identity Gateway keeps a base timeout you set higher than this.                                                                           |
-| `upstream_call_timeout`         | `upstream/call`          | `30s`   | Upper bound on each upstream operation, including session connect and each MCP call.                                                                                                                                                                 |
-| `upstream_session_ttl`          | `upstream/session/ttl`   | `15m`   | How long an idle upstream session survives before MCP Identity Gateway drops it.                                                                                                                                                                     |
-| `upstream_session_purge_period` | `upstream/session/purge` | `60s`   | How often MCP Identity Gateway checks for and removes idle upstream sessions past `upstream_session_ttl`.                                                                                                                                            |
-| `mrtr_backoff_base`             | -                        | `50ms`  | Initial backoff delay between consecutive rounds of a Multi Round-Trip Request that ask for no input, for a client on a revision earlier than 2026-07-28. Doubles each such round, up to `mrtr_backoff_max`, and resets when a round asks for input. |
-| `mrtr_backoff_max`              | -                        | `250ms` | Ceiling for the `mrtr_backoff_base` backoff delay.                                                                                                                                                                                                   |
+| Name                            | Also accepted            | Default | Applies to                                                                                                                                                                                                                                              |
+| ------------------------------- | ------------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fanout_max`                    | `fanout/max`             | `30s`   | Upper limit on a fan-out timeout that MCP Identity Gateway extends to leave time for CrowdStrike AIDR. MCP Identity Gateway keeps a base timeout you set higher than this.                                                                              |
+| `upstream_call_timeout`         | `upstream/call`          | `30s`   | Upper bound on each upstream operation, including session connect and each MCP call.                                                                                                                                                                    |
+| `upstream_session_ttl`          | `upstream/session/ttl`   | `15m`   | How long an idle upstream session survives before MCP Identity Gateway drops it.                                                                                                                                                                        |
+| `upstream_session_purge_period` | `upstream/session/purge` | `60s`   | How often MCP Identity Gateway checks for and removes idle upstream sessions past `upstream_session_ttl`.                                                                                                                                               |
+| `mrtr_backoff_base`             | -                        | `50ms`  | Initial backoff delay between consecutive rounds of a Multi Round-Trip Request that ask for no input, for a client using a revision earlier than 2026-07-28. Doubles each such round, up to `mrtr_backoff_max`, and resets when a round asks for input. |
+| `mrtr_backoff_max`              | -                        | `250ms` | Ceiling for the `mrtr_backoff_base` backoff delay.                                                                                                                                                                                                      |
 
 The following names have no effect in MCP Identity Gateway 1.34.6034 and later. MCP Identity Gateway still accepts them, so a value that sets one doesn’t stop the service from starting. `upstream_call_timeout` and the list timeouts now bound the upstream calls they covered.
 

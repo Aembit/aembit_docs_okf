@@ -5,7 +5,7 @@ description: "Reference for the MCP Identity Gateway—token formats, proxied me
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/reference-mcp-gateway/
 interface: mcp
 tags: ["mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-10-07T18:20:48-07:00
+timestamp: 2026-10-08T13:12:21-07:00
 ---
 
 # MCP Identity Gateway reference
@@ -31,16 +31,16 @@ The tokens and credentials used in each hop have different formats and purposes:
 
 The MCP Identity Gateway proxies the following MCP protocol methods to downstream MCP servers. All methods go through the same token validation, policy evaluation, and credential injection flow.
 
-The MCP Identity Gateway serves clients on either the [2026-07-28 revision](https://modelcontextprotocol.io/specification/2026-07-28) of the MCP specification or an earlier revision. The proxied methods apply to both, with revision-specific compatibility behavior where the two revisions differ. The MCP Identity Gateway negotiates each downstream connection, so a client’s revision and a server’s revision don’t have to match.
+The MCP Identity Gateway serves clients using either the [2026-07-28 revision](https://modelcontextprotocol.io/specification/2026-07-28) of the MCP specification or an earlier revision. The proxied methods apply to both, with revision-specific compatibility behavior where the two revisions differ. The MCP Identity Gateway negotiates each downstream connection, so a client’s revision and a server’s revision don’t have to match.
 
 ### Capability advertisement
 
 When an MCP client connects, the MCP Identity Gateway advertises the union of the capabilities that its assigned MCP servers support. These capabilities include tools, resources, prompts, and tasks. This set comes from the assigned MCP servers, not from a fixed list and not from what the client declared.
 
-Advertising a capability is separate from letting a client use it. Tools, resources, and prompts are server capabilities: the MCP Identity Gateway advertises them on behalf of its assigned MCP servers, and a client doesn’t declare them. Task handling and elicitation come from the client. A client on the 2026-07-28 revision declares them on each request, and a client on an earlier revision declares them when it connects:
+Advertising a capability is separate from letting a client use it. Tools, resources, and prompts are server capabilities: the MCP Identity Gateway advertises them on behalf of its assigned MCP servers, and a client doesn’t declare them. Task handling and elicitation come from the client. A client using the 2026-07-28 revision declares them on each request, and a client using an earlier revision declares them when it connects:
 
 * A task request from a client that didn’t declare tasks fails with error `-32021`.
-* The MCP Identity Gateway can relay a request for input to a client on a revision earlier than 2026-07-28. If that client didn’t declare elicitation, the request fails with error `-32600`. See [Elicitation](#elicitation).
+* The MCP Identity Gateway can relay a request for input to a client using a revision earlier than 2026-07-28. If that client didn’t declare elicitation, the request fails with error `-32600`. See [Elicitation](#elicitation).
 
 ### Tool methods
 
@@ -98,16 +98,16 @@ An upstream MCP server can ask for more input before it finishes a call. How the
 ### Methods the MCP Identity Gateway answers itself
 
 * `resources/templates/list` and `completion/complete` return an empty result.
-* `ping` returns a result for clients on revisions earlier than 2026-07-28, and error `-32601` for clients on the 2026-07-28 revision.
+* `ping` returns a result for clients using revisions earlier than 2026-07-28, and error `-32601` for clients using the 2026-07-28 revision.
 * `logging/setLevel`, `resources/subscribe`, `resources/unsubscribe`, `subscriptions/listen`, `tasks/list`, and `tasks/result` return error `-32601`. The MCP Identity Gateway doesn’t send change notifications to MCP clients.
 
 ### Transport
 
-The MCP Identity Gateway uses the streamable HTTP transport. A client on a revision earlier than 2026-07-28 can send an HTTP `GET` request with its session identifier to the `/mcp` endpoint. The MCP Identity Gateway answers it with a stream of messages. For a client on the 2026-07-28 revision, an HTTP `GET` request returns `405 Method Not Allowed`.
+The MCP Identity Gateway uses the streamable HTTP transport. A client using a revision earlier than 2026-07-28 can send an HTTP `GET` request with its session identifier to the `/mcp` endpoint. The MCP Identity Gateway answers it with a stream of messages. For a client using the 2026-07-28 revision, an HTTP `GET` request returns `405 Method Not Allowed`.
 
 ## Session management
 
-Sessions belong to the 2025-11-25 revision of the MCP specification and earlier revisions. A client on the 2026-07-28 revision sends no session identifier, and the MCP Identity Gateway holds no session for it. When such a client reaches an MCP server running an earlier revision, the MCP Identity Gateway performs that server’s handshake and manages the upstream session itself.
+Sessions belong to the 2025-11-25 revision of the MCP specification and earlier revisions. The 2026-07-28 revision removes sessions, so the MCP Identity Gateway doesn’t create a session for clients using that revision. When such a client reaches an MCP server running an earlier revision, the MCP Identity Gateway performs that server’s handshake and manages the upstream session itself.
 
 MCP clients can end their session with the MCP Identity Gateway by sending an HTTP `DELETE` request to the `/mcp` endpoint with the `mcp-session-id` header set to the session identifier. The MCP Identity Gateway returns `202 Accepted` on success. Subsequent requests that reuse the deleted session ID return `404 Not Found`.
 
@@ -181,7 +181,7 @@ Forward these logs to [Log Streams](../../administration/log-streams/overview.md
 * **Policy management** - Configure access policies through the [Aembit Tenant](../../access-policies/overview.md), [Terraform provider](../../access-policies/advanced-options/terraform/terraform-configuration.md), or [API](../../../dev-guide/api/overview.md).
 * **Service management** - Aembit operates the MCP Identity Gateway as a managed service. The Aembit operations team handles provisioning, upgrades, TLS certificate management, and runtime health.
 * **Customer-facing observability** - Use workload events in Aembit Cloud and forward via [Log Streams](../../administration/log-streams/overview.md) for visibility into MCP activity.
-* **Specification revisions** - The MCP Identity Gateway supports the 2026-07-28 revision of the MCP specification and earlier revisions. It serves each client on the revision the client asks for, when the MCP Identity Gateway supports that revision.
+* **Specification revisions** - The MCP Identity Gateway supports the 2026-07-28 revision of the MCP specification and earlier revisions. It serves each client using the revision the client asks for, when the MCP Identity Gateway supports that revision.
 
 To verify your Tenant configuration is working correctly, see [Verify the connection](../../access-policies/mcp-identity-gateway/setup-mcp-gateway.md#verify-the-connection) in the setup guide.
 
@@ -374,7 +374,7 @@ The MCP Identity Gateway supports both third-party SaaS MCP providers and custom
 
 Aembit has validated the MCP Identity Gateway with a small set of MCP servers. Additional MCP servers may work but Aembit considers them best-effort until explicitly documented.
 
-The MCP Identity Gateway connects to an MCP server on either the 2026-07-28 revision or an earlier one. It tries the newer revision first and falls back to the earlier handshake when the server doesn’t accept it, so a server on either revision works with no configuration.
+The MCP Identity Gateway connects to an MCP server on either the 2026-07-28 revision or an earlier one. It tries the newer revision first and falls back to the earlier handshake when the server doesn’t accept it, so a server using either revision works with no configuration.
 
 ## Security guarantees and non-goals
 

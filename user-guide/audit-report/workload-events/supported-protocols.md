@@ -1,11 +1,11 @@
 ---
 type: reference
 title: "Supported protocols and application fields"
-description: "The application fields Agent Proxy records in Workload Events for each supported protocol"
+description: "The application fields that Workload Events record for each supported protocol"
 resource: https://docs.aembit.io/user-guide/audit-report/workload-events/supported-protocols/
 interface: web-ui
 tags: ["workload-event", "audit-report"]
-timestamp: 2026-10-07T18:20:48-07:00
+timestamp: 2026-10-08T12:59:26-07:00
 ---
 
 # Supported protocols and application fields
@@ -14,7 +14,6 @@ Agent Proxy generates workload events for the following protocols and technologi
 
 * HTTP
 * Snowflake
-* MCP
 * PostgreSQL
 * Amazon Redshift
 * MySQL and MariaDB
@@ -22,9 +21,11 @@ Agent Proxy generates workload events for the following protocols and technologi
 * Redis
 * TCP Passthrough
 
-This page lists the `application` fields Agent Proxy records for each protocol, split by request and response event. For the common fields that every event shares, see the [Workload Event reference](reference.md). For a conceptual overview, see [Workload Events](overview.md).
+MCP Identity Gateway generates workload events for MCP.
 
-The **Presence** column indicates whether Agent Proxy always includes the field (**Always**) or includes it only under certain conditions (**Optional**).
+This page lists the `application` fields that Workload Events record for each protocol, split by request and response event. For the common fields that every event shares, see the [Workload Event reference](reference.md). For a conceptual overview, see [Workload Events](overview.md).
+
+The **Presence** column indicates whether the event always includes the field (**Always**) or includes it only under certain conditions (**Optional**).
 
 ## HTTP and Snowflake
 
@@ -66,7 +67,7 @@ Example `application.http` block
 
 ## MCP
 
-MCP events use the HTTP-based fields under `application.mcp`, plus MCP-specific fields.
+MCP Identity Gateway records MCP events, with the HTTP fields under `application.mcp` plus MCP-specific fields. Agent Proxy records traffic to MCP Server Workloads as HTTP events, under `application.http`.
 
 Request fields:
 

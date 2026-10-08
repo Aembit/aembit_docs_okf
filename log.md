@@ -1,5 +1,17 @@
 # Aembit Changelog
 
+## 2026-10-08
+
+### Agent Proxy now injects credentials for MCP Server Workloads
+
+Agent Proxy 1.34.6014 injects credentials for Server Workloads whose **Application Protocol** is **MCP**. Agent Proxy handles this traffic as HTTP and injects the credential the same way it does for HTTP Server Workloads. Earlier versions passed MCP traffic through without injecting a credential.
+
+Agent Proxy doesn’t read the MCP messages in this traffic, so these features of the MCP Identity Gateway don’t apply to it:
+
+* [MCP Tool Access Control](user-guide/access-policies/content-security/mcp-tool-access-control/overview.md)
+* [CrowdStrike AIDR](user-guide/access-policies/content-security/crowdstrike-aidr/overview.md) inspection
+* MCP details, such as the tool name, in Workload Events
+
 ## 2026-10-07
 
 ### Improved MCP Identity Gateway token validation and error reporting
@@ -24,7 +36,7 @@ For the latest available versions of these components, see the [Edge Components 
 
 Key Updates:
 
-* **2026-07-28 MCP specification support**: MCP Identity Gateway serves MCP clients on the 2026-07-28 revision and on earlier revisions. A client’s revision and a server’s revision don’t have to match, because MCP Identity Gateway negotiates each connection. A client on the 2026-07-28 revision sends no session identifier, and MCP Identity Gateway holds no session for it. See [Proxied MCP methods](user-guide/deploy-install/mcp-identity-gateway/reference-mcp-gateway.md#proxied-mcp-methods).
+* **2026-07-28 MCP specification support**: MCP Identity Gateway serves MCP clients using the 2026-07-28 revision and earlier revisions. A client’s revision and a server’s revision don’t have to match, because MCP Identity Gateway negotiates each connection. The 2026-07-28 revision removes sessions, so MCP Identity Gateway doesn’t create a session for clients using that revision. See [Proxied MCP methods](user-guide/deploy-install/mcp-identity-gateway/reference-mcp-gateway.md#proxied-mcp-methods).
 * **Prompts, resources, and tasks across all assigned MCP servers**: MCP Identity Gateway lists prompts and resources from every assigned MCP server. It sends each prompt or resource read to the MCP server that owns it. It routes task requests to the MCP server that created the task. It advertises the capabilities its assigned MCP servers support. It prefixes prompt and resource names with the Server Workload they came from, and returns each resource URI exactly as the MCP server reported it.
 * **More timeout names**: `AEMBIT_MCP_GATEWAY_TIMEOUT` accepts seven more [timeout names](user-guide/deploy-install/mcp-identity-gateway/env-vars-mcp-gateway.md#aembit_mcp_gateway_timeout), which tune the `prompts/list` fanout, the fan-out cap, upstream calls, upstream session caching, and Multi Round-Trip Request backoff.
 
