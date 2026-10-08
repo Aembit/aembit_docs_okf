@@ -5,7 +5,7 @@ description: "Reference for the MCP Identity Gateway—token formats, proxied me
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/reference-mcp-gateway/
 interface: mcp
 tags: ["mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-10-05T15:25:07-07:00
+timestamp: 2026-10-07T18:20:48-07:00
 ---
 
 # MCP Identity Gateway reference
@@ -23,7 +23,7 @@ The tokens and credentials used in each hop have different formats and purposes:
 | Agent-to-Gateway   | Aembit-issued access token (typically JWT) | Issued by the Aembit Authorization Server after the user authenticates via a configured IdP                           |
 | Gateway-to-Server  | Varies by MCP server                       | Determined by the Credential Provider configuration (for example, OAuth 2.0 access token via Authorization Code flow) |
 
-* **Agent-to-Gateway tokens** - The Aembit Authorization Server issues these tokens after it authenticates the user via an external identity provider (such as Google, Okta, or Microsoft Entra ID). The MCP Identity Gateway validates these tokens using Aembit’s signing keys.
+* **Agent-to-Gateway tokens** - The Aembit Authorization Server issues these tokens after it authenticates the user via an external identity provider (such as Google, Okta, or Microsoft Entra ID). The MCP Identity Gateway validates these tokens using Aembit’s signing keys, whether the keys sign with RS256 or ES256. A token’s audience must be the MCP Identity Gateway’s `/mcp` endpoint URL, or the MCP Identity Gateway URL itself with or without a trailing slash. The MCP Identity Gateway accepts a token for up to 60 seconds after it expires.
 * **Gateway-to-Server credentials** - Aembit manages these via Credential Providers. For modern SaaS MCP servers, these are typically OAuth 2.0 access tokens obtained via the Authorization Code (3-legged OAuth) flow. Aembit may support other methods depending on how the MCP server authenticates.
 * **Credential caching** - The MCP Identity Gateway caches downstream MCP server credentials and configuration in memory to reduce latency. Cached credentials are short-lived and refreshed as needed; the MCP Identity Gateway doesn’t persist them to disk.
 
@@ -31,12 +31,33 @@ The tokens and credentials used in each hop have different formats and purposes:
 
 The MCP Identity Gateway proxies the following MCP protocol methods to downstream MCP servers. All methods go through the same token validation, policy evaluation, and credential injection flow.
 
+The MCP Identity Gateway serves clients on either the [2026-07-28 revision](https://modelcontextprotocol.io/specification/2026-07-28) of the MCP specification or an earlier revision. The proxied methods apply to both, with revision-specific compatibility behavior where the two revisions differ. The MCP Identity Gateway negotiates each downstream connection, so a client’s revision and a server’s revision don’t have to match.
+
+### Capability advertisement
+
+When an MCP client connects, the MCP Identity Gateway advertises the union of the capabilities that its assigned MCP servers support. These capabilities include tools, resources, prompts, and tasks. This set comes from the assigned MCP servers, not from a fixed list and not from what the client declared.
+
+Advertising a capability is separate from letting a client use it. Tools, resources, and prompts are server capabilities: the MCP Identity Gateway advertises them on behalf of its assigned MCP servers, and a client doesn’t declare them. Task handling and elicitation come from the client. A client on the 2026-07-28 revision declares them on each request, and a client on an earlier revision declares them when it connects:
+
+* A task request from a client that didn’t declare tasks fails with error `-32021`.
+* The MCP Identity Gateway can relay a request for input to a client on a revision earlier than 2026-07-28. If that client didn’t declare elicitation, the request fails with error `-32600`. See [Elicitation](#elicitation).
+
 ### Tool methods
 
-| Method       | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `tools/list` | Discovers available tools across all assigned MCP servers. The MCP Identity Gateway adds prefixes to prevent tool name collisions across servers. The response includes tool annotations from upstream servers when those servers send them. MCP Tool Access Control matches the name the MCP server publishes, not the prefixed name the MCP client receives. See [MCP tool name reference](../../access-policies/content-security/mcp-tool-access-control/reference.md). |
-| `tools/call` | Invokes a tool on the appropriate MCP server.                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| Method       | Description                                                                                                                                                                                                                                       |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `tools/list` | Discovers available tools across all assigned MCP servers and returns each under a prefixed name. See [Tool and prompt names](#tool-and-prompt-names). The response includes tool annotations from upstream servers when those servers send them. |
+| `tools/call` | Invokes a tool on the appropriate MCP server.                                                                                                                                                                                                     |
+
+### Tool and prompt names
+
+The MCP Identity Gateway names each tool and prompt `<server-workload>_<name>`, so names from different MCP servers stay apart. `<server-workload>` is the name of the Server Workload the tool or prompt came from, with every character other than `A`-`Z`, `a`-`z`, `0`-`9`, or a hyphen replaced by a hyphen. For example, the `create_issue` tool from a Server Workload named `github.prod` reaches the MCP client as `github-prod_create_issue`.
+
+MCP Tool Access Control matches the name the MCP server publishes, not the prefixed name the MCP client receives. See [MCP tool name reference](../../access-policies/content-security/mcp-tool-access-control/reference.md).
+
+> **Two Server Workloads can’t share a prefix**
+>
+> Server Workload names that differ only in characters the MCP Identity Gateway replaces produce the same prefix. `github.prod` and `github prod` both become `github-prod`. Two Server Workloads assigned to the same MCP client can share a prefix. The MCP Identity Gateway then leaves both workloads’ tools and prompts out of `tools/list` and `prompts/list`, and calls to them fail with error `-32603`. The MCP Identity Gateway logs the two Server Workloads and the prefix they share. Rename one of the Server Workloads to fix it.
 
 ### Resource methods
 
@@ -45,26 +66,59 @@ The MCP Identity Gateway proxies the following MCP protocol methods to downstrea
 | `resources/list` | Discovers available resources across all assigned MCP servers. The MCP Identity Gateway fans out the request to all servers and aggregates the results. |
 | `resources/read` | Retrieves a specific resource by URI from the appropriate MCP server.                                                                                   |
 
-> **No resource prefixing**
+> **A shared resource URI reads from only one MCP server**
 >
-> When the MCP Identity Gateway fans out `resources/list` across multiple MCP servers, it returns resource URIs as-is without adding server-specific prefixes. If two MCP servers expose resources with the same URI, both appear in the aggregated list. This differs from tool discovery, where the MCP Identity Gateway adds prefixes to tool names to prevent collisions.
+> The MCP Identity Gateway returns each resource URI exactly as the MCP server reported it. It prefixes each resource’s `name` the same way as a [tool name](#tool-and-prompt-names), and puts the name of the Server Workload that returned it in brackets ahead of the resource’s `title` and `description`, so an MCP client can tell resources apart in `resources/list`. The MCP client sends the URI unchanged in `resources/read`. Two MCP servers can expose the same URI. The MCP Identity Gateway then sends every read for that URI to the first of them in the MCP client’s assignments that listed or read the URI. If a later read from that MCP server fails, the MCP Identity Gateway doesn’t try the other one. The MCP client can’t choose which of the two resources it reads.
 
-### Unsupported methods
+### Prompt methods
 
-The MCP Identity Gateway uses streamable HTTP transport, not Server-Sent Events (SSE). HTTP `GET` requests to the `/mcp` endpoint return `405 Method Not Allowed`, per the MCP specification.
+| Method         | Description                                                                                                                                              |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `prompts/list` | Discovers available prompts across all assigned MCP servers and returns each under a prefixed name. See [Tool and prompt names](#tool-and-prompt-names). |
+| `prompts/get`  | Retrieves a specific prompt from the MCP server that exposes it.                                                                                         |
+
+### Task methods
+
+Tasks let an MCP server accept work that outlives a single call and report on it later.
+
+| Method         | Description                                                              |
+| -------------- | ------------------------------------------------------------------------ |
+| `tasks/get`    | Returns the current state of a task from the MCP server that created it. |
+| `tasks/update` | Sends input a task is waiting on to the MCP server that created it.      |
+| `tasks/cancel` | Cancels a task on the MCP server that created it.                        |
+
+### Elicitation
+
+An upstream MCP server can ask for more input before it finishes a call. How the MCP Identity Gateway handles the request depends on the revision the MCP server and the client use:
+
+* When both use the 2026-07-28 revision, the client receives the server’s request for input, answers it, and retries the call.
+* When the MCP server uses the 2026-07-28 revision and the client uses an earlier one, the MCP Identity Gateway relays the request as `elicitation/create`. It sends the client’s answer to the MCP server. The client must declare elicitation. The MCP Identity Gateway doesn’t relay sampling or roots requests to these clients.
+* When the MCP server uses an earlier revision and sends `elicitation/create`, the MCP Identity Gateway declines it, and the client never receives it.
+
+### Methods the MCP Identity Gateway answers itself
+
+* `resources/templates/list` and `completion/complete` return an empty result.
+* `ping` returns a result for clients on revisions earlier than 2026-07-28, and error `-32601` for clients on the 2026-07-28 revision.
+* `logging/setLevel`, `resources/subscribe`, `resources/unsubscribe`, `subscriptions/listen`, `tasks/list`, and `tasks/result` return error `-32601`. The MCP Identity Gateway doesn’t send change notifications to MCP clients.
+
+### Transport
+
+The MCP Identity Gateway uses the streamable HTTP transport. A client on a revision earlier than 2026-07-28 can send an HTTP `GET` request with its session identifier to the `/mcp` endpoint. The MCP Identity Gateway answers it with a stream of messages. For a client on the 2026-07-28 revision, an HTTP `GET` request returns `405 Method Not Allowed`.
 
 ## Session management
 
-MCP clients can end their session with the MCP Identity Gateway by sending an HTTP `DELETE` request to the `/mcp` endpoint with the `mcp-session-id` header set to the session identifier. The MCP Identity Gateway returns `204 No Content` on success. Subsequent requests that reuse the deleted session ID return `404 Not Found`.
+Sessions belong to the 2025-11-25 revision of the MCP specification and earlier revisions. A client on the 2026-07-28 revision sends no session identifier, and the MCP Identity Gateway holds no session for it. When such a client reaches an MCP server running an earlier revision, the MCP Identity Gateway performs that server’s handshake and manages the upstream session itself.
+
+MCP clients can end their session with the MCP Identity Gateway by sending an HTTP `DELETE` request to the `/mcp` endpoint with the `mcp-session-id` header set to the session identifier. The MCP Identity Gateway returns `202 Accepted` on success. Subsequent requests that reuse the deleted session ID return `404 Not Found`.
 
 ```shell
 curl -X DELETE "https://<gateway-host>/mcp" \
   -H "Authorization: Bearer <token>" \
   -H "mcp-session-id: <session-id>"
-# Expected: 204 No Content
+# Expected: 202 Accepted
 ```
 
-This behavior implements [MCP specification section 2.5.5](https://modelcontextprotocol.io/specification/2025-03-26/basic/transports#session-management).
+This behavior implements [session management](https://modelcontextprotocol.io/specification/2025-11-25/basic/transports#session-management) in the MCP specification.
 
 The MCP Identity Gateway also ends a session that stays idle, and a self-hosted MCP Identity Gateway keeps sessions in memory unless you configure a session store. For both, see [Session persistence](session-persistence-mcp-gateway.md).
 
@@ -127,6 +181,7 @@ Forward these logs to [Log Streams](../../administration/log-streams/overview.md
 * **Policy management** - Configure access policies through the [Aembit Tenant](../../access-policies/overview.md), [Terraform provider](../../access-policies/advanced-options/terraform/terraform-configuration.md), or [API](../../../dev-guide/api/overview.md).
 * **Service management** - Aembit operates the MCP Identity Gateway as a managed service. The Aembit operations team handles provisioning, upgrades, TLS certificate management, and runtime health.
 * **Customer-facing observability** - Use workload events in Aembit Cloud and forward via [Log Streams](../../administration/log-streams/overview.md) for visibility into MCP activity.
+* **Specification revisions** - The MCP Identity Gateway supports the 2026-07-28 revision of the MCP specification and earlier revisions. It serves each client on the revision the client asks for, when the MCP Identity Gateway supports that revision.
 
 To verify your Tenant configuration is working correctly, see [Verify the connection](../../access-policies/mcp-identity-gateway/setup-mcp-gateway.md#verify-the-connection) in the setup guide.
 
@@ -242,10 +297,10 @@ The default port is 9091 to avoid a collision with the Agent Controller, which e
 
 #### Request processing metrics
 
-| Metric                                            | Type        | Labels                           | Description                                     |
-| ------------------------------------------------- | ----------- | -------------------------------- | ----------------------------------------------- |
-| `aembit_mcp_gateway_mcp_requests_processed_total` | `counter`   | `tenant_id`, `method`, `outcome` | MCP requests the Gateway processed              |
-| `aembit_mcp_gateway_mcp_request_duration_seconds` | `histogram` | `tenant_id`, `method`            | Time the Gateway took to process an MCP request |
+| Metric                                            | Type        | Labels                           | Description                                                                                   |
+| ------------------------------------------------- | ----------- | -------------------------------- | --------------------------------------------------------------------------------------------- |
+| `aembit_mcp_gateway_mcp_requests_processed_total` | `counter`   | `tenant_id`, `method`, `outcome` | MCP requests the Gateway processed                                                            |
+| `aembit_mcp_gateway_mcp_request_duration_seconds` | `histogram` | `tenant_id`, `method`            | Time the Gateway spent processing an MCP request, excluding time spent waiting on MCP servers |
 
 Fanout requests always report success here
 
@@ -319,6 +374,8 @@ The MCP Identity Gateway supports both third-party SaaS MCP providers and custom
 
 Aembit has validated the MCP Identity Gateway with a small set of MCP servers. Additional MCP servers may work but Aembit considers them best-effort until explicitly documented.
 
+The MCP Identity Gateway connects to an MCP server on either the 2026-07-28 revision or an earlier one. It tries the newer revision first and falls back to the earlier handshake when the server doesn’t accept it, so a server on either revision works with no configuration.
+
 ## Security guarantees and non-goals
 
 **Guarantees:**
@@ -337,3 +394,5 @@ Aembit has validated the MCP Identity Gateway with a small set of MCP servers. A
 
 * [MCP Identity Gateway concepts](concepts-mcp-gateway.md) - Architecture, identity model, and access policies
 * [Environment variables](env-vars-mcp-gateway.md) - Operator reference (the environment variables Aembit sets when provisioning an MCP Identity Gateway)
+* [Set up the MCP Identity Gateway](../../access-policies/mcp-identity-gateway/setup-mcp-gateway.md) - Tenant configuration, from Trust Provider to Access Policy
+* [Access Policies](../../access-policies/overview.md) - How Aembit authorizes each MCP request

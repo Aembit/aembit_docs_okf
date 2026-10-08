@@ -5,7 +5,7 @@ description: "Glob syntax and field limits for the tool names you add to MCP Too
 resource: https://docs.aembit.io/user-guide/access-policies/content-security/mcp-tool-access-control/reference/
 interface: web-ui
 tags: ["mcp-tool-access-control", "content-security", "access-policy"]
-timestamp: 2026-09-16T12:05:53-04:00
+timestamp: 2026-10-07T18:20:48-07:00
 ---
 
 # MCP Tool Access Control tool name reference
@@ -20,9 +20,9 @@ A name with no glob characters matches one tool exactly. Matching is case-sensit
 
 > **Aembit matches the name the MCP server publishes**
 >
-> When an MCP Client requests `tools/list`, the MCP Identity Gateway prefixes each MCP tool name with the Server Workload it came from, so that names from different MCP servers can’t collide.
+> When an MCP Client requests `tools/list`, the MCP Identity Gateway prefixes each MCP tool name with the Server Workload it came from, in the form `<server-workload>_<tool>`, so that names from different MCP servers stay apart.
 >
-> Aembit matches the name the upstream MCP Server publishes, not the prefixed name the client receives, so a name copied out of an AI agent’s MCP tool list carries a prefix that doesn’t match. Take MCP tool names from the MCP server’s documentation. See [Proxied MCP methods](../../../deploy-install/mcp-identity-gateway/reference-mcp-gateway.md#proxied-mcp-methods).
+> Aembit matches the name the upstream MCP Server publishes, not the prefixed name the client receives, so a name copied out of an AI agent’s MCP tool list carries a prefix that doesn’t match. Take MCP tool names from the MCP server’s documentation. See [Tool and prompt names](../../../deploy-install/mcp-identity-gateway/reference-mcp-gateway.md#tool-and-prompt-names).
 
 ## Glob patterns
 

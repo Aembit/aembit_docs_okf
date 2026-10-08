@@ -5,7 +5,7 @@ description: "The application fields Agent Proxy records in Workload Events for 
 resource: https://docs.aembit.io/user-guide/audit-report/workload-events/supported-protocols/
 interface: web-ui
 tags: ["workload-event", "audit-report"]
-timestamp: 2026-09-16T12:05:53-04:00
+timestamp: 2026-10-07T18:20:48-07:00
 ---
 
 # Supported protocols and application fields
@@ -78,7 +78,7 @@ Request fields:
 | `headers`            | Always   | A list of single-key objects, each a header name and value, with sensitive headers redacted.                         |
 | `mcpMethod`          | Always   | The MCP method for the request, such as `tools/list` or `tools/call`.                                                |
 | `mcpSessionId`       | Always   | The MCP session ID, shared across requests and responses in the same session.                                        |
-| `mcpProtocolVersion` | Optional | The negotiated MCP protocol version, when available.                                                                 |
+| `mcpProtocolVersion` | Optional | The MCP protocol version negotiated with the target MCP server, when available.                                      |
 | `mcpServerName`      | Optional | The name of the target MCP server, when available.                                                                   |
 | `mcpToolName`        | Optional | The tool invoked, on `tools/call` requests.                                                                          |
 | `mcpRequestId`       | Optional | The MCP request identifier, used to correlate a response with its request.                                           |
@@ -93,7 +93,7 @@ Response fields:
 | `httpResponseCode`   | Always   | HTTP response status code, such as `200` or `404`.                                           |
 | `mcpMethod`          | Always   | The MCP method the response corresponds to, such as `tools/list` or `tools/call`.            |
 | `mcpSessionId`       | Always   | The MCP session ID, shared across requests and responses in the same session.                |
-| `mcpProtocolVersion` | Optional | The negotiated MCP protocol version, when available.                                         |
+| `mcpProtocolVersion` | Optional | The MCP protocol version negotiated with the target MCP server, when available.              |
 | `mcpServerName`      | Optional | The name of the target MCP server, when available.                                           |
 | `mcpRequestId`       | Optional | The MCP request identifier, used to correlate the response with its request.                 |
 

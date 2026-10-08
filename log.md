@@ -1,5 +1,41 @@
 # Aembit Changelog
 
+## 2026-10-07
+
+### Improved MCP Identity Gateway token validation and error reporting
+
+MCP Identity Gateway version 1.34.6034 validates more access tokens and reports conflicting tool and prompt names. It also changes which timeout names take effect and what its request duration metric measures.
+
+For the latest available versions of these components, see the [Edge Components Supported Versions](reference/edge-components/edge-component-supported-versions.md) page.
+
+* **ES256-signed access tokens**: MCP Identity Gateway validates access tokens signed with ES256 as well as RS256. See [Set up the MCP Identity Gateway](user-guide/access-policies/mcp-identity-gateway/setup-mcp-gateway.md).
+* **Access token audience**: MCP Identity Gateway accepts an access token whose audience is its `/mcp` endpoint URL, or its own URL with or without a trailing slash.
+* **Tool and prompt name conflicts**: Two Server Workloads assigned to the same MCP client can produce the same name prefix. MCP Identity Gateway then leaves both Server Workloads’ tools and prompts out of the client’s lists and logs the conflict. Rename one of the Server Workloads to fix it. See [Tool and prompt names](user-guide/deploy-install/mcp-identity-gateway/reference-mcp-gateway.md#tool-and-prompt-names).
+* **Timeout names with no effect**: The `initialize`, `notifications_initialized`, `proactive_tools_list`, `reinit_initialize`, `reinit_notifications_initialized`, and `reinit_tools_list` timeout names no longer have an effect. MCP Identity Gateway still accepts them, so the service starts. If you set one of them, set `upstream_call_timeout` or the matching list timeout instead. See [`AEMBIT_MCP_GATEWAY_TIMEOUT`](user-guide/deploy-install/mcp-identity-gateway/env-vars-mcp-gateway.md#aembit_mcp_gateway_timeout).
+* **Request duration excludes MCP server time**: `aembit_mcp_gateway_mcp_request_duration_seconds` measures only the time MCP Identity Gateway spends processing a request, and excludes time spent waiting on MCP servers. Expect lower values, and review alerts and dashboards built on this metric. See [Prometheus metrics](user-guide/deploy-install/mcp-identity-gateway/reference-mcp-gateway.md#prometheus-metrics).
+
+This build also adds [support for the 2026-07-28 MCP specification](https://docs.aembit.io/changelog/entry/2026-10-07-mcp-identity-gateway-1-34-6034-release).
+
+### MCP Identity Gateway 1.34.6034 release
+
+Aembit has released [MCP Identity Gateway](user-guide/deploy-install/mcp-identity-gateway/overview.md) version 1.34.6034, which serves the [2026-07-28 revision](https://modelcontextprotocol.io/specification/2026-07-28) of the MCP specification.
+
+For the latest available versions of these components, see the [Edge Components Supported Versions](reference/edge-components/edge-component-supported-versions.md) page.
+
+Key Updates:
+
+* **2026-07-28 MCP specification support**: MCP Identity Gateway serves MCP clients on the 2026-07-28 revision and on earlier revisions. A client’s revision and a server’s revision don’t have to match, because MCP Identity Gateway negotiates each connection. A client on the 2026-07-28 revision sends no session identifier, and MCP Identity Gateway holds no session for it. See [Proxied MCP methods](user-guide/deploy-install/mcp-identity-gateway/reference-mcp-gateway.md#proxied-mcp-methods).
+* **Prompts, resources, and tasks across all assigned MCP servers**: MCP Identity Gateway lists prompts and resources from every assigned MCP server. It sends each prompt or resource read to the MCP server that owns it. It routes task requests to the MCP server that created the task. It advertises the capabilities its assigned MCP servers support. It prefixes prompt and resource names with the Server Workload they came from, and returns each resource URI exactly as the MCP server reported it.
+* **More timeout names**: `AEMBIT_MCP_GATEWAY_TIMEOUT` accepts seven more [timeout names](user-guide/deploy-install/mcp-identity-gateway/env-vars-mcp-gateway.md#aembit_mcp_gateway_timeout), which tune the `prompts/list` fanout, the fan-out cap, upstream calls, upstream session caching, and Multi Round-Trip Request backoff.
+
+[Access token validation and error reporting improvements](https://docs.aembit.io/changelog/entry/2026-10-07-improved-mcp-identity-gateway-token-validation-and-error-reporting) and a [security update](https://docs.aembit.io/changelog/entry/2026-10-07-mcp-identity-gateway-1-34-6034-security-updates) also shipped in this build.
+
+### MCP Identity Gateway security updates
+
+MCP Identity Gateway version 1.34.6034 includes security updates.
+
+For the latest available versions of these components, see the [Edge Components Supported Versions](reference/edge-components/edge-component-supported-versions.md) page.
+
 ## 2026-10-05
 
 ### Edge components dependency security updates

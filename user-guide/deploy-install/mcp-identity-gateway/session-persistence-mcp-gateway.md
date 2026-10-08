@@ -4,12 +4,12 @@ title: "Session persistence in the MCP Identity Gateway"
 description: "How the MCP Identity Gateway stores MCP sessions, and how to persist them across restarts with Valkey."
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/session-persistence-mcp-gateway/
 tags: ["mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-10-05T15:25:07-07:00
+timestamp: 2026-10-07T18:20:48-07:00
 ---
 
 # Session persistence in the MCP Identity Gateway
 
-The MCP Identity Gateway holds a session for each MCP client that connects to it. By default it keeps those sessions in memory, so a restart ends every open session. A self-hosted Gateway can instead keep them in Valkey, which lets sessions survive a restart or an upgrade.
+The MCP Identity Gateway holds a session for each MCP client that connects on the 2025-11-25 revision of the MCP specification or an earlier one. A client on the 2026-07-28 revision sends no session identifier, so the MCP Identity Gateway holds no session for it. Valkey health still affects that client, because it gates the Gateway’s readiness, as [Failure behavior](#failure-behavior) describes. By default the MCP Identity Gateway keeps sessions in memory, so a restart ends every open session. A self-hosted MCP Identity Gateway can instead keep them in Valkey, which lets sessions survive a restart or an upgrade.
 
 This page explains what a session holds, what happens to sessions when the Gateway restarts, and how to configure and operate a Valkey session store.
 

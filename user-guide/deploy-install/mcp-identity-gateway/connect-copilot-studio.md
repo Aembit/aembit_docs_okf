@@ -5,7 +5,7 @@ description: "Connect Microsoft Copilot Studio agents to enterprise MCP servers 
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/connect-copilot-studio/
 interface: mcp
 tags: ["mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-10-07T18:20:48-07:00
 ---
 
 # Connect Microsoft Copilot Studio
@@ -179,7 +179,7 @@ To stay within the limit:
 ### Entity and tool name length
 
 * Keep **Server Workload** and **Credential Provider** names to 15 characters or fewer. Longer names can cause silent connection failures.
-* Keep MCP tool names to 64 characters or fewer, including the server-name prefix that the Gateway adds.
+* Keep MCP tool names to 64 characters or fewer, including the Server Workload prefix that the Gateway adds.
 
 ### Copilot Studio caches the tool list
 

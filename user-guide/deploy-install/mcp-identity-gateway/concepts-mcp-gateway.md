@@ -4,7 +4,7 @@ title: "MCP Identity Gateway concepts"
 description: "Architecture, token handling, access policies, and deployment patterns for the MCP Identity Gateway."
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/concepts-mcp-gateway/
 tags: ["mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-10-05T15:25:07-07:00
+timestamp: 2026-10-07T18:20:48-07:00
 ---
 
 # MCP Identity Gateway concepts
@@ -128,7 +128,7 @@ The MCP Identity Gateway proxies MCP resource requests using the same infrastruc
 
 ### What are MCP resources?
 
-Among the capabilities that MCP servers can expose, **tools** and **resources** are the most relevant to the Identity Gateway.
+**Tools** and **resources** are the MCP server capabilities most relevant to the MCP Identity Gateway.
 
 * **Tools** are actions that an LLM decides to invoke, such as sending an email or querying a database. The LLM selects which tool to call and provides the required parameters.
 * **Resources** are data that an application or user retrieves for context, such as reading a file, fetching a database schema, or loading documentation. The client application (not the LLM) decides which resources to include.
@@ -145,7 +145,9 @@ Think of tools as **actions you can take** and resources as **reference material
 
 ### How the Gateway handles resources
 
-The Gateway proxies resource discovery and retrieval using the same request flow as tools. Clients can list available resources across all connected MCP servers and read individual resources by URI. The existing two-policy model (client-to-Gateway and Gateway-to-server) applies identically. You don’t need to create separate policies for resources.
+The MCP Identity Gateway proxies resource discovery and retrieval using the same request flow as tools. Clients can list available resources across all connected MCP servers and read individual resources by URI. The existing two Access Policy model (Client-to-Gateway and Gateway-to-Server) applies identically. You don’t need to create separate Access Policies for resources.
+
+What a client can discover reflects the union of what the assigned MCP servers support. It’s not a fixed list and not what the client declared.
 
 For the specific MCP methods the Gateway proxies, see the [proxied MCP methods](reference-mcp-gateway.md#proxied-mcp-methods) reference.
 

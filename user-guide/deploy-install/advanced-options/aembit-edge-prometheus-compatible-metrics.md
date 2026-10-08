@@ -268,10 +268,10 @@ The default port is 9091 to avoid a collision with the Agent Controller, which e
 
 #### Request processing metrics
 
-| Metric                                            | Type        | Labels                           | Description                                     |
-| ------------------------------------------------- | ----------- | -------------------------------- | ----------------------------------------------- |
-| `aembit_mcp_gateway_mcp_requests_processed_total` | `counter`   | `tenant_id`, `method`, `outcome` | MCP requests the Gateway processed              |
-| `aembit_mcp_gateway_mcp_request_duration_seconds` | `histogram` | `tenant_id`, `method`            | Time the Gateway took to process an MCP request |
+| Metric                                            | Type        | Labels                           | Description                                                                                   |
+| ------------------------------------------------- | ----------- | -------------------------------- | --------------------------------------------------------------------------------------------- |
+| `aembit_mcp_gateway_mcp_requests_processed_total` | `counter`   | `tenant_id`, `method`, `outcome` | MCP requests the Gateway processed                                                            |
+| `aembit_mcp_gateway_mcp_request_duration_seconds` | `histogram` | `tenant_id`, `method`            | Time the Gateway spent processing an MCP request, excluding time spent waiting on MCP servers |
 
 Fanout requests always report success here
 

@@ -5,18 +5,18 @@ description: "Environment variables for configuring a self-hosted MCP Identity G
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/env-vars-mcp-gateway/
 interface: mcp
 tags: ["mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-10-05T15:25:07-07:00
+timestamp: 2026-10-07T18:20:48-07:00
 ---
 
 # MCP Identity Gateway environment variables (self-hosted only)
 
-This page is the configuration reference for [self-hosting the MCP Identity Gateway](self-host-mcp-gateway.md). You supply most of these environment variables on the install command when you run the Gateway on your own host, and they configure how it operates at install time. [`AEMBIT_MCP_GATEWAY_TIMEOUT`](#aembit_mcp_gateway_timeout) is the one exception, and its entry explains how to set it.
+This page is the configuration reference for [self-hosting the MCP Identity Gateway](self-host-mcp-gateway.md). You supply most of these environment variables on the install command when you run MCP Identity Gateway on your own host, and they configure how it operates at install time. [`AEMBIT_MCP_GATEWAY_TIMEOUT`](#aembit_mcp_gateway_timeout) is the one exception, and its entry explains how to set it.
 
 > **Self-hosted only**
 >
 > These variables apply only to self-hosted deployments.
 
-If you use the Aembit-managed service, you don’t configure any of these. Aembit sets them when it provisions your Gateway endpoint.
+If you use the Aembit-managed service, you don’t configure any of these. Aembit sets them when it provisions your MCP Identity Gateway endpoint.
 
 For Tenant-side configuration (Identity Provider, Trust Provider, and Access Policies), which applies to both deployment models, see [Set up the MCP Identity Gateway](../../access-policies/mcp-identity-gateway/setup-mcp-gateway.md).
 
@@ -102,22 +102,22 @@ Log verbosity level. Options: `trace`, `debug`, `info`, `warn`, `error`, `off`. 
 
 Default - not set
 
-Overrides how long the MCP Identity Gateway waits for your assigned MCP servers when it fans a request out to them.
+Overrides how long the MCP Identity Gateway waits for your assigned MCP servers when it fans a request out to them. It also tunes the fan-out cap, upstream calls, upstream session caching, and Multi Round-Trip Request backoff.
 
 > **Not supplied on the install command**
 >
-> Unlike the other variables on this page, the installer doesn’t pass this one through to the running service. The systemd unit it writes calls the Gateway with a fixed set of arguments. The service starts with the default timeouts even when you set this variable on the install command. Use a systemd drop-in instead.
+> Unlike the other variables on this page, the installer doesn’t pass this one through to the running service. The systemd unit it writes calls MCP Identity Gateway with a fixed set of arguments. The service starts with the default timeouts even when you set this variable on the install command. Use a systemd drop-in instead, as shown in the following example.
 
-Most deployments never need this. The defaults are high enough that an AI client typically reaches its own timeout before the Gateway reaches one of these. Treat it as a last resort for MCP servers too slow for the defaults.
+Most deployments never need this. The defaults are high enough that an AI client typically reaches its own timeout before MCP Identity Gateway reaches one of these. Treat it as a last resort for MCP servers whose responses exceed the default timeouts.
 
 To override a timeout, create `/etc/systemd/system/aembit_mcp_gateway.service.d/override.conf`:
 
 ```ini
 [Service]
-Environment="AEMBIT_MCP_GATEWAY_TIMEOUT=initialize=15s,tools/list=5s"
+Environment="AEMBIT_MCP_GATEWAY_TIMEOUT=tools/list=10s,resources/list=10s"
 ```
 
-Then reload systemd and restart the Gateway:
+Then reload systemd and restart MCP Identity Gateway:
 
 ```shell
 sudo systemctl daemon-reload
@@ -126,23 +126,38 @@ sudo systemctl restart aembit_mcp_gateway
 
 A drop-in survives an upgrade. Edits to `/etc/systemd/system/aembit_mcp_gateway.service` don’t, because the installer replaces that file each time it runs.
 
-The value is a comma-separated list of `<name>=<duration>` pairs. Durations take a unit suffix, such as `500ms`, `3s`, or `1m`. Any name you leave out keeps its default. The Gateway validates the value when the service starts, and a zero duration or the same name listed twice stops the service from starting. A malformed value also fails the install command, even though a valid one has no effect there.
+The value is a comma-separated list of `<name>=<duration>` pairs. Durations take a unit suffix, such as `500ms`, `3s`, or `1m`. Any name you leave out keeps its default. MCP Identity Gateway validates the value when the service starts, and a zero duration or the same name listed twice stops the service from starting. A malformed value also fails the install command, even though a valid one has no effect there.
 
-| Name                               | Also accepted                      | Default | Applies to                                                                                   |
-| ---------------------------------- | ---------------------------------- | ------- | -------------------------------------------------------------------------------------------- |
-| `initialize`                       | -                                  | `10s`   | The `initialize` fanout, including the one the Gateway sends for a newly assigned server     |
-| `notifications_initialized`        | `notifications/initialized`        | `1s`    | The `notifications/initialized` fanout                                                       |
-| `tools_list`                       | `tools/list`                       | `3s`    | The `tools/list` fanout for a client request                                                 |
-| `proactive_tools_list`             | -                                  | `5s`    | The `tools/list` fanout the Gateway sends before a `tools/call` when its tool cache is empty |
-| `resources_list`                   | `resources/list`                   | `3s`    | The `resources/list` fanout                                                                  |
-| `reinit_initialize`                | -                                  | `10s`   | The `initialize` fanout sent while re-establishing an expired upstream session               |
-| `reinit_notifications_initialized` | `reinit/notifications/initialized` | `1s`    | The `notifications/initialized` fanout sent during that re-initialization                    |
-| `reinit_tools_list`                | `reinit/tools/list`                | `5s`    | The `tools/list` fanout that refreshes the tool cache after re-initialization                |
+| Name             | Also accepted    | Default | Applies to                                                                                                        |
+| ---------------- | ---------------- | ------- | ----------------------------------------------------------------------------------------------------------------- |
+| `tools_list`     | `tools/list`     | `3s`    | The `tools/list` fanout for a client request, and the `tools/list` sent to each MCP server when a client connects |
+| `resources_list` | `resources/list` | `3s`    | The `resources/list` fanout                                                                                       |
+| `prompts_list`   | `prompts/list`   | `3s`    | The `prompts/list` fanout                                                                                         |
 
-`proactive_tools_list` and `reinit_tools_list` are longer than their non-prefixed counterparts. Both cover a case where an upstream server is cold or a cache is empty, which is when a server is slowest to answer.
+The following names tune the fan-out cap, upstream calls, upstream sessions, and Multi Round-Trip Request backoff.
+
+| Name                            | Also accepted            | Default | Applies to                                                                                                                                                                                                                                           |
+| ------------------------------- | ------------------------ | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fanout_max`                    | `fanout/max`             | `30s`   | Upper limit on a fan-out timeout that MCP Identity Gateway extends to leave time for CrowdStrike AIDR. MCP Identity Gateway keeps a base timeout you set higher than this.                                                                           |
+| `upstream_call_timeout`         | `upstream/call`          | `30s`   | Upper bound on each upstream operation, including session connect and each MCP call.                                                                                                                                                                 |
+| `upstream_session_ttl`          | `upstream/session/ttl`   | `15m`   | How long an idle upstream session survives before MCP Identity Gateway drops it.                                                                                                                                                                     |
+| `upstream_session_purge_period` | `upstream/session/purge` | `60s`   | How often MCP Identity Gateway checks for and removes idle upstream sessions past `upstream_session_ttl`.                                                                                                                                            |
+| `mrtr_backoff_base`             | -                        | `50ms`  | Initial backoff delay between consecutive rounds of a Multi Round-Trip Request that ask for no input, for a client on a revision earlier than 2026-07-28. Doubles each such round, up to `mrtr_backoff_max`, and resets when a round asks for input. |
+| `mrtr_backoff_max`              | -                        | `250ms` | Ceiling for the `mrtr_backoff_base` backoff delay.                                                                                                                                                                                                   |
+
+The following names have no effect in MCP Identity Gateway 1.34.6034 and later. MCP Identity Gateway still accepts them, so a value that sets one doesn’t stop the service from starting. `upstream_call_timeout` and the list timeouts now bound the upstream calls they covered.
+
+| Name                               | Also accepted                      |
+| ---------------------------------- | ---------------------------------- |
+| `initialize`                       | -                                  |
+| `notifications_initialized`        | `notifications/initialized`        |
+| `proactive_tools_list`             | -                                  |
+| `reinit_initialize`                | -                                  |
+| `reinit_notifications_initialized` | `reinit/notifications/initialized` |
+| `reinit_tools_list`                | `reinit/tools/list`                |
 
 *Example*:\
-`initialize=15s,tools/list=5s`
+`tools/list=10s,resources/list=10s`
 
 ***
 
@@ -150,11 +165,11 @@ The value is a comma-separated list of `<name>=<duration>` pairs. Durations take
 
 Default - `43200` (12 hours)
 
-How long the MCP Identity Gateway keeps an MCP session that receives no requests. Every request on a session refreshes its expiry. When the window passes, the Gateway drops the session, and the client’s next request returns `404 Not Found` so the client starts a new session.
+How long the MCP Identity Gateway keeps an MCP session that receives no requests. Every request on a session refreshes its expiry. When the window passes, MCP Identity Gateway drops the session, and the client’s next request returns `404 Not Found` so the client starts a new session.
 
 The maximum is `1209600` seconds (14 days). A larger value fails the install.
 
-This variable applies whether the Gateway keeps sessions in memory or in Valkey. See [Session persistence](session-persistence-mcp-gateway.md).
+This variable applies whether MCP Identity Gateway keeps sessions in memory or in Valkey. See [Session persistence](session-persistence-mcp-gateway.md).
 
 *Example*:\
 `86400`
@@ -183,7 +198,7 @@ Additional trusted issuer domains for token validation. When set, MCP Identity G
 This variable is primarily for testing and development environments where MCP Identity Gateway needs to work with non-production Aembit Cloud instances or mocked services. Most production deployments don’t need this variable.
 
 *Example*:\
-`test.aembit-eng.com`
+`issuer.example.com`
 
 ***
 
@@ -193,11 +208,11 @@ Default - not set
 
 Sensitive - Yes
 
-URL of a Valkey instance to store MCP sessions in. When you leave this variable unset, the MCP Identity Gateway keeps sessions in process memory, and a restart ends every open session. Setting it lets sessions survive a restart and lets more than one Gateway instance share session state.
+URL of a Valkey instance to store MCP sessions in. When you leave this variable unset, the MCP Identity Gateway keeps sessions in process memory, and a restart ends every open session. Setting it lets sessions survive a restart and lets more than one MCP Identity Gateway instance share session state.
 
-The Gateway accepts `redis://<host>[:<port>]` and `rediss://<host>[:<port>]`. Use `rediss://` for any network connection, because `redis://` sends session data unencrypted.
+MCP Identity Gateway accepts `redis://<host>[:<port>]` and `rediss://<host>[:<port>]`. Use `rediss://` for any network connection, because `redis://` sends session data unencrypted.
 
-You can include Valkey credentials as `rediss://<user>:<password>@<host>` or as `user` and `pass` query parameters, which is why this value is sensitive. The Gateway redacts them when it logs the URL at startup.
+You can include Valkey credentials as `rediss://<user>:<password>@<host>` or as `user` and `pass` query parameters, which is why this value is sensitive. MCP Identity Gateway redacts them when it logs the URL at startup.
 
 The MCP Identity Gateway connects to Valkey while it validates your install arguments and again when the service starts. It fails closed on both: an unreachable Valkey stops the install and stops the service.
 
@@ -308,13 +323,13 @@ Log verbosity level for Agent Controller. The supported levels include `fatal`, 
 
 > **Log level mapping**
 >
-> The Agent Controller uses its own `AEMBIT_LOG_LEVEL` independently from the Gateway. For consistent logging in aggregated environments, use the following mapping:
+> The Agent Controller uses its own `AEMBIT_LOG_LEVEL` independently from MCP Identity Gateway. For consistent logging in aggregated environments, use the following mapping:
 >
-> | Gateway level | Agent Controller level |
-> | ------------- | ---------------------- |
-> | `info`        | `information`          |
-> | `debug`       | `debug`                |
-> | `trace`       | `verbose`              |
+> | MCP Identity Gateway level | Agent Controller level |
+> | -------------------------- | ---------------------- |
+> | `info`                     | `information`          |
+> | `debug`                    | `debug`                |
+> | `trace`                    | `verbose`              |
 
 For Agent Controller installation details, see [Set up the MCP Identity Gateway](../../access-policies/mcp-identity-gateway/setup-mcp-gateway.md).
 

@@ -4,7 +4,7 @@ title: "MCP servers and MCP apps"
 description: "How Aembit handles MCP servers and MCP apps differently, and what to expect when connecting each through the MCP Identity Gateway."
 resource: https://docs.aembit.io/user-guide/deploy-install/about-mcp-servers-and-apps/
 tags: ["deploy-install"]
-timestamp: 2026-10-05T15:25:07-07:00
+timestamp: 2026-10-07T18:20:48-07:00
 ---
 
 # MCP servers and MCP apps
@@ -36,7 +36,7 @@ This section describes how Aembit’s MCP Identity Gateway supports MCP servers 
 
 ### Tool support (fully supported)
 
-The Identity Gateway proxies tool discovery and invocation for both MCP servers and MCP apps. When an MCP client requests `tools/list`, the Identity Gateway fans out the request across all assigned MCP servers. It aggregates the results and returns them with server-specific prefixes to prevent name collisions.
+The Identity Gateway proxies tool discovery and invocation for both MCP servers and MCP apps. When an MCP client requests `tools/list`, the Identity Gateway fans out the request across all assigned MCP servers. It aggregates the results and prefixes each tool name with the Server Workload it came from, so names from different MCP servers stay apart. See [Tool and prompt names](mcp-identity-gateway/reference-mcp-gateway.md#tool-and-prompt-names) for the format, and for what happens when two Server Workloads produce the same prefix.
 
 The Identity Gateway also preserves tool annotations in `tools/list` responses. Annotations categorize tools by behavior (such as read-only or destructive operations), and MCP clients use them to organize tools in their UI.
 
@@ -44,16 +44,16 @@ The Identity Gateway also preserves tool annotations in `tools/list` responses. 
 
 The Identity Gateway supports MCP resource discovery and retrieval:
 
-| Method           | Description                                                                                                                  |
-| ---------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| `resources/list` | Discovers available resources across all assigned MCP servers. Returns resource URIs as-is without server-specific prefixes. |
-| `resources/read` | Retrieves a specific resource by URI from the appropriate MCP server.                                                        |
+| Method           | Description                                                           |
+| ---------------- | --------------------------------------------------------------------- |
+| `resources/list` | Discovers available resources across all assigned MCP servers.        |
+| `resources/read` | Retrieves a specific resource by URI from the appropriate MCP server. |
 
 Resources go through the same Access Policy evaluation, authentication, and credential injection as tool requests. Aembit doesn’t require any special configuration to support resources from MCP apps.
 
-> **No resource prefixing**
+> **A shared resource URI reads from only one MCP server**
 >
-> Unlike tool names, the Identity Gateway doesn’t prefix resource URIs with server identifiers. If two MCP servers expose resources with the same URI, both appear in the aggregated list.
+> The MCP Identity Gateway returns resource URIs unchanged. It prefixes each resource’s `name`, and puts the name of the Server Workload that returned it in brackets ahead of the resource’s `title` and `description`, so an MCP client can tell resources apart in `resources/list`. If two MCP servers expose the same URI, the MCP client can read only one of those resources through the MCP Identity Gateway. See the [MCP Identity Gateway reference](mcp-identity-gateway/reference-mcp-gateway.md) for details.
 
 ### MCP apps (partial support)
 
