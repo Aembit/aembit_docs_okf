@@ -5,14 +5,18 @@ description: "How Aembit discovers workloads using the Wiz Discovery Source"
 resource: https://docs.aembit.io/user-guide/discovery/sources/wiz/
 interface: web-ui
 tags: ["source", "discovery"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-10-08T16:14:07-07:00
 ---
 
 # Wiz Discovery Source
 
 > **Note**
 >
-> This is a beta feature and may be subject to changes. To enable Discovery with Wiz, contact Aembit by completing the [Contact Us form](https://aembit.io/contact/).
+> This is a beta feature and may be subject to changes.
+
+> **Not enabled by default**
+>
+> Contact [Aembit support](https://aembit.io/contact) to enable this feature.
 
 This page explains how Aembit uses the Wiz Discovery Source to identify workloads in your cloud environments.
 
@@ -65,7 +69,7 @@ The following lists represent all the available resource types that Aembit can d
   * Aurora MySQL Instances
   * Aurora Postgres Instances
 
-* AWS Elasticache
+* AWS ElastiCache
 
   * Redis Clusters
   * Valkey Clusters

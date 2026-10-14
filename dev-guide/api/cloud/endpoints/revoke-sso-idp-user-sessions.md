@@ -5,12 +5,12 @@ description: "Revoke user sessions for an SSO Identity Provider"
 resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
 interface: api
 tags: ["sso-identity-provider"]
-timestamp: 2026-09-25T10:20:24-07:00
+timestamp: 2026-10-13T16:56:08-07:00
 ---
 
 # POST /api/v1/sso-idps/{id}/user-sessions/revoke
 
-Revoke a single user session by grantKey, all sessions for a user by subjectId, or all sessions for the IdP.
+Revoke a single user session by grantKey, all sessions for a user by idpUserId, all sessions for an MCP client by clientWorkloadId, or all sessions for the IdP.
 
 **Operation ID:** `revoke-sso-idp-user-sessions`
 

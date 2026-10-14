@@ -4,7 +4,7 @@ title: "Discovery overview"
 resource: https://docs.aembit.io/user-guide/administration/discovery/
 interface: web-ui
 tags: ["discovery", "administration"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-10-08T16:14:07-07:00
 ---
 
 # Discovery overview
@@ -13,7 +13,11 @@ timestamp: 2026-09-08T23:32:41-07:00
 
 > **Note**
 >
-> This is a beta feature and may be subject to changes. To enable Discovery with Wiz, contact Aembit by completing the [Contact Us form](https://aembit.io/contact/).
+> This is a beta feature and may be subject to changes.
+
+> **Not enabled by default**
+>
+> Contact [Aembit support](https://aembit.io/contact) to enable this feature.
 
 Once you’ve contacted Aembit to enable Discovery in your Aembit Tenant, you can configure an integration to find workloads in your environment. Once you configure an integration, Aembit uses it to discover workloads. After discovering your workloads, Aembit displays them in either the **Client Workload** or **Server Workload** tab as **Discovered**. For detailed instructions on managing discovered workloads, refer to [Interacting with Discovered Workloads](../../discovery/managing-discovered-workloads.md).
 

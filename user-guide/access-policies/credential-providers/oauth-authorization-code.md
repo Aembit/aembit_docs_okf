@@ -5,7 +5,7 @@ description: "How to create and use an OAuth 2.0 Authorization Code Credential P
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/oauth-authorization-code/
 interface: web-ui
 tags: ["credential-provider", "access-policy"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-10-08T16:14:07-07:00
 ---
 
 # Configure OAuth 2.0 Authorization Code Credential Provider
@@ -48,7 +48,9 @@ Configure an OAuth 2.0 Authorization Code Credential Provider:
 
    * **Final Redirect URL** - Optionally enter the URL that Aembit redirects authenticated users after the OAuth authorization flow completes, instead of returning to the Aembit-provided Credential Provider page. Use this for custom or embedded integrations where users should return to your own application after authorization.
 
-     Contact [Aembit support](https://aembit.io/contact) to enable this feature.
+     > **Not enabled by default**
+     >
+     > Contact [Aembit support](https://aembit.io/contact) to enable this feature.
 
    * **Client ID** - The Client ID associated with the Credential Provider.
 
@@ -79,6 +81,6 @@ After you save the Credential Provider configuration, authorize it to complete t
 1. Click the Credential Provider.
 2. Click **Authorize**.\
    Aembit opens the third-party provider’s authorization page.
-3. Log in to the third-party service and grant access. The third-party service redirects back to Aembit’s Callback URL, or the Final Redirect URL if one is configured.
+3. Log in to the third-party service and grant access. The third-party service redirects back to Aembit’s Callback URL, or to the Final Redirect URL if you set one.
 
 The Credential Provider status changes to **Ready**, and Access Policies that use this Credential Provider can now inject credentials for workloads.

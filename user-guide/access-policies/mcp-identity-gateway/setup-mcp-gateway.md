@@ -5,7 +5,7 @@ description: "Configure your Aembit Tenant for the managed MCP Identity Gateway.
 resource: https://docs.aembit.io/user-guide/access-policies/mcp-identity-gateway/setup-mcp-gateway/
 interface: mcp
 tags: ["mcp-identity-gateway", "access-policy"]
-timestamp: 2026-09-22T15:44:57-07:00
+timestamp: 2026-10-13T14:46:03-07:00
 ---
 
 # Set up the MCP Identity Gateway
@@ -510,7 +510,7 @@ To use the MCP Identity Gateway, you only configure:
   * Client-to-Gateway (AI agent → MCP Gateway)
   * Gateway-to-Server (MCP Gateway → MCP server),
 
-* One **Credential Provider** for each MCP server. Use [MCP User-Based Access Token](../credential-providers/mcp-user-based-access-token.md) when the server requires per-user OAuth credentials, [MCP Enterprise Managed Access Token](../credential-providers/mcp-enterprise-managed-access-token.md) when the server and your OIDC Identity Provider support Enterprise-Managed Authorization, or [OAuth 2.0 Authorization Code](../credential-providers/oauth-authorization-code.md) for shared credentials.
+* One **Credential Provider** for each MCP server. Use [MCP User-Based Access Token](../credential-providers/mcp-user-based-access-token.md) when the server requires per-user OAuth credentials. Use [MCP Enterprise Managed Access Token](../credential-providers/mcp-enterprise-managed-access-token.md) when the server and your OIDC Identity Provider support Enterprise-Managed Authorization. Use [OAuth 2.0 Authorization Code](../credential-providers/oauth-authorization-code.md) for shared credentials.
 
 You **shouldn’t** follow the “Set up the MCP Authorization Server” steps unless you’re explicitly using Aembit as a standalone MCP Authorization Server for your own MCP servers.
 

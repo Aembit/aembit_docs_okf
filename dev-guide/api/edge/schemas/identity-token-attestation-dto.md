@@ -4,7 +4,7 @@ title: "IdentityTokenAttestationDTO"
 description: "JWT-based identity token attestation for CI/CD platforms"
 resource: https://docs.aembit.io/dev-guide/api/edge/api-reference-edge/
 interface: api
-timestamp: 2026-09-25T10:20:14-07:00
+timestamp: 2026-10-13T17:18:34-07:00
 ---
 
 # IdentityTokenAttestationDTO

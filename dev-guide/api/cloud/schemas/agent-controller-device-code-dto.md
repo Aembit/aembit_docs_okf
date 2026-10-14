@@ -4,7 +4,7 @@ title: "AgentControllerDeviceCodeDTO"
 description: "DTO of an individual Agent Controller Device Code"
 resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
 interface: api
-timestamp: 2026-09-25T10:20:24-07:00
+timestamp: 2026-10-13T16:56:08-07:00
 ---
 
 # AgentControllerDeviceCodeDTO

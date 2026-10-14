@@ -4,14 +4,14 @@ title: "About static HTTP headers"
 description: "What static HTTP headers do, when to use them, and why credentials belong in a Credential Provider"
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/static-http-headers/
 tags: ["server-workload", "access-policy"]
-timestamp: 2026-08-17T16:37:59-04:00
+timestamp: 2026-10-13T18:53:35-07:00
 ---
 
 # About static HTTP headers
 
 A Server Workload can define static HTTP headers: fixed header name and value pairs that Agent Proxy adds to every HTTP request it forwards to that workload.
 
-The **Static HTTP Headers** section appears when the Server Workload’s Service Endpoint has Application Protocol set to **HTTP**, which covers most REST and web API targets.
+The **Static HTTP Headers** section appears when the Server Workload’s Service Endpoint has Application Protocol set to **HTTP**, which covers most REST and web API targets, or to **MCP**.
 
 Static HTTP headers belong to the Server Workload, so they apply to every Access Policy that reaches it. Agent Proxy sends them whether or not the policy uses a Credential Provider to inject a credential.
 

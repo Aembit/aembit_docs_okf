@@ -3,7 +3,7 @@ type: reference
 title: "CPTypeOAuth2AuthorizationCodeUIV2DTO"
 resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
 interface: api
-timestamp: 2026-09-25T10:20:24-07:00
+timestamp: 2026-10-13T16:56:08-07:00
 ---
 
 # CPTypeOAuth2AuthorizationCodeUIV2DTO
@@ -28,6 +28,7 @@ timestamp: 2026-09-25T10:20:24-07:00
 - **lifetimeTimeSpanSeconds** *(optional)*: integer (int32)
 - **lifetimeExpiration** *(optional)*: null,string (date-time)
 - **accessPolicyCount** *(optional)*: integer (int32) - Access Policies associated with this Credential Provider
+- **catalogEntityTrackingStatus** *(optional)*: [CatalogEntityTrackingStatus](catalog-entity-tracking-status.md)
 - **clientID** *(required)*: string - OAuth Client ID 
 - **clientSecret** *(optional)*: null,string - OAuth Client Secret
 - **scope** *(optional)*: null,string - OAuth Scopes
@@ -41,3 +42,4 @@ timestamp: 2026-09-25T10:20:24-07:00
 - **finalCallbackUrl** *(optional)*: null,string - Redirect URL after Aembit successfully completes OAuth authorization. Contact Aembit support (https://aembit.io/contact) to enable this feature.
 - **userAuthorizationUrl** *(optional)*: null,string - Authorization URL to be used for authorization of the Credential Provider by a privileged user
 - **state** *(optional)*: null,string - State parameter to maintain state between the authorization request and callback
+- **issuer** *(optional)*: null,string - Canonical Issuer identifier of the Authorization Server

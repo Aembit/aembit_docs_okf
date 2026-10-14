@@ -4,7 +4,7 @@ title: "AuthorizationEventDTO"
 description: "An individual Aembit Access Authorization Event"
 resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
 interface: api
-timestamp: 2026-09-25T10:20:24-07:00
+timestamp: 2026-10-13T16:56:08-07:00
 ---
 
 # AuthorizationEventDTO
@@ -21,6 +21,7 @@ An individual Aembit Access Authorization Event
 - **clientRequest** *(optional)*: [ClientRequestDTO](client-request-dto.md) - Client Request information for an individual Aembit Access Authorization Event
 - **environment** *(optional)*: [AuthorizationEventEnvironmentDataDTO](authorization-event-environment-data-dto.md)
 - **clientWorkload** *(optional)*: [AuthorizationEventEntityResultDTO](authorization-event-entity-result-dto.md) - Client Workload information for an individual Aembit Access Authorization Event
+- **clientRegistration** *(optional)*: [AuthorizationEventClientRegistrationDTO](authorization-event-client-registration-dto.md) - Client Registration information for an individual Aembit Access Authorization Event
 - **clientWorkloads** *(optional)*: null,array - Client Workload information for an individual Aembit Access Authorization Event
 - **serverWorkload** *(optional)*: [AuthorizationEventEntityResultDTO](authorization-event-entity-result-dto.md) - Server Workload information for an individual Aembit Access Authorization Event
 - **serverWorkloads** *(optional)*: null,array - Server Workload information for an individual Aembit Access Authorization Event
@@ -31,3 +32,4 @@ An individual Aembit Access Authorization Event
 - **contentSecurity** *(optional)*: null,array - Content Security information for an individual Aembit Access Authorization Event
 - **credentialProvider** *(optional)*: [AuthorizationEventCPResultDTO](authorization-event-cp-result-dto.md) - Credential Provider information for an individual Aembit Access Authorization Event
 - **user** *(optional)*: null,string - User information of the Aembit Access Authorization Event
+- **grantKey** *(optional)*: null,string - Corresponding grant key of the Aembit Access Authorization Event

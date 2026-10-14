@@ -5,7 +5,7 @@ description: "How to configure Access Policies and register MCP clients for the 
 resource: https://docs.aembit.io/user-guide/access-policies/mcp-authorization-server/setup-mcp-auth-server/
 interface: mcp
 tags: ["mcp-authorization-server", "access-policy"]
-timestamp: 2026-09-22T11:51:31-07:00
+timestamp: 2026-10-13T18:53:35-07:00
 ---
 
 # Set up the MCP Authorization Server
@@ -108,7 +108,7 @@ For general Server Workload configuration guidance, see [Server Workloads](../se
 
 7. (Optional) In the **URL Path** field, enter the path if your MCP server uses one (for example, `/mcp`).
 
-   When you select **MCP** as the application protocol, Aembit automatically configures HTTP Authentication with the Bearer scheme. The **Aembit MCP Authorization Server URL** field displays the auto-generated authorization server URL that MCP clients use for OAuth discovery.
+   When you select **MCP** as the application protocol, Aembit sets **HTTP Authentication** with the **Bearer** scheme by default, and you can change both. The **Aembit MCP Authorization Server URL** field displays the auto-generated authorization server URL that MCP clients use for OAuth discovery.
 
    > **URL alignment**
    >

@@ -4,7 +4,7 @@ title: "PolicyDTO"
 description: "Individual Access Policy"
 resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
 interface: api
-timestamp: 2026-09-25T10:20:24-07:00
+timestamp: 2026-10-13T16:56:08-07:00
 ---
 
 # PolicyDTO
@@ -25,6 +25,7 @@ Individual Access Policy
 - **createdBy** *(optional)*: null,string
 - **modifiedBy** *(optional)*: null,string
 - **resourceSet** *(required)*: string (uuid) - ID of the Resource Set in which this Access Entity exists
+- **scenario** *(optional)*: null,string (uuid) - Scenario which this Access Policy Originated from
 - **credentialProvider** *(optional)*: null,string (uuid) - Credential Provider associated with this Access Policy
 - **trustProviders** *(optional)*: null,array - Trust Providers associated with this Access Policy
 - **accessConditions** *(optional)*: null,array - Access Conditions associated with this Access Policy

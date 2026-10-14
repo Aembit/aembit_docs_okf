@@ -4,7 +4,7 @@ title: "ApiCredentialsResponse"
 description: "Response containing credentials that a Client Workload requests with expiration details"
 resource: https://docs.aembit.io/dev-guide/api/edge/api-reference-edge/
 interface: api
-timestamp: 2026-09-25T10:20:14-07:00
+timestamp: 2026-10-13T17:18:34-07:00
 ---
 
 # ApiCredentialsResponse

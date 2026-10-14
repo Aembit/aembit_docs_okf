@@ -5,12 +5,16 @@ description: "How to configure SSO automatic user creation through an identity p
 resource: https://docs.aembit.io/user-guide/administration/identity-providers/automatic-user-creation/
 interface: web-ui
 tags: ["identity-provider", "administration"]
-timestamp: 2026-09-23T16:03:35-07:00
+timestamp: 2026-10-13T13:28:30-07:00
 ---
 
 # How to configure Single Sign On automatic user creation
 
 [Automatic user creation](overview.md#about-automatic-user-creation) automatically generates new user accounts on your behalf when your users go through the SSO authenticate process. This feature provides granular control of what user roles Aembit assigns to new users it creates. For more details, see [how automatic user creation works](overview.md#how-automatic-user-creation-works).
+
+> **Not enabled by default**
+>
+> Contact [Aembit support](https://aembit.io/contact) to enable this feature.
 
 ## Technical: SAML attribute requirements
 
@@ -47,8 +51,6 @@ If none of a name’s claims has a value, Aembit takes that name from the OIDC `
 ## Prerequisites
 
 To enable automatic user creation in your Aembit Tenant, you must have the following:
-
-* A Teams or Enterprise subscription plan.
 
 * Your Identity Provider’s (IdP) SAML group claim information attribute names and values.
 

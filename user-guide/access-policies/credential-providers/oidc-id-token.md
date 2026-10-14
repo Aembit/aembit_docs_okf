@@ -5,7 +5,7 @@ description: "How to create an OIDC ID Token Credential Provider"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/oidc-id-token/
 interface: web-ui
 tags: ["credential-provider", "access-policy"]
-timestamp: 2026-09-22T11:51:31-07:00
+timestamp: 2026-10-13T14:46:03-07:00
 ---
 
 # Create an OIDC ID Token Credential Provider
@@ -62,6 +62,8 @@ To create an OIDC ID Token Credential Provider, follow these steps:
    When enabled, the [MCP Authorization Server](../../deploy-install/mcp-authorization-server/concepts-mcp-auth-server.md#token-refresh) can return refresh tokens alongside access tokens during OAuth token requests. Refresh tokens are single-use, and each exchange returns a new refresh token. This option only applies to MCP Authorization Server flows.
 
    Set the **Absolute Token Lifetime** to control how long refresh tokens remain valid for exchanging for new access tokens after initial issuance. This value must be greater than the **Lifetime** value. The absolute token lifetime doesn’t reset with each refresh token exchange. Once it expires, the client must complete a new authorization flow.
+
+   With refresh token support on, each user sign-in through the MCP Identity Gateway creates an [MCP user session](../mcp-identity-gateway/mcp-user-sessions.md) that an administrator can revoke. With it off, Aembit creates no sessions. Turning it off on an existing Credential Provider opens a **Disable Refresh Token Support?** confirmation, which warns that active sessions can no longer refresh their tokens.
 
 8. (Optional) For **Custom Claims**, click **New Claim**.
 

@@ -5,7 +5,7 @@ description: "Configure your OIDC Identity Provider and Okta so Aembit can excha
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/mcp-enterprise-managed-access-token-idp/
 interface: web-ui
 tags: ["credential-provider", "access-policy"]
-timestamp: 2026-09-22T15:44:57-07:00
+timestamp: 2026-10-13T13:28:30-07:00
 ---
 
 # Prepare the Identity Provider for enterprise-managed access
@@ -19,7 +19,7 @@ See [About the MCP Enterprise Managed Access Token Credential Provider](about-mc
 * **An OIDC 1.0 Identity Provider that your users sign in through.** Create it in your Aembit Tenant and link it to an Okta OIDC application. See [How to create an OIDC 1.0 Identity Provider](../../administration/identity-providers/create-idp-oidc.md).
 * **Administrator access to the Okta org.** The org must have Cross App Access (Okta’s name for Enterprise-Managed Authorization) available on it.
 * **An MCP server that supports Enterprise-Managed Authorization.** The MCP server must also trust your Okta org as its identity provider. The MCP server vendor’s documentation covers that step.
-* **A Teams or Enterprise subscription plan.** The Identity Providers feature isn’t available on the Starter plan.
+* **Identity Providers enabled for your Aembit Tenant.** Contact [Aembit support](https://aembit.io/contact) to enable the feature.
 
 ## Add the `offline_access` scope in Aembit
 

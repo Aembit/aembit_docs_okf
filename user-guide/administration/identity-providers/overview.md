@@ -5,7 +5,7 @@ description: "Description of what Identity Providers are and how they work in th
 resource: https://docs.aembit.io/user-guide/administration/identity-providers/
 interface: web-ui
 tags: ["identity-provider", "administration"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-10-13T14:46:03-07:00
 ---
 
 # Identity Providers overview
@@ -13,24 +13,20 @@ timestamp: 2026-09-08T23:32:41-07:00
 This page explains how Identity Providers work with Aembit and when to use them.
 
 * **Ready to set up SSO?** See [Creating SAML 2.0 Identity Providers](create-idp-saml.md) or [Creating OIDC 1.0 Identity Providers](create-idp-oidc.md)
+* **Using Okta?** See [How to set up Okta SSO with your Aembit Tenant](okta/set-up-sso.md) to set up SSO with the Aembit integration from the Okta app catalog
 * **Need to configure automatic user creation?** See [Automatic User Creation](automatic-user-creation.md)
+* **Need to revoke a user’s MCP sessions?** The **Sessions** tab on each Identity Provider lists the MCP user sessions of people who signed in through it; see [Manage MCP user sessions](manage-mcp-user-sessions.md)
 * **Just exploring?** Keep reading to understand the concepts
 
-The Identity Providers feature allows you to offer alternate authentication methods when users sign in to your Aembit tenant. The default authentication method is to use an email and password with the option to [enable and require MFA](../sign-on-policy/overview.md#require-multi-factor-authentication-for-native-sign-in).
+In your Aembit Tenant, the Identity Providers feature lets you offer users alternate sign-in methods. The default authentication method is to use an email and password with the option to [enable and require MFA](../sign-on-policy/overview.md#require-multi-factor-authentication-for-native-sign-in).
 
-Requiring your users to remember and manually enter a username and password every time they sign in to your Aembit tenant is tedious, error-prone, and insecure long-term. To improve user experience and security, set up Single Sign-On (SSO). Integrate an external Identity Provider (IdP) such as Okta, Google, or Microsoft Entra ID. Aembit supports both SAML 2.0 and OIDC 1.0 protocols for SSO authentication.
+Requiring your users to remember and manually enter a username and password every time they sign in to your Aembit Tenant is tedious, error-prone, and insecure long-term. To improve user experience and security, set up Single Sign-On (SSO). Integrate an external Identity Provider (IdP) such as Okta, Google, or Microsoft Entra ID. Aembit supports both SAML 2.0 and OIDC 1.0 protocols for SSO authentication.
 
 To enforce the exclusive use of SSO and prevent your users from authenticating with their username and password, enable [Require Single Sign On](../sign-on-policy/overview.md#require-single-sign-on).
 
-> **Tip**
+> **Not enabled by default**
 >
-> The Identity Providers feature is only available on the following subscription plans:
->
-> * Teams plan
->
-> * Enterprise plan
->
-> To enable Identity Providers, please contact Aembit by completing the [Contact Us form](https://aembit.io/contact/).
+> Contact [Aembit support](https://aembit.io/contact) to enable this feature.
 
 ## SSO overview
 
@@ -80,7 +76,7 @@ Aembit extracts user information from authentication response claims including e
 
 ## Complete setup checklist
 
-Setting up SSO requires configuration in two places:
+Setting up SSO requires configuration in two places. For Okta, [How to set up Okta SSO with your Aembit Tenant](okta/set-up-sso.md) covers both, in the order the setup needs.
 
 1. **Configure Aembit in your IdP** - Add Aembit as an application in your Identity Provider. See your IdP’s documentation for instructions.
 
@@ -100,3 +96,4 @@ The following pages provide more information about working with Identity Provide
 * [Creating SAML 2.0 Identity Providers](create-idp-saml.md) - Set up SAML 2.0 SSO in your Aembit Tenant
 * [Creating OIDC 1.0 Identity Providers](create-idp-oidc.md) - Set up OIDC 1.0 SSO in your Aembit Tenant
 * [Automatic User Creation](automatic-user-creation.md) - Configure automatic user creation with Identity Providers
+* [How to set up Okta SSO with your Aembit Tenant](okta/set-up-sso.md) - Set up Okta SSO with the Aembit integration from the Okta app catalog

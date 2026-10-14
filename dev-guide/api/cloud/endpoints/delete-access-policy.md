@@ -5,7 +5,7 @@ description: "Delete an Access Policy"
 resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
 interface: api
 tags: ["access-policy-deprecated"]
-timestamp: 2026-09-25T10:20:24-07:00
+timestamp: 2026-10-13T16:56:08-07:00
 ---
 
 # DELETE /api/v1/access-policies/{id}

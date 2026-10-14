@@ -5,7 +5,7 @@ description: "Generate a Device Code for an Agent Controller"
 resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
 interface: api
 tags: ["agent-controller"]
-timestamp: 2026-09-25T10:20:24-07:00
+timestamp: 2026-10-13T16:56:08-07:00
 ---
 
 # POST /api/v1/agent-controllers/{agentControllerExternalId}/device-code

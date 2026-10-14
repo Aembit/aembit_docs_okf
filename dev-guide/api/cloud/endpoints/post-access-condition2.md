@@ -5,7 +5,7 @@ description: "Create an Access Condition"
 resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
 interface: api
 tags: ["access-condition-v2"]
-timestamp: 2026-09-25T10:20:24-07:00
+timestamp: 2026-10-13T16:56:08-07:00
 ---
 
 # POST /api/v2/access-conditions

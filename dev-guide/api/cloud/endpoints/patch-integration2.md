@@ -5,7 +5,7 @@ description: "Patch an Integration"
 resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
 interface: api
 tags: ["integration-v2"]
-timestamp: 2026-09-25T10:20:24-07:00
+timestamp: 2026-10-13T16:56:08-07:00
 ---
 
 # PATCH /api/v2/integrations/{id}

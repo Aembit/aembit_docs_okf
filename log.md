@@ -1,5 +1,27 @@
 # Aembit Changelog
 
+## 2026-10-14
+
+### Access Policy builder search and Credential Provider value checks
+
+The **Select Existing** tab in the Access Policy builder now searches and pages through all the entities you can access. Lists of more than 100 Client Workloads, Server Workloads, Trust Providers, Credential Providers, or Access Conditions no longer hide entries past the first page.
+
+Credential Provider fields that take a **Literal** or **Dynamic** value now check the value against its type. Aembit rejects a save, including one through the API or Terraform, when a **Literal** value contains a `${...}` expression or a **Dynamic** value contains no valid `${...}` expression. In the Aembit Tenant UI, entering a `${...}` expression in a field switches it to **Dynamic**. See [Dynamic claims](user-guide/access-policies/credential-providers/advanced-options/dynamic-claims.md).
+
+### Aembit Cloud security updates
+
+Enhanced security for sign-in to the Aembit Tenant UI, including single sign-on.
+
+### MCP Server Workloads support more authentication methods
+
+MCP Server Workloads can now use any authentication method that HTTP Server Workloads offer, such as API Key or HTTP Authentication with the Basic scheme. They can also define Static HTTP Headers. Selecting **MCP** still sets **HTTP Authentication** with the **Bearer** scheme by default, and you can change both. See [Set up the MCP Authorization Server](user-guide/access-policies/mcp-authorization-server/setup-mcp-auth-server.md).
+
+### MCP user session management now available
+
+Each Identity Provider in the Aembit Tenant UI now has a **Sessions** tab that lists the MCP user sessions of the people who signed in through it. Filter the list, revoke one session, or revoke every session for a user or an MCP client at once. When you delete an Identity Provider that has active sessions, Aembit prompts you to revoke them.
+
+Sessions exist when the Client-to-Gateway Access Policy uses an OIDC ID Token Credential Provider with **Enable Refresh Token Support** turned on. To get started, see [Manage MCP user sessions](user-guide/administration/identity-providers/manage-mcp-user-sessions.md). For what revoking a session does, see [MCP user sessions](user-guide/access-policies/mcp-identity-gateway/mcp-user-sessions.md).
+
 ## 2026-10-08
 
 ### Agent Proxy now injects credentials for MCP Server Workloads

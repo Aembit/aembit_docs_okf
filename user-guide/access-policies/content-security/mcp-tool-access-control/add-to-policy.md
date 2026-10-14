@@ -5,7 +5,7 @@ description: "How to add Content Security with MCP Tool Access Control to an Acc
 resource: https://docs.aembit.io/user-guide/access-policies/content-security/mcp-tool-access-control/add-to-policy/
 interface: web-ui
 tags: ["mcp-tool-access-control", "content-security", "access-policy"]
-timestamp: 2026-09-16T11:10:21-07:00
+timestamp: 2026-10-08T16:14:07-07:00
 ---
 
 # Add MCP Tool Access Control Content Security
@@ -16,9 +16,9 @@ Add a Content Security Provider to each Access Policy you want to control. Each 
 
 To learn more about MCP Tool Access Control, see [MCP Tool Access Control](overview.md). For the syntax a tool name or pattern accepts, see [MCP Tool Access Control tool name reference](reference.md).
 
-> **Note**
+> **Not enabled by default**
 >
-> MCP Tool Access Control isn’t enabled by default. Contact [Aembit support](https://aembit.io/contact) to enable this feature.
+> Contact [Aembit support](https://aembit.io/contact) to enable this feature.
 
 ## Prerequisites
 

@@ -4,7 +4,7 @@ title: "Quickstart: Add an Access Policy to the core setup"
 description: "Enhancing the Aembit quickstart guide to set up a Trust Provider, Access Conditions, and reporting"
 resource: https://docs.aembit.io/get-started/quickstart/quickstart-access-policy/
 tags: ["quickstart"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-10-08T16:14:07-07:00
 ---
 
 # Quickstart: Add an Access Policy to the core setup
@@ -87,9 +87,11 @@ This flexibility allows you to seamlessly integrate Trust Providers that align w
 
 Access Conditions allow you to define specific rules to control when and how Aembit issues credentials to Server Workloads. Access Conditions strengthen security by making sure Aembit grants access only when the Access Conditions aligns with your organization’s policies.
 
-> **Paid feature**
+Access Conditions are a paid feature.
+
+> **Not enabled by default**
 >
-> Access Conditions are a paid feature. To enable this feature, contact [Aembit Support](https://aembit.io/support/).
+> Contact [Aembit support](https://aembit.io/contact) to enable this feature.
 
 1. In the **Access Conditions** card in the right panel, click **+ Configure**.
 

@@ -5,14 +5,18 @@ description: "How to create an OIDC 1.0 Identity Provider for Single Sign-On"
 resource: https://docs.aembit.io/user-guide/administration/identity-providers/create-idp-oidc/
 interface: web-ui
 tags: ["identity-provider", "administration"]
-timestamp: 2026-09-22T15:44:57-07:00
+timestamp: 2026-10-13T13:28:30-07:00
 ---
 
 # How to create an OIDC 1.0 Identity Provider
 
-Configuring an OIDC 1.0 (OpenID Connect) Identity Provider (IdP) allows you to offer alternate authentication methods for how users sign in to your Aembit Tenant. For example, Single Sign-On (SSO) instead of the default authentication method of an email and password.
+Configuring an OpenID Connect (OIDC) 1.0 Identity Provider (IdP) allows you to offer alternate authentication methods for how users sign in to your Aembit Tenant. For example, Single Sign-On (SSO) instead of the default authentication method of an email and password.
 
 When you configure an OIDC-capable IdP in your Aembit Tenant, Aembit provides a redirect URL that you must configure in your third-party IdP.
+
+> **Not enabled by default**
+>
+> Contact [Aembit support](https://aembit.io/contact) to enable this feature.
 
 ## Before you start
 
@@ -25,8 +29,6 @@ Before you configure an OIDC 1.0 Identity Provider, ensure:
 * You have your Identity Provider’s base URL (also called the issuer URL or OIDC discovery endpoint).
 
 * You have your OIDC application’s Client ID from your Identity Provider.
-
-* You have a Teams or Enterprise subscription plan. The Identity Providers feature isn’t available on the Starter plan.
 
 > **Deciding on an authentication method**
 >
@@ -80,27 +82,29 @@ To configure an OIDC 1.0 IdP to work with Aembit, follow these steps:
 
    * **Authentication Method** - Choose between **Client Secret** and **Public Private Keypair**:
 
-     * **Client Secret**: If you select this option, you’ll need to enter the client secret from your OIDC application in the **Identity Provider Client Secret** field.
+     * **Client Secret**: If you select this option, you’ll need to enter the client secret from your OIDC application in the **Client Secret** field.
 
      * **Public Private Keypair**: If you select this option, Aembit provides a JWKS URL that you must configure in your IdP. Ensure your IdP can access this URL over the internet for key validation. This allows secure communication using JWT signing without requiring a client secret.
 
-6. After entering the Identity Provider details, Aembit displays a **Redirect URL**.
-
-   Copy this URL and configure it in your third-party IdP as the redirect URI or callback URL of your OIDC application.
-
-7. Optionally, in the **Mappings** tab of the **Identity Provider** page you may specify mapping information between group claims configured in your IdP and user roles available in your tenant.
+6. Optionally, in the **Mappings** tab of the **Identity Provider** page you may specify mapping information between group claims configured in your IdP and user roles available in your tenant.
 
    Adding this information enables automatic user creation based on the information in the OIDC ID token sent by your IdP.
 
    See [Configure automatic user creation](automatic-user-creation.md) for more information.
 
-8. Click **Save**.
+7. Click **Save**.
 
    Aembit displays the newly created OIDC IdP on the **Identity Provider** page. Now, when users log in to your Aembit Tenant, the login UI displays the available OIDC SSO option.
+
+8. Click the new Identity Provider to open it, and copy its **Aembit Redirect URL**.
+
+   Aembit displays the **Aembit Redirect URL** only after you save the Identity Provider. Configure this URL in your third-party IdP as the redirect URI or callback URL of your OIDC application.
 
 ## Provider-specific examples
 
 * Okta
+
+  To use the Aembit integration from the Okta app catalog instead of a custom application, see [How to set up Okta SSO with your Aembit Tenant](okta/set-up-sso.md).
 
   Follow these steps to configure Okta as an OIDC 1.0 Identity Provider for Aembit.
 
@@ -124,11 +128,11 @@ To configure an OIDC 1.0 IdP to work with Aembit, follow these steps:
 
      * Copy the client secret from your Okta application.
 
-     * Paste it into the **Identity Provider Client Secret** field in Aembit.
+     * Paste it into the **Client Secret** field in Aembit.
 
-  6. In Okta, add the Aembit Redirect URL to your application’s **Sign-in redirect URIs**.
+  6. Save the Identity Provider in Aembit, then open it and copy its **Aembit Redirect URL**.
 
-  7. Save your configuration in both Okta and Aembit.
+  7. In Okta, add the Aembit Redirect URL to your application’s **Sign-in redirect URIs**, and save the application.
 
 * Azure AD
 
@@ -154,17 +158,17 @@ To configure an OIDC 1.0 IdP to work with Aembit, follow these steps:
 
      * Click **New client secret**.
 
-     * Copy the secret value and paste it into the **Identity Provider Client Secret** field in Aembit.
+     * Copy the secret value and paste it into the **Client Secret** field in Aembit.
 
-  6. In Azure, go to your application’s **Authentication** settings.
+  6. Save the Identity Provider in Aembit, then open it and copy its **Aembit Redirect URL**.
 
-  7. Under **Platform configurations**, add a **Web** platform if not already present.
+  7. In Azure, go to your application’s **Authentication** settings.
 
-  8. Add the Aembit Redirect URL to the **Redirect URIs**.
+  8. Under **Platform configurations**, add a **Web** platform if not already present.
 
-  9. Click **Configure** to save.
+  9. Add the Aembit Redirect URL to the **Redirect URIs**.
 
-  10. Save your configuration in Aembit.
+  10. Click **Configure** to save.
 
 ## Testing your OIDC SSO setup
 
@@ -200,10 +204,6 @@ The following sections describe common issues you may encounter when setting up 
 
 **Solution**: Verify that the Redirect URL in your IdP exactly matches the Redirect URL provided by Aembit.
 
-### Can’t complete OIDC setup
-
-**Solution**: Ensure you have a Teams or Enterprise subscription plan. The Identity Providers feature isn’t available on the Starter plan. Contact Aembit by completing the [Contact Us form](https://aembit.io/contact/) to upgrade your plan.
-
 ### Authentication fails with PKCE error
 
 **Solution**: Ensure that you enable PKCE in both Aembit (PKCE Required checkbox) and your IdP’s OIDC application settings.
@@ -216,4 +216,5 @@ The following sections describe common issues you may encounter when setting up 
 
 * [Identity Providers overview](overview.md) - Understand how Identity Providers work with Aembit
 * [Automatic User Creation](automatic-user-creation.md) - Configure automatic user creation with Identity Providers
+* [How to set up Okta SSO with your Aembit Tenant](okta/set-up-sso.md) - Set up Okta SSO with the Aembit integration from the Okta app catalog
 * [Sign-On Policy](../sign-on-policy/overview.md) - Configure Sign-On policies including SSO requirements

@@ -4,7 +4,7 @@ title: "Access Authorization Events"
 description: "This page describes how users can review access authorization event information in Aembit Reporting."
 resource: https://docs.aembit.io/user-guide/audit-report/access-authorization-events/
 tags: ["audit-report"]
-timestamp: 2026-09-09T08:20:13-07:00
+timestamp: 2026-10-13T14:46:03-07:00
 ---
 
 # Access Authorization Events
@@ -144,6 +144,8 @@ For the Trust Provider ID `5f0c2962-2af4-4b5f-97c0-9046b37198a9` in this example
 
 With this information, you can determine that the `Kubernetes` Trust Provider failed its match rules: the check was looking for the `serviceNameUID` attribute with the expected value `foo` but found `bar`. The `AWS Production` Trust Provider in the same response failed its cryptographic verification check (`InvalidSignature`). Now that you know why the failures occurred, you can troubleshoot the issue.
 
+When Aembit Cloud denies a request because its MCP user session expired or an administrator revoked it, the event’s `outcome.reason` is `McpSessionExpiredOrRevoked`. That reason sits on `outcome` rather than on a Trust Provider or Access Condition, and `meta.severity` is `Error`. See [MCP user sessions](../access-policies/mcp-identity-gateway/mcp-user-sessions.md).
+
 ### Content Security
 
 When an Access Policy includes a Content Security Provider, the `access.authorization` event lists the provider that Aembit identified for the policy in the `contentSecurity` element. The element records the provider’s `id` and `name` with a `result` of `Identified`, following the same pattern as the `trustProviders` and `accessConditions` elements. When a policy has no Content Security Provider, `contentSecurity` is an empty array.
@@ -239,7 +241,7 @@ If a credential request fails during the check, the `credentialProvider` entity 
 
 A credential request can fail for different reasons, including:
 
-* **Token expired** - The requested token expired. The reason now identifies which token expired (for example, the upstream identity provider’s refresh token, the cached access token, or a Credential Provider-issued credential) and at which step Aembit detected the expiration. This makes it easier to choose between re-authenticating the user, refreshing the credential, or adjusting the Credential Provider configuration.
+* **Token expired** - The requested token expired. The reason identifies which token expired and at which step Aembit detected the expiration. The expired token can be the upstream identity provider’s refresh token, the cached access token, or a credential that a Credential Provider issued. This makes it easier to choose between re-authenticating the user, refreshing the credential, or adjusting the Credential Provider configuration.
 * **Request failed with BadRequest** - There was a communication error with the credential provider with the HTTP status code.
 * **Aembit Internal Error** - There was an internal Aembit error during the credential retrieval.
 * **Unknown error** - An unexpected error occurred during credential retrieval, and Aembit support is investigating.

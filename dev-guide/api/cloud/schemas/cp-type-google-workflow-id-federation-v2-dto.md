@@ -3,7 +3,7 @@ type: reference
 title: "CPTypeGoogleWorkflowIDFederationV2DTO"
 resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
 interface: api
-timestamp: 2026-09-25T10:20:24-07:00
+timestamp: 2026-10-13T16:56:08-07:00
 ---
 
 # CPTypeGoogleWorkflowIDFederationV2DTO
@@ -28,6 +28,7 @@ timestamp: 2026-09-25T10:20:24-07:00
 - **lifetimeTimeSpanSeconds** *(optional)*: integer (int32)
 - **lifetimeExpiration** *(optional)*: null,string (date-time)
 - **accessPolicyCount** *(optional)*: integer (int32) - Access Policies associated with this Credential Provider
+- **catalogEntityTrackingStatus** *(optional)*: [CatalogEntityTrackingStatus](catalog-entity-tracking-status.md)
 - **audience** *(required)*: string - Audience for the access token
 - **serviceAccountEmail** *(required)*: string (email) - Service account email
 - **lifetime** *(optional)*: null,integer (int32) - Access token lifetime (in seconds)

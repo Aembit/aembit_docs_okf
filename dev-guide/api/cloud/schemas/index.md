@@ -15,6 +15,7 @@
 * [AuditLogListDTO](audit-log-list-dto.md) - Page of Aembit Audit Logs
 * [AuditOutcomeDTO](audit-outcome-dto.md) - DTO for the Outcome of an individual Aembit Audit Log
 * [AuthorizationEventAttestationResultDTO](authorization-event-attestation-result-dto.md) - Individual Access Entity Attestation Result of an Aembit Access Authorization Event
+* [AuthorizationEventClientRegistrationDTO](authorization-event-client-registration-dto.md) - Client registration details for an Access Authorization Event
 * [AuthorizationEventCPResultDTO](authorization-event-cp-result-dto.md) - Individual Credential Provider Result of an Aembit Access Authorization Event
 * [AuthorizationEventDataMetaDTO](authorization-event-data-meta-dto.md) - Metadata DTO for an individual Aembit Access Authorization Event
 * [AuthorizationEventDTO](authorization-event-dto.md) - An individual Aembit Access Authorization Event
@@ -24,6 +25,7 @@
 * [AuthorizationEventOutcomeDTO](authorization-event-outcome-dto.md) - Outcome of an individual Aembit Access Authorization Event
 * [AwsIamRoleCpiDTO](aws-iam-role-cpi-dto.md) - DTO for AWS IAM Role Credential Provider Integration
 * [AzureEntraFederationCredentialProviderIntegrationDTO](azure-entra-federation-credential-provider-integration-dto.md) - Individual Credential Provider Integration
+* [CatalogEntityTrackingStatus](catalog-entity-tracking-status.md)
 * [ClientIdentifierExternalDTO](client-identifier-external-dto.md)
 * [ClientRequestDTO](client-request-dto.md)
 * [ClientWorkloadExternalDTO](client-workload-external-dto.md)
@@ -152,6 +154,7 @@
 * [SSOIdentityProviderDTOListDTO](sso-identity-provider-dto-list-dto.md)
 * [SSOIdentityProviderPatchDTO](sso-identity-provider-patch-dto.md) - Patch request for an individual SSO Identity Provider
 * [SsoIdpUserSessionDTO](sso-idp-user-session-dto.md) - SSO Identity Provider User Session
+* [SsoIdpUserSessionDTOListDTO](sso-idp-user-session-dto-list-dto.md)
 * [SSOSignInPolicyDTO](sso-sign-in-policy-dto.md)
 * [SsoStatementRoleMappingDTO](sso-statement-role-mapping-dto.md) - Represents a mapping of an SSO attribute to an Aembit role
 * [StandaloneCertificatePatchDTO](standalone-certificate-patch-dto.md) - Patch Request for an Individual Standalone Certificate Authority

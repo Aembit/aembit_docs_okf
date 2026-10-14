@@ -4,7 +4,7 @@ title: "MCP Tool Access Control"
 description: "A Content Security Provider that controls which MCP tools an AI agent can discover and call."
 resource: https://docs.aembit.io/user-guide/access-policies/content-security/mcp-tool-access-control/
 tags: ["mcp-tool-access-control", "content-security", "access-policy"]
-timestamp: 2026-09-16T11:10:21-07:00
+timestamp: 2026-10-08T16:14:07-07:00
 ---
 
 # MCP Tool Access Control
@@ -13,11 +13,11 @@ MCP Tool Access Control is a Content Security Provider that governs which Model 
 
 Authorizing an MCP Server grants an AI agent access to every MCP tool that the MCP server exposes. MCP Tool Access Control lets you control that access. You choose which MCP tools to allow and which to block. The MCP Identity Gateway enforces your choices on every request your Access Policy governs.
 
-An Access Policy can carry both MCP Tool Access Control and CrowdStrike AI Detection and Response (AIDR). MCP Tool Access Control matches tool names first, so AIDR inspects only the MCP tools and calls that MCP Tool Access Control allowed.
+One Access Policy can carry MCP Tool Access Control and CrowdStrike AI Detection and Response (AIDR). MCP Tool Access Control matches tool names first. AIDR then inspects only the MCP tools and calls that MCP Tool Access Control allowed.
 
-> **Note**
+> **Not enabled by default**
 >
-> MCP Tool Access Control isn’t enabled by default. Contact [Aembit support](https://aembit.io/contact) to enable this feature.
+> Contact [Aembit support](https://aembit.io/contact) to enable this feature.
 
 To add MCP Tool Access Control to an Access Policy, see [Add MCP Tool Access Control to an Access Policy](add-to-policy.md).
 

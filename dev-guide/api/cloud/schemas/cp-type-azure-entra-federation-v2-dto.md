@@ -3,7 +3,7 @@ type: reference
 title: "CPTypeAzureEntraFederationV2DTO"
 resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
 interface: api
-timestamp: 2026-09-25T10:20:24-07:00
+timestamp: 2026-10-13T16:56:08-07:00
 ---
 
 # CPTypeAzureEntraFederationV2DTO
@@ -28,6 +28,7 @@ timestamp: 2026-09-25T10:20:24-07:00
 - **lifetimeTimeSpanSeconds** *(optional)*: integer (int32)
 - **lifetimeExpiration** *(optional)*: null,string (date-time)
 - **accessPolicyCount** *(optional)*: integer (int32) - Access Policies associated with this Credential Provider
+- **catalogEntityTrackingStatus** *(optional)*: [CatalogEntityTrackingStatus](catalog-entity-tracking-status.md)
 - **audience** *(required)*: string - Audience for the access token
 - **subject** *(required)*: string - Subject for the access token
 - **scope** *(required)*: string - Scope for the access token

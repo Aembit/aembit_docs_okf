@@ -5,14 +5,18 @@ description: "How to create a SAML (Security Assertion Markup Language) 2.0 Iden
 resource: https://docs.aembit.io/user-guide/administration/identity-providers/create-idp-saml/
 interface: web-ui
 tags: ["identity-provider", "administration"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-10-13T13:28:30-07:00
 ---
 
 # How to create a SAML 2.0 Identity Provider
 
-Configuring a SAML 2.0 Identity Provider (IdP) allows you to offer alternate authentication methods for how users sign in to your Aembit Tenant. For example, Single Sign-On (SSO) instead of the default authentication method of an email and password.
+Configuring a Security Assertion Markup Language (SAML) 2.0 Identity Provider (IdP) allows you to offer alternate authentication methods for how users sign in to your Aembit Tenant. For example, Single Sign-On (SSO) instead of the default authentication method of an email and password.
 
-When you configure a SAML-capable IdP in your Aembit Tenant, you must enter either your IdP SAML **Metadata URL** or **Metadata XML** information. After you provide this information, Aembit displays the **Aembit SP Entity ID** and **Aembit SSO URL** that you’ll need to configure in your external Identity Provider.
+When you configure a SAML-capable IdP in your Aembit Tenant, you must enter either your IdP SAML **Metadata URL** or **Metadata XML** information. The SAML 2.0 form also displays the **Service Provider Entity ID** and **Service Provider Single Sign On URL** that you’ll need to configure in your external Identity Provider.
+
+> **Not enabled by default**
+>
+> Contact [Aembit support](https://aembit.io/contact) to enable this feature.
 
 ## Before you start
 
@@ -20,14 +24,12 @@ Before you configure a SAML 2.0 Identity Provider, ensure:
 
 * You have administrator access to both your Aembit Tenant and your Identity Provider.
 
-* You have completed IdP setup first by adding Aembit as a SAML application in your Identity Provider. You’ll need to provide the following Aembit values to your IdP (these appear after you enter metadata):
+* You have completed IdP setup first by adding Aembit as a SAML application in your Identity Provider. You’ll need to provide the following Aembit values to your IdP (the SAML 2.0 form displays them):
 
-  * **Entity ID**: Aembit’s unique identifier for SAML authentication
-  * **SSO URL**: The URL where your IdP sends SAML responses
+  * **Service Provider Entity ID**: Aembit’s unique identifier for SAML authentication
+  * **Service Provider Single Sign On URL**: The URL where your IdP sends SAML responses
 
 * You have your Identity Provider’s metadata URL or XML file ready.
-
-* You have a Teams or Enterprise subscription plan. The Identity Providers feature isn’t available on the Starter plan.
 
 > **Which metadata format to use**
 >
@@ -38,6 +40,8 @@ Before you configure a SAML 2.0 Identity Provider, ensure:
 > Use Metadata URL when your IdP supports it.
 
 ## Configure a SAML 2.0 Identity Provider
+
+If you use Okta, you can add the Aembit integration from the Okta app catalog instead of a custom SAML application. See [How to set up Okta SSO with your Aembit Tenant](okta/set-up-sso.md).
 
 To configure a SAML 2.0 IdP to work with Aembit, follow these steps:
 
@@ -61,7 +65,7 @@ To configure a SAML 2.0 IdP to work with Aembit, follow these steps:
 
    * **Identity Provider Type** - Select **SAML 2.0** from the dropdown.
 
-   * Depending on your Identity Provider, either enter the Metadata URL in the **Metadata URL** field or use the **Metadata XML** field to upload an XML file with the Identity Provider Metadata information:
+   * Depending on your Identity Provider, enter the Metadata URL in the **Metadata URL** field or upload an XML file of the metadata in the **Metadata XML** field:
 
      * **Metadata URL** - The URL where Aembit can retrieve SAML metadata for a specific SAML-capable Identity Provider.
 
@@ -69,7 +73,7 @@ To configure a SAML 2.0 IdP to work with Aembit, follow these steps:
 
      > **Note**
      >
-     > After you enter metadata, Aembit displays the **Aembit SP Entity ID** and **Aembit SSO URL** fields. You should use these values to configure your external Identity Provider.
+     > When you select **SAML 2.0**, Aembit displays the **Service Provider Entity ID** and **Service Provider Single Sign On URL** fields. You should use these values to configure your external Identity Provider.
 
 6. Optionally, in the **Mappings** tab of the **Identity Provider** page you may specify mapping information between group claims configured in your Identity Provider and user roles available in your tenant.
 
@@ -115,11 +119,7 @@ The following sections describe common issues you may encounter when setting up 
 
 ### Error after IdP login
 
-**Solution**: Verify that the Entity ID and SSO URL in your Identity Provider match what Aembit displays. Check both values as even small differences cause authentication to fail.
-
-### Can’t complete SAML setup
-
-**Solution**: Ensure you have a Teams or Enterprise subscription plan. The Identity Providers feature isn’t available on the Starter plan. Contact Aembit by completing the [Contact Us form](https://aembit.io/contact/) to upgrade your plan.
+**Solution**: Verify that the Service Provider Entity ID and Service Provider Single Sign On URL in your Identity Provider match what Aembit displays. Check both values as even small differences cause authentication to fail.
 
 ### IdP certificate rotation causes SSO to stop working
 
@@ -129,4 +129,5 @@ The following sections describe common issues you may encounter when setting up 
 
 * [Identity Providers overview](overview.md) - Understand how Identity Providers work with Aembit
 * [Automatic User Creation](automatic-user-creation.md) - Configure automatic user creation with Identity Providers
+* [How to set up Okta SSO with your Aembit Tenant](okta/set-up-sso.md) - Set up Okta SSO with the Aembit integration from the Okta app catalog
 * [Sign-On Policy](../sign-on-policy/overview.md) - Configure single sign-on policies including SSO requirements

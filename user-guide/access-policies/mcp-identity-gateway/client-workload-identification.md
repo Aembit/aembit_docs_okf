@@ -4,7 +4,7 @@ title: "Client workload identification in MCP Identity Gateway"
 description: "How the MCP Identity Gateway identifies which user is making requests in multi-user shared Gateway scenarios."
 resource: https://docs.aembit.io/user-guide/access-policies/mcp-identity-gateway/client-workload-identification/
 tags: ["mcp-identity-gateway", "access-policy"]
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-10-13T14:46:03-07:00
 ---
 
 # Client workload identification in MCP Identity Gateway

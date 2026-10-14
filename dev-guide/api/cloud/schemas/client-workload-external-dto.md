@@ -3,7 +3,7 @@ type: reference
 title: "ClientWorkloadExternalDTO"
 resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
 interface: api
-timestamp: 2026-09-25T10:20:24-07:00
+timestamp: 2026-10-13T16:56:08-07:00
 ---
 
 # ClientWorkloadExternalDTO
@@ -28,3 +28,4 @@ timestamp: 2026-09-25T10:20:24-07:00
 - **type** *(optional)*: null,string
 - **accessPolicyCount** *(optional)*: integer (int32) - Access Policies associated with this Client Workload
 - **ssoIdentityProviders** *(optional)*: null,array
+- **catalogEntityTrackingStatus** *(optional)*: [CatalogEntityTrackingStatus](catalog-entity-tracking-status.md) - Tracking status of Catalog Entity

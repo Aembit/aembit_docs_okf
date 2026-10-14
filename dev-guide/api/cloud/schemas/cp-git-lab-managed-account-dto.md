@@ -3,7 +3,7 @@ type: reference
 title: "CPGitLabManagedAccountDTO"
 resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
 interface: api
-timestamp: 2026-09-25T10:20:24-07:00
+timestamp: 2026-10-13T16:56:08-07:00
 ---
 
 # CPGitLabManagedAccountDTO
@@ -28,6 +28,7 @@ timestamp: 2026-09-25T10:20:24-07:00
 - **lifetimeTimeSpanSeconds** *(optional)*: integer (int32)
 - **lifetimeExpiration** *(optional)*: null,string (date-time)
 - **accessPolicyCount** *(optional)*: integer (int32) - Access Policies associated with this Credential Provider
+- **catalogEntityTrackingStatus** *(optional)*: [CatalogEntityTrackingStatus](catalog-entity-tracking-status.md)
 - **groupIds** *(optional)*: null,string - Comma separated list of GitLab Group Identifiers or Paths
 - **projectIds** *(optional)*: null,string - Comma separated list of GitLab Project Identifiers or Paths
 - **accessLevel** *(required)*: integer (int32) - Access level code to use while assigning Managed Service Account to a group or a project

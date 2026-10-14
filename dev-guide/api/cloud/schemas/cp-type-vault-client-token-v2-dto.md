@@ -3,7 +3,7 @@ type: reference
 title: "CPTypeVaultClientTokenV2DTO"
 resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
 interface: api
-timestamp: 2026-09-25T10:20:24-07:00
+timestamp: 2026-10-13T16:56:08-07:00
 ---
 
 # CPTypeVaultClientTokenV2DTO
@@ -28,6 +28,7 @@ timestamp: 2026-09-25T10:20:24-07:00
 - **lifetimeTimeSpanSeconds** *(optional)*: integer (int32)
 - **lifetimeExpiration** *(optional)*: null,string (date-time)
 - **accessPolicyCount** *(optional)*: integer (int32) - Access Policies associated with this Credential Provider
+- **catalogEntityTrackingStatus** *(optional)*: [CatalogEntityTrackingStatus](catalog-entity-tracking-status.md)
 - **issuer** *(required)*: string (https://your_tenant_id.id.aembit.io) - Issuer of the Access Token
 - **subject** *(required)*: string - Subject of the Access Token
 - **subjectType** *(optional)*: null,string - Subject type, Accepted values: 'literal', 'dynamic'

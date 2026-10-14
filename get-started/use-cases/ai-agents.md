@@ -4,7 +4,7 @@ title: "Securing AI agent access to your resources"
 description: "How Aembit secures AI agent access to enterprise resources through the Model Context Protocol (MCP)"
 resource: https://docs.aembit.io/get-started/use-cases/ai-agents/
 tags: ["use-case"]
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-10-13T14:46:03-07:00
 ---
 
 # Securing AI agent access to your resources
@@ -106,7 +106,7 @@ Traditional applications have predictable behavior: a web service queries the sa
 
 This unpredictability means you can’t rely on static application logs to understand what happened. You need identity-based audit trails that tie every agent action to a responsible user, just like you would for human access to sensitive systems.
 
-Aembit’s access logs provide this by capturing not just “an MCP request happened,” but “<user@example.com>’s Claude Desktop agent accessed Jira at 2:34 PM, received access under policy ‘Jira-Read’, and made 3 API calls.”
+Aembit’s access logs record more than “an MCP request happened.” They record that “<user@example.com>’s Claude Desktop agent accessed Jira at 2:34 PM, received access under policy ‘Jira-Read’, and made 3 API calls.”
 
 For organizations with audit requirements around privileged access or regulatory compliance (SOC 2, HIPAA, PCI), this agent-level logging satisfies the same controls as human access monitoring.
 

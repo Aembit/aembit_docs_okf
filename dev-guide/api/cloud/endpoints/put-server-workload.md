@@ -5,7 +5,7 @@ description: "Update a Server Workload"
 resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
 interface: api
 tags: ["server-workload"]
-timestamp: 2026-09-25T10:20:24-07:00
+timestamp: 2026-10-13T16:56:08-07:00
 ---
 
 # PUT /api/v1/server-workloads
@@ -30,6 +30,7 @@ ServerWorkloadExternalDTO
   - `application/json`: [ServerWorkloadExternalDTO](../schemas/server-workload-external-dto.md)
 - **400**: Bad Request
 - **401**: Not Authenticated
+- **404**: Not Found
 - **500**: Internal Server Error
   - `application/json`: [GenericResponseDTO](../schemas/generic-response-dto.md)
 

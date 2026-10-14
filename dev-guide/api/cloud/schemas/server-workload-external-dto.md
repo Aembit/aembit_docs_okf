@@ -4,7 +4,7 @@ title: "ServerWorkloadExternalDTO"
 description: "Individual Server Workload"
 resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
 interface: api
-timestamp: 2026-09-25T10:20:24-07:00
+timestamp: 2026-10-13T16:56:08-07:00
 ---
 
 # ServerWorkloadExternalDTO
@@ -28,3 +28,4 @@ Individual Server Workload
 - **serviceEndpoint** *(required)*: [WorkloadServiceEndpointDTO](workload-service-endpoint-dto.md) - Service Endpoint of the Server Workload
 - **type** *(optional)*: null,string - Type of Server Workload
 - **accessPolicyCount** *(optional)*: integer (int32) - Access Policies associated with this Server Workload
+- **catalogEntityTrackingStatus** *(optional)*: [CatalogEntityTrackingStatus](catalog-entity-tracking-status.md) - Tracking status of Catalog Entity

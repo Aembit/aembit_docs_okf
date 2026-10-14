@@ -4,7 +4,7 @@ title: "MCP Authorization Server concepts"
 description: "Conceptual deep-dive of Aembit's MCP Authorization Server including access control, client authentication, token handling, and URL configuration."
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-authorization-server/concepts-mcp-auth-server/
 tags: ["mcp-authorization-server", "deploy-install"]
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-10-13T14:46:03-07:00
 ---
 
 # MCP Authorization Server concepts
@@ -140,7 +140,7 @@ Different MCP clients use different redirect URI formats depending on whether th
 
 > **Port numbers for loopback URIs**
 >
-> For loopback IP addresses (localhost and 127.0.0.1), Aembit ignores the port number during redirect URI matching. This means a Client Workload configured with `http://localhost:7777/oauth/callback` will match requests from any port like `http://localhost:8080/oauth/callback` or `http://localhost:3000/oauth/callback`. Wildcards aren’t supported in redirect URIs.
+> For loopback IP addresses (localhost and 127.0.0.1), Aembit ignores the port number during redirect URI matching. This means a Client Workload configured with `http://localhost:7777/oauth/callback` matches requests from any port like `http://localhost:8080/oauth/callback` or `http://localhost:3000/oauth/callback`. Wildcards aren’t supported in redirect URIs.
 
 ## Token handling
 
@@ -172,6 +172,8 @@ Key behaviors:
 * **Absolute Token Lifetime** - Controls the total duration during which refresh tokens remain valid after the initial token issuance. This lifetime doesn’t reset with each exchange.
 * **Lifetime constraint** - The Absolute Token Lifetime must be greater than the access token Lifetime to allow at least one token exchange.
 * **MCP-only** - The MCP Authorization Server only returns refresh tokens for MCP flows. Agent Proxy flows don’t return refresh tokens, even when you enable this option on the Credential Provider.
+
+An OIDC ID Token Credential Provider with **Enable Refresh Token Support** turned on creates an [MCP user session](../../access-policies/mcp-identity-gateway/mcp-user-sessions.md) for each user sign-in through the MCP Identity Gateway. An administrator can revoke a session, and its refresh tokens then stop working.
 
 To configure refresh token support, see [OIDC ID Token](../../access-policies/credential-providers/oidc-id-token.md) or [Aembit Access Token](../../access-policies/credential-providers/aembit-access-token.md).
 
