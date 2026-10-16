@@ -5,7 +5,7 @@ description: "How to configure an Entra ID Server Workload in Aembit using Azure
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/guides/entra-id/
 interface: web-ui
 tags: ["guide", "server-workload", "access-policy"]
-timestamp: 2026-08-27T18:01:41-07:00
+timestamp: 2026-10-15T06:25:14-07:00
 ---
 
 # Create an Entra ID Server Workload

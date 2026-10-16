@@ -5,14 +5,12 @@ description: "Deploy and operate the Aembit MCP Identity Gateway on your own Lin
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/self-host-mcp-gateway/
 interface: mcp
 tags: ["mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-10-14T16:36:12-04:00
 ---
 
 # Self-host the MCP Identity Gateway
 
-This guide explains how to deploy and operate the
-
-Model Context Protocol (MCP) Identity Gateway on your own Linux host, as a standalone service that you run and maintain.
+This guide explains how to deploy and operate the Model Context Protocol (MCP) Identity Gateway on your own Linux host, as a standalone service that you run and maintain.
 
 > **Most teams should use the managed service**
 >
@@ -124,7 +122,7 @@ The following steps use [Let’s Encrypt](https://letsencrypt.org/) with `certbo
 
    `certbot` writes the certificate chain and private key to `/etc/letsencrypt/live/mcp-gateway.example.com/`.
 
-5. Stop and disable `nginx` so it doesn’t compete with the Gateway for port 443:
+5. Stop `nginx` and turn off its automatic start so it doesn’t compete with the Gateway for port 443:
 
    ```shell
    sudo systemctl stop nginx
@@ -135,7 +133,7 @@ The following steps use [Let’s Encrypt](https://letsencrypt.org/) with `certbo
 
 > **Certificate renewal**
 >
-> Let’s Encrypt certificates expire after 90 days. Because `nginx` is stopped, schedule renewal with a method that doesn’t need port 80 held open continuously (for example, `certbot renew` with the standalone plugin during a brief maintenance window), and reopen port 80 only for the duration of the renewal.
+> Let’s Encrypt certificates expire after 90 days. With `nginx` stopped, schedule renewal with a method that doesn’t hold port 80 open continuously, for example `certbot renew` with the standalone plugin during a brief maintenance window. Reopen port 80 only during the renewal.
 
 ## Install and start the Gateway
 
@@ -154,7 +152,7 @@ Download, install, and start the MCP Identity Gateway on the host. On startup, t
    > The following command shows configuration values inline for clarity. In production, load them from an environment file with restricted permissions (`chmod 600`) or a secrets manager so they don’t appear in shell history or process listings.
 
    ```shell
-   sudo AEMBIT_AUTHORIZATION_SERVER=https://<tenantId>.mcp.useast2.aembit.io/ \
+   sudo AEMBIT_AUTHORIZATION_SERVER=https://<tenantId>.id.useast2.aembit.io/ \
         AEMBIT_MCP_GATEWAY_URL=https://mcp-gateway.example.com \
         AEMBIT_TLS_CERT_CHAIN_PATH=/etc/letsencrypt/live/mcp-gateway.example.com/fullchain.pem \
         AEMBIT_TLS_PRIVATE_KEY_PATH=/etc/letsencrypt/live/mcp-gateway.example.com/privkey.pem \

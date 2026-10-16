@@ -5,7 +5,7 @@ description: "Reference for environment variables to configure MCP servers to us
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-authorization-server/env-vars-mcp-auth-server/
 interface: mcp
 tags: ["mcp-authorization-server", "deploy-install"]
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-10-14T16:36:12-04:00
 ---
 
 # MCP server environment variables (for Aembit MCP Authorization Server)
@@ -55,12 +55,12 @@ See [URL configuration alignment](concepts-mcp-auth-server.md#url-configuration-
 
 Default - not set
 
-The URL of the Aembit MCP Authorization Server for your tenant. This URL uses the `.mcp.` subdomain.
+The URL of the Aembit MCP Authorization Server for your tenant. This URL uses the `.id.` subdomain.
 
 You can find this URL in the **Aembit MCP Authorization Server URL** field when you configure a Server Workload with the MCP application protocol.
 
 *Example*:\
-`https://abc123.mcp.useast2.aembit.io`
+`https://abc123.id.useast2.aembit.io`
 
 ***
 
@@ -68,11 +68,7 @@ You can find this URL in the **Aembit MCP Authorization Server URL** field when 
 
 Default - not set
 
-The token issuer URL used during JWT verification. This URL uses the `.id.` subdomain, **not** the `.mcp.` subdomain.
-
-> **Caution**
->
-> The issuer URL must use the `.id.` subdomain (for example, `abc123.id.useast2.aembit.io`). Using the `.mcp.` subdomain causes token verification to fail.
+The token issuer URL used during JWT verification. This URL uses the `.id.` subdomain.
 
 See [Tenant URL patterns](reference-mcp-auth-server.md#tenant-url-patterns) for details on Aembit subdomain usage.
 
@@ -88,7 +84,7 @@ Default - not set
 The JSON Web Key Set (JWKS) endpoint for token signature verification. Your MCP server uses this endpoint to retrieve the public keys needed to validate access tokens issued by the Aembit MCP Authorization Server.
 
 *Example*:\
-`https://abc123.mcp.useast2.aembit.io/.well-known/openid-configuration/jwks`
+`https://abc123.id.useast2.aembit.io/.well-known/openid-configuration/jwks`
 
 ## Related resources
 

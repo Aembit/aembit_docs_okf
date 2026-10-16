@@ -5,7 +5,7 @@ description: "Secure OAuth 2.1 authorization for Model Context Protocol (MCP) cl
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-authorization-server/
 interface: mcp
 tags: ["mcp-authorization-server", "deploy-install"]
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-10-15T06:25:14-07:00
 ---
 
 # MCP Authorization Server
@@ -14,11 +14,11 @@ Aembit’s MCP Authorization Server secures MCP workloads using OAuth 2.1 author
 
 ## What it does
 
-* **Handles OAuth for MCP** - Implements the OAuth 2.1 authorization code flow from the MCP specification so you don’t have to build it yourself
-* **Works with existing MCP clients** - Supports Dynamic Client Registration, so tools like Gemini CLI and Claude Desktop can connect without pre-configuration
-* **Uses your existing identity provider** - Integrates with OIDC and SAML providers (Okta, Azure AD, Google) for user authentication, or skip user authentication entirely for use cases that don’t require it
-* **Adds access control** - Apply Aembit Access Policies to restrict who can access which MCP servers, with optional time and location conditions
-* **Runs in Aembit Cloud** - Available in v1.27+ with no additional agents to deploy
+* **Handles OAuth for MCP** - Implements the OAuth 2.1 authorization code flow from the MCP specification so you don’t have to build it yourself.
+* **Works with existing MCP clients** - Supports Dynamic Client Registration, so tools like Gemini CLI and Claude Desktop can connect without pre-configuration.
+* **Uses your existing identity provider** - Integrates with OIDC and SAML providers (Okta, Azure AD, Google) for user authentication. You can skip user authentication entirely for use cases that don’t require it.
+* **Adds access control** - Apply Aembit Access Policies to restrict who can access which MCP servers, with optional time and location conditions.
+* **Runs in Aembit Cloud** - Available in v1.27+ with no additional agents to deploy.
 
 ## When to use it
 

@@ -5,7 +5,7 @@ description: "A guide to troubleshooting common issues with Aembit CLI"
 resource: https://docs.aembit.io/dev-guide/cli/troubleshooting/
 interface: cli
 tags: ["cli"]
-timestamp: 2026-09-09T09:33:20-07:00
+timestamp: 2026-10-15T06:25:14-07:00
 ---
 
 # Troubleshooting Aembit CLI
@@ -61,7 +61,7 @@ export USERNAME='your-username-value'
 export PASSWORD='your-password-value'
 ```
 
-### `TOKEN` Credential mismatch errors
+### `TOKEN` credential mismatch errors
 
 When running the `aembit credentials get` command without specifying `--credential-names`, you might encounter an error message like this:
 
@@ -173,7 +173,7 @@ This error indicates that the `--client-id` Aembit CLI received isn’t valid or
 
 * Ensure that you’ve formatted the Edge SDK Client ID correctly, as shown in the [credentials get](reference/credentials-get.md) documentation. You can find your Edge SDK Client ID in your Aembit Tenant by following the steps in [Find your Edge SDK Client ID](../../user-guide/access-policies/trust-providers/get-edge-sdk-client-id.md).
 * Verify that the Edge SDK Client ID you set as the `--client-id` matches the Edge SDK Client ID of the Trust Provider in your Aembit Tenant.
-* Check that the Trust Provider is correctly configured in your Aembit Tenant and that it’s a part of the Access Policy that applies to the Client Workload you’re trying get a credential for.
+* Check that the Trust Provider is correctly configured in your Aembit Tenant. Also check that it’s part of the Access Policy that applies to the Client Workload you’re trying to get a credential for.
 
 ### Can’t connect to cloud error
 
@@ -202,7 +202,7 @@ On some Linux hosts, `aembit credentials get` can’t resolve your Aembit Tenant
 Cannot connect to cloud: Error when sending OIDC client credentials request: error sending request for url (https://<tenantId>.id.aembit.io/connect/token); client error (Connect); dns error; failed to lookup address information: Try again
 ```
 
-The default Linux build of Aembit CLI links statically against the musl C library, and the musl resolver treats some DNS responses as failures that the glibc resolver behind `dig` and `curl` tolerates. The case Aembit has seen is a resolver that answers the IPv6 (`AAAA`) query for the hostname with `REFUSED` while it answers the IPv4 (`A`) query normally. musl fails the whole lookup, and glibc uses the `A` answer.
+The default Linux build of Aembit CLI links statically against the musl C library. The musl resolver treats some DNS responses as failures that the glibc resolver behind `dig` and `curl` tolerates. The case Aembit has seen is a resolver that answers the IPv6 (`AAAA`) query for the hostname with `REFUSED` while it answers the IPv4 (`A`) query normally. musl fails the whole lookup, and glibc uses the `A` answer.
 
 **Solution** - Configure the resolver to answer an `AAAA` query for a name with no IPv6 address with an empty `NOERROR` response, which is what the DNS specification requires. That change fixes every client on the host.
 

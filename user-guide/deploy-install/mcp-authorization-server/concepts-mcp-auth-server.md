@@ -4,7 +4,7 @@ title: "MCP Authorization Server concepts"
 description: "Conceptual deep-dive of Aembit's MCP Authorization Server including access control, client authentication, token handling, and URL configuration."
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-authorization-server/concepts-mcp-auth-server/
 tags: ["mcp-authorization-server", "deploy-install"]
-timestamp: 2026-10-13T14:46:03-07:00
+timestamp: 2026-10-15T06:25:14-07:00
 ---
 
 # MCP Authorization Server concepts
@@ -92,9 +92,7 @@ For guidance on choosing between OIDC and SAML, see [MCP Authorization Server ov
 
 ## Client authentication
 
-Aembit’s MCP Authorization Server identifies MCP clients through two OAuth mechanisms:
-
-Dynamic Client Registration (DCR) and Client ID Metadata Documents (CIMD). This section covers both, along with how redirect URIs identify clients.
+Aembit’s MCP Authorization Server identifies MCP clients through two OAuth mechanisms: Dynamic Client Registration (DCR) and Client ID Metadata Documents (CIMD). This section covers both, along with how redirect URIs identify clients.
 
 ### Client registration
 

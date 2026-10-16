@@ -5,7 +5,7 @@ description: "Language libraries that let your application authenticate workload
 resource: https://docs.aembit.io/dev-guide/sdk/edge/
 interface: sdk
 tags: ["edge", "sdk"]
-timestamp: 2026-09-16T18:21:40-07:00
+timestamp: 2026-10-15T12:30:16-07:00
 ---
 
 # Aembit Edge SDKs
@@ -42,9 +42,11 @@ You can use the Edge SDK with the following Trust Providers:
 * [GCP Identity Token Trust Provider](../../../user-guide/access-policies/trust-providers/gcp-identity-token-trust-provider.md)
 * [GitHub Trust Provider](../../../user-guide/access-policies/trust-providers/github-trust-provider.md)
 * [GitLab Trust Provider](../../../user-guide/access-policies/trust-providers/gitlab-trust-provider.md)
+* [Kubernetes Service Account Trust Provider](../../../user-guide/access-policies/trust-providers/kubernetes-service-account-trust-provider.md)
 * [OIDC ID Token Trust Provider](../../../user-guide/access-policies/trust-providers/oidc-id-token-trust-provider.md)
+* [Terraform Cloud Trust Provider](../../../user-guide/access-policies/trust-providers/terraform-cloud-identity-token-trust-provider.md)
 
-Not every provider is available in both languages. For per-language coverage, see [Edge SDK Trust Providers](../../../reference/support-matrix.md#edge-sdk-trust-providers).
+The TypeScript and Python SDKs both support every provider in this list. For the per-language table, see [Edge SDK Trust Providers](../../../reference/support-matrix.md#edge-sdk-trust-providers).
 
 ## Where to go next
 

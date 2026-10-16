@@ -4,7 +4,7 @@ title: "Securing MCP server access"
 description: "How Aembit's MCP Identity Gateway gives AI agents centralized, zero-credential access to your MCP servers."
 resource: https://docs.aembit.io/get-started/use-cases/mcp-server-access/
 tags: ["use-case"]
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-10-15T06:25:14-07:00
 ---
 
 # Securing MCP server access
@@ -41,9 +41,7 @@ The Identity Gateway evaluates every MCP request against two Access Policies:
 * The Client-to-Gateway policy validates which AI agent (MCP client) is connecting and authenticates the user through your identity provider with a Trust Provider.
 * The Gateway-to-Server policy authorizes the Identity Gateway to reach a specific MCP server and uses a Credential Provider to obtain that user’s credentials for it.
 
-Because the user’s identity rides in every request, the Identity Gateway extends
-
-blended identity across both hops, combining the human user and the AI agent in a single access decision.
+Because the user’s identity rides in every request, the Identity Gateway extends blended identity across both hops, combining the human user and the AI agent in a single access decision.
 
 For the full request flow, token exchange, and security model, see [MCP Identity Gateway concepts](../../user-guide/deploy-install/mcp-identity-gateway/concepts-mcp-gateway.md). For a side-by-side comparison of the Identity Gateway and the MCP Authorization Server, see [AI agent access](ai-agents.md).
 

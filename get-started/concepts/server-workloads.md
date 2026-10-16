@@ -4,16 +4,16 @@ title: "About Server Workloads"
 description: "Understanding Server Workloads and their role as access targets in Aembit"
 resource: https://docs.aembit.io/get-started/concepts/server-workloads/
 tags: ["concept"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-10-15T06:25:14-07:00
 ---
 
 # About Server Workloads
 
 Server Workloads represent the target services, APIs, databases, or applications that receive and respond to access requests from Client Workloads. They’re the “servers” in Aembit’s client-server access model, acting as the resource providers that Client Workloads need to consume services, data, or functionality from.
 
-Server Workloads can be virtually any service that provides functionality to other systems—from modern cloud-native APIs and microservices to legacy on-premises databases, from third-party SaaS platforms like Snowflake and Stripe to AI services like OpenAI and Claude. The key characteristic is that they receive incoming requests and provide responses, making them the targets of access control policies.
+Server Workloads can be virtually any service that provides functionality to other systems. They range from modern cloud-native APIs and microservices to legacy on-premises databases. They also include third-party SaaS platforms like Snowflake and Stripe, and AI services like OpenAI and Claude. The key characteristic is that they receive incoming requests and provide responses, making them the targets of access control policies.
 
-The core challenge Server Workloads address is **centralized access management**—providing a unified way to define, configure, and manage access to diverse services regardless of their location, protocol, or authentication requirements. Instead of managing separate authentication configurations for each service, Aembit creates a logical abstraction that standardizes how [Client Workloads](client-workloads.md) access any target service.
+Server Workloads address the core challenge of **centralized access management**. They provide a unified way to define, configure, and manage access to diverse services regardless of their location, protocol, or authentication requirements. Instead of managing separate authentication configurations for each service, Aembit creates a logical abstraction that standardizes how [Client Workloads](client-workloads.md) access any target service.
 
 ![](https://docs.aembit.io/aembit-icons/server-workload.svg)
 
@@ -29,13 +29,13 @@ The following steps outline how Server Workloads function within Aembit’s acce
 
 2. **Server Workload Identification and Policy Lookup** - Aembit Edge intercepts the outbound request and matches the destination (host and port) against configured Server Workload definitions.
 
-   Aembit Cloud then locates the appropriate Access Policy that links the identified Client Workload to the target Server Workload, along with any required Trust Providers and Access Conditions.
+   Then Aembit Cloud locates the appropriate Access Policy that links the identified Client Workload to the target Server Workload, along with any required Trust Providers and Access Conditions.
 
 3. **Authentication Requirements** - The Server Workload definition specifies what type of authentication the target service expects (such as Bearer tokens, API keys, or database credentials).
 
 4. **Credential Provisioning** - Aembit obtains the required credentials from the configured Credential Provider, which knows how to generate or retrieve the specific authentication credentials that the target service expects.
 
-5. **Request Forwarding** - Aembit Edge injects the obtained credentials into the Client Workload’s original request (such as adding HTTP headers or modifying connection parameters) and forwards the authenticated request to the actual target service.
+5. **Request Forwarding** - Aembit Edge injects the obtained credentials into the Client Workload’s original request, such as adding HTTP headers or modifying connection parameters. Aembit Edge then forwards the authenticated request to the actual target service.
 
 6. **Response Handling** - The target service processes the authenticated request and returns its response, which Aembit Edge forwards back to the Client Workload transparently.
 

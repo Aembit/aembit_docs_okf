@@ -4,7 +4,7 @@ title: "About the Aembit MCP Server"
 description: "Learn how the Aembit MCP Server provides a secure, read-only API layer for AI agents to query Aembit event logs."
 resource: https://docs.aembit.io/user-guide/mcp-server/about-mcp-server/
 tags: ["mcp-server"]
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-10-15T06:25:14-07:00
 ---
 
 # About the Aembit MCP Server

@@ -4,7 +4,7 @@ title: "Access Authorization Events"
 description: "This page describes how users can review access authorization event information in Aembit Reporting."
 resource: https://docs.aembit.io/user-guide/audit-report/access-authorization-events/
 tags: ["audit-report"]
-timestamp: 2026-10-13T14:46:03-07:00
+timestamp: 2026-10-16T10:28:13-07:00
 ---
 
 # Access Authorization Events
@@ -13,21 +13,20 @@ An access authorization event is an event that Aembit generates that occurs when
 
 Having the ability to view information about these access authorization events enables you to not only troubleshoot issues, but also have a historical records of these events. You may also use these logs to perform threat detection analysis to ensure malicious actors and workloads don’t gain access to your resources.
 
-> **MCP access authorization events**
+> **Authorization chain**
 >
-> MCP access authorization events include `authorizationChain`, which contains an ordered list of context IDs that identify the authorization decisions behind a request.
+> Access authorization events can include `authorizationChain`, which contains an ordered list of context IDs that identify the authorization decisions behind a request.
 >
-> The same field also appears on the corresponding [MCP Workload Events](workload-events/overview.md), so you can take any context ID from the chain to trace a request across both surfaces. See [Trace a request with the authorization chain](../troubleshooting/mcp-ai-iam.md).
->
-> This field requires version 1.32 or later. Events from earlier components don’t include it.
+> The same field also appears on the corresponding [Workload Events](workload-events/overview.md), so you can take any context ID from the chain to trace a request across both surfaces. See [Trace a request with the authorization chain](../troubleshooting/mcp-ai-iam.md).
 
 ## Event types
 
-The four different types of access authorization events that you may view in the Aembit Reporting dashboard include:
+The Aembit Reporting dashboard shows the following types of access authorization events:
 
 * Access Request
 * Access Authorization
 * Access Discovery
+* Access Registration
 * Access Credential
 
 ## Access request events
@@ -38,6 +37,9 @@ The following example shows an `access.request` event type.
 
 ```json
 {
+  "authorizationChain": [
+    "4e876ace-d1b0-4095-ac22-f9c0fb7e676a"
+  ],
   "meta": {
     "clientIP": "1.2.3.4",
     "timestamp": "2024-09-14T20:29:11.0689334Z",
@@ -127,7 +129,7 @@ The following example shows the type of data you should expect to see in an acce
 
 ### Authorization failure
 
-If an authorization request fails during the check, the `trustProviders` and/or `accessConditions` elements include a `reason` property value that notifies you a failure occurred and explains why. By providing you a reason for the failure, you can then use this information to diagnose and troubleshoot the issue.
+If an authorization request fails, the result for the entity that failed includes a `reason` property that explains why. This applies to the `clientWorkload`, `serverWorkload`, `accessPolicy`, `trustProviders`, and `accessConditions` elements. When a value didn’t match, the result also includes `attribute`, `expectedValue`, and `actualValue`. Aembit omits these fields when they’re empty.
 
 A failure can return different types of `reason` values, including:
 
@@ -146,9 +148,19 @@ With this information, you can determine that the `Kubernetes` Trust Provider fa
 
 When Aembit Cloud denies a request because its MCP user session expired or an administrator revoked it, the event’s `outcome.reason` is `McpSessionExpiredOrRevoked`. That reason sits on `outcome` rather than on a Trust Provider or Access Condition, and `meta.severity` is `Error`. See [MCP user sessions](../access-policies/mcp-identity-gateway/mcp-user-sessions.md).
 
+### Failure diagnostics
+
+The `reason`, `attribute`, `expectedValue`, and `actualValue` fields appear in the event’s JSON view. Aembit caps each diagnostic value at 256 characters, adding `...` when it truncates one, and removes line breaks. JSON Web Tokens (JWTs) appear as `[REDACTED_JWT]`. Bearer tokens and values for keys such as `password`, `client_secret`, and `token` appear as `[REDACTED]`.
+
+### MCP authorization failure
+
+During MCP authorization, Aembit records an `access.authorization` event with severity `Error` when no Client Workload matches, no Server Workload matches, no Access Policy connects them, or more than one Access Policy matches. The MCP client receives the error `Aembit Access Policy validation failed. Contact your Aembit administrator`, followed by the event ID when Aembit recorded one.
+
+During this step, Aembit matches Client Workloads on redirect URI or client ID. The event shows a `reason` on the entity that failed, and a `matches` list when more than one workload matched, but no `attribute`, `expectedValue`, or `actualValue`.
+
 ### Content Security
 
-When an Access Policy includes a Content Security Provider, the `access.authorization` event lists the provider that Aembit identified for the policy in the `contentSecurity` element. The element records the provider’s `id` and `name` with a `result` of `Identified`, following the same pattern as the `trustProviders` and `accessConditions` elements. When a policy has no Content Security Provider, `contentSecurity` is an empty array.
+When an Access Policy includes a Content Security Provider, the `access.authorization` event lists the provider that Aembit identified for the Access Policy in the `contentSecurity` element. The element records the provider’s `id` and `name` with a `result` of `Identified`, following the same pattern as the `trustProviders` and `accessConditions` elements. When an Access Policy has no Content Security Provider, `contentSecurity` is an empty array.
 
 Example `contentSecurity` element in an `access.authorization` event
 
@@ -168,19 +180,23 @@ Example `contentSecurity` element in an `access.authorization` event
 }
 ```
 
-The element tells you which Content Security Provider applied to the request the policy authorized. The decisions themselves appear in [MCP workload events](workload-events/supported-protocols.md#content-security), not in Access Authorization Events.
+The element tells you which Content Security Provider applied to the request the Access Policy authorized. The decisions themselves appear in [MCP workload events](workload-events/supported-protocols.md#content-security), not in Access Authorization Events.
 
 ## Access discovery events
 
-An `access.discovery` event captures the Client Workloads and Server Workloads that Aembit Cloud considered while evaluating an access request. It’s most useful for diagnosing requests that fail because no workload or policy matched, or because multiple workloads matched a single request.
+An `access.discovery` event captures the Client Workloads and Server Workloads that Aembit Cloud considered while evaluating an access request. It’s most useful for diagnosing requests that fail because no workload or Access Policy matched, or because multiple workloads matched a single request.
 
 Aembit emits Access Discovery events alongside the standard `access.request` and `access.authorization` events when discovery applies. For example, during Model Context Protocol (MCP) Identity Gateway authorization, a single client request can match multiple candidate Server Workloads.
 
-When no workload or policy matches the request, the discovery event has severity `Error` and lists each candidate that Aembit Cloud evaluated along with the reason Aembit Cloud excluded it.
+When no workload or Access Policy matches the request, the discovery event has severity `Error` and lists each candidate that Aembit Cloud evaluated along with the reason Aembit Cloud excluded it.
 
 You can filter the Access Authorization Events view by the `access.discovery` event type to review all discovery outcomes over a timespan.
 
 For end-to-end troubleshooting that uses Access Discovery events alongside Workload Events and MCP Authorization Tracing, see [Troubleshoot MCP and AI IAM access](../troubleshooting/mcp-ai-iam.md).
+
+## Access registration events
+
+An `access.registration` event records a Dynamic Client Registration (DCR) request to the MCP Authorization Server. A successful registration has severity `Info`, and a failed one has severity `Error`. The `clientRegistration` element lists the registration’s `clientId`, `clientName`, `redirectUris`, `grantTypes`, and `responseTypes`. A failed registration has no `clientRegistration` element. Its `clientWorkload` element carries `reason` and `attribute`, plus `actualValue` when the request supplied one.
 
 ## Access credential events
 
@@ -242,7 +258,7 @@ If a credential request fails during the check, the `credentialProvider` entity 
 A credential request can fail for different reasons, including:
 
 * **Token expired** - The requested token expired. The reason identifies which token expired and at which step Aembit detected the expiration. The expired token can be the upstream identity provider’s refresh token, the cached access token, or a credential that a Credential Provider issued. This makes it easier to choose between re-authenticating the user, refreshing the credential, or adjusting the Credential Provider configuration.
-* **Request failed with BadRequest** - There was a communication error with the credential provider with the HTTP status code.
+* **Request failed with BadRequest** - There was a communication error with the Credential Provider with the HTTP status code.
 * **Aembit Internal Error** - There was an internal Aembit error during the credential retrieval.
 * **Unknown error** - An unexpected error occurred during credential retrieval, and Aembit support is investigating.
 
@@ -268,7 +284,7 @@ To retrieve detailed information about access authorization events, perform the 
 
    * **Timespan** - The period of time you would like to have event data displayed.
    * **Severity** - The level of importance of the event.
-   * **Event type** - Filter to a specific event type, including `access.discovery`.
+   * **Event type** - Filter to a specific event type, including **Discovery** and **Registration**.
 
    > **Default filters**
    >
@@ -326,7 +342,7 @@ In the right side of the information panel, you see the more granular, detailed 
   * Options are `Authorized`, `Unauthorized`, or `Error`.
 
 * **Client Workload** - The Client Workload used in the access authorization request.
-  * Detailed information includes `id`, `name`, `result`, and `matches`. Note that the `matches` value is optional, and only renders if the request matches multiple Client Workloads.
+  * Detailed information includes `id`, `name`, `result`, and `matches`. The `matches` value is optional, and only renders if the request matches multiple Client Workloads.
 
 * **Server Workload** - The Server Workload used in the access authorization request.
 

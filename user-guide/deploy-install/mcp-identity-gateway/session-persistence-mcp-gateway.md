@@ -4,7 +4,7 @@ title: "Session persistence in the MCP Identity Gateway"
 description: "How the MCP Identity Gateway stores MCP sessions, and how to persist them across restarts with Valkey."
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/session-persistence-mcp-gateway/
 tags: ["mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-10-08T13:12:21-07:00
+timestamp: 2026-10-14T16:36:12-04:00
 ---
 
 # Session persistence in the MCP Identity Gateway
@@ -38,7 +38,7 @@ An in-memory store is also per-process, so it can’t back more than one Gateway
 Set `AEMBIT_VALKEY_URL` on the install command to store sessions in Valkey instead:
 
 ```shell
-sudo AEMBIT_AUTHORIZATION_SERVER=https://abc123.mcp.useast2.aembit.io/ \
+sudo AEMBIT_AUTHORIZATION_SERVER=https://abc123.id.useast2.aembit.io/ \
      AEMBIT_MCP_GATEWAY_URL=https://mcp-gateway.example.com \
      AEMBIT_TLS_CERT_CHAIN_PATH=/etc/ssl/certs/fullchain.pem \
      AEMBIT_TLS_PRIVATE_KEY_PATH=/etc/ssl/private/privkey.pem \

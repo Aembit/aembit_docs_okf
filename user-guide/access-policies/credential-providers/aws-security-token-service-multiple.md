@@ -4,7 +4,7 @@ title: "Using multiple AWS STS Federation Credential Providers in a single Acces
 description: "How to add and use multiple AWS Security Token Service (STS) Federation Credential Providers to an Access Policy"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/aws-security-token-service-multiple/
 tags: ["credential-provider", "access-policy"]
-timestamp: 2026-09-22T15:17:29-07:00
+timestamp: 2026-10-15T06:25:14-07:00
 ---
 
 # Using multiple AWS STS Federation Credential Providers in a single Access Policy

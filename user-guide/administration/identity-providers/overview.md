@@ -5,7 +5,7 @@ description: "Description of what Identity Providers are and how they work in th
 resource: https://docs.aembit.io/user-guide/administration/identity-providers/
 interface: web-ui
 tags: ["identity-provider", "administration"]
-timestamp: 2026-10-13T14:46:03-07:00
+timestamp: 2026-10-14T16:36:12-04:00
 ---
 
 # Identity Providers overview
@@ -53,6 +53,10 @@ The following occurs during the SSO authentication process on your Aembit Tenant
 4. If the IdP authentication is successful, the IdP redirects the user back to your Aembit Tenant.
 
 5. Aembit logs the user in through the successful SSO authentication.
+
+SSO authentication fails when the IdP’s response fails validation, when Aembit can’t create the user or map them to a role, or when the user has no account, an inactive account, or no active role. In that case, Aembit returns the user to the login page with the message “Single Sign-On login failed. Check your Identity Provider configuration.” Aembit also records an [Audit Log](../../audit-report/audit-logs.md#sso-login-failures) event in the `Authentication` category that names the step that failed.
+
+If Aembit can’t redirect the user to the IdP, the login page shows “Single Sign-On challenge failed. Please contact your administrator.”
 
 The following diagram shows the SSO authentication flow:
 

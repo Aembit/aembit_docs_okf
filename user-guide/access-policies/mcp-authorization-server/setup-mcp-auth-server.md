@@ -5,7 +5,7 @@ description: "How to configure Access Policies and register MCP clients for the 
 resource: https://docs.aembit.io/user-guide/access-policies/mcp-authorization-server/setup-mcp-auth-server/
 interface: mcp
 tags: ["mcp-authorization-server", "access-policy"]
-timestamp: 2026-10-13T18:53:35-07:00
+timestamp: 2026-10-14T16:36:12-04:00
 ---
 
 # Set up the MCP Authorization Server
@@ -66,7 +66,7 @@ For general Client Workload configuration guidance, see [Client Workloads](../cl
 
      > **Local development**
      >
-     > For local development, you can use either `127.0.0.1` or `localhost`. The MCP specification allows ephemeral ports, so the Authorization Server ignores port numbers in redirect URIs when matching policies against local IP addresses. See [Redirect URIs](../../deploy-install/mcp-authorization-server/concepts-mcp-auth-server.md#redirect-uris).
+     > For local development, you can use either `127.0.0.1` or `localhost`. The MCP specification allows ephemeral ports, so the Authorization Server ignores the port number when it matches a local redirect URI to a Client Workload. See [Redirect URIs](../../deploy-install/mcp-authorization-server/concepts-mcp-auth-server.md#redirect-uris).
 
    * Remote/cloud
 
@@ -108,7 +108,7 @@ For general Server Workload configuration guidance, see [Server Workloads](../se
 
 7. (Optional) In the **URL Path** field, enter the path if your MCP server uses one (for example, `/mcp`).
 
-   When you select **MCP** as the application protocol, Aembit sets **HTTP Authentication** with the **Bearer** scheme by default, and you can change both. The **Aembit MCP Authorization Server URL** field displays the auto-generated authorization server URL that MCP clients use for OAuth discovery.
+   When you select **MCP** as the application protocol, the **Authentication Method** field defaults to **HTTP Authentication** with the **Bearer** scheme. You can change both. The **Aembit MCP Authorization Server URL** field displays the auto-generated authorization server URL that MCP clients use for OAuth discovery.
 
    > **URL alignment**
    >
@@ -340,23 +340,19 @@ If you encounter authentication errors, see [Troubleshoot the MCP Authorization 
 
 To work with Aembit’s MCP Authorization Server, your MCP server needs certain configuration settings. Most of these are standard OAuth concepts from the MCP specification—the exact field names vary by MCP server implementation.
 
-| Concept                      | Purpose                                           | Aembit value                                                                    | Required by |
-| ---------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------- | ----------- |
-| **Authorization Server URL** | Where MCP clients discover OAuth endpoints        | `https://[tenant].mcp.[region].aembit.io`                                       | MCP spec    |
-| **Token Issuer**             | OIDC issuer URL of token validation               | `https://[tenant].id.[region].aembit.io`                                        | RFC 8414    |
-| **JWKS URI**                 | Public keys used for token signature verification | `https://[tenant].mcp.[region].aembit.io/.well-known/openid-configuration/jwks` | RFC 8414    |
-| **Token Audience**           | Must match your Credential Provider configuration | Your MCP server’s public URL                                                    | RFC 8707    |
-| **Token Algorithm**          | Signing algorithm for access tokens               | `ES256` (default) or RSA                                                        | Aembit      |
+| Concept                      | Purpose                                           | Aembit value                                                                   | Required by |
+| ---------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------ | ----------- |
+| **Authorization Server URL** | Where MCP clients discover OAuth endpoints        | `https://[tenant].id.[region].aembit.io`                                       | MCP spec    |
+| **Token Issuer**             | OIDC issuer URL of token validation               | `https://[tenant].id.[region].aembit.io`                                       | RFC 8414    |
+| **JWKS URI**                 | Public keys used for token signature verification | `https://[tenant].id.[region].aembit.io/.well-known/openid-configuration/jwks` | RFC 8414    |
+| **Token Audience**           | Must match your Credential Provider configuration | Your MCP server’s public URL                                                   | RFC 8707    |
+| **Token Algorithm**          | Signing algorithm for access tokens               | `ES256` (default) or RSA                                                       | Aembit      |
 
 > **Token algorithm**
 >
 > The MCP specification doesn’t mandate a specific signing algorithm. Aembit supports ES256 (default) and RSA—configure your MCP server’s token verifier to match your Credential Provider settings.
 
 Consult your MCP server’s documentation for how to configure these settings. For a complete reference, see [Configuration concepts](../../deploy-install/mcp-authorization-server/reference-mcp-auth-server.md#configuration-concepts).
-
-> **Issuer subdomain**
->
-> When configuring your MCP server’s token verification, the `issuer` must use the `.id.` subdomain (for example, `abc123.id.useast2.aembit.io`), **not** the `.mcp.` subdomain. See [Tenant URL patterns](../../deploy-install/mcp-authorization-server/reference-mcp-auth-server.md#tenant-url-patterns) for details.
 
 ## Test with a demo MCP server
 
@@ -380,11 +376,10 @@ Replace the placeholder values with your Aembit tenant details, then run with `p
       "host": "0.0.0.0",
       "port": 8000,
       "mcp_server_url": "http://localhost:8000",
-      # Authorization server uses .mcp. subdomain
-      "auth_server": "https://[your-tenant-id].mcp.[region].aembit.io",
-      # Token issuer uses .id. subdomain (NOT .mcp.)
+      # Authorization server, issuer, and JWKS all use the .id. subdomain
+      "auth_server": "https://[your-tenant-id].id.[region].aembit.io",
       "issuer": "https://[your-tenant-id].id.[region].aembit.io",
-      "jwks_uri": "https://[your-tenant-id].mcp.[region].aembit.io/.well-known/openid-configuration/jwks",
+      "jwks_uri": "https://[your-tenant-id].id.[region].aembit.io/.well-known/openid-configuration/jwks",
   }
 
 
@@ -446,7 +441,6 @@ Replace the placeholder values with your Aembit tenant details, then run with `p
 
 **Key configuration notes:**
 
-* The `issuer` uses the `.id.` subdomain (for example, `abc123.id.useast2.aembit.io`), not `.mcp.`
 * The `algorithm` must match your Credential Provider setting—ES256 (default) or RSA (see [Token algorithm](../../deploy-install/mcp-authorization-server/reference-mcp-auth-server.md#token-algorithm))
 * The `audience` must match your server’s public URL exactly
 

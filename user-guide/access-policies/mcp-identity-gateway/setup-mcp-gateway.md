@@ -5,7 +5,7 @@ description: "Configure your Aembit Tenant for the managed MCP Identity Gateway.
 resource: https://docs.aembit.io/user-guide/access-policies/mcp-identity-gateway/setup-mcp-gateway/
 interface: mcp
 tags: ["mcp-identity-gateway", "access-policy"]
-timestamp: 2026-10-13T14:46:03-07:00
+timestamp: 2026-10-14T16:36:12-04:00
 ---
 
 # Set up the MCP Identity Gateway
@@ -55,7 +55,7 @@ Unlike typical Aembit workload-to-workload scenarios, MCP requests involve two i
 
 The MCP Identity Gateway needs both: it validates *which* MCP client is connecting and *who* is using it. The Credential Provider then stores tokens per-user, tying each user’s MCP server access to their own authorization.
 
-In this model, you configure identity once at the tenant level. Many users can share the same set of policies, while the per-user credentials the Credential Provider manages isolate their individual access.
+In this model, you configure identity once at the tenant level. Many users can share the same set of Access Policies, while the per-user credentials the Credential Provider manages isolate their individual access.
 
 In your Aembit Tenant, go to **Administration -> Identity Providers** and configure your IdP using [OIDC](../../administration/identity-providers/create-idp-oidc.md) or [SAML](../../administration/identity-providers/create-idp-saml.md). The MCP Enterprise Managed Access Token Credential Provider requires an OIDC Identity Provider with the `offline_access` scope; see [Prepare the Identity Provider for enterprise-managed access](../credential-providers/mcp-enterprise-managed-access-token-idp.md).
 
@@ -65,11 +65,11 @@ In your Aembit Tenant, go to **Administration -> Identity Providers** and config
 
 ## Create the client-to-gateway Access Policy
 
-The MCP Identity Gateway requires **two Access Policies** to function: one for the client-to-Gateway connection and one for the Gateway-to-server connection. You must create both policies for the Gateway to work.
+The MCP Identity Gateway requires **two Access Policies** to function: one for the client-to-Gateway connection and one for the Gateway-to-server connection. You must create both Access Policies for the Gateway to work.
 
 ![Two Access Policies required for the MCP Identity Gateway: client-to-Gateway and Gateway-to-server](https://docs.aembit.io/d2/docs/user-guide/access-policies/mcp-identity-gateway/setup-mcp-gateway-0.svg)
 
-This section covers creating the first policy, which governs which MCP clients and users can connect to the MCP Identity Gateway. For step-by-step instructions on using the Access Policy Builder interface, see [Create an Access Policy](../create-access-policy.md).
+This section covers creating the first Access Policy, which governs which MCP clients and users can connect to the MCP Identity Gateway. For step-by-step instructions on using the Access Policy Builder interface, see [Create an Access Policy](../create-access-policy.md).
 
 ### Name the Access Policy
 
@@ -119,7 +119,7 @@ Create a Server Workload that represents the MCP Identity Gateway endpoint.
 
 > **Set URL Path to `/mcp`**
 >
-> The **URL Path** field is an Aembit policy-matching identifier. The Gateway always exposes MCP traffic at `/mcp`, so MCP clients connect to `https://<gateway-host>/mcp`. Setting **URL Path** to `/mcp` matches this path exactly, which is the most precise policy configuration.
+> The **URL Path** field is an Aembit policy-matching identifier. The Gateway always exposes MCP traffic at `/mcp`, so MCP clients connect to `https://<gateway-host>/mcp`. Setting **URL Path** to `/mcp` matches this path exactly, which is the most precise Access Policy configuration.
 
 See [Server Workloads](../server-workloads/overview.md) for additional configuration options.
 
@@ -191,11 +191,11 @@ The token contains the authenticated user’s identity (for example, an email cl
 
 ## Create the gateway-to-server Access Policy
 
-The second policy governs the MCP Identity Gateway’s access to each MCP server. The Credential Provider enforces per-user access by storing OAuth tokens for each user.
+The second Access Policy governs the MCP Identity Gateway’s access to each MCP server. The Credential Provider enforces per-user access by storing OAuth tokens for each user.
 
 > **Per-user access control**
 >
-> In this policy, the **Client Workload** is the MCP Identity Gateway itself, not individual users. The Credential Provider enforces per-user access: with MCP User-Based Access Token, each user completes an OAuth authorization flow once per MCP server, and Aembit stores their tokens individually. With MCP Enterprise Managed Access Token, Aembit exchanges each user’s SSO identity for the MCP server token, and no user sees a consent prompt. Optional Access Conditions can add Time or GeoIP restrictions.
+> In this Access Policy, the **Client Workload** is the MCP Identity Gateway itself, not individual users. The Credential Provider enforces per-user access: with MCP User-Based Access Token, each user completes an OAuth authorization flow once per MCP server, and Aembit stores their tokens individually. With MCP Enterprise Managed Access Token, Aembit exchanges each user’s SSO identity for the MCP server token, and no user sees a consent prompt. Optional Access Conditions can add Time or GeoIP restrictions.
 
 ### Name the Access Policy
 
@@ -218,7 +218,7 @@ Create a Client Workload that represents the MCP Identity Gateway as a client.
    | Client Identification | Select **OIDC ID Token Audience**                                                           |
    | Value                 | The Gateway URL **with a trailing slash** (for example, `https://mcp-gateway.example.com/`) |
 
-   The Audience value must include the trailing slash and match the audience that the left-side policy’s Credential Provider issues, so Aembit recognizes the Gateway as the authenticated caller.
+   The Audience value must include the trailing slash. It must also match the audience that the Client-to-Gateway Access Policy’s Credential Provider issues, so Aembit recognizes the Gateway as the authenticated caller.
 
 4. Click **Save**.
 
@@ -234,15 +234,21 @@ Create a Server Workload for each downstream MCP server.
 
 3. Configure the Server Workload with the following settings:
 
-   | Field                | Value                                                      |
-   | -------------------- | ---------------------------------------------------------- |
-   | Name                 | A descriptive name (for example, `Finance MCP Server`)     |
-   | Host                 | The MCP server’s hostname (for example, `mcp.example.com`) |
-   | Application Protocol | Select **MCP**                                             |
-   | Port                 | Typically **443** with TLS enabled                         |
-   | URL Path             | The MCP endpoint path (for example, `/integrations/mcp`)   |
+   | Field                 | Value                                                                                     |
+   | --------------------- | ----------------------------------------------------------------------------------------- |
+   | Name                  | A descriptive name (for example, `Finance MCP Server`)                                    |
+   | Host                  | The MCP server’s hostname (for example, `mcp.example.com`)                                |
+   | Application Protocol  | Select **MCP**                                                                            |
+   | Port                  | Typically **443** with TLS enabled                                                        |
+   | URL Path              | The MCP endpoint path (for example, `/integrations/mcp`)                                  |
+   | Authentication Method | Aembit preselects **HTTP Authentication**; change it to the method the MCP server expects |
+   | Authentication Scheme | Aembit preselects **Bearer**; change it to the scheme the MCP server expects              |
 
 4. Click **Save**.
+
+> **Some authentication schemes don’t reach the MCP server**
+>
+> The MCP Identity Gateway sends the credential to the MCP server in an HTTP header or as a mutual Transport Layer Security (mTLS) client certificate. A Server Workload that uses the **Query Parameter** or **AWS Signature v4** scheme saves, but the MCP Identity Gateway doesn’t send that credential to the MCP server. See [Authentication sent to the MCP server](../../deploy-install/mcp-identity-gateway/reference-mcp-gateway.md#authentication-sent-to-the-mcp-server).
 
 Find the hostname, path, and port in your MCP server vendor’s documentation. See [Server Workloads](../server-workloads/overview.md) for additional configuration options.
 
@@ -273,7 +279,7 @@ See [Trust Providers](../trust-providers/overview.md) for additional configurati
 
 ### Credential Provider
 
-Create a Credential Provider that retrieves credentials for the MCP server. The MCP Identity Gateway supports three credential provider types for this policy, depending on how the MCP server issues credentials.
+Create a Credential Provider that retrieves credentials for the MCP server. The MCP Identity Gateway supports the following Credential Provider types for this Access Policy, depending on how the MCP server issues credentials.
 
 #### Choosing a credential type
 
@@ -420,7 +426,7 @@ For more information, see:
 
 ### Access Conditions (optional)
 
-Use Access Conditions to add contextual restrictions to the policy. The MCP Identity Gateway supports time-based and GeoIP-based conditions for MCP traffic.
+Use Access Conditions to add contextual restrictions to the Access Policy. The MCP Identity Gateway supports time-based and GeoIP-based conditions for MCP traffic.
 
 To add Access Conditions, in the **Access Conditions** card in the right panel, click **+ Configure** and configure as needed. See [Access Conditions](../access-conditions/overview.md) for available condition types and configuration options.
 
@@ -432,7 +438,7 @@ To add Access Conditions, in the **Access Conditions** card in the right panel, 
 
 ### Content Security (optional)
 
-Adding a Content Security Provider to this policy makes the Gateway apply that provider’s decision to each MCP tool message the policy matches.
+Adding a Content Security Provider to this Access Policy makes the Gateway apply that provider’s decision to each MCP tool message the Access Policy matches.
 
 To add Content Security, in the **Content Security** card in the right panel, click **+ Configure**. Then select an existing Content Security Provider or create a new one. See [Add CrowdStrike AIDR to a policy](../content-security/crowdstrike-aidr/add-to-policy.md) for the full configuration steps.
 
@@ -459,7 +465,7 @@ This consent flow applies to MCP User-Based Access Token. With [MCP Enterprise M
 
 ## Verify the connection
 
-> **Activate both policies**
+> **Activate both Access Policies**
 >
 > Both the client-to-Gateway and Gateway-to-server Access Policies must be active before testing. If you didn’t activate them during creation, go to **Access Policies** and enable the **Active** toggle for each policy.
 
@@ -479,11 +485,11 @@ Once configuration is complete, verify the end-to-end flow:
 
 3. Verify the MCP Identity Gateway can evaluate Access Policies and that permitted requests succeed. After authentication, the MCP client should be able to list tools or resources.
 
-   If this fails, check the Access Policy configuration in Aembit. Ensure both Client-to-Gateway and Gateway-to-Server policies are active.
+   If this fails, check the Access Policy configuration in Aembit. Ensure both Client-to-Gateway and Gateway-to-Server Access Policies are active.
 
 4. Review MCP activity in Aembit Cloud:
 
-   * **Workload events** - Check `mcp.request` and `mcp.response` events in Aembit Cloud for authentication, policy evaluation, and MCP request handling. See [Audit and report on Workload activity](../../audit-report/overview.md).
+   * **Workload events** - Check `mcp.request` and `mcp.response` events in Aembit Cloud for authentication, Access Policy evaluation, and MCP request handling. See [Audit and report on Workload activity](../../audit-report/overview.md).
    * **Log Streams** - Forward workload events to your SIEM or observability tooling via [Log Streams](../../administration/log-streams/overview.md).
 
    If you need access to Gateway runtime logs (operated by Aembit), contact your Aembit representative.
@@ -510,13 +516,17 @@ To use the MCP Identity Gateway, you only configure:
   * Client-to-Gateway (AI agent → MCP Gateway)
   * Gateway-to-Server (MCP Gateway → MCP server),
 
-* One **Credential Provider** for each MCP server. Use [MCP User-Based Access Token](../credential-providers/mcp-user-based-access-token.md) when the server requires per-user OAuth credentials. Use [MCP Enterprise Managed Access Token](../credential-providers/mcp-enterprise-managed-access-token.md) when the server and your OIDC Identity Provider support Enterprise-Managed Authorization. Use [OAuth 2.0 Authorization Code](../credential-providers/oauth-authorization-code.md) for shared credentials.
+* One **Credential Provider** for each MCP server:
+
+  * [MCP User-Based Access Token](../credential-providers/mcp-user-based-access-token.md) when the server requires per-user OAuth credentials
+  * [MCP Enterprise Managed Access Token](../credential-providers/mcp-enterprise-managed-access-token.md) when the server and your OIDC Identity Provider support Enterprise-Managed Authorization
+  * [OAuth 2.0 Authorization Code](../credential-providers/oauth-authorization-code.md) for shared credentials
 
 You **shouldn’t** follow the “Set up the MCP Authorization Server” steps unless you’re explicitly using Aembit as a standalone MCP Authorization Server for your own MCP servers.
 
 ## Example end-to-end scenario
 
-1. An administrator configures the Gateway and access policies in Aembit
+1. An administrator configures the Gateway and Access Policies in Aembit
 2. A user opens an AI agent (such as Claude), which connects through the Gateway
 3. The user queries an MCP server through the agent
 4. An auditor reviews logs to see which user and agent accessed which MCP server and when

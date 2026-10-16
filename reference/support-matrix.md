@@ -3,7 +3,7 @@ type: reference
 title: "Support matrix"
 description: "Supported features for each deployment type"
 resource: https://docs.aembit.io/reference/support-matrix/
-timestamp: 2026-09-21T11:29:36-04:00
+timestamp: 2026-10-15T12:30:16-07:00
 ---
 
 # Support matrix
@@ -244,16 +244,16 @@ The Aembit CLI supports the following Access Conditions:
 
 ### Edge SDK Trust Providers
 
-The [Edge SDK](../dev-guide/sdk/edge/overview.md) is available for TypeScript and Python, and the available Trust Providers differ between the two languages. This table lists every Trust Provider type the Edge API accepts and shows SDK support for each by language.
+The [Edge SDK](../dev-guide/sdk/edge/overview.md) is available for TypeScript and Python, and both languages support the same Trust Providers. This table lists every Trust Provider type the Edge API accepts and shows SDK support for each by language.
 
 | Trust Providers                                                                                                                     | TypeScript | Python |
 | ----------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------ |
-| [AWS Metadata Service Trust Provider](../user-guide/access-policies/trust-providers/aws-metadata-service-trust-provider.md)              | ✅          | ❌      |
+| [AWS Metadata Service Trust Provider](../user-guide/access-policies/trust-providers/aws-metadata-service-trust-provider.md)              | ✅          | ✅      |
 | [AWS Role Trust Provider](../user-guide/access-policies/trust-providers/aws-role-trust-provider.md)                                      | ✅          | ✅      |
-| [Azure Instance Metadata Service Trust Provider](../user-guide/access-policies/trust-providers/azure-metadata-service-trust-provider.md) | ✅          | ❌      |
-| [GCP Identity Token Trust Provider](../user-guide/access-policies/trust-providers/gcp-identity-token-trust-provider.md)                  | ✅          | ❌      |
+| [Azure Instance Metadata Service Trust Provider](../user-guide/access-policies/trust-providers/azure-metadata-service-trust-provider.md) | ✅          | ✅      |
+| [GCP Identity Token Trust Provider](../user-guide/access-policies/trust-providers/gcp-identity-token-trust-provider.md)                  | ✅          | ✅      |
 | [GitHub Trust Provider](../user-guide/access-policies/trust-providers/github-trust-provider.md)                                          | ✅          | ✅      |
-| [GitLab Trust Provider](../user-guide/access-policies/trust-providers/gitlab-trust-provider.md)                                          | ❌          | ✅      |
-| [OIDC ID Token Trust Provider](../user-guide/access-policies/trust-providers/oidc-id-token-trust-provider.md)                            | ✅          | ❌      |
-| [Terraform Cloud Trust Provider](../user-guide/access-policies/trust-providers/terraform-cloud-identity-token-trust-provider.md)         | ❌          | ✅      |
-| [Kubernetes Service Account Trust Provider](../user-guide/access-policies/trust-providers/kubernetes-service-account-trust-provider.md)  | ❌          | ❌      |
+| [GitLab Trust Provider](../user-guide/access-policies/trust-providers/gitlab-trust-provider.md)                                          | ✅          | ✅      |
+| [OIDC ID Token Trust Provider](../user-guide/access-policies/trust-providers/oidc-id-token-trust-provider.md)                            | ✅          | ✅      |
+| [Terraform Cloud Trust Provider](../user-guide/access-policies/trust-providers/terraform-cloud-identity-token-trust-provider.md)         | ✅          | ✅      |
+| [Kubernetes Service Account Trust Provider](../user-guide/access-policies/trust-providers/kubernetes-service-account-trust-provider.md)  | ✅          | ✅      |

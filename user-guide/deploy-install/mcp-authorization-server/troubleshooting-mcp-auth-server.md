@@ -5,7 +5,7 @@ description: "Common errors and solutions when configuring the Aembit MCP Author
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-authorization-server/troubleshooting-mcp-auth-server/
 interface: mcp
 tags: ["mcp-authorization-server", "deploy-install"]
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-10-15T06:25:14-07:00
 ---
 
 # Troubleshoot the MCP Authorization Server
@@ -79,7 +79,7 @@ Error: Protected resource http://server-a:8080/mcp does not match expected http:
 No Identity Providers Available
 ```
 
-**Cause:** The Access Policy's Trust Provider doesn’t have an associated identity provider configured.
+**Cause:** The Trust Provider in the Access Policy doesn’t have an associated identity provider configured.
 
 **Resolution:**
 
@@ -159,9 +159,9 @@ Error: invalid_grant - code_verifier doesn't match code_challenge
 **Resolution:**
 
 1. Verify your client generates a proper `code_challenge` from the `code_verifier`
-2. Ensure `code_challenge_method` is set to `S256`
+2. Ensure your client sets `code_challenge_method` to `S256`
 3. Check for URL encoding issues in code values
-4. Confirm the same `code_verifier` is used throughout the flow
+4. Confirm your client uses the same `code_verifier` throughout the flow
 
 ## Policy evaluation errors
 

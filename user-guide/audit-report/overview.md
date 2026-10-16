@@ -5,7 +5,7 @@ description: "This document provides a high-level conceptual overview of auditin
 resource: https://docs.aembit.io/user-guide/audit-report/
 interface: web-ui
 tags: ["audit-report"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-10-14T16:36:12-04:00
 ---
 
 # Audit and report on Workload activity
@@ -26,7 +26,7 @@ The Aembit Tenant includes the following views in the Reporting Dashboard:
 
 ## Access Authorization Events
 
-Aembit generates Access Authorization events when Edge Components request access to Aembit-managed Server Workloads. These events detail the evaluation of requests against Access Policies, including the request, evaluation steps, and the outcome (granted or denied). The three event types are: Access Request, Access Authorization, and Access Credential. These logs are essential for diagnosing access-related issues and detecting potential security threats.
+Aembit generates Access Authorization events when Edge Components request access to Aembit-managed Server Workloads. These events detail the evaluation of requests against Access Policies, including the request, evaluation steps, and the outcome (granted or denied). The event types are Access Request, Access Authorization, Access Discovery, Access Registration, and Access Credential. These logs are essential for diagnosing access-related issues and detecting potential security threats.
 
 ![](https://docs.aembit.io/aembit-icons/lightbulb-light.svg)
 
@@ -66,7 +66,7 @@ Use the Global Policy Compliance view to review the compliance status of your Ae
 
 ## MCP Authorization Tracing
 
-MCP Authorization Tracing is a live view of inbound authorization requests at the MCP Identity Gateway. It surfaces the redirect URI, resource, matched Client Workload, and policy outcome for each request as the Gateway receives it, without waiting for the standard event-pipeline delay. Use it to reproduce a failing MCP flow and watch what the Gateway sees in real time.
+MCP Authorization Tracing is a live view of inbound authorization requests at the MCP Identity Gateway. It surfaces the redirect URI, resource, matched Client Workload, and Access Policy outcome for each request as the Gateway receives it, without waiting for the standard event-pipeline delay. Use it to reproduce a failing MCP flow and watch what the Gateway sees in real time.
 
 ![](https://docs.aembit.io/aembit-icons/lightbulb-light.svg)
 
@@ -80,6 +80,6 @@ For end-to-end troubleshooting of MCP and AI IAM access failures, see [Troublesh
 
 MCP Authorization Tracing and Access Authorization Events describe overlapping activity from different angles.
 
-MCP Authorization Tracing is live and scoped to MCP authorization at MCP Identity Gateway. It shows the inbound request shape (redirect URI, resource, workload/policy match) before Aembit Cloud emits formal events.
+MCP Authorization Tracing is live and scoped to MCP authorization at MCP Identity Gateway. It shows the inbound request shape (redirect URI, resource, matched workload, and matched Access Policy) before Aembit Cloud emits formal events.
 
-Access Authorization Events are durable records of every authorization decision Aembit Cloud makes, available across all protocols. They include `access.request`, `access.authorization`, `access.discovery`, and `access.credential` event types with severity and full JSON payloads.
+Access Authorization Events are durable records of every authorization decision Aembit Cloud makes, available across all protocols. They include `access.request`, `access.authorization`, `access.discovery`, `access.registration`, and `access.credential` event types with severity and full JSON payloads.

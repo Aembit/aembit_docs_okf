@@ -5,7 +5,7 @@ description: "Environment variables for configuring a self-hosted MCP Identity G
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/env-vars-mcp-gateway/
 interface: mcp
 tags: ["mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-10-08T13:12:21-07:00
+timestamp: 2026-10-15T12:41:34-07:00
 ---
 
 # MCP Identity Gateway environment variables (self-hosted only)
@@ -26,14 +26,14 @@ For Tenant-side configuration (Identity Provider, Trust Provider, and Access Pol
 
 Default - not set
 
-URL of the Aembit authorization server for this Aembit Tenant. The format is `https://<tenantId>.mcp.<region>.aembit.io/`.
+URL of the Aembit authorization server for this Aembit Tenant. The format is `https://<tenantId>.id.<region>.aembit.io/`.
 
 Replace `<tenantId>` with your Aembit Tenant ID, visible in the Aembit Tenant URL (for example, `abc123` in `https://abc123.aembit.io`). Aembit Tenants use the `useast2` region. In the future, Aembit may add more regions, making this value dynamic.
 
 See [Set up the MCP Identity Gateway](../../access-policies/mcp-identity-gateway/setup-mcp-gateway.md) for detailed configuration steps.
 
 *Example*:\
-`https://abc123.mcp.useast2.aembit.io/`
+`https://abc123.id.useast2.aembit.io/`
 
 ***
 
@@ -102,7 +102,7 @@ Log verbosity level. Options: `trace`, `debug`, `info`, `warn`, `error`, `off`. 
 
 Default - not set
 
-Overrides how long the MCP Identity Gateway waits for your assigned MCP servers when it fans a request out to them. It also tunes the fan-out cap, upstream calls, upstream session caching, and Multi Round-Trip Request backoff.
+Overrides how long the MCP Identity Gateway waits for your assigned MCP servers when it fans a request out to them. It also tunes the fan-out cap, upstream calls, upstream session caching, Multi Round-Trip Request backoff, and change notifications.
 
 > **Not supplied on the install command**
 >
@@ -130,20 +130,21 @@ The value is a comma-separated list of `<name>=<duration>` pairs. Durations take
 
 | Name             | Also accepted    | Default | Applies to                                                                                                        |
 | ---------------- | ---------------- | ------- | ----------------------------------------------------------------------------------------------------------------- |
-| `tools_list`     | `tools/list`     | `3s`    | The `tools/list` fanout for a client request, and the `tools/list` sent to each MCP server when a client connects |
-| `resources_list` | `resources/list` | `3s`    | The `resources/list` fanout                                                                                       |
-| `prompts_list`   | `prompts/list`   | `3s`    | The `prompts/list` fanout                                                                                         |
+| `tools_list`     | `tools/list`     | `5s`    | The `tools/list` fanout for a client request, and the `tools/list` sent to each MCP server when a client connects |
+| `resources_list` | `resources/list` | `5s`    | The `resources/list` fanout                                                                                       |
+| `prompts_list`   | `prompts/list`   | `5s`    | The `prompts/list` fanout                                                                                         |
 
-The following names tune the fan-out cap, upstream calls, upstream sessions, and Multi Round-Trip Request backoff.
+The following names tune the fan-out cap, upstream calls, upstream sessions, Multi Round-Trip Request backoff, and change notifications.
 
-| Name                            | Also accepted            | Default | Applies to                                                                                                                                                                                                                                              |
-| ------------------------------- | ------------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fanout_max`                    | `fanout/max`             | `30s`   | Upper limit on a fan-out timeout that MCP Identity Gateway extends to leave time for CrowdStrike AIDR. MCP Identity Gateway keeps a base timeout you set higher than this.                                                                              |
-| `upstream_call_timeout`         | `upstream/call`          | `30s`   | Upper bound on each upstream operation, including session connect and each MCP call.                                                                                                                                                                    |
-| `upstream_session_ttl`          | `upstream/session/ttl`   | `15m`   | How long an idle upstream session survives before MCP Identity Gateway drops it.                                                                                                                                                                        |
-| `upstream_session_purge_period` | `upstream/session/purge` | `60s`   | How often MCP Identity Gateway checks for and removes idle upstream sessions past `upstream_session_ttl`.                                                                                                                                               |
-| `mrtr_backoff_base`             | -                        | `50ms`  | Initial backoff delay between consecutive rounds of a Multi Round-Trip Request that ask for no input, for a client using a revision earlier than 2026-07-28. Doubles each such round, up to `mrtr_backoff_max`, and resets when a round asks for input. |
-| `mrtr_backoff_max`              | -                        | `250ms` | Ceiling for the `mrtr_backoff_base` backoff delay.                                                                                                                                                                                                      |
+| Name                                      | Also accepted                    | Default | Applies to                                                                                                                                                                                                                                                    |
+| ----------------------------------------- | -------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fanout_max`                              | `fanout/max`                     | `30s`   | Upper limit on a fan-out timeout that MCP Identity Gateway extends to leave time for CrowdStrike AIDR. MCP Identity Gateway keeps a base timeout you set higher than this.                                                                                    |
+| `upstream_call_timeout`                   | `upstream/call`                  | `30s`   | Upper bound on each upstream operation, including session connect and each MCP call.                                                                                                                                                                          |
+| `upstream_session_ttl`                    | `upstream/session/ttl`           | `15m`   | How long an idle upstream session survives before MCP Identity Gateway drops it.                                                                                                                                                                              |
+| `upstream_session_purge_period`           | `upstream/session/purge`         | `60s`   | How often MCP Identity Gateway checks for and removes idle upstream sessions past `upstream_session_ttl`.                                                                                                                                                     |
+| `mrtr_backoff_base`                       | -                                | `50ms`  | Initial backoff delay between consecutive rounds of a Multi Round-Trip Request that ask for no input, for a client using a revision earlier than 2026-07-28. Doubles each such round, up to `mrtr_backoff_max`, and resets when a round asks for input.       |
+| `mrtr_backoff_max`                        | -                                | `250ms` | Ceiling for the `mrtr_backoff_base` backoff delay.                                                                                                                                                                                                            |
+| `subscriptions_workload_refresh_interval` | `subscriptions/workload/refresh` | `30s`   | How often MCP Identity Gateway checks a subscribed client’s assigned Server Workloads and MCP Tool Access Control rules for changes. See [Change notifications](reference-mcp-gateway.md#change-notifications). |
 
 The following names have no effect in MCP Identity Gateway 1.34.6034 and later. MCP Identity Gateway still accepts them, so a value that sets one doesn’t stop the service from starting. `upstream_call_timeout` and the list timeouts now bound the upstream calls they covered.
 
@@ -228,7 +229,7 @@ For what a session holds and how to operate the store, see [Session persistence]
 > The following example shows environment variables on the command line for clarity. In production, use an environment file with restricted permissions (`chmod 600`) or inject values from a secrets manager so configuration values don’t appear in shell history or process listings.
 
 ```shell
-sudo AEMBIT_AUTHORIZATION_SERVER=https://abc123.mcp.useast2.aembit.io/ \
+sudo AEMBIT_AUTHORIZATION_SERVER=https://abc123.id.useast2.aembit.io/ \
      AEMBIT_MCP_GATEWAY_URL=https://mcp-gateway.example.com \
      AEMBIT_TLS_CERT_CHAIN_PATH=/etc/ssl/certs/fullchain.pem \
      AEMBIT_TLS_PRIVATE_KEY_PATH=/etc/ssl/private/privkey.pem \
@@ -259,7 +260,7 @@ During operation, the MCP Identity Gateway caches data from Aembit Cloud to main
 | Data type                     | Cache duration |
 | ----------------------------- | -------------- |
 | Assigned MCP server workloads | 60 seconds     |
-| Access policy directives      | 60 seconds     |
+| Access Policy directives      | 60 seconds     |
 | Credentials                   | 60 seconds     |
 
 If Aembit Cloud becomes unreachable, the MCP Identity Gateway continues operating with cached data until the cache expires.

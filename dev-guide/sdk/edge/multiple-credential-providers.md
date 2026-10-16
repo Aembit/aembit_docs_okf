@@ -5,12 +5,12 @@ description: "Pass an Access Key ID selector as connection metadata so the Edge 
 resource: https://docs.aembit.io/dev-guide/sdk/edge/multiple-credential-providers/
 interface: sdk
 tags: ["edge", "sdk"]
-timestamp: 2026-09-22T15:17:29-07:00
+timestamp: 2026-10-16T11:40:32-07:00
 ---
 
 # Select among multiple Credential Providers with the Edge SDK
 
-An Access Policy can hold multiple AWS STS Federation Credential Providers, each with its own **Access Key ID selector**. For how Aembit uses the selector, see [Using multiple AWS STS Federation Credential Providers](../../../user-guide/access-policies/credential-providers/aws-security-token-service-multiple.md). Pass the selector as connection metadata when you request the credential, and Aembit returns temporary AWS credentials for the IAM role of the matching Credential Provider. Connection metadata requires Edge SDK 1.34.0 or later.
+An Access Policy can hold multiple AWS STS Federation Credential Providers, each with its own **Access Key ID selector**. For how Aembit uses the selector, see [Using multiple AWS STS Federation Credential Providers](../../../user-guide/access-policies/credential-providers/aws-security-token-service-multiple.md). Pass the selector as connection metadata when you request the credential, and Aembit returns temporary AWS credentials for the IAM role of the matching Credential Provider. Connection metadata requires Edge SDK for TypeScript 1.34.0 or later, or Edge SDK for Python 1.35.0 or later.
 
 * TypeScript
 

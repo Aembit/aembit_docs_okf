@@ -5,7 +5,7 @@ description: "Authenticating with Aembit Edge API using a Google Cloud identity 
 resource: https://docs.aembit.io/dev-guide/api/edge/auth/gcp-identity-token/
 interface: api
 tags: ["auth", "edge", "api"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-10-15T12:57:18-07:00
 ---
 
 # Edge API authentication with GCP Identity Token
@@ -23,7 +23,7 @@ To authenticate using a GCP identity token, you must have the following:
 * A workload running on Google Cloud with a service account attached and network access to the metadata server at `metadata.google.internal`. This covers Compute Engine instances, GKE pods, Cloud Run services, and Cloud Functions.
 * Your Aembit identity host, in the form `https://<tenantId>.id.<stack>.aembit.io`. Google requires an audience value to mint an identity token.
 
-The GCP Identity Token Trust Provider matches on the `email` claim only. Make sure the service account attached to your workload is the one named in your match rule, not the default Compute Engine service account.
+The GCP Identity Token Trust Provider supports a match rule on the `email` claim only. Make sure the service account attached to your workload is the one named in your match rule, not the default Compute Engine service account.
 
 ## Authenticate with a GCP identity token
 
@@ -56,7 +56,7 @@ To authenticate with the Aembit Edge API using a GCP identity token, follow thes
 
    The `audience` parameter is required. Google refuses to mint the token without it.
 
-   Aembit matches on the `email` claim rather than the audience, but set the audience to your identity host anyway. Any other service that checks the audience rejects a token minted for your Tenant.
+   Aembit rejects a token whose audience isn’t your identity host. It then compares the token’s `email` claim with your Trust Provider’s match rule.
 
    You should get a single-line JWT similar to the following:
 

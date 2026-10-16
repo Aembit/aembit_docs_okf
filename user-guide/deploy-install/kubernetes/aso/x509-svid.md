@@ -5,7 +5,7 @@ description: "Use Aembit Secrets Operator to request an X.509-SVID certificate a
 resource: https://docs.aembit.io/user-guide/deploy-install/kubernetes/aso/x509-svid/
 interface: web-ui
 tags: ["aso", "kubernetes", "deploy-install"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-10-15T06:25:14-07:00
 ---
 
 # Deliver X.509-SVID certificates with Secrets Operator
@@ -79,13 +79,13 @@ Create an `AembitSecretRefreshSchedule` that sets `credentialType` to `X509Svid`
 
 For the full field reference, see [Credential types and Secret data keys](reference.md#credential-types-and-secret-data-keys).
 
-> **The Secret is created in the schedule’s namespace**
+> **Secrets Operator creates the Secret in the schedule’s namespace**
 >
-> Secrets Operator writes the target Secret to the same namespace as the `AembitSecretRefreshSchedule`. Because Kubernetes Secrets can’t be mounted across namespaces, create the schedule and its `AembitEdgeApiClient` in the same namespace as the workload that consumes the certificate.
+> Secrets Operator writes the target Secret to the same namespace as the `AembitSecretRefreshSchedule`. Because workloads can’t mount Kubernetes Secrets across namespaces, create the schedule and its `AembitEdgeApiClient` in the same namespace as the workload that consumes the certificate.
 
 > **Switching `credentialType` recreates the Secret**
 >
-> A Kubernetes Secret’s `type` is immutable. Switching an existing schedule’s `credentialType` to or from `X509Svid` changes the target Secret’s type between a generic Secret and a `kubernetes.io/tls` Secret, so Secrets Operator deletes and recreates the Secret. Any workload mounting the Secret sees it briefly disappear and reappear.
+> A Kubernetes Secret’s `type` is immutable. Switching an existing schedule’s `credentialType` to or from `X509Svid` changes the target Secret’s type between a generic Secret and a `kubernetes.io/tls` Secret, so Secrets Operator deletes and recreates the Secret. Any workload mounting the Secret sees it disappear for a short time and reappear.
 
 ## Verify the certificate
 

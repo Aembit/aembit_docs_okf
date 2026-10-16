@@ -4,7 +4,7 @@ title: "About the Oracle Database protocol"
 description: "Understand how Aembit connects to Oracle databases, what versions Aembit supports, and how TLS connections work"
 resource: https://docs.aembit.io/user-guide/deploy-install/databases/about-oracle-databases/
 tags: ["database", "deploy-install"]
-timestamp: 2026-05-01T09:18:39-07:00
+timestamp: 2026-10-15T06:25:14-07:00
 ---
 
 # About the Oracle Database protocol
@@ -84,7 +84,7 @@ You enable TLS per Server Workload by checking the **TLS** checkbox on the **Por
 
 ### How Oracle TLS works
 
-TLS is established before the TNS handshake, when the client connects to the Oracle TNS listener. When the TNS listener directs the connection to the database instance, Agent Proxy renegotiates TLS mid-TNS-handshake. Agent Proxy handles both the initial TLS setup and renegotiation transparently, without customer configuration.
+TLS setup happens before the TNS handshake, when the client connects to the Oracle TNS listener. When the TNS listener directs the connection to the database instance, Agent Proxy renegotiates TLS mid-TNS-handshake. Agent Proxy handles both the initial TLS setup and renegotiation transparently, without customer configuration.
 
 ### System trust store requirement
 

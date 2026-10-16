@@ -5,7 +5,7 @@ description: "How to identify Terraform Cloud Workloads using the organization I
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/terraform-cloud-id-token-organization-id/
 interface: web-ui
 tags: ["cicd", "identification", "client-workload", "access-policy"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-10-15T12:57:18-07:00
 ---
 
 # Terraform Cloud Organization ID
@@ -20,7 +20,7 @@ For example, an organization ID might look like: `org-GRNbCjYNpBB6NEH9`
 
 ## Applicable deployment type
 
-Aembit supports this identifier only when you use the [Aembit Terraform provider](https://registry.terraform.io/providers/Aembit/aembit/latest).
+Aembit supports this identifier when you use the [Aembit Terraform provider](https://registry.terraform.io/providers/Aembit/aembit/latest) or the [Edge SDK in a Terraform Cloud run](../../../../dev-guide/sdk/edge/integrations/terraform-cloud.md).
 
 ## Create a Client Workload with a Terraform Cloud ID Token identifier
 

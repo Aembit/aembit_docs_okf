@@ -5,7 +5,7 @@ description: "How to configure a SAMLv2 Response Trust Provider"
 resource: https://docs.aembit.io/user-guide/access-policies/trust-providers/saml-response-trust-provider/
 interface: web-ui
 tags: ["trust-provider", "access-policy"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-10-15T06:25:14-07:00
 ---
 
 # SAMLv2 Response Trust Provider

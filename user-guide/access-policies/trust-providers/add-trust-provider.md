@@ -5,7 +5,7 @@ description: "How to configure a Trust Provider for Client Workload identity att
 resource: https://docs.aembit.io/user-guide/access-policies/trust-providers/add-trust-provider/
 interface: web-ui
 tags: ["trust-provider", "access-policy"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-10-15T06:25:14-07:00
 ---
 
 # How to add a Trust Provider

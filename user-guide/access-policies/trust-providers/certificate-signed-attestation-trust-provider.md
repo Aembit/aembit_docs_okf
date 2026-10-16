@@ -5,14 +5,12 @@ description: "How to configure a Certificate Signed Attestation Trust Provider"
 resource: https://docs.aembit.io/user-guide/access-policies/trust-providers/certificate-signed-attestation-trust-provider/
 interface: web-ui
 tags: ["trust-provider", "access-policy"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-10-15T06:25:14-07:00
 ---
 
 # Certificate Signed Attestation Trust Provider
 
-The Certificate Signed Attestation Trust Provider verifies cryptographically signed
-
-attestation documents using PEM certificates that you register. An external system generates and signs the attestation document, and this Trust Provider validates the signature to confirm the document’s authenticity and integrity.
+The Certificate Signed Attestation Trust Provider verifies cryptographically signed attestation documents using PEM certificates that you register. An external system generates and signs the attestation document, and this Trust Provider validates the signature to confirm the document’s authenticity and integrity.
 
 ## Key capabilities
 
@@ -32,9 +30,7 @@ The authentication process involves an external system that generates a signed a
 
 1. An external system generates an attestation document containing metadata about the workload. The system signs this document using a private key from a certificate that you manage.
 
-2. The Aembit Agent Proxy presents the signed attestation document to
-
-   Aembit Cloud as part of the workload authentication flow.
+2. The Aembit Agent Proxy presents the signed attestation document to Aembit Cloud as part of the workload authentication flow.
 
 3. Aembit Cloud verifies the document’s signature using the PEM certificate registered in this Trust Provider. If the signature is invalid or the signing certificate doesn’t match any registered certificate, Aembit rejects the request.
 

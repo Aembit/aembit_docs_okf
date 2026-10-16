@@ -5,7 +5,7 @@ description: "Verify credential delivery end to end for the Agent Proxy, Edge SD
 resource: https://docs.aembit.io/dev-guide/integration/testing/
 interface: sdk
 tags: ["integration"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-10-14T16:36:12-04:00
 ---
 
 # Test and debug your integration
@@ -16,7 +16,7 @@ Whichever path you chose, your Aembit Tenant records the full authorization flow
 
 ## Check authorization events in your Aembit Tenant
 
-Every integration path produces the same authorization events in your Aembit Tenant, so check them first when access fails. To view them, click **Reporting** in the left sidebar of your Tenant, which displays the **Access Authorization Events** page. The events trace each request through four event types: Access Request, Access Authorization, Access Discovery, and Access Credential.
+Every integration path produces the same authorization events in your Aembit Tenant, so check them first when access fails. To view them, click **Reporting** in the left sidebar of your Tenant, which displays the **Access Authorization Events** page. The events trace each request through the Access Request, Access Authorization, Access Discovery, Access Registration, and Access Credential event types.
 
 Each authorization event records the identified Client Workload, Server Workload, and whether Aembit granted or denied access, together with the reason for a denial.
 

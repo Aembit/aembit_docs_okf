@@ -4,7 +4,7 @@ title: "Understanding component copying between Resource Sets"
 description: "Learn what component copying is, what gets copied, and use cases for replicating configurations"
 resource: https://docs.aembit.io/user-guide/administration/resource-sets/about-component-copying/
 tags: ["resource-set", "administration"]
-timestamp: 2026-09-09T08:20:13-07:00
+timestamp: 2026-10-15T06:25:14-07:00
 ---
 
 # Understanding component copying between Resource Sets

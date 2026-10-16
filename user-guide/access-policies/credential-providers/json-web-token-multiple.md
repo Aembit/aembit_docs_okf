@@ -4,7 +4,7 @@ title: "Using Multiple JWT Credential Providers in a Single Access Policy"
 description: "How Aembit routes requests to multiple JWT Credential Providers based on username or HTTP values"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/json-web-token-multiple/
 tags: ["credential-provider", "access-policy"]
-timestamp: 2025-12-04T22:08:22-08:00
+timestamp: 2026-10-15T06:25:14-07:00
 ---
 
 # Using Multiple JWT Credential Providers in a Single Access Policy

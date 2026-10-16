@@ -5,7 +5,7 @@ description: "Technical reference for the Aembit Model Context Protocol (MCP) Se
 resource: https://docs.aembit.io/user-guide/mcp-server/reference-mcp-server/
 interface: mcp
 tags: ["mcp-server"]
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-10-14T16:36:12-04:00
 ---
 
 # Aembit MCP Server reference
@@ -114,7 +114,7 @@ All parameters are optional.
 | `spanLastMinutes` | integer        | `0`           | Return events from the last N minutes. Takes priority over `spanLastHours`. Ignored when you specify `startDate`/`endDate`. |
 | `spanLastHours`   | integer        | `24`          | Return events from the last N hours. Only applies when you don’t specify `startDate`/`endDate` or `spanLastMinutes`.        |
 | `severity`        | string \| null | `null`        | Filter by severity. Valid values: `Error`, `Alert`, `Warn`, `Info`.                                                         |
-| `eventType`       | string \| null | `null`        | Filter by event type. Valid values: `Request`, `Authorization`, `Credential`.                                               |
+| `eventType`       | string \| null | `null`        | Filter by event type. Valid values: `Request`, `Authorization`, `Credential`, `Discovery`, `Registration`.                  |
 
 **Date range priority:** `startDate`/`endDate` > `spanLastMinutes` > `spanLastHours`.
 
@@ -201,6 +201,8 @@ Valid values for the `eventType` filter in `get_auth_events`. Each type represen
 | `Request`       | Captures the incoming access request and associated metadata.                                           |
 | `Authorization` | Records the outcome of Access Policy evaluation, including Trust Provider and Access Condition results. |
 | `Credential`    | Records the result of credential retrieval from the Credential Provider.                                |
+| `Discovery`     | Lists the Client Workloads and Server Workloads Aembit Cloud considered for a request.                  |
+| `Registration`  | Records a Dynamic Client Registration request to the MCP Authorization Server.                          |
 
 ### Authorization event severities
 

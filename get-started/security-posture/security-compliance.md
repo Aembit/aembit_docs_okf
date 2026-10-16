@@ -4,7 +4,7 @@ title: "Security compliance"
 description: "Overview of Aembit's security posture and compliance"
 resource: https://docs.aembit.io/get-started/security-posture/security-compliance/
 tags: ["security-posture"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-10-15T06:25:14-07:00
 ---
 
 # Security compliance
@@ -20,9 +20,7 @@ Aembit is a cloud-native Workload IAM platform committed to maintaining the high
 
 ## How Aembit compliance supports your organization
 
-Aembit’s SOC 2 Type II and
-
-ISO/IEC 27001:2022 certifications provide assurance that workload identity and access management operations follow rigorous security controls. These certifications can support your organization’s compliance with:
+Aembit’s SOC 2 Type II and ISO/IEC 27001:2022 certifications provide assurance that workload identity and access management operations follow rigorous security controls. These certifications can support your organization’s compliance with:
 
 * **HIPAA Security Rule** (§164.308-312): SOC 2 controls for access management, audit logging, and encryption support healthcare data protection requirements
 * **PCI-DSS Requirement 12**: Security policy enforcement and RBAC align with PCI requirements for cardholder data environments
@@ -63,7 +61,7 @@ Aembit follows a shared responsibility model similar to other SaaS platforms:
 * **Platform Infrastructure**: Cloud hosting, network security, infrastructure hardening
 * **Security Controls**: Continuous monitoring, penetration testing, vulnerability management, audit processes
 * **Compliance Programs**: SOC 2, ISO 27001 certifications, annual audits, regulatory updates
-* **Service Availability**: High availability, disaster recovery, backup and restoration
+* **Service Availability**: High availability, disaster recovery, and backup and restoration
 
 Aembit fully manages all preceding compliance processes (monitoring, audits, penetration testing, RBAC for Aembit administration). Your team doesn’t configure or maintain these platform-level controls.
 
@@ -93,4 +91,4 @@ This overview excludes internal audit results, detailed control mappings, and pr
 > 2. **Review the security architecture** at [Software Architecture](architecture.md) and [Threat Model](threat-model.md)
 > 3. **Discuss your specific requirements** by contacting <security@aembit.io> for NDA-protected detailed reports and compliance mapping
 >
-> For general questions, see [What is Aembit?](../overview.md) or start with the [quickstart guides](../quickstart/overview.md).
+> For general questions, see [What’s Aembit?](../overview.md) or start with the [quickstart guides](../quickstart/overview.md).

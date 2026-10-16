@@ -5,7 +5,7 @@ description: "How CrowdStrike AIDR inspects MCP content as a Content Security Pr
 resource: https://docs.aembit.io/user-guide/access-policies/content-security/crowdstrike-aidr/
 interface: web-ui
 tags: ["crowdstrike-aidr", "content-security", "access-policy"]
-timestamp: 2026-09-09T08:20:13-07:00
+timestamp: 2026-10-15T12:41:34-07:00
 ---
 
 # CrowdStrike AIDR Content Security
@@ -51,7 +51,7 @@ The **Fail Open on Error** setting controls what Aembit does when it can’t rea
 
 The setting is a trade-off between availability and guaranteed inspection. You set **Fail Open on Error** when you add CrowdStrike AIDR to a policy.
 
-An inspection error records an error in the workload event under either setting. When Aembit fails open, it forwards the content and still records the error, so an error in the event doesn’t by itself mean Aembit blocked the content.
+An inspection error records an error in the workload event under either setting. When Aembit fails open, it forwards the content and still records the error, so an error in the event doesn’t by itself mean Aembit blocked the content. When an inspection request times out, the error message in the event says so and gives the timeout in milliseconds.
 
 ### AIDR content size limit
 

@@ -1,6 +1,69 @@
 # Aembit Changelog
 
+## 2026-10-16
+
+### Access Authorization Events now record MCP client registrations
+
+Access Authorization Events now include the `access.registration` event type. It records each Dynamic Client Registration (DCR) request that an MCP client sends to the MCP Authorization Server.
+
+* A successful registration has severity `Info` and lists the client ID, client name, redirect URIs, grant types, and response types that the MCP client registered.
+* A failed registration has severity `Error` and carries a `reason` and the `attribute` that failed, so you can see why an MCP client couldn’t register. When the request supplied a value for that attribute, the event also carries that value.
+
+See [Access registration events](user-guide/audit-report/access-authorization-events.md#access-registration-events).
+
+### Edge SDKs support the same Trust Providers in TypeScript and Python
+
+The Edge SDKs for TypeScript and Python now attest with the same nine Trust Providers, so the language you pick no longer limits which Trust Providers your workload can use. For the full list, see [Edge SDK Trust Providers](reference/support-matrix.md#edge-sdk-trust-providers).
+
+**What’s new:**
+
+* **Python Trust Providers**: The Python SDK adds AWS Metadata Service, Azure Instance Metadata Service, GCP Identity Token, Kubernetes Service Account, and OIDC ID Token.
+* **TypeScript Trust Providers**: The TypeScript SDK adds GitLab, Kubernetes Service Account, and Terraform Cloud.
+* **Python package on PyPI**: Install the Python SDK with `pip install aembit-edge-sdk`. It requires Python 3.10 or later. See the [Edge SDK quickstart](dev-guide/sdk/edge/quickstart.md).
+* **Integration guides**: New guides cover [Azure Functions](dev-guide/sdk/edge/integrations/azure-functions.md), [Azure virtual machines](dev-guide/sdk/edge/integrations/azure-vm.md), [GitHub Actions](dev-guide/sdk/edge/integrations/github-actions.md), [GitLab CI/CD](dev-guide/sdk/edge/integrations/gitlab-ci.md), [Kubernetes](dev-guide/sdk/edge/integrations/kubernetes.md), and [Terraform Cloud](dev-guide/sdk/edge/integrations/terraform-cloud.md). Every integration guide now shows both languages.
+* **Logging reference**: [Edge SDK logging and network activity](dev-guide/sdk/edge/logging.md) lists the events the SDKs log, how to send them to your logger, and which hosts the SDKs contact.
+
+**Minimum version required:**
+
+* Edge SDK for TypeScript 1.34.1
+* Edge SDK for Python 1.35.0
+
 ## 2026-10-14
+
+### Improved MCP Identity Gateway token, credential, and error handling
+
+MCP Identity Gateway version 1.35.6086 accepts more access token audiences and sends credentials in named headers. It also reports more detail when an MCP server or a CrowdStrike AIDR inspection fails.
+
+For the latest available versions of these components, see the [Edge Components Supported Versions](reference/edge-components/edge-component-supported-versions.md) page.
+
+* **Access token audience**: MCP Identity Gateway accepts an access token whose audience is its `/mcp` endpoint URL with a trailing slash. See [Token and credential details](user-guide/deploy-install/mcp-identity-gateway/reference-mcp-gateway.md#token-and-credential-details).
+* **Credentials in a named header**: When a Server Workload uses the **Header** authentication scheme, MCP Identity Gateway sends the credential to the MCP server in the header you name. MCP servers that take an API key in a custom header now receive it. See [Authentication sent to the MCP server](user-guide/deploy-install/mcp-identity-gateway/reference-mcp-gateway.md#authentication-sent-to-the-mcp-server).
+* **Longer list timeouts**: The default `tools_list`, `resources_list`, and `prompts_list` timeouts are 5 seconds, up from 3 seconds. See [`AEMBIT_MCP_GATEWAY_TIMEOUT`](user-guide/deploy-install/mcp-identity-gateway/env-vars-mcp-gateway.md#aembit_mcp_gateway_timeout).
+* **CrowdStrike AIDR timeouts in workload events**: When a CrowdStrike AIDR inspection request times out, the workload event’s error message says so and gives the timeout. See [Fail-open and fail-closed behavior](user-guide/access-policies/content-security/crowdstrike-aidr/overview.md#fail-open-and-fail-closed-behavior).
+* **MCP server connection errors**: When MCP Identity Gateway can’t connect to the MCP server for a request such as `tools/call`, the MCP client gets error `-32603`. The error message names the failure, such as `failed to connect to upstream MCP server`. When the MCP server answered with an HTTP status, the error’s `data` carries it in `upstreamHttpStatus`, which replaces the `status` field that earlier versions sent. Update any client code that reads `status`.
+* **Workload events for each MCP server**: For `tools/list`, `resources/list`, and `prompts/list`, MCP Identity Gateway now emits a request event for each MCP server it fans the request out to. This includes a server it then skips because that server doesn’t support the method. These request events, and the event for each MCP server that fails, now name the Server Workload. A failure event also records the MCP server’s host and HTTP status when known. Review retention and alerting thresholds for the added request events. See [Requests that fan out to multiple servers](user-guide/troubleshooting/mcp-ai-iam.md#requests-that-fan-out-to-multiple-servers).
+
+This build also adds [change notifications and tool output validation](https://docs.aembit.io/changelog/entry/2026-10-14-mcp-identity-gateway-1-35-6086-release) and a [security update](https://docs.aembit.io/changelog/entry/2026-10-14-mcp-identity-gateway-1-35-6086-security-updates).
+
+### MCP Identity Gateway 1.35.6086 release
+
+Aembit has released [MCP Identity Gateway](user-guide/deploy-install/mcp-identity-gateway/overview.md) version 1.35.6086, which relays change notifications to MCP clients and checks tool results against their output schemas.
+
+For the latest available versions of these components, see the [Edge Components Supported Versions](reference/edge-components/edge-component-supported-versions.md) page.
+
+Key Updates:
+
+* **Change notifications**: An MCP client using the 2026-07-28 revision of the MCP specification can send `subscriptions/listen` to learn when the tools, resources, or prompts it can reach change. MCP Identity Gateway relays these notifications from MCP servers using the 2026-07-28 revision. It also sends one when the client’s assigned Server Workloads or MCP Tool Access Control rules change, and when it reconnects to an MCP server. See [Change notifications](user-guide/deploy-install/mcp-identity-gateway/reference-mcp-gateway.md#change-notifications).
+* **Tool output validation**: When a tool publishes an output schema, MCP Identity Gateway checks the tool’s completed results against it. The MCP client gets error `-32004` in place of a result that doesn’t match. For the results MCP Identity Gateway doesn’t check, see [Tool output validation](user-guide/deploy-install/mcp-identity-gateway/reference-mcp-gateway.md#tool-output-validation).
+* **Subscription refresh interval**: `AEMBIT_MCP_GATEWAY_TIMEOUT` accepts the `subscriptions_workload_refresh_interval` [timeout name](user-guide/deploy-install/mcp-identity-gateway/env-vars-mcp-gateway.md#aembit_mcp_gateway_timeout), which sets how often MCP Identity Gateway checks for assignment and rule changes. The default is 30 seconds.
+
+[Access token, credential, and error handling improvements](https://docs.aembit.io/changelog/entry/2026-10-14-improved-mcp-identity-gateway-token-credential-and-error-handling) and a [security update](https://docs.aembit.io/changelog/entry/2026-10-14-mcp-identity-gateway-1-35-6086-security-updates) also shipped in this build.
+
+### MCP Identity Gateway rejects expired access tokens sooner
+
+MCP Identity Gateway version 1.35.6086 accepts an access token for up to 3 seconds after it expires, down from 60 seconds. Make sure MCP clients refresh their access tokens before the tokens expire. See [Token and credential details](user-guide/deploy-install/mcp-identity-gateway/reference-mcp-gateway.md#token-and-credential-details).
+
+For the latest available versions of these components, see the [Edge Components Supported Versions](reference/edge-components/edge-component-supported-versions.md) page.
 
 ### Access Policy builder search and Credential Provider value checks
 
@@ -186,7 +249,8 @@ An Access Policy can hold more than one AWS STS Federation Credential Provider, 
 **Minimum version required:**
 
 * Aembit GitHub Action 1.3.0
-* Edge SDK 1.34.0
+* Edge SDK for TypeScript 1.34.0
+* Edge SDK for Python 1.35.0
 
 For how Aembit matches a selector to a Credential Provider, see [Using multiple AWS STS Credential Providers](user-guide/access-policies/credential-providers/aws-security-token-service-multiple.md).
 
@@ -247,9 +311,9 @@ Use an SDK when you can change the application’s source and you want credentia
 
 **What’s new:**
 
-* **TypeScript and Python libraries**: Install the SDK from its language package registry and call it from your application. The [SDK repository](https://github.com/Aembit/edge-sdks) carries the installation steps, the developer reference, and runnable examples.
-* **Workload attestation, token lifecycle, and credential retrieval**: The SDK collects identity evidence from the environment it runs in, caches the resulting access token in memory, refreshes that token before it expires, and requests the credential your application needs.
-* **Seven supported Trust Providers**: Attest with AWS Metadata Service, AWS Role, Azure Instance Metadata Service, GCP Identity Token, GitHub, GitLab, or OIDC ID Token. For per-language coverage, see [Edge SDK Trust Providers](reference/support-matrix.md#edge-sdk-trust-providers).
+* **TypeScript and Python libraries**: Install the TypeScript SDK from npm and call it from your application. The Python SDK installs from PyPI starting with version 1.35.0. The [SDK repository](https://github.com/Aembit/edge-sdks) carries the installation steps, the developer reference, and runnable examples.
+* **Workload attestation, token lifecycle, and credential retrieval**: The SDK collects identity evidence from the environment it runs in and caches the resulting access token in memory. It refreshes that token before it expires and requests the credential your application needs.
+* **Eight supported Trust Providers**: Attest with AWS Metadata Service, AWS Role, Azure Instance Metadata Service, GCP Identity Token, GitHub, GitLab, OIDC ID Token, or Terraform Cloud. For per-language coverage, see [Edge SDK Trust Providers](reference/support-matrix.md#edge-sdk-trust-providers).
 * **Integration guides for four platforms**: Follow a worked setup for [AWS EC2](dev-guide/sdk/edge/integrations/aws-ec2.md), [AWS Lambda](dev-guide/sdk/edge/integrations/aws-lambda.md), [GCP Cloud Run](dev-guide/sdk/edge/integrations/gcp-cloud-run.md), or [Vercel OIDC](dev-guide/sdk/edge/integrations/vercel-oidc.md).
 
 The console-side configuration matches every other Aembit access path. You configure a Trust Provider to verify the workload’s identity and a Credential Provider to supply the credential. An Access Policy then authorizes a specific Client Workload to reach a specific Server Workload.

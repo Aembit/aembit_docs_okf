@@ -268,10 +268,11 @@ The default port is 9091 to avoid a collision with the Agent Controller, which e
 
 #### Request processing metrics
 
-| Metric                                            | Type        | Labels                           | Description                                                                                   |
-| ------------------------------------------------- | ----------- | -------------------------------- | --------------------------------------------------------------------------------------------- |
-| `aembit_mcp_gateway_mcp_requests_processed_total` | `counter`   | `tenant_id`, `method`, `outcome` | MCP requests the Gateway processed                                                            |
-| `aembit_mcp_gateway_mcp_request_duration_seconds` | `histogram` | `tenant_id`, `method`            | Time the Gateway spent processing an MCP request, excluding time spent waiting on MCP servers |
+| Metric                                                    | Type        | Labels                           | Description                                                                                                                                                                       |
+| --------------------------------------------------------- | ----------- | -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `aembit_mcp_gateway_mcp_requests_processed_total`         | `counter`   | `tenant_id`, `method`, `outcome` | MCP requests the Gateway processed                                                                                                                                                |
+| `aembit_mcp_gateway_mcp_request_duration_seconds`         | `histogram` | `tenant_id`, `method`            | Time the Gateway spent processing an MCP request, excluding time spent waiting on MCP servers                                                                                     |
+| `aembit_mcp_gateway_tool_output_schema_validations_total` | `counter`   | `tenant_id`, `outcome`           | Completed tool results, by the result of the output schema check. `blocked` means the result didn’t match its tool’s output schema and the client received error `-32004` instead |
 
 Fanout requests always report success here
 
@@ -309,20 +310,21 @@ For a request the Gateway fans out to your MCP servers, it builds the client res
 
 #### Label values
 
-| Label       | Applies to                                                     | Values                                                                   |
-| ----------- | -------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| `component` | Process and runtime metrics                                    | `aembit_mcp_gateway`                                                     |
-| `hostname`  | Process and runtime metrics                                    | The hostname of the machine running the Gateway                          |
-| `version`   | The `version` metric                                           | The MCP Identity Gateway build version, such as `1.34.5733`              |
-| `tenant_id` | Every metric with a `tenant_id` label                          | Your Aembit Tenant ID                                                    |
-| `method`    | Every metric with a `method` label                             | The MCP method name, such as `initialize`, `tools/list`, or `tools/call` |
-| `outcome`   | Every metric with an `outcome` label, except where noted       | `success` or `error`                                                     |
-| `outcome`   | `aembit_mcp_gateway_aidr_guard_decisions_total`                | `scanned`, `fail_open`, or `fail_closed`                                 |
-| `outcome`   | `aembit_mcp_gateway_upstream_mcp_server_fanout_timeouts_total` | `timeout`                                                                |
-| `reason`    | `aembit_mcp_gateway_auth_failures_total`                       | `missing_header`, `audience_mismatch`, or `invalid_token`                |
-| `reason`    | Session store metrics                                          | `none`, `not_found`, or `store_error`                                    |
-| `operation` | Session store metrics                                          | `save`, `get`, `delete`, or `count`                                      |
-| `probe`     | `aembit_mcp_gateway_readiness_probe_flaps_total`               | `cloud` or `session_store`                                               |
+| Label       | Applies to                                                     | Values                                                                                   |
+| ----------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `component` | Process and runtime metrics                                    | `aembit_mcp_gateway`                                                                     |
+| `hostname`  | Process and runtime metrics                                    | The hostname of the machine running the Gateway                                          |
+| `version`   | The `version` metric                                           | The MCP Identity Gateway build version, such as `1.34.5733`                              |
+| `tenant_id` | Every metric with a `tenant_id` label                          | Your Aembit Tenant ID                                                                    |
+| `method`    | Every metric with a `method` label                             | The MCP method name, such as `initialize`, `tools/list`, or `tools/call`                 |
+| `outcome`   | Every metric with an `outcome` label, except where noted       | `success` or `error`                                                                     |
+| `outcome`   | `aembit_mcp_gateway_aidr_guard_decisions_total`                | `scanned`, `fail_open`, or `fail_closed`                                                 |
+| `outcome`   | `aembit_mcp_gateway_upstream_mcp_server_fanout_timeouts_total` | `timeout`                                                                                |
+| `outcome`   | `aembit_mcp_gateway_tool_output_schema_validations_total`      | `valid`, `blocked`, or `unchecked`                                                       |
+| `reason`    | `aembit_mcp_gateway_auth_failures_total`                       | `missing_header`, `audience_mismatch`, `invalid_token`, or `token_expired_during_listen` |
+| `reason`    | Session store metrics                                          | `none`, `not_found`, or `store_error`                                                    |
+| `operation` | Session store metrics                                          | `save`, `get`, `delete`, or `count`                                                      |
+| `probe`     | `aembit_mcp_gateway_readiness_probe_flaps_total`               | `cloud` or `session_store`                                                               |
 
 Histogram metrics expose `_bucket`, `_count`, and `_sum` series under the metric names in these tables.
 

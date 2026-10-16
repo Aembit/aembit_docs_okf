@@ -5,7 +5,7 @@ description: "Configuration options, endpoints, and error codes for the Aembit M
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-authorization-server/reference-mcp-auth-server/
 interface: mcp
 tags: ["mcp-authorization-server", "deploy-install"]
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-10-14T16:36:12-04:00
 ---
 
 # MCP Authorization Server reference
@@ -16,14 +16,14 @@ This reference documents the configuration options, endpoints, and error codes f
 
 MCP servers require specific configuration to work with Aembit’s MCP Authorization Server. Most settings are standard OAuth concepts from the MCP specification—the exact field names vary by MCP server implementation.
 
-| Concept                      | Purpose                                                | Aembit value                                                                    | Required by |
-| ---------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------- | ----------- |
-| **Authorization Server URL** | Where MCP clients discover OAuth endpoints             | `https://[tenant].mcp.[region].aembit.io`                                       | MCP spec    |
-| **Resource Server URL**      | Identifies your MCP server for token audience matching | Your MCP server’s public URL                                                    | MCP spec    |
-| **JWKS Endpoint**            | Public keys used for token signature verification      | `https://[tenant].mcp.[region].aembit.io/.well-known/openid-configuration/jwks` | RFC 8414    |
-| **Token Issuer**             | OIDC issuer URL of token validation                    | `https://[tenant].id.[region].aembit.io` (note: `.id.` subdomain)               | RFC 8414    |
-| **Token Audience**           | Expected audience claim in issued tokens               | Must match your Credential Provider configuration                               | RFC 8707    |
-| **Signing Algorithm**        | Algorithm for token signatures                         | `ES256` (default) or RSA                                                        | Aembit      |
+| Concept                      | Purpose                                                | Aembit value                                                                   | Required by |
+| ---------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------ | ----------- |
+| **Authorization Server URL** | Where MCP clients discover OAuth endpoints             | `https://[tenant].id.[region].aembit.io`                                       | MCP spec    |
+| **Resource Server URL**      | Identifies your MCP server for token audience matching | Your MCP server’s public URL                                                   | MCP spec    |
+| **JWKS Endpoint**            | Public keys used for token signature verification      | `https://[tenant].id.[region].aembit.io/.well-known/openid-configuration/jwks` | RFC 8414    |
+| **Token Issuer**             | OIDC issuer URL of token validation                    | `https://[tenant].id.[region].aembit.io`                                       | RFC 8414    |
+| **Token Audience**           | Expected audience claim in issued tokens               | Must match your Credential Provider configuration                              | RFC 8707    |
+| **Signing Algorithm**        | Algorithm for token signatures                         | `ES256` (default) or RSA                                                       | Aembit      |
 
 ### MCP server configuration
 
@@ -37,31 +37,27 @@ For step-by-step configuration instructions, see [Set up the MCP Authorization S
 
 ## Tenant URL patterns
 
-Aembit uses different subdomains for different services. When configuring your MCP server, use the correct subdomain for each service.
+The MCP Authorization Server, token issuer, and JWKS endpoint all use your Aembit Tenant’s `.id.` subdomain.
 
-| Service         | URL pattern                                                                     | Example                                                                      |
-| --------------- | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| MCP Auth Server | `https://[tenant].mcp.[region].aembit.io`                                       | `https://abc123.mcp.useast2.aembit.io`                                       |
-| Token Issuer    | `https://[tenant].id.[region].aembit.io`                                        | `https://abc123.id.useast2.aembit.io`                                        |
-| JWKS            | `https://[tenant].mcp.[region].aembit.io/.well-known/openid-configuration/jwks` | `https://abc123.mcp.useast2.aembit.io/.well-known/openid-configuration/jwks` |
+| Service         | URL pattern                                                                    | Example                                                                     |
+| --------------- | ------------------------------------------------------------------------------ | --------------------------------------------------------------------------- |
+| MCP Auth Server | `https://[tenant].id.[region].aembit.io`                                       | `https://abc123.id.useast2.aembit.io`                                       |
+| Token Issuer    | `https://[tenant].id.[region].aembit.io`                                       | `https://abc123.id.useast2.aembit.io`                                       |
+| JWKS            | `https://[tenant].id.[region].aembit.io/.well-known/openid-configuration/jwks` | `https://abc123.id.useast2.aembit.io/.well-known/openid-configuration/jwks` |
 
 Replace `[tenant]` with your Aembit tenant ID and `[region]` with your deployment region (for example, `useast2`).
 
-> **Token issuer subdomain**
->
-> The token issuer uses the `.id.` subdomain, not `.mcp.`. Ensure your MCP server’s `issuer` configuration uses the correct subdomain.
-
 ## Endpoints
 
-| Endpoint                                       | Method | Description                                               |
-| ---------------------------------------------- | ------ | --------------------------------------------------------- |
-| `/.well-known/openid-configuration`            | GET    | OIDC discovery metadata document                          |
-| `<jwks_uri>`                                   | GET    | JWKS public keys, as advertised in the discovery document |
-| `<registration_endpoint>`                      | POST   | Dynamic Client Registration (DCR)                         |
-| `<authorization_endpoint>` (e.g. `/authorize`) | GET    | OAuth 2.1 authorization endpoint                          |
-| `<token_endpoint>` (e.g. `/token`)             | POST   | OAuth 2.1 token endpoint                                  |
+| Endpoint                                               | Method | Description                                               |
+| ------------------------------------------------------ | ------ | --------------------------------------------------------- |
+| `/.well-known/openid-configuration`                    | GET    | OIDC discovery metadata document                          |
+| `<jwks_uri>`                                           | GET    | JWKS public keys, as advertised in the discovery document |
+| `<registration_endpoint>`                              | POST   | Dynamic Client Registration (DCR)                         |
+| `<authorization_endpoint>` (for example, `/authorize`) | GET    | OAuth 2.1 authorization endpoint                          |
+| `<token_endpoint>` (for example, `/token`)             | POST   | OAuth 2.1 token endpoint                                  |
 
-All endpoints except `/.well-known/openid-configuration` are discovered via the metadata document and must not be hard-coded; the preceding examples (`/authorize`, `/token`) illustrate typical paths only.
+MCP clients discover all endpoints except `/.well-known/openid-configuration` through the metadata document, so don’t hard-code them; the preceding examples (`/authorize`, `/token`) illustrate typical paths only.
 
 ### Endpoint response examples
 
@@ -75,11 +71,11 @@ Response:
 
 ```json
 {
-  "issuer": "https://[tenant].mcp.[region].aembit.io",
-  "authorization_endpoint": "https://[tenant].mcp.[region].aembit.io/connect/authorize",
-  "token_endpoint": "https://[tenant].mcp.[region].aembit.io/connect/token",
-  "jwks_uri": "https://[tenant].mcp.[region].aembit.io/.well-known/openid-configuration/jwks",
-  "registration_endpoint": "https://[tenant].mcp.[region].aembit.io/register",
+  "issuer": "https://[tenant].id.[region].aembit.io",
+  "authorization_endpoint": "https://[tenant].id.[region].aembit.io/connect/authorize",
+  "token_endpoint": "https://[tenant].id.[region].aembit.io/connect/token",
+  "jwks_uri": "https://[tenant].id.[region].aembit.io/.well-known/openid-configuration/jwks",
+  "registration_endpoint": "https://[tenant].id.[region].aembit.io/register",
   "scopes_supported": ["openid", "profile", "email"],
   "response_types_supported": ["code", "token", "id_token", "id_token token", "code id_token", "code token", "code id_token token"],
   "response_modes_supported": ["form_post", "query", "fragment"],
@@ -100,7 +96,7 @@ Response:
 ```json
 {
   "resource": "http://your-mcp-server:8000/mcp",
-  "authorization_servers": ["https://[tenant].mcp.[region].aembit.io"]
+  "authorization_servers": ["https://[tenant].id.[region].aembit.io"]
 }
 ```
 
@@ -154,7 +150,7 @@ The following table contains common HTTP status codes returned by the MCP Author
 | Server Workload protocol       | MCP application protocol                                                                                                                                                                                                                                                      |
 | Trust Providers                | OIDC ID Token; [SAMLv2 Response](../../access-policies/trust-providers/saml-response-trust-provider.md)                                                                                                                                                                   |
 
-When Enforce SSO is off on the Client Workload, the policy needs no Trust Provider. For guidance on choosing between OIDC and SAML, see [MCP Authorization Server overview](overview.md#choosing-between-oidc-and-saml).
+When Enforce SSO is off on the Client Workload, the Access Policy needs no Trust Provider. For guidance on choosing between OIDC and SAML, see [MCP Authorization Server overview](overview.md#choosing-between-oidc-and-saml).
 
 ## Dynamic client registration (DCR) support
 
@@ -229,7 +225,7 @@ Tokens issued by the MCP Authorization Server include these standard claims:
 Token validation keys are available at:
 
 ```text
-https://[tenant].mcp.[region].aembit.io/.well-known/openid-configuration/jwks
+https://[tenant].id.[region].aembit.io/.well-known/openid-configuration/jwks
 ```
 
 Resource servers should cache JWKS responses and refresh periodically per standard OAuth practices. Resource servers should obtain this from the `jwks_uri` field in the discovery document.

@@ -5,14 +5,14 @@ description: "Reference for the MCP Identity Gateway—token formats, proxied me
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/reference-mcp-gateway/
 interface: mcp
 tags: ["mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-10-08T13:12:21-07:00
+timestamp: 2026-10-16T10:28:13-07:00
 ---
 
 # MCP Identity Gateway reference
 
 Operational reference for the MCP Identity Gateway, covering the Aembit-managed service and self-hosted deployments.
 
-For Tenant-side configuration, see [Set up the MCP Identity Gateway](../../access-policies/mcp-identity-gateway/setup-mcp-gateway.md). To deploy and operate the MCP Identity Gateway yourself, see [Self-host the MCP Identity Gateway](self-host-mcp-gateway.md).
+For configuration in your Aembit Tenant, see [Set up the MCP Identity Gateway](../../access-policies/mcp-identity-gateway/setup-mcp-gateway.md). To deploy and operate the MCP Identity Gateway yourself, see [Self-host the MCP Identity Gateway](self-host-mcp-gateway.md).
 
 ## Token and credential details
 
@@ -23,19 +23,36 @@ The tokens and credentials used in each hop have different formats and purposes:
 | Agent-to-Gateway   | Aembit-issued access token (typically JWT) | Issued by the Aembit Authorization Server after the user authenticates via a configured IdP                           |
 | Gateway-to-Server  | Varies by MCP server                       | Determined by the Credential Provider configuration (for example, OAuth 2.0 access token via Authorization Code flow) |
 
-* **Agent-to-Gateway tokens** - The Aembit Authorization Server issues these tokens after it authenticates the user via an external identity provider (such as Google, Okta, or Microsoft Entra ID). The MCP Identity Gateway validates these tokens using Aembit’s signing keys, whether the keys sign with RS256 or ES256. A token’s audience must be the MCP Identity Gateway’s `/mcp` endpoint URL, or the MCP Identity Gateway URL itself with or without a trailing slash. The MCP Identity Gateway accepts a token for up to 60 seconds after it expires.
+* **Agent-to-Gateway tokens** - The Aembit Authorization Server issues these tokens after it authenticates the user via an external identity provider (such as Google, Okta, or Microsoft Entra ID). The MCP Identity Gateway validates these tokens using Aembit’s signing keys, whether the keys sign with RS256 or ES256. A token’s audience must be the MCP Identity Gateway’s `/mcp` endpoint URL or the MCP Identity Gateway URL itself, either with or without a trailing slash. The MCP Identity Gateway accepts a token for up to 3 seconds after it expires.
 * **Gateway-to-Server credentials** - Aembit manages these via Credential Providers. For modern SaaS MCP servers, these are typically OAuth 2.0 access tokens obtained via the Authorization Code (3-legged OAuth) flow. Aembit may support other methods depending on how the MCP server authenticates.
 * **Credential caching** - The MCP Identity Gateway caches downstream MCP server credentials and configuration in memory to reduce latency. Cached credentials are short-lived and refreshed as needed; the MCP Identity Gateway doesn’t persist them to disk.
 
+### Authentication sent to the MCP server
+
+The Gateway-to-Server Server Workload’s **Authentication Method** and **Authentication Scheme** decide how the MCP Identity Gateway presents the credential to the MCP server. The following table lists each combination and whether its credential reaches the MCP server:
+
+| Authentication method   | Authentication scheme | Sent to the MCP server | Notes                                                      |
+| ----------------------- | --------------------- | ---------------------- | ---------------------------------------------------------- |
+| HTTP Authentication     | Basic                 | Yes                    | `Authorization: Basic` header                              |
+| HTTP Authentication     | Bearer                | Yes                    | `Authorization: Bearer` header                             |
+| HTTP Authentication     | Header                | Yes                    | The header you name in **Header**                          |
+| HTTP Authentication     | AWS Signature v4      | No                     | None                                                       |
+| API Key                 | Header                | Yes                    | The header you name in **Header**                          |
+| API Key                 | Query Parameter       | No                     | None                                                       |
+| mTLS Authentication     | x509 Certificate      | Yes                    | Needs an X.509-SVID Credential Provider and an `https` URL |
+| Password Authentication | Password              | No                     | Applies to database protocols, not MCP                     |
+
+The MCP Identity Gateway rejects a mutual Transport Layer Security (mTLS) connection to an MCP server whose URL uses `http://`. The MCP Identity Gateway sends the Server Workload’s Static HTTP Headers to the MCP server with every authentication method, including **No Authentication**.
+
 ## Proxied MCP methods
 
-The MCP Identity Gateway proxies the following MCP protocol methods to downstream MCP servers. All methods go through the same token validation, policy evaluation, and credential injection flow.
+The MCP Identity Gateway proxies the following MCP protocol methods to downstream MCP servers. All methods go through the same token validation, Access Policy evaluation, and credential injection flow.
 
 The MCP Identity Gateway serves clients using either the [2026-07-28 revision](https://modelcontextprotocol.io/specification/2026-07-28) of the MCP specification or an earlier revision. The proxied methods apply to both, with revision-specific compatibility behavior where the two revisions differ. The MCP Identity Gateway negotiates each downstream connection, so a client’s revision and a server’s revision don’t have to match.
 
 ### Capability advertisement
 
-When an MCP client connects, the MCP Identity Gateway advertises the union of the capabilities that its assigned MCP servers support. These capabilities include tools, resources, prompts, and tasks. This set comes from the assigned MCP servers, not from a fixed list and not from what the client declared.
+When an MCP client connects, the MCP Identity Gateway advertises the union of the capabilities that its assigned MCP servers support. These capabilities include tools, resources, prompts, and tasks, and whether tools, resources, and prompts send change notifications. This set comes from the assigned MCP servers, not from a fixed list and not from what the client declared.
 
 Advertising a capability is separate from letting a client use it. Tools, resources, and prompts are server capabilities: the MCP Identity Gateway advertises them on behalf of its assigned MCP servers, and a client doesn’t declare them. Task handling and elicitation come from the client. A client using the 2026-07-28 revision declares them on each request, and a client using an earlier revision declares them when it connects:
 
@@ -47,7 +64,7 @@ Advertising a capability is separate from letting a client use it. Tools, resour
 | Method       | Description                                                                                                                                                                                                                                       |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `tools/list` | Discovers available tools across all assigned MCP servers and returns each under a prefixed name. See [Tool and prompt names](#tool-and-prompt-names). The response includes tool annotations from upstream servers when those servers send them. |
-| `tools/call` | Invokes a tool on the appropriate MCP server.                                                                                                                                                                                                     |
+| `tools/call` | Invokes a tool on the appropriate MCP server, and checks the result against the tool’s output schema. See [Tool output validation](#tool-output-validation).                                                                                      |
 
 ### Tool and prompt names
 
@@ -59,6 +76,19 @@ MCP Tool Access Control matches the name the MCP server publishes, not the prefi
 >
 > Server Workload names that differ only in characters the MCP Identity Gateway replaces produce the same prefix. `github.prod` and `github prod` both become `github-prod`. Two Server Workloads assigned to the same MCP client can share a prefix. The MCP Identity Gateway then leaves both workloads’ tools and prompts out of `tools/list` and `prompts/list`, and calls to them fail with error `-32603`. The MCP Identity Gateway logs the two Server Workloads and the prefix they share. Rename one of the Server Workloads to fix it.
 
+### Tool output validation
+
+When a tool publishes an output schema in `tools/list`, the MCP Identity Gateway checks each completed result of that tool against the schema before returning it. This includes a result that a task returns later through `tasks/get`. When a successful result doesn’t match the schema, or carries no structured content, the MCP client gets error `-32004` in place of the result. The error message names the tool and where the result breaks the schema, and the workload event for the call records an error. The MCP Identity Gateway checks a tool error that carries structured content the same way as a successful result. A tool error that carries no structured content passes, because the schema describes successful results.
+
+The MCP Identity Gateway returns the result without checking it in these cases:
+
+* The tool published no output schema, or the MCP Identity Gateway hasn’t received the tool in a `tools/list` response in the last hour.
+* The MCP Identity Gateway can’t compile the schema, such as when the schema references an external document.
+* The schema has more than 64 levels of nesting or more than 10,000 nodes.
+* The result comes from a task, and the MCP Identity Gateway can’t tell which tool started the task or can’t read the task’s result.
+
+A self-hosted MCP Identity Gateway counts each checked or unchecked result in the `aembit_mcp_gateway_tool_output_schema_validations_total` metric. See [Prometheus metrics](#prometheus-metrics).
+
 ### Resource methods
 
 | Method           | Description                                                                                                                                             |
@@ -68,7 +98,7 @@ MCP Tool Access Control matches the name the MCP server publishes, not the prefi
 
 > **A shared resource URI reads from only one MCP server**
 >
-> The MCP Identity Gateway returns each resource URI exactly as the MCP server reported it. It prefixes each resource’s `name` the same way as a [tool name](#tool-and-prompt-names), and puts the name of the Server Workload that returned it in brackets ahead of the resource’s `title` and `description`, so an MCP client can tell resources apart in `resources/list`. The MCP client sends the URI unchanged in `resources/read`. Two MCP servers can expose the same URI. The MCP Identity Gateway then sends every read for that URI to the first of them in the MCP client’s assignments that listed or read the URI. If a later read from that MCP server fails, the MCP Identity Gateway doesn’t try the other one. The MCP client can’t choose which of the two resources it reads.
+> The MCP Identity Gateway returns each resource URI exactly as the MCP server reported it. It prefixes each resource’s `name` the same way as a [tool name](#tool-and-prompt-names). It also puts the name of the Server Workload that returned it in brackets ahead of the resource’s `title` and `description`. An MCP client can then tell resources apart in `resources/list`. The MCP client sends the URI unchanged in `resources/read`. Two MCP servers can expose the same URI. The MCP Identity Gateway then sends every read for that URI to the first of them in the MCP client’s assignments that listed or read the URI. If a later read from that MCP server fails, the MCP Identity Gateway doesn’t try the other one. The MCP client can’t choose which of the two resources it reads.
 
 ### Prompt methods
 
@@ -95,11 +125,30 @@ An upstream MCP server can ask for more input before it finishes a call. How the
 * When the MCP server uses the 2026-07-28 revision and the client uses an earlier one, the MCP Identity Gateway relays the request as `elicitation/create`. It sends the client’s answer to the MCP server. The client must declare elicitation. The MCP Identity Gateway doesn’t relay sampling or roots requests to these clients.
 * When the MCP server uses an earlier revision and sends `elicitation/create`, the MCP Identity Gateway declines it, and the client never receives it.
 
+### Change notifications
+
+A client using the 2026-07-28 revision can subscribe to change notifications by sending `subscriptions/listen`. A client using an earlier revision that sends `subscriptions/listen` gets error `-32601`.
+
+When an assigned MCP server reports that its tools, resources, or prompts have changed, the MCP Identity Gateway relays the matching notification to the subscribed client: `notifications/tools/list_changed`, `notifications/resources/list_changed`, or `notifications/prompts/list_changed`. A client that subscribes to specific resources also receives `notifications/resources/updated` when one of them changes. The MCP Identity Gateway doesn’t support `resources/subscribe` or `resources/unsubscribe`. Subscribe to resources through `subscriptions/listen` instead.
+
+The MCP Identity Gateway also sends a `list_changed` notification itself in these cases:
+
+* The client’s assigned Server Workloads change, including a change to an assigned Server Workload’s settings, such as its name or URL.
+* The MCP Tool Access Control rules that apply to the client change.
+* The MCP Identity Gateway reconnects to an MCP server after the connection drops.
+
+The MCP Identity Gateway checks for assignment and rule changes every 30 seconds by default. The `subscriptions_workload_refresh_interval` name in [`AEMBIT_MCP_GATEWAY_TIMEOUT`](env-vars-mcp-gateway.md#aembit_mcp_gateway_timeout) sets the interval.
+
+The MCP Identity Gateway relays notifications only from MCP servers that use the 2026-07-28 revision. When its connection to an MCP server for notifications drops, it reconnects after a delay that starts at 200 milliseconds and doubles up to 5 minutes. The MCP Identity Gateway stops reconnecting when a retry would get the same answer, such as HTTP status `401`, `403`, `404`, `405`, `501`, or `505`. It keeps reconnecting after a timeout, a rate limit, or another server error such as `503`. After it stops, it reconnects to that MCP server only after that Server Workload changes, or after the client reconnects and subscribes again.
+
+A subscription ends when the client’s access token expires. The client gets error `-32005` and must reconnect with a fresh token. A subscription also ends when the MCP Identity Gateway can’t refresh the client’s assignments from Aembit Cloud. A second `subscriptions/listen` request fails when the client already has a subscription open on the same connection. The client can reconnect and subscribe again.
+
 ### Methods the MCP Identity Gateway answers itself
 
 * `resources/templates/list` and `completion/complete` return an empty result.
 * `ping` returns a result for clients using revisions earlier than 2026-07-28, and error `-32601` for clients using the 2026-07-28 revision.
-* `logging/setLevel`, `resources/subscribe`, `resources/unsubscribe`, `subscriptions/listen`, `tasks/list`, and `tasks/result` return error `-32601`. The MCP Identity Gateway doesn’t send change notifications to MCP clients.
+* `logging/setLevel`, `resources/subscribe`, `resources/unsubscribe`, `tasks/list`, and `tasks/result` return error `-32601`.
+* `subscriptions/listen` returns error `-32601` for clients using revisions earlier than 2026-07-28. See [Change notifications](#change-notifications).
 
 ### Transport
 
@@ -160,7 +209,7 @@ The `userId` field is absent when Aembit can’t identify the MCP client, such a
 > * Tool invocations forwarded to upstream MCP servers
 > * Resource requests forwarded to upstream MCP servers
 > * Credential injection events
-> * Policy evaluation results for server access
+> * Access Policy evaluation results for server access
 >
 > **Agent to Gateway** events (such as initial client connections and authentication) don’t appear in workload events. Aembit plans this capability for a future release.
 >
@@ -171,7 +220,7 @@ The `userId` field is absent when Aembit can’t identify the MCP client, such a
 The MCP Identity Gateway produces structured JSON logs that help you:
 
 * Answer “who did what” questions—which user and AI agent accessed which MCP server and tools, and when
-* Trace policy decisions—which policy allowed or denied a given request
+* Trace Access Policy decisions—which Access Policy allowed or denied a given request
 * Monitor behavior—connection patterns and error rates between AI agents and MCP servers
 
 Forward these logs to [Log Streams](../../administration/log-streams/overview.md) to integrate with your existing observability and Security Information and Event Management (SIEM) tooling.
@@ -183,7 +232,7 @@ Forward these logs to [Log Streams](../../administration/log-streams/overview.md
 * **Customer-facing observability** - Use workload events in Aembit Cloud and forward via [Log Streams](../../administration/log-streams/overview.md) for visibility into MCP activity.
 * **Specification revisions** - The MCP Identity Gateway supports the 2026-07-28 revision of the MCP specification and earlier revisions. It serves each client using the revision the client asks for, when the MCP Identity Gateway supports that revision.
 
-To verify your Tenant configuration is working correctly, see [Verify the connection](../../access-policies/mcp-identity-gateway/setup-mcp-gateway.md#verify-the-connection) in the setup guide.
+To verify your Aembit Tenant configuration is working correctly, see [Verify the connection](../../access-policies/mcp-identity-gateway/setup-mcp-gateway.md#verify-the-connection) in the setup guide.
 
 ## Deployment model
 
@@ -193,7 +242,7 @@ Aembit operates the MCP Identity Gateway as a managed service. Each Aembit Tenan
 * Aembit handles TLS termination, certificate management, and runtime operations.
 * Customers configure only Aembit Tenant resources (Identity Provider, Trust Provider, Access Policies, Credential Providers).
 
-To request an MCP Identity Gateway endpoint for your Tenant, contact your Aembit representative.
+To request an MCP Identity Gateway endpoint for your Aembit Tenant, contact your Aembit representative.
 
 As a secondary option, you can self-host the MCP Identity Gateway in your own infrastructure. See [Self-host the MCP Identity Gateway](self-host-mcp-gateway.md) and [Self-hosted operations](#self-hosted-operations).
 
@@ -240,12 +289,12 @@ Open the following network paths for the host running a self-hosted MCP Identity
 
 #### Outbound
 
-| Port | Target           | Destination                    | Purpose                                |
-| ---- | ---------------- | ------------------------------ | -------------------------------------- |
-| 443  | Aembit Cloud     | `https://<tenantId>.aembit.io` | Authorization, policy, and credentials |
-| 443  | MCP servers      | `https://<mcp-server-host>`    | Proxied MCP traffic                    |
-| 443  | IdP endpoints    | `https://<idp-host>/...`       | OAuth/OIDC user authentication         |
-| 5000 | Agent Controller | `http://localhost:5000`        | Registration (localhost only)          |
+| Port | Target           | Destination                    | Purpose                                       |
+| ---- | ---------------- | ------------------------------ | --------------------------------------------- |
+| 443  | Aembit Cloud     | `https://<tenantId>.aembit.io` | Authorization, Access Policy, and credentials |
+| 443  | MCP servers      | `https://<mcp-server-host>`    | Proxied MCP traffic                           |
+| 443  | IdP endpoints    | `https://<idp-host>/...`       | OAuth/OIDC user authentication                |
+| 5000 | Agent Controller | `http://localhost:5000`        | Registration (localhost only)                 |
 
 > **Agent Controller dependency**
 >
@@ -297,10 +346,11 @@ The default port is 9091 to avoid a collision with the Agent Controller, which e
 
 #### Request processing metrics
 
-| Metric                                            | Type        | Labels                           | Description                                                                                   |
-| ------------------------------------------------- | ----------- | -------------------------------- | --------------------------------------------------------------------------------------------- |
-| `aembit_mcp_gateway_mcp_requests_processed_total` | `counter`   | `tenant_id`, `method`, `outcome` | MCP requests the Gateway processed                                                            |
-| `aembit_mcp_gateway_mcp_request_duration_seconds` | `histogram` | `tenant_id`, `method`            | Time the Gateway spent processing an MCP request, excluding time spent waiting on MCP servers |
+| Metric                                                    | Type        | Labels                           | Description                                                                                                                                                                       |
+| --------------------------------------------------------- | ----------- | -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `aembit_mcp_gateway_mcp_requests_processed_total`         | `counter`   | `tenant_id`, `method`, `outcome` | MCP requests the Gateway processed                                                                                                                                                |
+| `aembit_mcp_gateway_mcp_request_duration_seconds`         | `histogram` | `tenant_id`, `method`            | Time the Gateway spent processing an MCP request, excluding time spent waiting on MCP servers                                                                                     |
+| `aembit_mcp_gateway_tool_output_schema_validations_total` | `counter`   | `tenant_id`, `outcome`           | Completed tool results, by the result of the output schema check. `blocked` means the result didn’t match its tool’s output schema and the client received error `-32004` instead |
 
 Fanout requests always report success here
 
@@ -338,20 +388,21 @@ For a request the Gateway fans out to your MCP servers, it builds the client res
 
 #### Label values
 
-| Label       | Applies to                                                     | Values                                                                   |
-| ----------- | -------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| `component` | Process and runtime metrics                                    | `aembit_mcp_gateway`                                                     |
-| `hostname`  | Process and runtime metrics                                    | The hostname of the machine running the Gateway                          |
-| `version`   | The `version` metric                                           | The MCP Identity Gateway build version, such as `1.34.5733`              |
-| `tenant_id` | Every metric with a `tenant_id` label                          | Your Aembit Tenant ID                                                    |
-| `method`    | Every metric with a `method` label                             | The MCP method name, such as `initialize`, `tools/list`, or `tools/call` |
-| `outcome`   | Every metric with an `outcome` label, except where noted       | `success` or `error`                                                     |
-| `outcome`   | `aembit_mcp_gateway_aidr_guard_decisions_total`                | `scanned`, `fail_open`, or `fail_closed`                                 |
-| `outcome`   | `aembit_mcp_gateway_upstream_mcp_server_fanout_timeouts_total` | `timeout`                                                                |
-| `reason`    | `aembit_mcp_gateway_auth_failures_total`                       | `missing_header`, `audience_mismatch`, or `invalid_token`                |
-| `reason`    | Session store metrics                                          | `none`, `not_found`, or `store_error`                                    |
-| `operation` | Session store metrics                                          | `save`, `get`, `delete`, or `count`                                      |
-| `probe`     | `aembit_mcp_gateway_readiness_probe_flaps_total`               | `cloud` or `session_store`                                               |
+| Label       | Applies to                                                     | Values                                                                                   |
+| ----------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `component` | Process and runtime metrics                                    | `aembit_mcp_gateway`                                                                     |
+| `hostname`  | Process and runtime metrics                                    | The hostname of the machine running the Gateway                                          |
+| `version`   | The `version` metric                                           | The MCP Identity Gateway build version, such as `1.34.5733`                              |
+| `tenant_id` | Every metric with a `tenant_id` label                          | Your Aembit Tenant ID                                                                    |
+| `method`    | Every metric with a `method` label                             | The MCP method name, such as `initialize`, `tools/list`, or `tools/call`                 |
+| `outcome`   | Every metric with an `outcome` label, except where noted       | `success` or `error`                                                                     |
+| `outcome`   | `aembit_mcp_gateway_aidr_guard_decisions_total`                | `scanned`, `fail_open`, or `fail_closed`                                                 |
+| `outcome`   | `aembit_mcp_gateway_upstream_mcp_server_fanout_timeouts_total` | `timeout`                                                                                |
+| `outcome`   | `aembit_mcp_gateway_tool_output_schema_validations_total`      | `valid`, `blocked`, or `unchecked`                                                       |
+| `reason`    | `aembit_mcp_gateway_auth_failures_total`                       | `missing_header`, `audience_mismatch`, `invalid_token`, or `token_expired_during_listen` |
+| `reason`    | Session store metrics                                          | `none`, `not_found`, or `store_error`                                                    |
+| `operation` | Session store metrics                                          | `save`, `get`, `delete`, or `count`                                                      |
+| `probe`     | `aembit_mcp_gateway_readiness_probe_flaps_total`               | `cloud` or `session_store`                                                               |
 
 Histogram metrics expose `_bucket`, `_count`, and `_sum` series under the metric names in these tables.
 
@@ -388,11 +439,11 @@ The MCP Identity Gateway connects to an MCP server on either the 2026-07-28 revi
 **Non-goals:**
 
 * The MCP Identity Gateway doesn’t replace the MCP server’s internal authorization logic
-* The MCP Identity Gateway doesn’t inspect or filter prompt content beyond what policy evaluation requires
+* The MCP Identity Gateway doesn’t inspect or filter prompt content beyond what Access Policy evaluation requires
 
 ## See also
 
-* [MCP Identity Gateway concepts](concepts-mcp-gateway.md) - Architecture, identity model, and access policies
+* [MCP Identity Gateway concepts](concepts-mcp-gateway.md) - Architecture, identity model, and Access Policies
 * [Environment variables](env-vars-mcp-gateway.md) - Operator reference (the environment variables Aembit sets when provisioning an MCP Identity Gateway)
-* [Set up the MCP Identity Gateway](../../access-policies/mcp-identity-gateway/setup-mcp-gateway.md) - Tenant configuration, from Trust Provider to Access Policy
+* [Set up the MCP Identity Gateway](../../access-policies/mcp-identity-gateway/setup-mcp-gateway.md) - Aembit Tenant configuration, from Trust Provider to Access Policy
 * [Access Policies](../../access-policies/overview.md) - How Aembit authorizes each MCP request

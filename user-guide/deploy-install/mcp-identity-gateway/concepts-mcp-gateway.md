@@ -4,7 +4,7 @@ title: "MCP Identity Gateway concepts"
 description: "Architecture, token handling, access policies, and deployment patterns for the MCP Identity Gateway."
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/concepts-mcp-gateway/
 tags: ["mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-10-07T18:20:48-07:00
+timestamp: 2026-10-15T06:25:14-07:00
 ---
 
 # MCP Identity Gateway concepts

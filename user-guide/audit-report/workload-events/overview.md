@@ -5,7 +5,7 @@ description: "Understand what Workload Events are, how they're structured, and h
 resource: https://docs.aembit.io/user-guide/audit-report/workload-events/
 interface: web-ui
 tags: ["workload-event", "audit-report"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-10-16T10:28:13-07:00
 ---
 
 # Workload Events
@@ -26,12 +26,7 @@ Every workload event shares a common JSON structure:
 * [**network**](reference.md#network) - Network-level details including client and server IP addresses, ports, transport protocol, and proxy port.
 * [**outcome**](reference.md#outcome) - The result of the event: `Passthrough`, `Modified`, or `Error`, with an optional reason.
 * [**application**](supported-protocols.md) - Protocol-specific data that varies by protocol type.
-
-> **MCP workload events**
->
-> Model Context Protocol (MCP) workload events include an additional top-level field, `authorizationChain`. It contains an ordered list of authorization-event context IDs that tie the event to the authorization decisions behind the request. See [Trace a request with the authorization chain](../../troubleshooting/mcp-ai-iam.md#trace-a-request-with-the-authorization-chain).
->
-> This field requires version 1.32 or later. Events from earlier components don’t include it.
+* [**`authorizationChain`**](reference.md#top-level-fields) - Optional. Ordered list of authorization-event context IDs that tie the event to the authorization decisions behind the request. MCP Identity Gateway events include it from version 1.32 on, and Agent Proxy events from version 1.34.5755 on.
 
 ## Outcome classification
 
