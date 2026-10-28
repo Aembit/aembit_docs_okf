@@ -4,7 +4,7 @@ title: "MCP Identity Gateway concepts"
 description: "Architecture, token handling, access policies, and deployment patterns for the MCP Identity Gateway."
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/concepts-mcp-gateway/
 tags: ["mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-10-15T06:25:14-07:00
+timestamp: 2026-10-16T17:35:53-07:00
 ---
 
 # MCP Identity Gateway concepts
@@ -38,7 +38,7 @@ In the client-to-Gateway policy, the Credential Provider extracts the user’s i
 
 ## MCP Identity Gateway architecture
 
-The following diagram shows how traffic flows through the MCP Identity Gateway. The flow is identical in both deployment models; only where the Gateway runs differs—inside Aembit’s managed service, or inside your own environment when you self-host.
+The following diagram shows how traffic flows through the MCP Identity Gateway. The flow is identical in both deployment models. Only where the Gateway runs differs—inside Aembit’s managed service, or inside your own environment when you self-host.
 
 * Aembit-managed
 
@@ -80,7 +80,7 @@ With MCP User-Based Access Token, each user completes an OAuth flow once per MCP
 
 The Client-to-Gateway and Gateway-to-Server policies are also called **left-side auth** and **right-side auth**. These are terms you’ll encounter in Aembit documentation and support conversations.
 
-The naming is positional: the Gateway sits in the middle of every MCP request. The left side is the inbound connection from MCP clients; the right side is the outbound connection to MCP servers.
+The naming is positional: the Gateway sits in the middle of every MCP request. The left side is the inbound connection from MCP clients. The right side is the outbound connection to MCP servers.
 
 * **Left-side auth (Client-to-Gateway)** - Controls who can connect to the Gateway. Validates MCP client identity and authenticates users through your IdP. One left-side policy per MCP client and Gateway combination.
 * **Right-side auth (Gateway-to-Server)** - Controls where the Gateway routes traffic and how it authenticates to each destination. One right-side policy per MCP server, so a Gateway routing to multiple servers has multiple right-side policies.
@@ -92,7 +92,7 @@ A central design principle: the MCP Identity Gateway scopes credentials to where
 * **Agent → MCP Identity Gateway** - The AI agent holds a token that identifies the agent and user. This token is only valid against the MCP Identity Gateway.
 * **MCP Identity Gateway → MCP server** - The MCP Identity Gateway holds a token that’s valid against the MCP server. The MCP Identity Gateway never exposes this token to the AI agent.
 
-With MCP Enterprise Managed Access Token, Aembit Cloud obtains the server-side token by exchanging the user’s SSO identity. It requests an identity assertion from the corporate identity provider, then an access token from the MCP server’s authorization server. The corporate identity provider must support token exchange, and Okta is the only one Aembit has verified. No user completes a consent flow; see [About the MCP Enterprise Managed Access Token Credential Provider](../../access-policies/credential-providers/about-mcp-enterprise-managed-access-token.md).
+With MCP Enterprise Managed Access Token, Aembit Cloud obtains the server-side token by exchanging the user’s SSO identity. It requests an identity assertion from the corporate identity provider, then an access token from the MCP server’s authorization server. The corporate identity provider must support token exchange, and Okta is the only one Aembit has verified. No user completes a consent flow. See [About the MCP Enterprise Managed Access Token Credential Provider](../../access-policies/credential-providers/about-mcp-enterprise-managed-access-token.md).
 
 This separation allows you to:
 

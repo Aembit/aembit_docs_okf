@@ -1,5 +1,35 @@
 # Aembit Changelog
 
+## 2026-10-28
+
+### MCP Identity Gateway 1.35.6263 release
+
+Aembit has released [MCP Identity Gateway](user-guide/deploy-install/mcp-identity-gateway/overview.md) version 1.35.6263, which reports its version in its protected resource metadata and returns MCP server errors more reliably.
+
+For the latest available versions of these components, see the [Edge Components Supported Versions](reference/edge-components/edge-component-supported-versions.md) page.
+
+Key Updates:
+
+* **Version in protected resource metadata** - The protected resource metadata document includes an `aembit_gateway_version` field, which you can read without an access token. See [Check the MCP Identity Gateway version](user-guide/deploy-install/mcp-identity-gateway/reference-mcp-gateway.md#check-the-mcp-identity-gateway-version).
+* **Credential available after authorization** - After a user authorizes an MCP User-Based Access Token Credential Provider, MCP Identity Gateway uses the new credential on the user’s next request. Earlier versions returned errors for those requests until the cached credential expired.
+* **MCP server errors with MCP Tool Access Control** - If an MCP server returns an error while MCP Tool Access Control filters its tool list, the MCP client receives that error.
+* **Header parameters across specification revisions** - Some MCP servers on the 2026-07-28 MCP specification take a tool argument as a request header. MCP Identity Gateway sends that header for MCP clients on earlier revisions.
+* **Credential injection failures in workload events** - MCP Identity Gateway sometimes cannot add a credential to a request as a header or query parameter. The workload event then records the credential injection as failed.
+
+A [security update](https://docs.aembit.io/changelog/entry/2026-10-28-mcp-identity-gateway-1-35-6263-security-updates) also shipped in this build.
+
+### MCP Identity Gateway 1.35.6263 security updates
+
+MCP Identity Gateway version 1.35.6263 includes security updates.
+
+A self-hosted MCP Identity Gateway can limit the MCP servers it connects to with the `AEMBIT_NETWORK_ACCESS_POLICY` environment variable. The default, `any`, allows MCP servers at any address. `public` allows only MCP servers at publicly reachable addresses. With `public`, MCP Identity Gateway does not use a proxy set in the host’s environment. If MCP Identity Gateway reaches MCP servers through a proxy, use `any`. See [`AEMBIT_NETWORK_ACCESS_POLICY`](user-guide/deploy-install/mcp-identity-gateway/env-vars-mcp-gateway.md#aembit_network_access_policy).
+
+This version also updates dependencies to address published security advisories.
+
+For the latest available versions of these components, see the [Edge Components Supported Versions](reference/edge-components/edge-component-supported-versions.md) page.
+
+[Other improvements](https://docs.aembit.io/changelog/entry/2026-10-28-mcp-identity-gateway-1-35-6263-release) also shipped in this build.
+
 ## 2026-10-16
 
 ### Access Authorization Events now record MCP client registrations
@@ -571,7 +601,7 @@ Key Updates:
 * **CIMD authorization flow**: Fixed an issue where an OIDC session expiring mid-flow could clear the Client Workload cookie and interrupt authorization.
 * **Form validation focus**: Saving a form with an invalid URL field now scrolls that field into view across entity editors, and External ID tooltips no longer get cut off in long list views.
 
-Session IDs are now bound to the authenticated user in this build, closing a privilege-escalation gap; see the [Security entry](https://docs.aembit.io/changelog/entry/2026-06-30-mcp-identity-gateway-session-ids-are-now-bound-to-the-authenticated-user). Client ID Metadata Document (CIMD) identification also reached general availability in this update; see the [announcement](https://docs.aembit.io/changelog/entry/2026-06-30-client-id-metadata-document-cimd-identification-now-available).
+Session IDs are now bound to the authenticated user in this build, closing a privilege-escalation gap. See the [Security entry](https://docs.aembit.io/changelog/entry/2026-06-30-mcp-identity-gateway-session-ids-are-now-bound-to-the-authenticated-user). Client ID Metadata Document (CIMD) identification also reached general availability in this update. See the [announcement](https://docs.aembit.io/changelog/entry/2026-06-30-client-id-metadata-document-cimd-identification-now-available).
 
 ## 2026-06-26
 

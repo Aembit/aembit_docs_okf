@@ -5,7 +5,7 @@ description: "Configure a Claude Workload Identity Federation Credential Provide
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/claude-workload-identity-federation/
 interface: web-ui
 tags: ["credential-provider", "access-policy"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-10-16T17:35:53-07:00
 ---
 
 # Configure a Claude WIF Credential Provider
@@ -73,21 +73,21 @@ As you configure Claude Console, record the following values, which you’ll ent
 
 Return to the Aembit web UI and complete the **Credential Provider** page with the values from Claude Console:
 
-1. For **Federation Rule ID**, enter the federation rule you recorded from Claude Console; its ID starts with `fdrl_`.
+1. For **Federation Rule ID**, enter the federation rule you recorded from Claude Console. Its ID starts with `fdrl_`.
 
 2. For **Organization ID**, enter your Claude organization ID.
 
 3. For **Scope**, leave the default value of `workspace:developer`.
 
-4. For **Service Account ID**, enter the service account you recorded from Claude Console; its ID starts with `svac_`.
+4. For **Service Account ID**, enter the service account you recorded from Claude Console. Its ID starts with `svac_`.
 
 5. For **Audience**, enter the `aud` value your federation rule expects.
 
    Leave this field blank unless your federation rule requires a specific audience.
 
-6. For **Workspace ID**, enter the workspace you recorded from Claude Console; its ID starts with `wrkspc_`.
+6. For **Workspace ID**, enter the workspace you recorded from Claude Console. Its ID starts with `wrkspc_`.
 
-   If your federation rule covers more than one workspace, enter this value; otherwise, the token exchange fails with a `workspace_id_required` error. If the rule covers a single workspace, leave it blank and Claude scopes the token to that workspace.
+   If your federation rule covers more than one workspace, enter this value. Otherwise, the token exchange fails with a `workspace_id_required` error. If the rule covers a single workspace, leave it blank and Claude scopes the token to that workspace.
 
 7. For **Lifetime**, keep the default of `3600` seconds or enter the duration, in seconds, for which credentials remain valid.
 
@@ -121,7 +121,7 @@ The following configuration is an example. For the authoritative, current argume
 
 1. Create a new Terraform configuration file (such as `claude-wif.tf`) following this example structure.
 
-   In the `claude_wif` block, `federation_rule_id`, `organization_id`, and `service_account_id` are required. The `audience`, `scope`, and `workspace_id` fields are optional. If you omit `scope`, it defaults to `workspace:developer`; `audience` and `workspace_id` are null when omitted. Aembit requires `lifetime` and defaults it to `3600` seconds.
+   In the `claude_wif` block, `federation_rule_id`, `organization_id`, and `service_account_id` are required. The `audience`, `scope`, and `workspace_id` fields are optional. If you omit `scope`, it defaults to `workspace:developer`. The `audience` and `workspace_id` fields are null when omitted. Aembit requires `lifetime` and defaults it to `3600` seconds.
 
    ```hcl
    provider "aembit" {

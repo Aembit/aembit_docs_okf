@@ -5,7 +5,7 @@ description: "This page describes how to configure Aembit to work with the GitHu
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/guides/github-rest/
 interface: web-ui
 tags: ["ci-cd", "guide", "server-workload", "access-policy"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-10-26T22:20:59-07:00
 ---
 
 # GitHub REST
@@ -85,7 +85,7 @@ Aembit supports multiple authentication/authorization methods for GitHub. This p
 * **Client Id** - Provide the Client ID copied from GitHub.
 * **Client Secret** - Provide the Secret copied from GitHub.
 * **Scopes** - You can leave this field empty by entering a single whitespace, as GitHub will default to your selected scopes for the app.
-* **OAuth URL** - `https://github.com`
+* **OAuth URL** - `https://github.com/login/oauth`
 * **Authorization URL** - `https://github.com/login/oauth/authorize`
 * **Token URL** - `https://github.com/login/oauth/access_token`
 * **PKCE Required** - Off (PKCE is not supported by Github, so leave this field unchecked).

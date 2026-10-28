@@ -5,7 +5,7 @@ description: "Configure Claude Desktop or Claude on the web to query Aembit even
 resource: https://docs.aembit.io/user-guide/mcp-server/connect/claude-desktop/
 interface: mcp
 tags: ["connect", "mcp-server"]
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-10-16T17:35:53-07:00
 ---
 
 # Connect with Claude (Desktop/web)
@@ -113,7 +113,7 @@ Use this method when your Aembit tenant doesn’t have an IdP configured yet, or
 
 > **About the stdio-HTTP bridge**
 >
-> Claude Desktop’s local configuration only supports stdio-based MCP servers. Anthropic routes remote MCP servers through the [Connectors UI](#claude-connectors-ui-recommended) instead. The stdio-HTTP bridge works around that by relaying Claude Desktop’s stdio traffic through [`mcp-remote`](https://github.com/geelen/mcp-remote), an MIT-licensed community bridge. Neither Anthropic nor the Model Context Protocol project publishes an official equivalent. Aembit doesn’t maintain `mcp-remote`; evaluate it like any other third-party dependency before relying on it in production.
+> Claude Desktop’s local configuration only supports stdio-based MCP servers. Anthropic routes remote MCP servers through the [Connectors UI](#claude-connectors-ui-recommended) instead. The stdio-HTTP bridge works around that by relaying Claude Desktop’s stdio traffic through [`mcp-remote`](https://github.com/geelen/mcp-remote), an MIT-licensed community bridge. Neither Anthropic nor the Model Context Protocol project publishes an official equivalent. Aembit doesn’t maintain `mcp-remote`. Evaluate it like any other third-party dependency before relying on it in production.
 
 ### How the stdio-HTTP bridge works
 
@@ -270,7 +270,7 @@ Error: spawn npx ENOENT
 
 1. Install Node.js on the operating system Claude Desktop runs on. On Windows, use the official installer from [nodejs.org](https://nodejs.org/), Chocolatey (`choco install nodejs-lts -y`), or `winget` (`winget install OpenJS.NodeJS.LTS`).
 2. Open a **new** terminal and confirm `npx` resolves: `where.exe npx` on Windows or `which npx` on macOS. You should see a path such as `C:\Program Files\nodejs\npx.cmd`.
-3. Fully quit and relaunch Claude Desktop (see step 3 of [Add Aembit’s MCP server](#add-aembits-mcp-server-to-claude_desktop_configjson)). Claude Desktop inherits PATH at launch; a running instance won’t see the new install.
+3. Fully quit and relaunch Claude Desktop (see step 3 of [Add Aembit’s MCP server](#add-aembits-mcp-server-to-claude_desktop_configjson)). Claude Desktop inherits PATH at launch. A running instance won’t see the new install.
 
 ### Error: `502 Bad Gateway`
 
@@ -305,7 +305,7 @@ Less common 502 causes: the MCP backend is temporarily unhealthy for your tenant
 If `mcp-server-aembit.log` doesn’t exist after you’ve added the configuration and restarted, Claude Desktop hasn’t attempted to spawn the server. Check each of these:
 
 * **Are you looking in the right section?** Locally configured servers don’t appear under `Settings` > `Connectors` (OAuth-only). Look under `Developer` > `MCP Servers` or under an `MCP Servers` top-level Settings item.
-* **Did you fully quit Claude Desktop?** On Windows, closing the window sends the app to the system tray; the process keeps running with the old configuration in memory. Right-click the tray icon and choose `Quit`, then relaunch.
+* **Did you fully quit Claude Desktop?** On Windows, closing the window sends the app to the system tray. The process keeps running with the old configuration in memory. Right-click the tray icon and choose `Quit`, then relaunch.
 * **Is your `claude_desktop_config.json` valid JSON?** A syntax error elsewhere in the file can cause Claude Desktop to skip MCP server initialization. Validate the file with a JSON linter.
 
 ## Next steps

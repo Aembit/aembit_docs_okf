@@ -5,7 +5,7 @@ description: "Investigate MCP and AI IAM failures end-to-end across Aembit's aut
 resource: https://docs.aembit.io/user-guide/troubleshooting/mcp-ai-iam/
 interface: web-ui
 tags: ["troubleshooting"]
-timestamp: 2026-10-16T10:28:13-07:00
+timestamp: 2026-10-28T15:13:06-07:00
 ---
 
 # Troubleshoot MCP and AI IAM access
@@ -142,7 +142,7 @@ A request such as `tools/list` fans out to every assigned MCP server, and the Ga
 
 The Client-to-Gateway `mcp.response` carries only the shared opening Context IDs, not the per-branch entries, so you can trace each branch on its own. To investigate one server, take a Context ID from that branch’s chain and filter Access Authorization Events on it. For example, filtering on `aaaa0001-…` returns the `access.*` events for the connection to Server A.
 
-On versions 1.34.6034 and 1.35.6086, the MCP Identity Gateway emits the Client-to-Gateway `mcp.request` and `mcp.response` events only for some failures, so a successful request has neither.
+The MCP Identity Gateway emits the Client-to-Gateway `mcp.request` and `mcp.response` events for every request that passes access token validation.
 
 On `tools/list`, `resources/list`, and `prompts/list`, the Gateway also emits a fanout `mcp.request` event for each server, and an `mcp.response` event for each server that fails or times out. These are separate from the Gateway-to-Server events in the table. They name the server’s Server Workload in `workload.server.id` and `workload.server.name`. Their `authorizationChain` holds only the shared opening Context IDs, so use `workload.server.id` to tell the servers apart. To find a server’s Access Authorization Events, take a Context ID from that server’s Gateway-to-Server event. When known, the `mcp.response` event also records the MCP server’s host in `network.serverWorkloadHost` and the HTTP status the MCP server returned in `application.mcp.httpResponseCode`. When the server didn’t respond within the list timeout, `application.mcp.httpResponseCode` is `504`.
 

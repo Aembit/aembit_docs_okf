@@ -5,7 +5,7 @@ description: "How to deploy Aembit Edge Components in an AWS Lambda function env
 resource: https://docs.aembit.io/user-guide/deploy-install/serverless/aws-lambda-function/
 interface: web-ui
 tags: ["serverless", "deploy-install"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-10-16T17:35:53-07:00
 ---
 
 # Deploy Aembit Edge to AWS Lambda function
@@ -58,7 +58,7 @@ Aembit publishes the Aembit AWS Lambda Layer to the [AWS Serverless Application 
 
 To deploy the Aembit Lambda layer:
 
-1. Navigate to **SAR** and search the public applications list for “Aembit Lambda layer”.
+1. Navigate to **SAR** and search the public applications list for `Aembit Lambda layer`.
 
    Public **SAR** entry for [Aembit AWS Lambda Layer](https://serverlessrepo.aws.amazon.com/applications/us-east-1/833062290399/aembit-agent-proxy-lambda-layer).
 

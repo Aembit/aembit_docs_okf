@@ -5,7 +5,7 @@ description: "How to create a Google GCP Workload Identity Federation (WIF) Cred
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/google-workload-identity-federation/
 interface: web-ui
 tags: ["credential-provider", "access-policy"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-10-16T17:35:53-07:00
 ---
 
 # Configure a Google GCP WIF Credential Provider
@@ -48,7 +48,7 @@ Create a service account for Aembit to impersonate, then grant it the IAM roles 
 
    ![Google Cloud Service Accounts page with the Create Service Account button highlighted](https://docs.aembit.io/_astro/gcp_bigquery_create_service_account.DbhFl_H2_Z1U66PA.webp)
 
-3. Enter a name for the service account. Google Cloud generates the ID from the name, but you can edit it; the description is optional.
+3. Enter a name for the service account. Google Cloud generates the ID from the name, but you can edit it. The description is optional.
 
    ![Service account creation form showing the name, ID, and optional description fields](https://docs.aembit.io/_astro/gcp_bigquery_create_service_account_details.pkNuhiN8_Z2759HB.webp)
 
@@ -70,11 +70,11 @@ Create a service account for Aembit to impersonate, then grant it the IAM roles 
 
 Create a Workload Identity Federation pool and add an OpenID Connect (OIDC) provider that trusts Aembit as the issuer.
 
-1. In the Google Cloud console, go to [Workload Identity Federation](https://console.cloud.google.com/iam-admin/workload-identity-pools). If this is your first pool, click **Get Started**; otherwise, click **Create Pool**.
+1. In the Google Cloud console, go to [Workload Identity Federation](https://console.cloud.google.com/iam-admin/workload-identity-pools). If this is your first pool, click **Get Started**. Otherwise, click **Create Pool**.
 
    ![Google Cloud Workload Identity Federation page with the Create Pool button](https://docs.aembit.io/_astro/gcp_bigquery_create_pool.Cl_ipB78_Z18fLJG.webp)
 
-2. Enter a name for the pool, then click **Continue**. Google Cloud generates the ID from the name, but you can edit it; the description is optional.
+2. Enter a name for the pool, then click **Continue**. Google Cloud generates the ID from the name, but you can edit it. The description is optional.
 
 3. For the provider, select **OpenID Connect (OIDC)**, then enter a name for the provider.
 
@@ -102,7 +102,7 @@ Grant the pool’s identities permission to impersonate the service account you 
 
 3. For **Attribute name**, select **subject**.
 
-4. For **Attribute value**, enter your Aembit Tenant ID, then click **Save**. Your Tenant ID is the subdomain of your Aembit URL; for example, in `https://xyz.aembit.io`, the Tenant ID is `xyz`.
+4. For **Attribute value**, enter your Aembit Tenant ID, then click **Save**. Your Tenant ID is the subdomain of your Aembit URL. For example, in `https://xyz.aembit.io`, the Tenant ID is `xyz`.
 
    ![Grant pool access to the service account using the subject attribute and the Aembit Tenant ID](https://docs.aembit.io/_astro/gcp_bigquery_grant_access_pool_identity.l_f4MUnm_ZewhH4.webp)
 
@@ -144,7 +144,7 @@ The following table shows how each Aembit Credential Provider field maps to a Go
 
 | Aembit Credential Provider field | Google Cloud value                       | Where to find it                                                                            |
 | -------------------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------- |
-| OIDC Issuer URL                  | Provider **Issuer (URL)**                | Aembit generates this value; you paste it into the OIDC provider when you create the pool   |
+| OIDC Issuer URL                  | Provider **Issuer (URL)**                | Aembit generates this value. You paste it into the OIDC provider when you create the pool   |
 | Audience                         | Workload Identity Pool Provider audience | The audience shown when you add the OIDC provider                                           |
 | Service Account Email            | Service account email                    | The **Service Accounts** page, or the email you copied when you created the service account |
 | Lifetime                         | —                                        | Set in Aembit, to a maximum of 3,600 seconds (1 hour)                                       |

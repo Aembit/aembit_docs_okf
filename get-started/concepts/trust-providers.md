@@ -4,14 +4,14 @@ title: "About Trust Providers"
 description: "Understanding Trust Providers and their role in verifying workload identities in Aembit"
 resource: https://docs.aembit.io/get-started/concepts/trust-providers/
 tags: ["concept"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-10-16T17:35:53-07:00
 ---
 
 # About Trust Providers
 
 Trust Providers validate the identity of [Client Workloads](client-workloads.md) through a process called workload attestation. Instead of relying on pre-shared secrets like API keys, passwords, or certificates Trust Providers verify identity by consulting trusted systems in the workload’s runtime environment.
 
-The core idea is simple but powerful: rather than asking, “What secret do you know?”, Trust Providers ask, “Can your environment vouch for who you are?” It’s similar to checking someone’s government-issued ID rather than taking their word for it.
+The core idea is simple but powerful: rather than asking, “What secret do you know?” Trust Providers ask, “Can your environment vouch for who you are?” It’s similar to checking someone’s government-issued ID rather than taking their word for it.
 
 You can think of Trust Providers as a kind of certificate authority for workloads—but instead of issuing certificates, they produce cryptographically verifiable claims about a workload’s environment. Aembit uses these claims to establish trust before granting access, reducing the risk of unauthorized workloads posing as trusted ones.
 

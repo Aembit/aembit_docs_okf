@@ -5,7 +5,7 @@ description: "Deploy and operate the Aembit MCP Identity Gateway on your own Lin
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/self-host-mcp-gateway/
 interface: mcp
 tags: ["mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-10-14T16:36:12-04:00
+timestamp: 2026-10-16T17:35:53-07:00
 ---
 
 # Self-host the MCP Identity Gateway
@@ -52,7 +52,7 @@ Before you begin, ensure you have:
 
 ## Provision the host
 
-Create a Linux host for the MCP Identity Gateway. Aembit supports the Gateway as a `systemd` service on a virtual machine or cloud instance; an Ubuntu host is a common choice.
+Create a Linux host for the MCP Identity Gateway. Aembit supports the Gateway as a `systemd` service on a virtual machine or cloud instance. An Ubuntu host is a common choice.
 
 Size the host’s network access so it can:
 
@@ -96,7 +96,7 @@ Expected: the host’s public IP address.
 
 The MCP Identity Gateway terminates TLS itself, so it needs a certificate and private key for your Gateway hostname.
 
-The following steps use [Let’s Encrypt](https://letsencrypt.org/) with `certbot` to issue a certificate. This is a quick option for a single host; for production you might instead offload TLS to a load balancer or use your internal public key infrastructure.
+The following steps use [Let’s Encrypt](https://letsencrypt.org/) with `certbot` to issue a certificate. This is a quick option for a single host. For production, you might instead offload TLS to a load balancer or use your internal public key infrastructure.
 
 1. Open inbound port **80** on the host (and in your cloud security group) so Let’s Encrypt can complete the HTTP challenge.
 

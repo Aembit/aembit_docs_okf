@@ -5,7 +5,7 @@ description: "Learn how to use dynamic claims to extract and use values from wor
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/advanced-options/dynamic-claims/
 interface: web-ui
 tags: ["advanced-option", "credential-provider", "access-policy"]
-timestamp: 2026-10-14T16:36:12-04:00
+timestamp: 2026-10-19T14:40:21-07:00
 ---
 
 # Dynamic Claims
@@ -187,7 +187,7 @@ ${oidc.identityToken.decode.payload.kubernetes\.io.namespace}
 
 * `aud` - Audience claim (configurable)
 
-* Build number (included by default)
+* `build_number` - Build number (included by default)
 
 * Custom claims - Jenkins allows administrators to configure additional claims through “Claim templates” using build variables such as:
 
@@ -241,7 +241,7 @@ When Agent Proxy runs on Kubernetes, dynamic claims can also read the following 
 
 ### SAML assertion claims
 
-To use these expressions, a [SAMLv2 Response Trust Provider](../../trust-providers/saml-response-trust-provider.md) must attest the request. That Trust Provider validates the SAML 2.0 response and supplies the assertion; these expressions only read values from an assertion it has already validated. Without that attestation there is no assertion to read, and the expression resolves to no value.
+To use these expressions, a [SAMLv2 Response Trust Provider](../../trust-providers/saml-response-trust-provider.md) must attest the request. That Trust Provider validates the SAML 2.0 response and supplies the assertion. These expressions only read values from an assertion it has already validated. Without that attestation there is no assertion to read, and the expression resolves to no value.
 
 Aembit exposes the following values from the validated assertion. These expressions use SAML concepts, so there is no `decode.payload` step, and an OIDC expression doesn’t translate to SAML by analogy.
 
@@ -259,7 +259,7 @@ To carry an attribute into the credential, add a custom claim on the Credential 
 
 **Attribute names**
 
-Copy `<name>` verbatim from your Identity Provider, matching its exact spelling and case. The name can be a short name such as `groups` or a full URI such as `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress`; both resolve the same way. Single or double quotes around the name both work. An attribute that carries more than one value produces one claim value per attribute value, so the custom claim is an array. The Subject must resolve to exactly one value; a multi-valued or empty attribute in the Subject fails closed.
+Copy `<name>` verbatim from your Identity Provider, matching its exact spelling and case. The name can be a short name such as `groups` or a full URI such as `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress`. Both resolve the same way. Single or double quotes around the name both work. An attribute that carries more than one value produces one claim value per attribute value, so the custom claim is an array. The Subject must resolve to exactly one value. A multi-valued or empty attribute in the Subject fails closed.
 
 **Behavior when a value is missing**
 

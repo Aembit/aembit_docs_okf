@@ -5,7 +5,7 @@ description: "This page describes how to configure Aembit to work with the Amazo
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/guides/aws-mysql/
 interface: web-ui
 tags: ["databases", "guide", "server-workload", "access-policy"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-10-16T17:35:53-07:00
 ---
 
 # Amazon RDS for MySQL
@@ -33,13 +33,13 @@ Before proceeding with the configuration, ensure you have an AWS tenant (or [sig
 
 * Under **Engine options**, select a version from the **8.0.x** series.
 
-* Under **Settings**, enter a name for the **DB cluster identifier**; this will be used in the endpoint.
+* Under **Settings**, enter a name for the **DB cluster identifier**. This will be used in the endpoint.
 
 * In **Settings**, expand the **Credentials Settings** section. Use the **Master username** and **master password** as Credential Provider details. You can either auto-generate a password or type your own. Save this information for future use.
 
   > **Note**
   >
-  > In this example, we are using the master username and password for demonstration purposes; however, it is advisable to create a dedicated user with appropriate privileges for enhanced security.
+  > In this example, we are using the master username and password for demonstration purposes. However, it is advisable to create a dedicated user with appropriate privileges for enhanced security.
 
 * In **Connectivity**, find the **Publicly Accessible** option and set it to **Yes**.
 

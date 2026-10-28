@@ -5,7 +5,7 @@ description: "This page describes how to configure Aembit to work with the Atlas
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/guides/atlassian/
 interface: web-ui
 tags: ["productivity", "guide", "server-workload", "access-policy"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-10-16T17:35:53-07:00
 ---
 
 # Atlassian
@@ -15,7 +15,7 @@ timestamp: 2026-09-08T23:32:41-07:00
 
 * Jira for project tracking
 * Confluence for document collaboration
-* Bitbucket for version control; and
+* Bitbucket for version control
 * other integrated applications
 
 Below you can find the Aembit configuration required to work with the Atlassian Cloud service as a Server Workload using the Atlassian REST APIs. Aembit supports multiple authentication/authorization methods for Atlassian. This page describes scenarios where the Credential Provider is configured for Atlassian via:
@@ -60,7 +60,7 @@ Below you can find the Aembit configuration required to work with the Atlassian 
 
 6. Return to Atlassian and paste the copied URL into the **Callback URL** field.
 
-7. In the left pane, select **Permissions**, and then click **Add** under the Action column of the API that best suits your project needs. After clicking **Add**, it will change to **Configure**; click **Configure** to edit.
+7. In the left pane, select **Permissions**, and then click **Add** under the Action column of the API that best suits your project needs. After clicking **Add**, it will change to **Configure**. Click **Configure** to edit.
 
 ![Atlassian Scopes](https://docs.aembit.io/_astro/atlassian_permissions.HYNhBqUi_ZBlEHJ.webp)
 

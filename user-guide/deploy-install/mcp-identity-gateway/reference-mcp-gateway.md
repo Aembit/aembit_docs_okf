@@ -5,7 +5,7 @@ description: "Reference for the MCP Identity Gateway—token formats, proxied me
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/reference-mcp-gateway/
 interface: mcp
 tags: ["mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-10-16T10:28:13-07:00
+timestamp: 2026-10-28T16:02:48-07:00
 ---
 
 # MCP Identity Gateway reference
@@ -150,6 +150,22 @@ A subscription ends when the client’s access token expires. The client gets er
 * `logging/setLevel`, `resources/subscribe`, `resources/unsubscribe`, `tasks/list`, and `tasks/result` return error `-32601`.
 * `subscriptions/listen` returns error `-32601` for clients using revisions earlier than 2026-07-28. See [Change notifications](#change-notifications).
 
+### Errors from MCP servers
+
+When an MCP server answers a request with an HTTP error status, the MCP client receives error `-32603`. The error’s `data` object carries the MCP server’s HTTP status code in `upstreamHttpStatus`:
+
+**Error for an MCP server that returned HTTP 502**
+
+```json
+{
+  "code": -32603,
+  "message": "upstream MCP server rejected the request with HTTP 502 Bad Gateway",
+  "data": { "upstreamHttpStatus": 502 }
+}
+```
+
+The `message` text varies by request, so read the status code from `upstreamHttpStatus`. A list request that spans more than one MCP server, such as `tools/list`, leaves out the MCP server that failed and returns results from the rest.
+
 ### Transport
 
 The MCP Identity Gateway uses the streamable HTTP transport. A client using a revision earlier than 2026-07-28 can send an HTTP `GET` request with its session identifier to the `/mcp` endpoint. The MCP Identity Gateway answers it with a stream of messages. For a client using the 2026-07-28 revision, an HTTP `GET` request returns `405 Method Not Allowed`.
@@ -182,7 +198,9 @@ Aembit operates the MCP Identity Gateway endpoint at `https://<tenantId>.mcpgate
 
 MCP clients authenticate using access tokens (JWTs) issued by the Aembit Authorization Server after the user authenticates through your configured IdP. The MCP Identity Gateway validates tokens against the configured Trust Provider and uses streamable HTTP transport for server-to-client streaming.
 
-Aembit manages the MCP Identity Gateway’s outbound paths to the Aembit Cloud control plane, MCP servers, and IdP discovery endpoints, so these don’t require customer configuration.
+Aembit manages the MCP Identity Gateway’s outbound paths to the Aembit Cloud control plane, MCP servers, and IdP discovery endpoints, so these don’t require customer configuration. The Aembit-managed MCP Identity Gateway connects only to MCP servers at publicly reachable addresses.
+
+Neither the managed nor the self-hosted MCP Identity Gateway follows HTTP redirects from an MCP server. Set each Server Workload to the MCP server’s final URL. A request that the MCP server redirects fails, and the MCP Identity Gateway records the failure in a workload event.
 
 ## Logging and events
 
@@ -196,24 +214,24 @@ If you self-host the MCP Identity Gateway, you access its runtime logs directly 
 
 Workload events in Aembit Cloud capture access patterns for audit and observability. See [Audit and report on Workload activity](../../audit-report/overview.md) for details.
 
-#### The `userId` field
-
-When an [identity provider](../../access-policies/trust-providers/overview.md) authenticates the MCP client, `mcp.request` and `mcp.response` workload events include a `userId` field containing the subject of the user’s OAuth or OIDC access token. This lets you attribute MCP activity to the specific authenticated user in audit reports.
-
-The `userId` field is absent when Aembit can’t identify the MCP client, such as when client workload identification fails.
-
 > **Event coverage**
 >
-> Workload events capture **Gateway to MCP Server** traffic only. This includes:
+> The MCP Identity Gateway emits Client-to-Gateway `mcp.request` and `mcp.response` events for every request that passes access token validation. It also emits them when it rejects a correctly signed access token because of its claims, such as an audience that doesn’t match.
+>
+> Gateway-to-Server workload events cover:
 >
 > * Tool invocations forwarded to upstream MCP servers
 > * Resource requests forwarded to upstream MCP servers
 > * Credential injection events
 > * Access Policy evaluation results for server access
 >
-> **Agent to Gateway** events (such as initial client connections and authentication) don’t appear in workload events. Aembit plans this capability for a future release.
->
-> Until Agent-to-Gateway events are available in workload events, if you need connection or authentication visibility, contact your Aembit representative.
+> A request the Gateway rejects before it can trust the access token produces no workload event. That includes an access token whose signature doesn’t verify, and one that has expired or isn’t valid yet. The Gateway logs each access token it rejects. If you self-host the MCP Identity Gateway, check its [logs](#logs) for those requests.
+
+#### The `userId` field
+
+When an [identity provider](../../access-policies/trust-providers/overview.md) authenticates the MCP client, `mcp.request` and `mcp.response` workload events include a `userId` field containing the subject of the user’s OAuth or OIDC access token. This lets you attribute MCP activity to the specific authenticated user in audit reports.
+
+The `userId` field is absent when Aembit can’t identify the MCP client, such as when client workload identification fails.
 
 ## Observability
 
@@ -233,6 +251,27 @@ Forward these logs to [Log Streams](../../administration/log-streams/overview.md
 * **Specification revisions** - The MCP Identity Gateway supports the 2026-07-28 revision of the MCP specification and earlier revisions. It serves each client using the revision the client asks for, when the MCP Identity Gateway supports that revision.
 
 To verify your Aembit Tenant configuration is working correctly, see [Verify the connection](../../access-policies/mcp-identity-gateway/setup-mcp-gateway.md#verify-the-connection) in the setup guide.
+
+## Check the MCP Identity Gateway version
+
+The protected resource metadata document that MCP Identity Gateway serves reports its version in the `aembit_gateway_version` field. The document needs no access token, so you can read it for the Aembit-managed service and for a self-hosted MCP Identity Gateway:
+
+```shell
+curl "https://<tenant-id>.mcpgateway.aembit.io/.well-known/oauth-protected-resource/mcp"
+```
+
+MCP Identity Gateway serves the same document at `/.well-known/oauth-protected-resource`. For a self-hosted MCP Identity Gateway, replace the host with your MCP Identity Gateway’s URL.
+
+```json
+{
+  "resource": "https://<tenant-id>.mcpgateway.aembit.io/mcp",
+  "authorization_servers": ["<authorization-server-url>"],
+  "scopes_supported": ["https://<tenant-id>.mcpgateway.aembit.io/mcp"],
+  "aembit_gateway_version": "1.35.6263"
+}
+```
+
+MCP Identity Gateway versions earlier than 1.35.6263 do not include the `aembit_gateway_version` field.
 
 ## Deployment model
 
@@ -295,6 +334,8 @@ Open the following network paths for the host running a self-hosted MCP Identity
 | 443  | MCP servers      | `https://<mcp-server-host>`    | Proxied MCP traffic                           |
 | 443  | IdP endpoints    | `https://<idp-host>/...`       | OAuth/OIDC user authentication                |
 | 5000 | Agent Controller | `http://localhost:5000`        | Registration (localhost only)                 |
+
+To limit a self-hosted MCP Identity Gateway to MCP servers at publicly reachable addresses, set [`AEMBIT_NETWORK_ACCESS_POLICY`](env-vars-mcp-gateway.md#aembit_network_access_policy) to `public`.
 
 > **Agent Controller dependency**
 >

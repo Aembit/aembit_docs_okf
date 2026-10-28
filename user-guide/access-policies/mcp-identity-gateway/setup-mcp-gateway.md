@@ -5,7 +5,7 @@ description: "Configure your Aembit Tenant for the managed MCP Identity Gateway.
 resource: https://docs.aembit.io/user-guide/access-policies/mcp-identity-gateway/setup-mcp-gateway/
 interface: mcp
 tags: ["mcp-identity-gateway", "access-policy"]
-timestamp: 2026-10-14T16:36:12-04:00
+timestamp: 2026-10-28T15:13:06-07:00
 ---
 
 # Set up the MCP Identity Gateway
@@ -20,8 +20,8 @@ This guide explains how to configure your Aembit Tenant for the Model Context Pr
 
 Before you begin, ensure you have:
 
-* An Aembit Tenant with admin access
-* A provisioned MCP Identity Gateway endpoint for your Tenant (`https://<tenantId>.mcpgateway.aembit.io`). If you don’t have one yet, contact your Aembit representative.
+* An Aembit Tenant with administrator access
+* A provisioned MCP Identity Gateway endpoint for your Aembit Tenant (`https://<tenantId>.mcpgateway.aembit.io`). If you don’t have one yet, contact your Aembit representative.
 * An identity provider (Okta, Google, Microsoft Entra ID, or similar) for user authentication
 * The OAuth redirect URLs of the MCP clients (AI agents) you plan to connect
 * The hostname and OAuth configuration for each MCP server you plan to proxy
@@ -36,7 +36,7 @@ Before you begin, ensure you have:
 
 Aembit operates the MCP Identity Gateway as a managed service. Each Aembit Tenant has a per-Tenant Gateway endpoint at `https://<tenantId>.mcpgateway.aembit.io` (replace `<tenantId>` with your Aembit Tenant ID, visible in your Aembit Tenant URL, for example, `abc123` in `https://abc123.aembit.io`).
 
-To get started, contact your Aembit representative to provision a Gateway endpoint for your Tenant. Aembit handles provisioning, TLS termination, certificate management, and runtime operations.
+To get started, contact your Aembit representative to provision a Gateway endpoint for your Aembit Tenant. Aembit handles provisioning, TLS termination, certificate management, and runtime operations.
 
 Once provisioned, note the Gateway hostname. You’ll reference it later in this guide when configuring the Server Workload and Credential Provider for the client-to-Gateway Access Policy.
 
@@ -55,9 +55,9 @@ Unlike typical Aembit workload-to-workload scenarios, MCP requests involve two i
 
 The MCP Identity Gateway needs both: it validates *which* MCP client is connecting and *who* is using it. The Credential Provider then stores tokens per-user, tying each user’s MCP server access to their own authorization.
 
-In this model, you configure identity once at the tenant level. Many users can share the same set of Access Policies, while the per-user credentials the Credential Provider manages isolate their individual access.
+In this model, you configure identity once at the Aembit Tenant level. Many users can share the same set of Access Policies, while the per-user credentials the Credential Provider manages isolate their individual access.
 
-In your Aembit Tenant, go to **Administration -> Identity Providers** and configure your IdP using [OIDC](../../administration/identity-providers/create-idp-oidc.md) or [SAML](../../administration/identity-providers/create-idp-saml.md). The MCP Enterprise Managed Access Token Credential Provider requires an OIDC Identity Provider with the `offline_access` scope; see [Prepare the Identity Provider for enterprise-managed access](../credential-providers/mcp-enterprise-managed-access-token-idp.md).
+In your Aembit Tenant, go to **Administration -> Identity Providers** and configure your IdP using [OIDC](../../administration/identity-providers/create-idp-oidc.md) or [SAML](../../administration/identity-providers/create-idp-saml.md). The MCP Enterprise Managed Access Token Credential Provider requires an OIDC Identity Provider with the `offline_access` scope. See [Prepare the Identity Provider for enterprise-managed access](../credential-providers/mcp-enterprise-managed-access-token-idp.md).
 
 > **Automating configuration**
 >
@@ -106,14 +106,14 @@ Create a Server Workload that represents the MCP Identity Gateway endpoint.
 
 3. Configure the Server Workload with the following settings:
 
-   | Field                | Value                                                                                   |
-   | -------------------- | --------------------------------------------------------------------------------------- |
-   | Name                 | A descriptive name (for example, `MCP Identity Gateway`)                                |
-   | Host                 | The Gateway’s hostname for your Tenant (for example, `<tenantId>.mcpgateway.aembit.io`) |
-   | Application Protocol | Select **MCP**                                                                          |
-   | Port                 | **443**                                                                                 |
-   | TLS                  | Enabled                                                                                 |
-   | URL Path             | `/mcp`                                                                                  |
+   | Field                | Value                                                                                          |
+   | -------------------- | ---------------------------------------------------------------------------------------------- |
+   | Name                 | A descriptive name (for example, `MCP Identity Gateway`)                                       |
+   | Host                 | The Gateway’s hostname for your Aembit Tenant (for example, `<tenantId>.mcpgateway.aembit.io`) |
+   | Application Protocol | Select **MCP**                                                                                 |
+   | Port                 | **443**                                                                                        |
+   | TLS                  | Enabled                                                                                        |
+   | URL Path             | `/mcp`                                                                                         |
 
 4. Click **Save**.
 
@@ -165,7 +165,7 @@ Create a Credential Provider that issues tokens for MCP clients to authenticate 
    | Name                   | A descriptive name (for example, `Gateway Access Token`)                                                                     |
    | Credential Type        | Select **OIDC ID Token**                                                                                                     |
    | Subject                | Select **Dynamic** from the dropdown, then enter `${oidc.identityToken.decode.payload.<user_claim>}` (see the following tip) |
-   | Audience               | The Gateway URL **with a trailing slash** (for example, `https://mcp-gateway.example.com/`)                                  |
+   | Audience               | The MCP Identity Gateway URL (for example, `https://mcp-gateway.example.com/`); a trailing slash is optional                 |
    | Signing Algorithm Type | **RS256** (recommended) or ES256                                                                                             |
 
 4. Click **Save**.
@@ -212,13 +212,13 @@ Create a Client Workload that represents the MCP Identity Gateway as a client.
 
 3. Configure the Client Workload with the following settings:
 
-   | Field                 | Value                                                                                       |
-   | --------------------- | ------------------------------------------------------------------------------------------- |
-   | Name                  | A descriptive name (for example, `MCP Identity Gateway`)                                    |
-   | Client Identification | Select **OIDC ID Token Audience**                                                           |
-   | Value                 | The Gateway URL **with a trailing slash** (for example, `https://mcp-gateway.example.com/`) |
+   | Field                 | Value                                                                                                      |
+   | --------------------- | ---------------------------------------------------------------------------------------------------------- |
+   | Name                  | A descriptive name (for example, `MCP Identity Gateway`)                                                   |
+   | Client Identification | Select **OIDC ID Token Audience**                                                                          |
+   | Value                 | The same value as the Credential Provider’s **Audience** (for example, `https://mcp-gateway.example.com/`) |
 
-   The Audience value must include the trailing slash. It must also match the audience that the Client-to-Gateway Access Policy’s Credential Provider issues, so Aembit recognizes the Gateway as the authenticated caller.
+   This value must match the **Audience** of the Client-to-Gateway Access Policy’s Credential Provider exactly, including whether it ends in a trailing slash. Aembit matches this value against the token’s audience to recognize the MCP Identity Gateway as the authenticated caller.
 
 4. Click **Save**.
 
@@ -241,8 +241,8 @@ Create a Server Workload for each downstream MCP server.
    | Application Protocol  | Select **MCP**                                                                            |
    | Port                  | Typically **443** with TLS enabled                                                        |
    | URL Path              | The MCP endpoint path (for example, `/integrations/mcp`)                                  |
-   | Authentication Method | Aembit preselects **HTTP Authentication**; change it to the method the MCP server expects |
-   | Authentication Scheme | Aembit preselects **Bearer**; change it to the scheme the MCP server expects              |
+   | Authentication Method | Aembit preselects **HTTP Authentication**. Change it to the method the MCP server expects |
+   | Authentication Scheme | Aembit preselects **Bearer**. Change it to the scheme the MCP server expects              |
 
 4. Click **Save**.
 
@@ -275,7 +275,7 @@ Create a Trust Provider that validates Aembit-issued tokens.
 
 5. Click **Save**.
 
-See [Trust Providers](../trust-providers/overview.md) for additional configuration options, including how to locate your tenant’s OIDC discovery URL.
+See [Trust Providers](../trust-providers/overview.md) for additional configuration options, including how to locate your Aembit Tenant’s OIDC discovery URL.
 
 ### Credential Provider
 
@@ -375,7 +375,7 @@ Most SaaS MCP servers require per-user credentials. Use **MCP User-Based Access 
 
   > **Per-user authorization without a consent prompt**
   >
-  > Unlike MCP User-Based Access Token, this type shows no consent prompt to the user. Aembit exchanges the user’s SSO identity for the MCP server token when the user first sends a request through the Gateway. Users who signed in to Aembit before you added the `offline_access` scope must sign out and sign in again; see [Configure MCP Enterprise Managed Access Token](../credential-providers/mcp-enterprise-managed-access-token.md) for the full field reference.
+  > Unlike MCP User-Based Access Token, this type shows no consent prompt to the user. Aembit exchanges the user’s SSO identity for the MCP server token when the user first sends a request through the Gateway. Users who signed in to Aembit before you added the `offline_access` scope must sign out and sign in again. See [Configure MCP Enterprise Managed Access Token](../credential-providers/mcp-enterprise-managed-access-token.md) for the full field reference.
 
 * OAuth 2.0 Authorization Code
 
@@ -536,4 +536,4 @@ You **shouldn’t** follow the “Set up the MCP Authorization Server” steps u
 * [Connect Microsoft Copilot Studio](../../deploy-install/mcp-identity-gateway/connect-copilot-studio.md) - Connect Copilot Studio agents to your MCP servers through the Gateway
 * [MCP Identity Gateway reference](../../deploy-install/mcp-identity-gateway/reference-mcp-gateway.md) - Token formats, proxied MCP methods, session management, connectivity, and workload events
 * [Client workload identification](client-workload-identification.md) - How the Gateway identifies users in multi-user deployments
-* [Audit and report on Workload activity](../../audit-report/overview.md) - Review MCP request and response events for your Tenant
+* [Audit and report on Workload activity](../../audit-report/overview.md) - Review MCP request and response events for your Aembit Tenant

@@ -5,7 +5,7 @@ description: "Curated prompts for querying Aembit event logs through the MCP Ser
 resource: https://docs.aembit.io/user-guide/mcp-server/prompt-library/
 interface: mcp
 tags: ["prompt-library", "mcp-server"]
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-10-16T17:35:53-07:00
 ---
 
 # Prompt Library
@@ -48,7 +48,7 @@ Show workload event activity audit events over the last day.
 
 Adjust these parameters in your prompts to retrieve different data:
 
-* **Time window** - Change “last hour” to “last day”, “past week”, or a specific time range
+* **Time window** - Change `last hour` to `last day`, `past week`, or a specific time range
 * **Event type** - Specify authentication, authorization, or workload events
 * **Severity** - Filter by severity level (for example, “Show only error-level events”)
 

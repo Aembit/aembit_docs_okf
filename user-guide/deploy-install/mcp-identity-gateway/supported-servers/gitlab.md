@@ -5,7 +5,7 @@ description: "Configure the GitLab MCP Server to work with AI agents through the
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/supported-servers/gitlab/
 interface: mcp
 tags: ["supported-server", "mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-09-22T15:09:30-07:00
+timestamp: 2026-10-28T08:39:08-07:00
 ---
 
 # GitLab MCP Server
@@ -47,41 +47,46 @@ GitLab turns the MCP server off by default, so a group Owner enables it on the t
 
 ## Configure the Credential Provider
 
-Create an MCP User-Based Access Token Credential Provider in Aembit.
+Register a GitLab OAuth application and use its application ID and secret in the MCP User-Based Access Token Credential Provider.
 
-1. Log into your Aembit Tenant.
+1. Log in to your Aembit Tenant.
 
-2. Go to **Credential Providers** in the left sidebar and click **+ New**.
+2. Go to **Credential Providers** and click **+ New**.
 
-3. Configure the following fields:
+3. Enter a **Name** and select **MCP User-Based Access Token** as the **Credential Type**.
 
-   | Field               | Value                                     |
-   | ------------------- | ----------------------------------------- |
-   | **Name**            | A user-friendly name                      |
-   | **Credential Type** | MCP User-Based Access Token               |
-   | **MCP Server URL**  | `https://gitlab.com/api/v4/mcp`           |
-   | **Client ID**       | Auto-populated—no pre-registration needed |
-   | **Client Secret**   | Auto-populated by Discover                |
-   | **Scopes**          | `mcp`                                     |
-   | **PKCE Required**   | On                                        |
+4. Set **MCP Server URL** to `https://gitlab.com/api/v4/mcp` and click **Discover** to populate the OAuth URLs.
 
-   For **MCP Server URL**, click **Discover** to populate the Authorization URL and Token URL.
+5. Copy the read-only **Callback URL**. Keep this Credential Provider form open while you register the application in GitLab.
 
-4. Click **Save**.
+6. In GitLab, open your top-level group and go to **Settings > Applications**.
 
-5. Copy the read-only **Callback URL** from the Credential Provider.
+7. Enter a **Name** and set **Redirect URI** to the exact **Callback URL** you copied from Aembit.
 
-## Finish configuring the OAuth client
+8. Select the `mcp` scope and click **Save application**.
 
-GitLab supports OAuth Dynamic Client Registration, so you don’t need to register an application in GitLab.
+9. Copy the **Application ID** and **Secret** from GitLab. Store the secret securely. GitLab shows the secret only immediately after application creation. Copy it before you leave the page.
 
-When you create the MCP User-Based Access Token Credential Provider and click **Discover**, GitLab fills in the client registration automatically—Client ID, Client Secret, and URLs. GitLab grants access when each user completes the OAuth consent flow in the browser.
+10. Return to the same Aembit Credential Provider form and enter the following values:
 
-## Authorize the Credential Provider
+    | Field             | Value                         |
+    | ----------------- | ----------------------------- |
+    | **Client Id**     | The GitLab **Application ID** |
+    | **Client Secret** | The GitLab **Secret**         |
+    | **Scopes**        | `mcp`                         |
+    | **PKCE Required** | On                            |
 
-1. Return to the Credential Provider in Aembit and click **Authorize**.
+11. Click **Save**.
 
-2. Complete the GitLab sign-in and approve access. The Credential Provider status changes to **Ready** when the flow completes.
+12. Compare the saved Credential Provider’s **Callback URL** with the GitLab application’s **Redirect URI**. If they differ, update the application’s **Redirect URI** to match the saved **Callback URL**.
+
+When you create the Access Policy that grants MCP Identity Gateway access to GitLab, use the **Select Existing** tab. Select the Credential Provider you saved here and click **Use Selected**. Don’t create another Credential Provider: its **Callback URL** won’t match the GitLab application’s **Redirect URI**. Don’t run **Discover** again after entering the application credentials, because it overwrites them.
+
+For details, see GitLab’s [Create a group-owned application](https://docs.gitlab.com/integration/oauth_provider/#create-a-group-owned-application).
+
+## User authorization
+
+Each user authorizes access to GitLab when they first connect through MCP Identity Gateway. The MCP User-Based Access Token Credential Provider has no administrator **Authorize** step.
 
 ## Create the Server Workload
 
@@ -102,6 +107,8 @@ When you create the MCP User-Based Access Token Credential Provider and click **
 3. Click **Save**.
 
 ## Create an Access Policy
+
+On the **Select Existing** tab, select the Credential Provider you saved during GitLab setup and click **Use Selected**. The linked setup procedure describes creating a new Credential Provider. Reuse yours so its **Callback URL** matches GitLab’s **Redirect URI**.
 
 This section creates the Gateway-to-Server Access Policy, which authorizes the MCP Identity Gateway to access GitLab on behalf of authenticated users.
 

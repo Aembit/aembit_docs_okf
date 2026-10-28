@@ -5,7 +5,7 @@ description: "Environment variables for configuring a self-hosted MCP Identity G
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/env-vars-mcp-gateway/
 interface: mcp
 tags: ["mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-10-15T12:41:34-07:00
+timestamp: 2026-10-28T15:13:06-07:00
 ---
 
 # MCP Identity Gateway environment variables (self-hosted only)
@@ -18,7 +18,7 @@ This page is the configuration reference for [self-hosting the MCP Identity Gate
 
 If you use the Aembit-managed service, you don’t configure any of these. Aembit sets them when it provisions your MCP Identity Gateway endpoint.
 
-For Tenant-side configuration (Identity Provider, Trust Provider, and Access Policies), which applies to both deployment models, see [Set up the MCP Identity Gateway](../../access-policies/mcp-identity-gateway/setup-mcp-gateway.md).
+For Aembit Tenant configuration (Identity Provider, Trust Provider, and Access Policies), which applies to both deployment models, see [Set up the MCP Identity Gateway](../../access-policies/mcp-identity-gateway/setup-mcp-gateway.md).
 
 ## Required variables
 
@@ -190,6 +190,26 @@ Port `9091` avoids a collision with the Agent Controller, which uses port `9090`
 
 ***
 
+### `AEMBIT_NETWORK_ACCESS_POLICY`
+
+Default - `any`
+
+Which MCP server addresses the MCP Identity Gateway can connect to. Set one of the following values:
+
+* `any` allows MCP servers at any address.
+* `public` allows only MCP servers at publicly reachable addresses. The MCP Identity Gateway doesn’t connect to a loopback, private, link-local, carrier-grade NAT, or other address that isn’t globally reachable. It also doesn’t connect to a hostname that resolves to any such address.
+
+The value isn’t case-sensitive. Any value other than `any` or `public` stops the MCP Identity Gateway from starting.
+
+With `public`, the MCP Identity Gateway connects to MCP servers directly and ignores proxy environment variables, such as `HTTPS_PROXY`. If your network routes MCP server traffic through a proxy, use `any`.
+
+With `public`, a request to an MCP server at an address that `public` doesn’t allow fails. The MCP Identity Gateway records the failure in a workload event.
+
+*Example*:\
+`public`
+
+***
+
 ### `AEMBIT_TRUSTED_ISSUER_DOMAINS`
 
 Default - not set
@@ -309,7 +329,7 @@ ID of the Agent Controller as configured in Aembit.
 
 Default - `useast2.aembit.io`
 
-Aembit stack domain for this tenant. **Don’t set this value unless directed by your Aembit representative.**
+Aembit stack domain for this Aembit Tenant. **Don’t set this value unless directed by your Aembit representative.**
 
 ***
 

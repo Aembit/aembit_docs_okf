@@ -5,7 +5,7 @@ description: "This page describes how to configure Aembit to work with the Apige
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/guides/apigee/
 interface: web-ui
 tags: ["cloud", "guide", "server-workload", "access-policy"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-10-19T21:20:16-07:00
 ---
 
 # Apigee
@@ -69,7 +69,7 @@ Aembit supports multiple authentication/authorization methods for Apigee. This p
    * You may skip the Scopes step by clicking **Save and Continue** once again.
    * In the **Summary** step, review the details of your app and click **Back to Dashboard**.
 
-5. Navigate back to [Credentials](hhttps://console.cloud.google.com/apis/credentials) page, click **Create Credentials**, and select the **OAuth client ID** option again.
+5. Navigate back to [Credentials](https://console.cloud.google.com/apis/credentials) page, click **Create Credentials**, and select the **OAuth client ID** option again.
 
    * Choose **Web Application** for Application Type.
    * Provide a name for your web client.
@@ -93,7 +93,7 @@ Click on **URL Discovery** to populate the Authorization and Token URL fields, w
 
 * **PKCE Required** - Off
 * **Lifetime** - 1 year (A Google Cloud Platform project with an OAuth consent screen configured for an external user type and a publishing status of Testing is issued a refresh token expiring in 7 days).\
-  Google does not specify a refresh token lifetime for the internal user type selected version; this value is recommended by Aembit. For more information, refer to the [official Google documentation](https://developers.google.com/identity/protocols/oauth2#expiration).
+  Google does not specify a refresh token lifetime for the internal user type selected version. This value is recommended by Aembit. For more information, refer to the [official Google documentation](https://developers.google.com/identity/protocols/oauth2#expiration).
 
 8. Click **Save** to save your changes on the Credential Provider.
 
@@ -121,7 +121,7 @@ Click on **URL Discovery** to populate the Authorization and Token URL fields, w
 
 ![Create API Proxy](https://docs.aembit.io/_astro/apigee_create_api_proxy.Byo7U2xh_70NYV.webp)
 
-4. You will be prompted to choose a proxy type; keep the default **Reverse proxy** option and provide the any other required information.
+4. You will be prompted to choose a proxy type. Keep the default **Reverse proxy** option and provide the any other required information.
 
 5. Once you have configured your proxy, deploy it to make the API proxy active.
 

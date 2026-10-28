@@ -5,7 +5,7 @@ description: "How to inject custom environment variables into Agent Proxy and Ae
 resource: https://docs.aembit.io/user-guide/deploy-install/advanced-options/agent-proxy/configure-custom-env-vars/
 interface: web-ui
 tags: ["agent-proxy", "advanced-option", "deploy-install"]
-timestamp: 2026-09-25T09:44:34-07:00
+timestamp: 2026-10-26T22:38:59-07:00
 ---
 
 # Configure custom environment variables for Agent Proxy
@@ -83,13 +83,21 @@ Choose the tab for your deployment platform.
      Environment="WEBSITE_HOSTNAME=example.com"
      ```
 
-  4. Restart Agent Proxy service so it picks up the updated environment:
+  4. Reload `systemd` to read the updated service configuration:
+
+     ```shell
+     sudo systemctl daemon-reload
+     ```
+
+     `systemctl edit` reloads the configuration automatically. Running `daemon-reload` again keeps the reload-before-restart sequence consistent across these Linux options.
+
+  5. Restart Agent Proxy service so it picks up the updated environment:
 
      ```shell
      sudo systemctl restart aembit_agent_proxy
      ```
 
-  5. Confirm the running service has the variables you expect:
+  6. Confirm the running service has the variables you expect:
 
      ```shell
      systemctl show aembit_agent_proxy --property=Environment
@@ -145,9 +153,10 @@ Choose the tab for your deployment platform.
      Environment="WEBSITE_HOSTNAME=example.com"
      ```
 
-  3. Restart Agent Proxy service:
+  3. Reload `systemd` and restart Agent Proxy service:
 
      ```shell
+     sudo systemctl daemon-reload
      sudo systemctl restart aembit_agent_proxy
      ```
 
@@ -289,11 +298,11 @@ Aembit captures custom environment variables on:
 
 ## Troubleshooting
 
-| Symptom                                                                                  | Likely cause                                                | Resolution                                                                                                                                |
-| ---------------------------------------------------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| Request denied with `Incorrect dynamic claim configuration`                              | Variable missing from the process environment               | Confirm with `systemctl show` (Linux), `[Environment]::GetEnvironmentVariable(..., 'Machine')` (Windows), or `kubectl exec ... env` (K8s) |
-| Request denied and Agent Proxy logs `requested env variable <name> is not in allow list` | Variable name not in `AEMBIT_ENV_VAR_ALLOWLIST`             | Add the name to the allowlist and restart the service                                                                                     |
-| Variable visible in shell but not in claim                                               | Set in Client Workload process, not Agent Proxy/CLI process | Move the variable definition to Agent Proxy or Aembit CLI process environment                                                             |
+| Symptom                                                                                  | Likely cause                                                | Resolution                                                                                                                                      |
+| ---------------------------------------------------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| Request denied with `Incorrect dynamic claim configuration`                              | Variable missing from the process environment               | Confirm with `systemctl show` (Linux), `[Environment]::GetEnvironmentVariable(..., 'Machine')` (Windows), or `kubectl exec ... env` (K8s)       |
+| Request denied and Agent Proxy logs `requested env variable <name> is not in allow list` | Variable name not in `AEMBIT_ENV_VAR_ALLOWLIST`             | Add the name to the allowlist and restart the service. On Linux, [reload `systemd` before restarting](#option-2-manually-managed-drop-in-file). |
+| Variable visible in shell but not in claim                                               | Set in Client Workload process, not Agent Proxy/CLI process | Move the variable definition to Agent Proxy or Aembit CLI process environment                                                                   |
 
 ## Related docs
 

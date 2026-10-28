@@ -4,7 +4,7 @@ title: "Edge Component environment variables reference"
 description: "Reference for environment variables of Edge Components categorized by deployment type"
 resource: https://docs.aembit.io/reference/edge-components/edge-component-env-vars/
 tags: ["edge-component"]
-timestamp: 2026-09-25T09:44:34-07:00
+timestamp: 2026-10-16T17:35:53-07:00
 ---
 
 # Edge Component environment variables reference
@@ -487,7 +487,7 @@ OS-Linux
 
 When `true`, lets Agent Proxy authenticate as the computer account principal in `/etc/krb5.keytab` while that file keeps root-only read permissions. The installer grants the Agent Proxy read access through `sudo` and records the principal it finds.
 
-When `AEMBIT_KERBEROS_ATTESTATION_ENABLED` is `true` on Linux, set either this variable or `AEMBIT_AGENT_PROXY_KERBEROS_PRINCIPAL`. Don’t combine this variable with `KRB5_KTNAME` or `KRB5_CLIENT_KTNAME`; it reads `/etc/krb5.keytab` only. Windows ignores this variable.
+When `AEMBIT_KERBEROS_ATTESTATION_ENABLED` is `true` on Linux, set either this variable or `AEMBIT_AGENT_PROXY_KERBEROS_PRINCIPAL`. Don’t combine this variable with `KRB5_KTNAME` or `KRB5_CLIENT_KTNAME`. It reads `/etc/krb5.keytab` only. Windows ignores this variable.
 
 *Example*:\
 `true`
@@ -682,7 +682,7 @@ Default - `/etc/krb5.keytab`
 
 OS-Linux
 
-The keytab Agent Proxy reads for its Kerberos principal when `KRB5_CLIENT_KTNAME` isn’t set. The `aembit_agent_proxy` Linux user must be able to read it; the default is root-only on most hosts. Don’t set it together with `AEMBIT_PRIVILEGED_KEYTAB=true`.
+The keytab Agent Proxy reads for its Kerberos principal when `KRB5_CLIENT_KTNAME` isn’t set. The `aembit_agent_proxy` Linux user must be able to read it. The default is root-only on most hosts. Don’t set it together with `AEMBIT_PRIVILEGED_KEYTAB=true`.
 
 *Example*:\
 `/etc/aembit/agent-proxy.keytab`
@@ -800,7 +800,7 @@ OS-All v1.31.4764
 
 A comma-separated list of environment variable names that Aembit CLI may capture for use in [dynamic claims](../../user-guide/access-policies/credential-providers/advanced-options/dynamic-claims.md). By default, the allowlist is empty, so Aembit CLI captures no custom environment variables.
 
-The CLI inherits the shell environment automatically; you only need to set the allowlist itself explicitly.
+The CLI inherits the shell environment automatically. You only need to set the allowlist itself explicitly.
 
 *Example*:\
 `CORPORATE_APP_ID,WEBSITE_HOSTNAME`

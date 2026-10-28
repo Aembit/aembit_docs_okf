@@ -5,7 +5,7 @@ description: "This page describes how to configure Aembit to work with the Looke
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/guides/looker-studio/
 interface: web-ui
 tags: ["data-analytics", "guide", "server-workload", "access-policy"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-10-19T21:20:16-07:00
 ---
 
 # Looker Studio
@@ -40,7 +40,7 @@ Below you can find the Aembit configuration required to work with the Looker Stu
 
 ## Credential Provider Configuration
 
-1. Sign in to the Google Cloud Console and navigate to the [Credentials](hhttps://console.cloud.google.com/apis/credentials) page. Ensure you are working within a GCP project for which you have authorization.
+1. Sign in to the Google Cloud Console and navigate to the [Credentials](https://console.cloud.google.com/apis/credentials) page. Ensure you are working within a GCP project for which you have authorization.
 
 2. On the **Credentials** dashboard, click **Create Credentials** located in the top left corner and select the **OAuth client ID** option.
 
@@ -60,7 +60,7 @@ Below you can find the Aembit configuration required to work with the Looker Stu
    * You may skip the Scopes step by clicking **Save and Continue** once again.
    * In the **Summary** step, review the details of your app and click **Back to Dashboard**.
 
-5. Navigate back to [Credentials](hhttps://console.cloud.google.com/apis/credentials) page, click **Create Credentials**, and select the **OAuth client ID** option again.
+5. Navigate back to [Credentials](https://console.cloud.google.com/apis/credentials) page, click **Create Credentials**, and select the **OAuth client ID** option again.
 
    * Choose **Web Application** for Application Type.
    * Provide a name for your web client.

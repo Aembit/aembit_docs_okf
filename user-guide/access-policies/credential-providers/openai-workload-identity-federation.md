@@ -5,7 +5,7 @@ description: "Configure an OpenAI Workload Identity Federation Credential Provid
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/openai-workload-identity-federation/
 interface: web-ui
 tags: ["credential-provider", "access-policy"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-10-16T17:35:53-07:00
 ---
 
 # Configure an OpenAI WIF Credential Provider
@@ -65,16 +65,16 @@ Follow OpenAI’s [Workload Identity Federation](https://developers.openai.com/a
 
 As you configure OpenAI, record the following values, which you’ll enter in Aembit in the next section:
 
-1. **Workload Identity Provider ID** - OpenAI generates this when you create the Workload Identity Provider; its ID starts with `idp_`.
-2. **Service Account ID** - the OpenAI service account your mapping authorizes; its ID starts with `user-`.
+1. **Workload Identity Provider ID** - OpenAI generates this when you create the Workload Identity Provider. Its ID starts with `idp_`.
+2. **Service Account ID** - the OpenAI service account your mapping authorizes. Its ID starts with `user-`.
 
 ## Complete the Credential Provider in the Aembit Tenant
 
 Return to the Aembit Tenant and complete the **Credential Provider** page with the values from OpenAI. For a field-by-field reference, see [OpenAI and Credential Provider UI value mappings](#openai-and-credential-provider-ui-value-mappings).
 
-1. For **Identity Provider ID**, enter the Workload Identity Provider you recorded from OpenAI; its ID starts with `idp_`.
+1. For **Identity Provider ID**, enter the Workload Identity Provider you recorded from OpenAI. Its ID starts with `idp_`.
 
-2. For **Service Account ID**, enter the service account you recorded from OpenAI; its ID starts with `user-`.
+2. For **Service Account ID**, enter the service account you recorded from OpenAI. Its ID starts with `user-`.
 
 3. For **Audience**, enter the same **Audience** value you set on the Workload Identity Provider in OpenAI.
 

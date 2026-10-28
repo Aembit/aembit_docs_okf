@@ -5,7 +5,7 @@ description: "The application fields that Workload Events record for each suppor
 resource: https://docs.aembit.io/user-guide/audit-report/workload-events/supported-protocols/
 interface: web-ui
 tags: ["workload-event", "audit-report"]
-timestamp: 2026-10-08T12:59:26-07:00
+timestamp: 2026-10-16T17:35:53-07:00
 ---
 
 # Supported protocols and application fields
@@ -316,7 +316,7 @@ Example `application.postgres` block
 
 ## MySQL and MariaDB
 
-MySQL fields appear under `application.mysql`. MariaDB shares the MySQL protocol handler and uses the same event types and fields. Request and response events carry the same fields; the value of `message.type` differs by direction.
+MySQL fields appear under `application.mysql`. MariaDB shares the MySQL protocol handler and uses the same event types and fields. Request and response events carry the same fields. The value of `message.type` differs by direction.
 
 > **Note**
 >

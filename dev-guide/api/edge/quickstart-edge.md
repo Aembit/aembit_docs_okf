@@ -5,7 +5,7 @@ description: "Learn how to integrate Aembit Edge API into your cloud-native appl
 resource: https://docs.aembit.io/dev-guide/api/edge/quickstart-edge/
 interface: api
 tags: ["edge", "api"]
-timestamp: 2026-09-22T11:51:31-07:00
+timestamp: 2026-10-23T07:16:17-07:00
 ---
 
 # Get started with Aembit Edge API

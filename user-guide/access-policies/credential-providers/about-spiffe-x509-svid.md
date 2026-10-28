@@ -4,7 +4,7 @@ title: "About the X.509-SVID Credential Provider"
 description: "This page describes the X.509-SVID Credential Provider and how it works"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/about-spiffe-x509-svid/
 tags: ["credential-provider", "access-policy"]
-timestamp: 2026-09-22T11:51:31-07:00
+timestamp: 2026-10-16T17:35:53-07:00
 ---
 
 # About the X.509-SVID Credential Provider
@@ -46,8 +46,8 @@ Aembit provides three ways to consume certificates from an X.509-SVID Credential
 
 | Aspect              | Agent Proxy                                               | Aembit CLI                                                                      | Aembit Secrets Operator                                               |
 | ------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| **Private key**     | Aembit generates the key in memory; never written to disk | You supply the key on disk; the CLI never transmits it to Aembit Cloud          | Aembit generates the key in-cluster; never leaves the cluster         |
-| **Rotation**        | Automatic at regular intervals                            | One-shot per invocation; you re-run the CLI before expiration                   | Automatic through the reconciliation loop                             |
+| **Private key**     | Aembit generates the key in memory. Never written to disk | You supply the key on disk, and the CLI never transmits it to Aembit Cloud      | Aembit generates the key in-cluster. The key never leaves the cluster |
+| **Rotation**        | Automatic at regular intervals                            | One-shot per invocation. You re-run the CLI before expiration                   | Automatic through the reconciliation loop                             |
 | **App integration** | Transparent—Agent Proxy intercepts outbound TLS           | The CLI returns the certificate chain in `CLIENT_CERT_CHAIN` for your TLS stack | Reads a standard `kubernetes.io/tls` Secret (`tls.crt` and `tls.key`) |
 | **Deployment**      | Sidecar or host-level proxy                               | Single CLI binary, on-demand                                                    | Kubernetes operator                                                   |
 | **Best fit**        | Long-running services with stable network footprint       | Short-lived workloads and externally managed key custody                        | Kubernetes workloads that consume certificates from a mounted Secret  |
@@ -136,13 +136,13 @@ All issued certificates carry the following constraints:
 
 * The certificate can’t sign other certificates.
 * The certificate allows only URI Subject Alternative Names, not DNS or IP entries.
-* Aembit Cloud sets the SPIFFE ID URI Subject Alternative Name during signing; the consumer (Agent Proxy, Aembit CLI, or Secrets Operator) can’t modify it in the request.
+* Aembit Cloud sets the SPIFFE ID URI Subject Alternative Name during signing. The consumer (Agent Proxy, Aembit CLI, or Secrets Operator) can’t modify it in the request.
 
 ## Limitations
 
 * **Cert chain only—no root CA**: Aembit returns the leaf certificate and any intermediates, but not the root CA.
 * **Certificate revocation**—Aembit doesn’t publish Certificate Revocation Lists or Online Certificate Status Protocol responders for X.509-SVID certificates. Short certificate lifetimes and automatic rotation are the primary controls.
-* **External CA chaining**—You can’t chain X.509-SVID issuance to a non-Aembit-managed root CA. Aembit Cloud always signs X.509-SVID certificates with an Aembit Standalone CA; you can’t substitute a different root CA.
+* **External CA chaining**—You can’t chain X.509-SVID issuance to a non-Aembit-managed root CA. Aembit Cloud always signs X.509-SVID certificates with an Aembit Standalone CA. You can’t substitute a different root CA.
 * **Service mesh integration**—Direct integration with service mesh certificate provisioning (such as Istio) isn’t supported.
 
 ## Additional resources

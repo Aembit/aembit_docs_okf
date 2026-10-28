@@ -5,7 +5,7 @@ description: "This page describes how to configure Aembit to work with the Datab
 resource: https://docs.aembit.io/user-guide/access-policies/server-workloads/guides/databricks/
 interface: web-ui
 tags: ["data-analytics", "guide", "server-workload", "access-policy"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-10-16T17:35:53-07:00
 ---
 
 # Databricks
@@ -125,7 +125,7 @@ Below you can find the Aembit configuration required to work with the Databricks
 Click on **URL Discovery** to populate the Authorization and Token URL fields, which can be left as populated.
 
 * **PKCE Required** - On
-* **Lifetime** - 1 year (Databricks does not specify a refresh token lifetime; this value is recommended by Aembit.)
+* **Lifetime** - 1 year (Databricks does not specify a refresh token lifetime. This value is recommended by Aembit.)
 
 11. Click **Save** to save your changes on the Credential Provider.
 
@@ -166,7 +166,7 @@ Click on **URL Discovery** to populate the Authorization and Token URL fields, w
 
 4. Click the **Add service principal** button.
 
-5. If you do not already have a service principal, click **Add New**; otherwise, select the desired service principal from the list and click **Add**.
+5. If you do not already have a service principal, click **Add New**. Otherwise, select the desired service principal from the list and click **Add**.
 
 6. Click on the name of the service principal to view its details.
 

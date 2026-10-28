@@ -4,7 +4,7 @@ title: "Session persistence in the MCP Identity Gateway"
 description: "How the MCP Identity Gateway stores MCP sessions, and how to persist them across restarts with Valkey."
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/session-persistence-mcp-gateway/
 tags: ["mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-10-14T16:36:12-04:00
+timestamp: 2026-10-28T15:13:06-07:00
 ---
 
 # Session persistence in the MCP Identity Gateway
@@ -23,7 +23,7 @@ An MCP session is protocol state. When a client sends `initialize`, the Gateway 
 
 A session isn’t authentication state. The Gateway validates the caller’s access token on every request and evaluates Access Policy decisions per request, so a persisted session never extends anyone’s access. Revoking access takes effect on the next request whether a session exists. For how the Gateway identifies the caller, see [Client workload identification](../../access-policies/mcp-identity-gateway/client-workload-identification.md).
 
-The Gateway keys each session by Tenant, user, and session ID together, so only the user who created a session ID can use it.
+The Gateway keys each session by Aembit Tenant, user, and session ID together, so only the user who created a session ID can use it.
 
 ## The default in-memory store
 
@@ -75,7 +75,7 @@ Raising the timeout keeps idle clients from re-initializing, at the cost of more
 The Gateway treats Valkey as a dependency it doesn’t manage. A few operational choices matter more than the rest:
 
 * **Manage Valkey independently of the Gateway.** The point of the session store is to outlive the Gateway process. Running Valkey where a Gateway upgrade can restart or replace it removes that benefit.
-* **Require TLS and authentication.** Session records name the Tenant, the user, and the upstream servers a client has open.
+* **Require TLS and authentication.** Session records name the Aembit Tenant, the user, and the upstream servers a client has open.
 * **Decide whether session loss is acceptable.** Sessions are recoverable state, so Valkey persistence to disk is optional. Enable it when you want sessions to survive a Valkey restart as well as a Gateway restart.
 * **Keep Valkey reachable.** The Gateway doesn’t fall back to its in-memory store if Valkey becomes unreachable, so plan for the same availability you expect from the Gateway itself.
 
@@ -85,11 +85,11 @@ The Gateway stores each session under a key of the form `aembit_mcp_gateway:tena
 
 **At startup**, the Gateway fails closed. When you set `AEMBIT_VALKEY_URL`, the installer connects to Valkey as part of validating your arguments, and the Gateway connects again when the service starts. If either connection fails, the Gateway doesn’t start, and it reports the reason.
 
-**During operation**, each session store operation retries up to three times, backing off 100 ms and then 200 ms, which adds at most 300 ms before the operation gives up. Errors that aren’t connection failures fail immediately without retrying.
+**During operation**, the Gateway tries each session store operation up to three times. It backs off 100 ms and then 200 ms between attempts, which adds at most 300 ms before the operation gives up. Errors that aren’t connection failures fail immediately without retrying.
 
-If Valkey stays unreachable after those retries, the Gateway keeps serving `initialize` and keeps issuing session IDs, but it can’t save or read the sessions behind them. Requests that carry a session ID return `404 Not Found`, so clients re-initialize and then fail again on their next request until Valkey recovers. The Gateway logs each failed operation.
+If Valkey stays unreachable after those attempts, the Gateway keeps serving `initialize` and keeps issuing session IDs, but it can’t save or read the sessions behind them. Requests that carry a session ID return `503 Service Unavailable` until Valkey recovers. The Gateway logs each failed operation.
 
-A session record the Gateway can’t read—because it’s corrupted, or because a newer Gateway build wrote it—counts as a miss rather than an error. The Gateway re-initializes the session instead of failing the request.
+The Gateway can’t read a session record that’s corrupted or that a newer Gateway build wrote. It treats that record as a miss rather than an error, the same as an expired session.
 
 When you configure Valkey, its health also gates the Gateway’s readiness endpoint, so an unready Gateway leaves the load balancer rotation while Valkey is down. The in-memory store never gates readiness.
 
@@ -102,7 +102,7 @@ Two metrics cover session store activity, both labeled with `operation` (`save`,
 
 A rising rate of `outcome="error"` with `reason="store_error"` is the signal that Valkey is failing, and the duration histogram shows the latency the store adds to requests. `aembit_mcp_gateway_readiness_probe_flaps_total` with `probe="session_store"` counts how often the store has taken the Gateway out of rotation.
 
-`aembit_mcp_gateway_sessions_active` reports open sessions per Tenant. The Gateway recomputes it from the session store on an interval, so it can lag the true count.
+`aembit_mcp_gateway_sessions_active` reports open sessions per Aembit Tenant. The Gateway recomputes it from the session store on an interval, so it can lag the true count.
 
 For every metric and label, see [MCP Identity Gateway metrics](reference-mcp-gateway.md#prometheus-metrics).
 
@@ -121,7 +121,7 @@ Two connection failures have specific causes:
 * **A TLS scheme mismatch.** The Gateway reports receiving TLS data on a non-TLS connection when the URL uses `redis://` against a TLS-enabled Valkey. Switch the scheme to `rediss://`.
 * **A rejected connection.** The Gateway reports a broken pipe when Valkey closes the connection without answering. Valkey protected mode does this: it rejects connections from addresses other than loopback until you configure a password or bind address. Either allow the Gateway’s address or turn protected mode off.
 
-If clients get `404 Not Found` on every request after a successful `initialize`, the Gateway is reaching Valkey at startup but failing on session reads and writes. Check the session store metrics for `reason="store_error"` and confirm Valkey is still reachable from the Gateway host.
+If clients get `503 Service Unavailable` on every request after a successful `initialize`, the Gateway is reaching Valkey at startup but failing on session reads and writes. Check the session store metrics for `reason="store_error"` and confirm Valkey is still reachable from the Gateway host.
 
 ## Related resources
 

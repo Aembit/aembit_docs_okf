@@ -5,7 +5,7 @@ description: "How to create a JWT-SVID Token Credential Provider"
 resource: https://docs.aembit.io/user-guide/access-policies/credential-providers/spiffe-jwt-svid/
 interface: web-ui
 tags: ["credential-provider", "access-policy"]
-timestamp: 2026-09-25T09:44:34-07:00
+timestamp: 2026-10-16T17:35:53-07:00
 ---
 
 # Create a JWT-SVID Token Credential Provider
@@ -128,7 +128,7 @@ To verify a JWT-SVID token is retrievable and formatted correctly, follow these 
 
    ![Verify JWT-SVID Token Credential Provider](https://docs.aembit.io/_astro/oidc-id-token-verify.LuUCHbDJ_Z1OCYlP.webp)
 
-4. When successful, Aembit posts a green notification that says “**Verified successfully**”.
+4. When successful, Aembit posts a green “**Verified successfully**” notification.
 
    The verification confirms:
 
