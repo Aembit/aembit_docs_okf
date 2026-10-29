@@ -1,5 +1,22 @@
 # Aembit Changelog
 
+## 2026-10-29
+
+### Agent Controller 1.35.3776 security updates
+
+Agent Controller version 1.35.3776 includes security updates to its container image. The update requires no configuration change. Upgrade container deployments to 1.35.3776 or later to pick up the updates.
+
+[Other improvements](https://docs.aembit.io/changelog/entry/2026-10-29-agent-controller-1-35-3776-release) also shipped in this build. For the latest available versions, see the [Edge Components Supported Versions](reference/edge-components/edge-component-supported-versions.md) page.
+
+### Agent Controller 1.35.3776 release
+
+Aembit has released [Agent Controller](user-guide/deploy-install/about-agent-controller.md) version 1.35.3776 for Linux and Windows. For the latest available versions, see the [Edge Components Supported Versions](reference/edge-components/edge-component-supported-versions.md) page.
+
+* **AWS Metadata Service attestation behind an HTTP proxy** - Agent Controller now bypasses an [HTTP proxy](user-guide/deploy-install/advanced-options/running-behind-secure-web-gateways.md#route-outbound-traffic-through-the-gateway) when it calls the AWS instance metadata service for [AWS Metadata Service Trust Provider](user-guide/access-policies/trust-providers/aws-metadata-service-trust-provider.md) attestation. It already bypassed the proxy for the Azure instance metadata service.
+* **Agent Controller ID in authentication errors** - When Agent Controller fails to authenticate with the Agent Controller ID you configured, the error now names that ID. The error asks you to confirm that the ID is valid and active in your Aembit Tenant.
+
+Security updates also shipped in this build. See [Agent Controller 1.35.3776 security updates](https://docs.aembit.io/changelog/entry/2026-10-29-agent-controller-1-35-3776-security-updates).
+
 ## 2026-10-28
 
 ### MCP Identity Gateway 1.35.6263 release

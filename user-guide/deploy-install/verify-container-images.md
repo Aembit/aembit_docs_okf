@@ -76,12 +76,12 @@ cosign verify --key <path-to-public-key> aembit/<image_name>:<tag>
 
 **Docker Hub repo**: [`aembit/aembit_agent_controller`](https://hub.docker.com/r/aembit/aembit_agent_controller)
 
-**Latest version**: `1.34.3725`
+**Latest version**: `1.35.3776`
 
 **Verification command**:
 
 ```shell
-cosign verify --key <path-to-public-key> aembit/aembit_agent_controller:1.34.3725
+cosign verify --key <path-to-public-key> aembit/aembit_agent_controller:1.35.3776
 ```
 
 ### Agent Proxy
