@@ -90,12 +90,12 @@ cosign verify --key <path-to-public-key> aembit/aembit_agent_controller:1.35.377
 
 **Docker Hub repo**: [`aembit/aembit_agent_proxy`](https://hub.docker.com/r/aembit/aembit_agent_proxy)
 
-**Latest version**: `1.34.6014`
+**Latest version**: `1.35.6254`
 
 **Verification command**:
 
 ```shell
-cosign verify --key <path-to-public-key> aembit/aembit_agent_proxy:1.34.6014
+cosign verify --key <path-to-public-key> aembit/aembit_agent_proxy:1.35.6254
 ```
 
 ### Agent Injector
@@ -104,12 +104,12 @@ cosign verify --key <path-to-public-key> aembit/aembit_agent_proxy:1.34.6014
 
 **Docker Hub repo**: [`aembit/aembit_agent_injector`](https://hub.docker.com/r/aembit/aembit_agent_injector)
 
-**Latest version**: `1.34.433`
+**Latest version**: `1.35.446`
 
 **Verification command**:
 
 ```shell
-cosign verify --key <path-to-public-key> aembit/aembit_agent_injector:1.34.433
+cosign verify --key <path-to-public-key> aembit/aembit_agent_injector:1.35.446
 ```
 
 ### AWS Lambda Extension
@@ -118,12 +118,12 @@ cosign verify --key <path-to-public-key> aembit/aembit_agent_injector:1.34.433
 
 **Docker Hub repo**: [`aembit/aembit_aws_lambda_extension`](https://hub.docker.com/r/aembit/aembit_aws_lambda_extension)
 
-**Latest version**: `1.34.185`
+**Latest version**: `1.35.199`
 
 **Verification command**:
 
 ```shell
-cosign verify --key <path-to-public-key> aembit/aembit_aws_lambda_extension:1.34.185
+cosign verify --key <path-to-public-key> aembit/aembit_aws_lambda_extension:1.35.199
 ```
 
 ### Sidecar Init

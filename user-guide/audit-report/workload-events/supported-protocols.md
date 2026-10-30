@@ -5,7 +5,7 @@ description: "The application fields that Workload Events record for each suppor
 resource: https://docs.aembit.io/user-guide/audit-report/workload-events/supported-protocols/
 interface: web-ui
 tags: ["workload-event", "audit-report"]
-timestamp: 2026-10-16T17:35:53-07:00
+timestamp: 2026-10-30T15:14:14-07:00
 ---
 
 # Supported protocols and application fields
@@ -276,15 +276,17 @@ For the controls and the glob syntax for MCP tool names, see [MCP Tool Access Co
 
 PostgreSQL fields appear under `application.postgres`. Amazon Redshift uses the same fields, under `application.redshift`. Request and response events carry the same fields; the value of `message.type` differs by direction.
 
+When Agent Proxy injects the credential into a connection, Agent Proxy 1.35.6254 and later record events up to and including the database’s `AuthenticationOk` response. After that response, Agent Proxy passes the connection’s traffic through without recording further events. Earlier versions also recorded an event for each query message after authentication, such as `Query`, `Parse`, `Bind`, `Execute`, and `CommandComplete`. When Agent Proxy 1.35.6254 and later does not inject a credential, it records an event for every message on the connection.
+
 Request fields:
 
-| Field             | Presence | Description                                    |
-| ----------------- | -------- | ---------------------------------------------- |
-| `protocolVersion` | Optional | The PostgreSQL wire protocol version.          |
-| `user`            | Optional | The database user.                             |
-| `database`        | Optional | The target database name.                      |
-| `message.type`    | Always   | The protocol message type, such as `Query`.    |
-| `tls.version`     | Optional | The negotiated TLS version, such as `TLSv1.2`. |
+| Field             | Presence | Description                                          |
+| ----------------- | -------- | ---------------------------------------------------- |
+| `protocolVersion` | Optional | The PostgreSQL wire protocol version.                |
+| `user`            | Optional | The database user.                                   |
+| `database`        | Optional | The target database name.                            |
+| `message.type`    | Always   | The protocol message type, such as `StartupMessage`. |
+| `tls.version`     | Optional | The negotiated TLS version, such as `TLSv1.2`.       |
 
 Response fields:
 
@@ -305,7 +307,7 @@ Example `application.postgres` block
     "user": "analytics",
     "database": "warehouse",
     "message": {
-      "type": "Query"
+      "type": "AuthenticationOk"
     },
     "tls": {
       "version": "TLSv1.2"

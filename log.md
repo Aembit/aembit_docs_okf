@@ -1,5 +1,55 @@
 # Aembit Changelog
 
+## 2026-10-30
+
+### Aembit Cloud and Aembit Edge stop trusting compromised eMudhra certificates
+
+In October 2026, a compromise exposed the private keys of eight emSign intermediate certificate authorities operated by eMudhra. Anyone holding those keys can issue certificates that chain to a widely trusted root certificate. Aembit Cloud and the Aembit releases in this entry reject certificates from these certificate authorities.
+
+### Aembit Cloud
+
+Aembit Cloud no longer trusts the `emSign ECC Root CA - G3` and `AAA Certificate Services` root certificates, so it rejects certificates from the compromised certificate authorities. Aembit applied this change to Aembit Cloud for you.
+
+### Aembit Edge
+
+Upgrade each of the following that you run to the listed version or later:
+
+* Agent Proxy 1.35.6254, for the container image and the virtual machine installers. Agent Proxy rejects certificates from the compromised certificate authorities whatever the host trust store contains.
+* Aembit CLI 1.35.6254, which rejects them the same way.
+* Agent Controller 1.35.3776, for the Linux container image. On a virtual machine, Agent Controller uses the host operating system’s trust store, so it rejects these certificates only after the host stops trusting both root certificates.
+* Agent Injector 1.35.446
+* AWS Lambda Extension and AWS Lambda Layer 1.35.199, which include Agent Proxy 1.35.6254.
+* MCP Identity Gateway 1.35.6263
+* Aembit Secrets Operator 1.35.394
+* Helm Chart 1.35.575, which deploys Agent Proxy 1.35.6254, Agent Controller 1.35.3776, and Agent Injector 1.35.446 by default.
+* AWS ECS Terraform 1.35.5, which deploys Agent Proxy 1.35.6254 and Agent Controller 1.35.3776 by default.
+
+### Aembit Terraform Provider
+
+Aembit Terraform Provider 1.35.1 and later reject certificates from the compromised certificate authorities.
+
+### Edge Components release with faster PostgreSQL and Amazon Redshift connections
+
+Aembit has released new versions of the following components and packages:
+
+* Agent Proxy 1.35.6254
+* Aembit CLI 1.35.6254
+* Agent Injector 1.35.446
+* AWS Lambda Extension 1.35.199
+* AWS Lambda Layer 1.35.199
+* Helm Chart 1.35.575
+* AWS ECS Terraform 1.35.5
+
+For the latest available versions of these components, see the [Edge Components Supported Versions](reference/edge-components/edge-component-supported-versions.md) page.
+
+Key Updates:
+
+* **Faster PostgreSQL and Amazon Redshift connections** - When Agent Proxy injects the credential, it passes the connection’s traffic through after the database authenticates the connection. Connections handle more load and use less memory.
+* **PostgreSQL and Amazon Redshift workload events** - When Agent Proxy injects the credential, events end at authentication. Otherwise, Agent Proxy now records an event for every message on the connection, as [PostgreSQL and Amazon Redshift](user-guide/audit-report/workload-events/supported-protocols.md#postgresql-and-amazon-redshift) describes.
+* **Large database messages over TLS** - Agent Proxy now delivers large messages from a Client Workload when it connects to the Server Workload over TLS. This applies to MySQL, PostgreSQL, Amazon Redshift, Oracle Database, and Redis Server Workloads.
+* **Credentials without a value** - Agent Proxy and Aembit CLI no longer cache a credential that Aembit Cloud returns without a value, so the next request retrieves the credential again.
+* **AWS Lambda packages** - AWS Lambda Extension and AWS Lambda Layer bundle Agent Proxy 1.35.6254.
+
 ## 2026-10-29
 
 ### Agent Controller 1.35.3776 security updates

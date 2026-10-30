@@ -39,6 +39,7 @@ The following matrices list the Edge Component versions that Aembit supports alo
 
 | Agent Proxy Version   | Release Date | Platforms                     | Notes                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | --------------------- | ------------ | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1.35.6254             | 10/30/2026   | Linux (amd64) Windows (amd64) | Apply security updates; improve PostgreSQL and Amazon Redshift performance under load; stop recording workload events after PostgreSQL and Amazon Redshift authentication when Agent Proxy injects the credential; deliver large Client Workload messages to database Server Workloads over TLS; stop caching credentials that arrive without a value                                                                                       |
 | 1.34.6014             | 10/5/2026    | Linux (amd64) Windows (amd64) | Support installation on Ubuntu 26.04 LTS; inject HTTP credentials for Server Workloads that use the MCP application protocol; fix credential retrieval for Credential Providers that use Private Network Access                                                                                                                                                                                                                             |
 | 1.34.5755             | 8/27/2026    | Linux (amd64) Windows (amd64) | Honor the gRPC keep-alive properties in the Windows installer; add the authorization chain to workload events; keep the outcome fields on Aembit-generated response events; validate arguments in the Linux installer                                                                                                                                                                                                                       |
 | 1.32.4999             | 6/4/2026     | Linux (amd64) Windows (amd64) | Add gRPC keep-alive and HTTP/2 ping options, with keep-alive settings in the Linux and Windows installers; add the HTTP idle timeout setting to the Windows installer; add a private key rotation period for x509 credentials; resolve all directive variables in a single GetCredentials call; restore AGENT\_TRUST\_PATH; handle dmidecode errors when gathering the serial number; include the error body when a server connection fails |
@@ -79,7 +80,7 @@ The following matrices list the Edge Component versions that Aembit supports alo
 | 1.10.1441             | 1/4/2024     | Linux (amd64)                 | Validate process identification with conntrack events; fetch Redis credentials just in time; add TTL information when caching credentials; add a backoff interval for command queue polling                                                                                                                                                                                                                                                 |
 | 1.10.1415             | 12/7/2023    | Linux (amd64)                 | Add Azure attestation support; add the system serial number and endpoint security agent data to assessments; add a sudoers file and harden file permissions in the VM installer; bundle AWS certificates in the container; include a message in events when directive retrieval fails                                                                                                                                                       |
 | 1.9.1337              | 11/8/2023    | Linux (amd64)                 |                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| Show 35 more versions |              |                               |                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| Show 36 more versions |              |                               |                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 
 ### Agent Controller
 
@@ -117,6 +118,7 @@ The following matrices list the Edge Component versions that Aembit supports alo
 
 | Agent Injector Version | Release Date | Notes                                                                   |
 | ---------------------- | ------------ | ----------------------------------------------------------------------- |
+| 1.35.446               | 10/30/2026   | Apply security updates                                                  |
 | 1.34.433               | 8/27/2026    | Move to a newer Debian base image; fix RUSTSEC-2026-0185 in quinn-proto |
 | 1.31.425               | 5/2/2026     | Apply security upgrades and bug fixes                                   |
 | 1.29.394               | 2/26/2026    |                                                                         |
@@ -130,12 +132,13 @@ The following matrices list the Edge Component versions that Aembit supports alo
 | 1.14.182               | 4/30/2024    |                                                                         |
 | 1.9.142                | 10/16/2023   |                                                                         |
 | 1.8.137                | 9/27/2023    |                                                                         |
-| Show 8 more versions   |              |                                                                         |
+| Show 9 more versions   |              |                                                                         |
 
 ### Aembit CLI
 
 | Aembit CLI Version    | Release Date | Platforms                            | Notes                                                                                                                                                                                                                                                                       |
 | --------------------- | ------------ | ------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1.35.6254             | 10/30/2026   | Linux (amd64, arm64) Windows (amd64) | Apply security updates; stop caching credentials that arrive without a value                                                                                                                                                                                                |
 | 1.34.6014             | 10/5/2026    | Linux (amd64, arm64) Windows (amd64) |                                                                                                                                                                                                                                                                             |
 | 1.34.5772             | 8/27/2026    | Linux (amd64, arm64) Windows (amd64) | Add a glibc-linked Linux amd64 archive alongside the default musl build                                                                                                                                                                                                     |
 | 1.32.4999             | 6/4/2026     | Linux (amd64, arm64) Windows (amd64) | Add AWS (instance metadata or IAM role) and Kubernetes Trust Provider authentication to credentials get alongside OIDC tokens; add X.509 certificate retrieval for the X.509-SVID Credential Provider through a new client private-key option; add HTTP/2 keepalive options |
@@ -151,7 +154,7 @@ The following matrices list the Edge Component versions that Aembit supports alo
 | 1.24.3328             | 7/29/2025    | Linux (amd64, arm64) Windows (amd64) |                                                                                                                                                                                                                                                                             |
 | 1.17.0                | 9/18/2024    | Linux (amd64, arm64)                 |                                                                                                                                                                                                                                                                             |
 | 1.13.0                | 3/27/2024    | Linux (amd64, arm64)                 |                                                                                                                                                                                                                                                                             |
-| Show 10 more versions |              |                                      |                                                                                                                                                                                                                                                                             |
+| Show 11 more versions |              |                                      |                                                                                                                                                                                                                                                                             |
 
 ### Aembit Secrets Operator
 
@@ -206,6 +209,7 @@ The following matrices list the package versions that Aembit supports along with
 
 | ECS Terraform Version | Release Date | Notes                                                                                             |
 | --------------------- | ------------ | ------------------------------------------------------------------------------------------------- |
+| 1.35.5                | 10/30/2026   |                                                                                                   |
 | 1.34.4                | 10/5/2026    |                                                                                                   |
 | 1.34.1                | 8/27/2026    |                                                                                                   |
 | 1.32.1                | 7/8/2026     |                                                                                                   |
@@ -249,12 +253,13 @@ The following matrices list the package versions that Aembit supports along with
 | 1.12.2                | 3/12/2024    |                                                                                                   |
 | 1.12.1                | 2/29/2024    |                                                                                                   |
 | 1.12.0                | 2/8/2024     |                                                                                                   |
-| Show 38 more versions |              |                                                                                                   |
+| Show 39 more versions |              |                                                                                                   |
 
 ### Helm chart
 
 | Helm chart Version    | Release Date | Notes                                                                                             |
 | --------------------- | ------------ | ------------------------------------------------------------------------------------------------- |
+| 1.35.575              | 10/30/2026   |                                                                                                   |
 | 1.34.571              | 10/5/2026    |                                                                                                   |
 | 1.34.566              | 8/27/2026    |                                                                                                   |
 | 1.32.562              | 7/8/2026     |                                                                                                   |
@@ -304,7 +309,7 @@ The following matrices list the package versions that Aembit supports along with
 | 1.12.176              | 3/12/2024    |                                                                                                   |
 | 1.12.174              | 2/29/2024    |                                                                                                   |
 | 1.12.164              | 2/9/2024     |                                                                                                   |
-| Show 44 more versions |              |                                                                                                   |
+| Show 45 more versions |              |                                                                                                   |
 
 ### Aembit Secrets Operator Helm chart
 
@@ -319,6 +324,7 @@ The following matrices list the package versions that Aembit supports along with
 
 | Lambda Extension Version | Release Date | Notes                                                                                             |
 | ------------------------ | ------------ | ------------------------------------------------------------------------------------------------- |
+| 1.35.199                 | 10/30/2026   | Bundle Agent Proxy 1.35.6254; apply security updates                                              |
 | 1.34.185                 | 10/5/2026    |                                                                                                   |
 | 1.34.175                 | 8/27/2026    | Update the Go version                                                                             |
 | 1.32.168                 | 6/4/2026     |                                                                                                   |
@@ -347,12 +353,13 @@ The following matrices list the package versions that Aembit supports along with
 | 1.14.38                  | 6/19/2024    |                                                                                                   |
 | 1.14.37                  | 5/31/2024    |                                                                                                   |
 | 1.14.29                  | 4/22/2024    |                                                                                                   |
-| Show 23 more versions    |              |                                                                                                   |
+| Show 24 more versions    |              |                                                                                                   |
 
 ### Lambda Layer
 
 | Lambda Layer Version | Release Date | Notes                                                                                             |
 | -------------------- | ------------ | ------------------------------------------------------------------------------------------------- |
+| 1.35.199             | 10/30/2026   | Bundle Agent Proxy 1.35.6254; apply security updates                                              |
 | 1.32.168             | 6/4/2026     |                                                                                                   |
 | 1.31.164             | 5/21/2026    |                                                                                                   |
 | 1.31.162             | 5/2/2026     |                                                                                                   |
@@ -365,4 +372,4 @@ The following matrices list the package versions that Aembit supports along with
 | 1.25.132             | 9/2/2025     |                                                                                                   |
 | 1.23.112             | 5/26/2025    |                                                                                                   |
 | 1.22.110             | 5/6/2025     |                                                                                                   |
-| Show 7 more versions |              |                                                                                                   |
+| Show 8 more versions |              |                                                                                                   |
