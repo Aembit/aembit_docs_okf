@@ -1,16 +1,16 @@
 ---
 type: reference
 title: "Client Workload Identifiers overview"
-description: "This page provides a high-level description of Client Workload Identifiers in Aembit."
+description: "A high-level description of Client Workload Identifiers in Aembit."
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/
 interface: web-ui
 tags: ["identification", "client-workload", "access-policy"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-11-03T11:36:11-05:00
 ---
 
 # Client Workload Identifiers overview
 
-Client Workload identification is an initial step to recognize the specific software application, script, or automated process that initiates an access request to a Server Workload. This identification is critical because it’s a prerequisite for matching the request to the correct Access Policy and invoking the appropriate Trust Provider for identity attestation. Accurate identification is essential for enforcing the principle of least privilege and preventing misidentification which could lead to security vulnerabilities.
+Client Workload identification is an initial step to recognize the specific software application, script, or automated process that initiates an access request to a Server Workload. This identification is critical because it is a prerequisite for matching the request to the correct Access Policy and invoking the appropriate Trust Provider for identity attestation. Accurate identification is essential for enforcing the principle of least privilege and preventing misidentification which could lead to security vulnerabilities.
 
 Aembit addresses the need for accurate identification across diverse and heterogeneous environments by offering a variety of methods tailored to different deployment contexts. These methods leverage native identity constructs and environmental evidence available in those platforms.
 
@@ -22,7 +22,7 @@ Examples of Aembit Client Workload identification methods include:
 * **Serverless Platforms (AWS Lambda)** - Using the unique AWS Lambda Function ARN.
 * **Virtual Machines (VMs)** - Identifying by Hostname, Process Name, or both.
 * **MCP Clients** - Using the redirect URI from Dynamic Client Registration, or the URL of a Client ID Metadata Document (CIMD), to identify MCP clients connecting through the MCP Authorization Server.
-* **Aembit Native** - A unique Aembit Client ID that Aembit assigns for scenarios where other identifiers won’t work.
+* **Aembit Native** - A unique Aembit Client ID that Aembit assigns for scenarios where other identifiers do not work.
 
 Aembit supports [configuring multiple identifiers](client-workload-multiple-ids.md) for a single Client Workload definition, to increase its uniqueness when identifying your Client Workloads.
 
@@ -130,7 +130,7 @@ The following sections are the different identification methods available:
 
 →
 
-### GCP Client Workload Identifiers
+### Google Cloud Platform Client Workload Identifiers
 
 ![GCP Icon](https://docs.aembit.io/3p-logos/gcp-icon.svg)
 
@@ -233,6 +233,14 @@ The following sections are the different identification methods available:
 ![JWT Icon](https://docs.aembit.io/3p-logos/jwt-icon.svg)
 
 [OIDC ID Token Subject](oidc-id-token-subject.md)Identify workloads by the subject claim in an OIDC ID token.
+
+→
+
+### Identity Provider Client Workload Identifiers
+
+![Client Workload Icon](https://docs.aembit.io/aembit-icons/client-workload.svg)
+
+[User Group](user-group.md)Identify MCP Identity Gateway users by their groups in an OIDC Identity Provider.
 
 →
 

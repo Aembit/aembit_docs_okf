@@ -1,5 +1,6 @@
 * [DELETE /api/v1/access-conditions/{id}](delete-access-condition.md) - Delete a single Access Condition
 * [DELETE /api/v1/access-policies/{id}](delete-access-policy.md) - Delete an Access Policy
+* [DELETE /api/v1/access-scenarios/{id}](delete-access-scenario.md) - Delete an Access Scenario
 * [DELETE /api/v1/agent-controllers/{id}](delete-agent-controller.md) - Delete an Agent Controller
 * [DELETE /api/v1/certificate-authorities/{id}](delete-standalone-certificate-authority.md) - Delete a Standalone Certificate Authority
 * [DELETE /api/v1/client-workloads/{id}](delete-client-workload.md) - Delete a Client Workload
@@ -27,6 +28,10 @@
 * [GET /api/v1/access-policies](get-access-policies.md) - Get a page of Access Policies
 * [GET /api/v1/access-policies/{id}](get-access-policy.md) - Get the identified Access Policy
 * [GET /api/v1/access-policies/getByWorkloadIds/{clientWorkloadId}/{serverWorkloadId}](get-access-policy-by-workloads.md) - Get the identified Access Policy
+* [GET /api/v1/access-scenarios](get-access-scenarios.md) - Get a page of Access Scenarios
+* [GET /api/v1/access-scenarios/{id}](get-access-scenario.md) - Get the identified Access Scenario
+* [GET /api/v1/access-scenarios/by-policy/{policyId}](get-access-scenario-by-policy.md) - Get Access Scenario for a Policy
+* [GET /api/v1/access-scenarios/group-by](get-access-scenarios-group-by.md) - Get scenario count grouped by field
 * [GET /api/v1/agent-controllers](get-agent-controllers.md) - Get a page of Agent Controllers
 * [GET /api/v1/agent-controllers/{id}](get-agent-controller.md) - Get an Agent Controller
 * [GET /api/v1/audit-logs](get-audit-logs.md) - Get a page of Audit Log events
@@ -58,6 +63,9 @@
 * [GET /api/v1/integrations/{id}](get-integration.md) - Get an Integration
 * [GET /api/v1/log-streams](get-log-streams.md) - Get a page of Log Streams
 * [GET /api/v1/log-streams/{id}](get-log-stream.md) - Get a Log Stream
+* [GET /api/v1/mcp-activity](get-mcp-activity-summary.md) - Get MCP Access Activity Summary
+* [GET /api/v1/mcp-activity/request-history](get-mcp-request-history.md) - Get MCP Request History
+* [GET /api/v1/mcp-activity/requests/{correlationId}](get-mcp-request-detail.md) - Get MCP Request Detail
 * [GET /api/v1/resource-sets](get-resource-sets.md) - Get a page of Resource Sets
 * [GET /api/v1/resource-sets/{id}](get-resource-set.md) - Get a Resource Set
 * [GET /api/v1/roles](get-roles.md) - Get a page of Roles
@@ -70,7 +78,9 @@
 * [GET /api/v1/signin-policies](get-signon-policy.md) - Get a SignOn Policy
 * [GET /api/v1/sso-idps](get-identity-providers.md) - Get a page of SSO Identity Providers
 * [GET /api/v1/sso-idps/{id}](get-identity-provider.md) - Get a SSO Identity Provider
+* [GET /api/v1/sso-idps/{id}/discovered-groups](get-sso-idp-discovered-groups.md) - Get Discovered Groups for an SSO Identity Provider
 * [GET /api/v1/sso-idps/{id}/user-sessions](get-sso-idp-user-sessions.md) - Get active and revoked user sessions for an SSO Identity Provider
+* [GET /api/v1/sso-idps/{id}/userinfo-metrics](get-sso-idp-userinfo-metrics.md) - Get rolling 24-hour UserInfo health telemetry for an SSO Identity Provider
 * [GET /api/v1/sso-idps/{id}/verification](get-identity-provider-verification.md) - Verify the SSO Identity Provider
 * [GET /api/v1/trust-providers](get-trust-providers.md) - Get a page of Trust Providers
 * [GET /api/v1/trust-providers/{id}](get-trust-provider.md) - Get a Trust Provider
@@ -95,6 +105,7 @@
 * [GET /api/v2/integrations/{id}](get-integration2.md) - Get an Integration
 * [PATCH /api/v1/access-conditions/{id}](patch-access-condition.md) - Patch a single Access Condition
 * [PATCH /api/v1/access-policies/{id}](patch-access-policy.md) - Patch an Access Policy
+* [PATCH /api/v1/access-scenarios/{id}](patch-access-scenario.md) - Patch an Access Scenario
 * [PATCH /api/v1/agent-controllers/{id}](patch-agent-controller.md) - Patch an Agent Controller
 * [PATCH /api/v1/certificate-authorities/{id}](patch-standalone-certificate-authority.md) - Patch a Standalone Certificate Authority
 * [PATCH /api/v1/client-workloads/{id}](patch-client-workload.md) - Patch a Client Workload
@@ -118,6 +129,8 @@
 * [POST /api/v1/access-conditions](post-access-condition.md) - Create an Access Condition
 * [POST /api/v1/access-policies](post-access-policy.md) - Create an Access Policy
 * [POST /api/v1/access-policies/{id}/notes](post-access-policy-note.md) - Add a note to an Access Policy
+* [POST /api/v1/access-scenarios](post-access-scenario.md) - Create an Access Scenario
+* [POST /api/v1/access-scenarios/check-overlaps](check-access-scenario-overlaps.md) - Check Access Scenario policy overlaps
 * [POST /api/v1/agent-controllers](post-agent-controller.md) - Create an Agent Controller
 * [POST /api/v1/agent-controllers/{agentControllerExternalId}/device-code](post-agent-controller-device-code.md) - Generate a Device Code for an Agent Controller
 * [POST /api/v1/certificate-authorities](post-standalone-certificate-authority.md) - Create a Standalone Certificate Authority
@@ -146,6 +159,7 @@
 * [POST /api/v2/integrations](post-integration2.md) - Create an Integration
 * [PUT /api/v1/access-conditions](put-access-condition.md) - Update a single Access Condition
 * [PUT /api/v1/access-policies](put-access-policy.md) - Update an Access Policy
+* [PUT /api/v1/access-scenarios](put-access-scenario.md) - Update an Access Scenario
 * [PUT /api/v1/agent-controllers](put-agent-controller.md) - Update an Agent Controller
 * [PUT /api/v1/certificate-authorities](put-standalone-certificate-authority.md) - Update a Standalone Certificate Authority
 * [PUT /api/v1/client-workloads](put-client-workload.md) - Update a Client Workload

@@ -5,7 +5,7 @@ description: "Create a Trust Provider Secret"
 resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
 interface: api
 tags: ["trust-provider-secret"]
-timestamp: 2026-10-13T16:56:08-07:00
+timestamp: 2026-11-03T18:06:18-08:00
 ---
 
 # POST /api/v1/trust-providers/{tpId}/secrets

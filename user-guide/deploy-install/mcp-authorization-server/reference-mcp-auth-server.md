@@ -5,7 +5,7 @@ description: "Configuration options, endpoints, and error codes for the Aembit M
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-authorization-server/reference-mcp-auth-server/
 interface: mcp
 tags: ["mcp-authorization-server", "deploy-install"]
-timestamp: 2026-10-14T16:36:12-04:00
+timestamp: 2026-11-03T18:51:02-08:00
 ---
 
 # MCP Authorization Server reference
@@ -166,6 +166,18 @@ When implementing DCR in your MCP client:
 | **Response Type**                      | `code` (required)               |
 | **Authentication Method**              | `private_key_jwt` (recommended) |
 | **Proof Key for Code Exchange (PKCE)** | Required per MCP specification  |
+| **Application Type**                   | `native` or `web` (optional)    |
+
+### Application type
+
+The `application_type` field in a registration request sets which redirect URIs Aembit accepts.
+
+| Application type | Allowed redirect URIs                                                                         |
+| ---------------- | --------------------------------------------------------------------------------------------- |
+| `native`         | Custom schemes, such as `vscode://` or `cursor://`; `https`; and `http` on a loopback address |
+| `web`            | `https`, and `http` on a loopback address                                                     |
+
+A loopback address is `localhost`, `127.0.0.1`, or `[::1]`. When a request omits `application_type`, Aembit treats the client as `native` if any redirect URI uses a custom scheme or a loopback address, and as `web` otherwise. Aembit rejects any other `application_type` value with an `invalid_client_metadata` error. Aembit rejects a redirect URI that the application type does not allow with an `invalid_redirect_uri` error.
 
 ### Registration behavior
 
@@ -179,7 +191,7 @@ When implementing DCR in your MCP client:
 Ensure your MCP client library supports DCR. The client must:
 
 1. Discover the `registration_endpoint` from the OAuth/OIDC metadata document (exposed at `/.well-known/openid-configuration`)
-2. Send a POST request with `redirect_uris`, `grant_types`, and `response_types`
+2. Send a POST request with `redirect_uris`, `grant_types`, `response_types`, and optionally `application_type`
 3. Store the returned `client_id` for subsequent requests
 4. Include PKCE (`code_challenge` and `code_challenge_method`) in authorization requests
 

@@ -5,7 +5,7 @@ description: "The application fields that Workload Events record for each suppor
 resource: https://docs.aembit.io/user-guide/audit-report/workload-events/supported-protocols/
 interface: web-ui
 tags: ["workload-event", "audit-report"]
-timestamp: 2026-10-30T15:14:14-07:00
+timestamp: 2026-11-03T15:14:28-05:00
 ---
 
 # Supported protocols and application fields
@@ -71,32 +71,44 @@ MCP Identity Gateway records MCP events, with the HTTP fields under `application
 
 Request fields:
 
-| Field                | Presence | Description                                                                                                          |
-| -------------------- | -------- | -------------------------------------------------------------------------------------------------------------------- |
-| `httpMethod`         | Always   | HTTP method, such as `POST`.                                                                                         |
-| `httpVersion`        | Always   | HTTP version, such as `HTTP/1.1`.                                                                                    |
-| `uri`                | Always   | Requested URI, with the query string removed to avoid recording sensitive values.                                    |
-| `headers`            | Always   | A list of single-key objects, each a header name and value, with sensitive headers redacted.                         |
-| `mcpMethod`          | Always   | The MCP method for the request, such as `tools/list` or `tools/call`.                                                |
-| `mcpSessionId`       | Always   | The MCP session ID, shared across requests and responses in the same session.                                        |
-| `mcpProtocolVersion` | Optional | The MCP protocol version negotiated with the target MCP server, when available.                                      |
-| `mcpServerName`      | Optional | The name of the target MCP server, when available.                                                                   |
-| `mcpToolName`        | Optional | The tool invoked, on `tools/call` requests.                                                                          |
-| `mcpRequestId`       | Optional | The MCP request identifier, used to correlate a response with its request.                                           |
-| `userId`             | Optional | The user identity for MCP flows that involve a human identity, matching the **User (MCP App Protocol only)** filter. |
+| Field                       | Presence | Description                                                                                                                                                        |
+| --------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `httpMethod`                | Always   | HTTP method, such as `POST`.                                                                                                                                       |
+| `httpVersion`               | Always   | HTTP version, such as `HTTP/1.1`.                                                                                                                                  |
+| `uri`                       | Always   | Requested URI, with the query string removed to avoid recording sensitive values.                                                                                  |
+| `headers`                   | Always   | A list of single-key objects, each a header name and value, with sensitive headers redacted.                                                                       |
+| `mcpMethod`                 | Always   | The MCP method for the request, such as `tools/list` or `tools/call`.                                                                                              |
+| `mcpSessionId`              | Always   | The MCP session ID, shared across requests and responses in the same session.                                                                                      |
+| `mcpProtocolVersion`        | Optional | The MCP protocol version negotiated with the target MCP server, when available.                                                                                    |
+| `mcpServerName`             | Optional | The name of the target MCP server, when available.                                                                                                                 |
+| `mcpToolName`               | Optional | The tool invoked, on `tools/call` requests.                                                                                                                        |
+| `mcpPromptName`             | Optional | The prompt requested, on `prompts/get` requests.                                                                                                                   |
+| `mcpResourceUri`            | Optional | The URI of the resource requested, on `resources/read` requests.                                                                                                   |
+| `mcpRequestId`              | Optional | The MCP request identifier, used to correlate a response with its request.                                                                                         |
+| `userId`                    | Optional | The user identity for MCP flows that involve a human identity, matching the **User (MCP App Protocol only)** filter.                                               |
+| `originatingClientWorkload` | Optional | The Client Workload that the MCP Identity Gateway matched to the MCP client, as an object with `id` and `name`.                                                    |
+| `exceptionCategory`         | Optional | The category of the exception the MCP Identity Gateway recorded for the request, such as `MCP_SERVER`.                                                             |
+| `exceptionCode`             | Optional | The exception code the MCP Identity Gateway recorded for the request, such as `TIMEOUT`. See [MCP exception codes](../mcp/exception-codes.md). |
 
 Response fields:
 
-| Field                | Presence | Description                                                                                  |
-| -------------------- | -------- | -------------------------------------------------------------------------------------------- |
-| `httpVersion`        | Always   | HTTP version, such as `HTTP/1.1`.                                                            |
-| `headers`            | Always   | A list of single-key objects, each a header name and value, with sensitive headers redacted. |
-| `httpResponseCode`   | Always   | HTTP response status code, such as `200` or `404`.                                           |
-| `mcpMethod`          | Always   | The MCP method the response corresponds to, such as `tools/list` or `tools/call`.            |
-| `mcpSessionId`       | Always   | The MCP session ID, shared across requests and responses in the same session.                |
-| `mcpProtocolVersion` | Optional | The MCP protocol version negotiated with the target MCP server, when available.              |
-| `mcpServerName`      | Optional | The name of the target MCP server, when available.                                           |
-| `mcpRequestId`       | Optional | The MCP request identifier, used to correlate the response with its request.                 |
+| Field                       | Presence | Description                                                                                                          |
+| --------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------- |
+| `httpVersion`               | Always   | HTTP version, such as `HTTP/1.1`.                                                                                    |
+| `headers`                   | Always   | A list of single-key objects, each a header name and value, with sensitive headers redacted.                         |
+| `httpResponseCode`          | Always   | HTTP response status code, such as `200` or `404`.                                                                   |
+| `mcpMethod`                 | Always   | The MCP method the response corresponds to, such as `tools/list` or `tools/call`.                                    |
+| `mcpSessionId`              | Always   | The MCP session ID, shared across requests and responses in the same session.                                        |
+| `mcpProtocolVersion`        | Optional | The MCP protocol version negotiated with the target MCP server, when available.                                      |
+| `mcpServerName`             | Optional | The name of the target MCP server, when available.                                                                   |
+| `mcpToolName`               | Optional | The tool invoked, on `tools/call` responses.                                                                         |
+| `mcpPromptName`             | Optional | The prompt requested, on `prompts/get` responses.                                                                    |
+| `mcpResourceUri`            | Optional | The URI of the resource requested, on `resources/read` responses.                                                    |
+| `mcpRequestId`              | Optional | The MCP request identifier, used to correlate the response with its request.                                         |
+| `userId`                    | Optional | The user identity for MCP flows that involve a human identity, matching the **User (MCP App Protocol only)** filter. |
+| `originatingClientWorkload` | Optional | The Client Workload that the MCP Identity Gateway matched to the MCP client, as an object with `id` and `name`.      |
+| `exceptionCategory`         | Optional | The category of the exception the MCP Identity Gateway recorded for the request, such as `MCP_SERVER`.               |
+| `exceptionCode`             | Optional | The exception code the MCP Identity Gateway recorded for the request, such as `TIMEOUT`.                             |
 
 Example `application.mcp` block
 
@@ -116,7 +128,11 @@ Example `application.mcp` block
     "mcpServerName": "example-mcp-server",
     "mcpToolName": "search_records",
     "mcpRequestId": "42",
-    "userId": "alice@example.com"
+    "userId": "alice@example.com",
+    "originatingClientWorkload": {
+      "id": "8e3f2b1c-6d4a-4c7e-9b2f-1a5d8c0e7f43",
+      "name": "example-mcp-client"
+    }
   }
 }
 ```

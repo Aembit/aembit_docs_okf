@@ -89,15 +89,15 @@ When you create the MCP User-Based Access Token Credential Provider and click **
 
 ## Create an Access Policy
 
-This section creates the Gateway-to-Server Access Policy, which authorizes the MCP Identity Gateway to access Stripe on behalf of authenticated users.
+This section creates the Gateway-to-Server Access Policy, which authorizes MCP Identity Gateway to access Stripe on behalf of authenticated users.
 
-Create an Access Policy linking the MCP Identity Gateway (as the Client Workload), the Credential Provider you created, and the Server Workload for Stripe.
+Create an Access Policy linking MCP Identity Gateway (as the Client Workload), the Credential Provider you created, and the Server Workload for Stripe.
 
 > **The Gateway is the Client Workload**
 >
-> In this policy, the Client Workload is the MCP Identity Gateway itself—not the AI agent or individual users. The AI agent connects through the separate Client-to-Gateway policy, and the Credential Provider enforces per-user access.
+> In this policy, the Client Workload is MCP Identity Gateway itself—not the AI agent or individual users. The AI agent connects through the separate Client-to-Gateway policy, and the Credential Provider enforces per-user access.
 
-For step-by-step instructions, including the Client Workload settings that identify the Gateway, see [Create the gateway-to-server Access Policy](../../../access-policies/mcp-identity-gateway/setup-mcp-gateway.md#create-the-gateway-to-server-access-policy).
+For step-by-step instructions, including the Client Workload settings that identify MCP Identity Gateway, see [Create the gateway-to-server Access Policy](../../../access-policies/mcp-identity-gateway/setup-mcp-gateway.md#create-the-gateway-to-server-access-policy).
 
 ## Verify
 

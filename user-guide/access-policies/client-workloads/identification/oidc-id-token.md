@@ -5,12 +5,12 @@ description: "How to identify workloads using a custom claim from an OIDC ID tok
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/oidc-id-token/
 interface: web-ui
 tags: ["generic", "identification", "client-workload", "access-policy"]
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-11-03T11:36:11-05:00
 ---
 
 # OIDC ID Token
 
-This page explains how to use the **OIDC ID Token** identifier to match any claim in an OIDC ID token from a standards-compliant identity provider.
+Use the **OIDC ID Token** identifier to match any claim in an OIDC ID token from a standards-compliant identity provider.
 
 ## Understanding the OIDC ID Token identifier
 
@@ -18,9 +18,9 @@ Unlike the dedicated [Audience](oidc-id-token-audience.md), [Issuer](oidc-id-tok
 
 Use this identifier to restrict access based on custom or non-standard token attributes. Examples include a user’s email address, a custom group membership field, or an organizational attribute your identity provider adds to tokens.
 
-> **Array-valued claims aren’t supported**
+> **Array-valued claims are not supported**
 >
-> This identifier matches scalar string values only. If the claim you specify contains an array of values (for example, `"groups": ["engineering", "platform"]`), the match fails. Use a claim that contains a single string value.
+> This identifier matches scalar string values only. If the claim you specify contains an array of values (for example, `"groups": ["engineering", "platform"]`), the match fails. Use a claim that contains a single string value. To match a user’s identity provider groups, use the [User Group](user-group.md) identifier instead.
 
 ## Applicable deployment type
 
@@ -50,8 +50,8 @@ Supported environments include:
 
    For example, to match on a user’s email address:
 
-   * **Claim Name**: `email`
-   * **Claim Value**: `user@example.com`
+   * **Claim Name** - `email`
+   * **Claim Value** - `user@example.com`
 
 6. Click **Save**.
 
@@ -59,7 +59,7 @@ Supported environments include:
 
 ## Common custom claim examples
 
-The following table shows commonly used claim names and example values. The exact claims available depend on your identity provider and its configuration.
+Commonly used claim names and example values appear in the following table. The exact claims available depend on your identity provider and its configuration.
 
 | Claim name   | Description                            | Example value                      |
 | ------------ | -------------------------------------- | ---------------------------------- |
@@ -70,7 +70,7 @@ The following table shows commonly used claim names and example values. The exac
 | `tenant_id`  | Custom organizational identifier       | `acme-corp`                        |
 | `department` | Custom department claim                | `engineering`                      |
 
-> **Tip**
+> **Find the claims in your tokens**
 >
 > To discover which claims your identity provider includes in its tokens, decode a sample token using a tool such as [jwt.io](https://jwt.io) and review the available fields.
 

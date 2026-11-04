@@ -5,12 +5,12 @@ description: "This document provides a high-level conceptual overview of auditin
 resource: https://docs.aembit.io/user-guide/audit-report/
 interface: web-ui
 tags: ["audit-report"]
-timestamp: 2026-10-14T16:36:12-04:00
+timestamp: 2026-11-03T15:14:28-05:00
 ---
 
 # Audit and report on Workload activity
 
-Your Aembit Tenant includes three different reporting tools that allow you to review detailed event information. These tools provide insights into your Aembit environment, enabling you to review historical event data and remediate any issues that may arise. This content is useful for reviewing the number of credential requests recorded over a specific period or diving deep into audit logs to troubleshoot errors.
+Your Aembit Tenant includes reporting tools that allow you to review detailed event information. These tools provide insights into your Aembit environment, enabling you to review historical event data and remediate any issues that may arise. This content is useful for reviewing the number of credential requests recorded over a specific period or diving deep into audit logs to troubleshoot errors.
 
 The Aembit Tenant includes the following views in the Reporting Dashboard:
 
@@ -20,7 +20,7 @@ The Aembit Tenant includes the following views in the Reporting Dashboard:
 
 * [Workload Events](#workload-events)
 
-* [MCP Authorization Tracing](#mcp-authorization-tracing)
+* [MCP reports](#mcp-reports)
 
 * [Global Policy Compliance](#global-policy-compliance)
 
@@ -64,13 +64,15 @@ Use the Global Policy Compliance view to review the compliance status of your Ae
 
 →
 
-## MCP Authorization Tracing
+## MCP reports
+
+The MCP reports cover MCP traffic through the MCP Identity Gateway. MCP Access Activities lists MCP requests with no error or exception code, grouped by user, MCP client, MCP server, method, and target. MCP Access Exceptions lists MCP requests that have an error or an exception code, grouped by user, MCP client, MCP server, method, target, and exception.
 
 MCP Authorization Tracing is a live view of inbound authorization requests at the MCP Identity Gateway. It surfaces the redirect URI, resource, matched Client Workload, and Access Policy outcome for each request as the Gateway receives it, without waiting for the standard event-pipeline delay. Use it to reproduce a failing MCP flow and watch what the Gateway sees in real time.
 
 ![](https://docs.aembit.io/aembit-icons/lightbulb-light.svg)
 
-[More on MCP Authorization Tracing](mcp-authorization-tracing.md)Learn how to use the live MCP Authorization Tracing view in the Reporting dashboard.
+[More on MCP reports](mcp/overview.md)Learn which MCP report to use in the Reporting dashboard.
 
 →
 

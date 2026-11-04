@@ -4,7 +4,7 @@ title: "SamlIdentityProviderDTO"
 description: "Individual SSO Identity Provider"
 resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
 interface: api
-timestamp: 2026-10-13T16:56:08-07:00
+timestamp: 2026-11-03T18:06:18-08:00
 ---
 
 # SamlIdentityProviderDTO
@@ -31,6 +31,9 @@ Individual SSO Identity Provider
 - **userAccessEnabled** *(optional)*: boolean - Whether user access via this Identity Provider is enabled
 - **userAccessTokenLifetime** *(optional)*: null,integer (int32) - User access token lifetime in seconds (sliding inactivity lifetime)
 - **userAccessAbsoluteLifetime** *(optional)*: null,integer (int32) - User access absolute lifetime in seconds (maximum session duration)
+- **enableUserinfoGroupLookup** *(optional)*: boolean - Whether UserInfo group lookup is enabled for this identity provider
+- **groupClaimAttribute** *(optional)*: null,string - Claim attribute name for extracting group memberships
+- **groupCacheTtlMinutes** *(optional)*: integer (int32) - Group cache TTL in minutes
 - **entityId** *(optional)*: null,string - SAML Entity ID of the remote SSO Identity Provider
 - **metadataUrl** *(optional)*: null,string - Metadata URL of the remote SSO Identity Provider
 - **metadataXml** *(optional)*: null,string - Metadata XML content of the remote SSO Identity Provider

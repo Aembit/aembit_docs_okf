@@ -5,7 +5,7 @@ description: "How to identify MCP client workloads using a Client ID Metadata Do
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/cimd-client-id/
 interface: web-ui
 tags: ["identification", "client-workload", "access-policy"]
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-11-03T18:51:02-08:00
 ---
 
 # CIMD Client ID
@@ -77,7 +77,18 @@ To configure a Client Workload using the CIMD Client ID identifier, follow these
 
    For example: `https://mcp.example.com/.well-known/oauth/client-metadata.json`
 
-6. Click **Save**.
+6. Under **MCP Authorization Configuration**, configure the **Enforce SSO** option:
+
+   | Setting          | Behavior                                                                              |
+   | ---------------- | ------------------------------------------------------------------------------------- |
+   | **On** (default) | Users must authenticate through a configured identity provider during the OAuth flow. |
+   | **Off**          | The OAuth flow completes without user authentication.                                 |
+
+   When Enforce SSO is on, a multi-select dropdown appears listing the active SSO identity providers configured for your Aembit Tenant. By default, Aembit selects every listed identity provider. Deselect any that you do not want to appear on the MCP authentication page for this Client Workload. Keep at least one selected, or Aembit does not save the Client Workload.
+
+   For architecture diagrams comparing these flows, see [MCP Authorization Server architecture](../../../deploy-install/mcp-authorization-server/concepts-mcp-auth-server.md#mcp-authorization-server-architecture).
+
+7. Click **Save**.
 
    Aembit displays the new Client Workload on the **Client Workloads** page.
 

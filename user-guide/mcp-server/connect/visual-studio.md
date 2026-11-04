@@ -5,7 +5,7 @@ description: "Configure Visual Studio to query Aembit event logs through the MCP
 resource: https://docs.aembit.io/user-guide/mcp-server/connect/visual-studio/
 interface: mcp
 tags: ["connect", "mcp-server"]
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-11-03T18:51:02-08:00
 ---
 
 # Connect with Visual Studio
@@ -79,7 +79,7 @@ Keep these points in mind when using Visual Studio’s MCP support with the Aemb
 
 * The MCP Server expects structured JSON commands, not free-form natural language.
 * The MCP Server only supports read operations; you can’t modify Aembit data through this connection.
-* Queries operate on your default resource set unless you specify `X-Aembit-ResourceSet`.
+* Without `X-Aembit-ResourceSet`, queries use the default Resource Set if you have access to it, and otherwise a Resource Set where you can read the requested data.
 
 ## Next steps
 

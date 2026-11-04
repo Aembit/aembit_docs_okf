@@ -5,18 +5,18 @@ description: "Configuration guides for connecting third-party MCP servers to AI 
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/supported-servers/
 interface: mcp
 tags: ["supported-server", "mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-09-23T12:32:31-07:00
+timestamp: 2026-11-02T13:04:06-08:00
 ---
 
 # Supported MCP Servers
 
-The Aembit MCP Identity Gateway brokers AI agent access to third-party MCP servers. It enforces Access Policies and injects per-user credentials, so agents never hold credentials directly.
+The Aembit MCP Identity Gateway brokers AI agent access to third-party MCP servers. It enforces Access Policies and injects per-user credentials, so AI agents never hold credentials directly.
 
-Each of the following guides configures one MCP server to work through the Identity Gateway with the **MCP User-Based Access Token** credential type. The Atlassian guide also covers the **MCP Enterprise Managed Access Token** credential type, which the Atlassian MCP server supports.
+Each of the following guides configures one MCP server to work through MCP Identity Gateway with the **MCP User-Based Access Token** credential type. The Atlassian guide also covers the **MCP Enterprise Managed Access Token** credential type, which the Atlassian MCP server supports.
 
 > **MCP access vs. direct API access**
 >
-> These guides configure **MCP tool access through the Identity Gateway**. For direct REST API access to the same vendor (a traditional Server Workload), see the [Server Workload guides](../../../access-policies/server-workloads/guides/overview.md).
+> These guides configure **MCP tool access through MCP Identity Gateway**. For direct REST API access to the same vendor (a traditional Server Workload), see the [Server Workload guides](../../../access-policies/server-workloads/guides/overview.md).
 
 ## Supported servers
 

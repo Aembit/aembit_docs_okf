@@ -5,17 +5,18 @@ description: "Description of what Identity Providers are and how they work in th
 resource: https://docs.aembit.io/user-guide/administration/identity-providers/
 interface: web-ui
 tags: ["identity-provider", "administration"]
-timestamp: 2026-10-14T16:36:12-04:00
+timestamp: 2026-11-03T11:36:11-05:00
 ---
 
 # Identity Providers overview
 
-This page explains how Identity Providers work with Aembit and when to use them.
+Identity Providers let users sign in to Aembit through an external SSO provider.
 
 * **Ready to set up SSO?** See [Creating SAML 2.0 Identity Providers](create-idp-saml.md) or [Creating OIDC 1.0 Identity Providers](create-idp-oidc.md)
 * **Using Okta?** See [How to set up Okta SSO with your Aembit Tenant](okta/set-up-sso.md) to set up SSO with the Aembit integration from the Okta app catalog
 * **Need to configure automatic user creation?** See [Automatic User Creation](automatic-user-creation.md)
-* **Need to revoke a user’s MCP sessions?** The **Sessions** tab on each Identity Provider lists the MCP user sessions of people who signed in through it; see [Manage MCP user sessions](manage-mcp-user-sessions.md)
+* **Need to revoke a user’s MCP sessions?** The **Sessions** tab on each Identity Provider lists the MCP user sessions of people who signed in through it. See [Manage MCP user sessions](manage-mcp-user-sessions.md)
+* **Need to limit MCP servers to an IdP group?** Turn on group lookup on an OIDC Identity Provider. See [Configure user group lookup](user-group-lookup.md)
 * **Just exploring?** Keep reading to understand the concepts
 
 In your Aembit Tenant, the Identity Providers feature lets you offer users alternate sign-in methods. The default authentication method is to use an email and password with the option to [enable and require MFA](../sign-on-policy/overview.md#require-multi-factor-authentication-for-native-sign-in).
@@ -54,9 +55,9 @@ The following occurs during the SSO authentication process on your Aembit Tenant
 
 5. Aembit logs the user in through the successful SSO authentication.
 
-SSO authentication fails when the IdP’s response fails validation, when Aembit can’t create the user or map them to a role, or when the user has no account, an inactive account, or no active role. In that case, Aembit returns the user to the login page with the message “Single Sign-On login failed. Check your Identity Provider configuration.” Aembit also records an [Audit Log](../../audit-report/audit-logs.md#sso-login-failures) event in the `Authentication` category that names the step that failed.
+SSO authentication fails when the IdP’s response fails validation or when Aembit cannot create the user or map them to a role. SSO authentication also fails when the user has no account, an inactive account, or no active role. In that case, Aembit returns the user to the login page with the message “Single Sign-On login failed. Check your Identity Provider configuration.” Aembit also records an [Audit Log](../../audit-report/audit-logs.md#sso-login-failures) event in the `Authentication` category that names the step that failed.
 
-If Aembit can’t redirect the user to the IdP, the login page shows “Single Sign-On challenge failed. Please contact your administrator.”
+If Aembit cannot redirect the user to the IdP, the login page shows `Single Sign-On challenge failed. Please contact your administrator.`
 
 The following diagram shows the SSO authentication flow:
 
@@ -66,7 +67,7 @@ The following diagram shows the SSO authentication flow:
 
 When you enable the automatic user creation feature, Aembit automatically generates new user accounts on your behalf when your users go through the [SSO authenticate process](#aembit-sso-authentication-process). This automation not only saves time and resources by reducing or eliminating the manual effort needed to manage user accounts but also minimizes errors associated with manual account management. Also, this feature provides granular control of what user roles Aembit assigns to new users it creates.
 
-The automatic user creation feature works by extracting certain SAML attributes in the SAML response from the IdP after successful authentication with that IdP. It’s important to know, however, that not all IdPs configure their SAML attributes the same way. Different IdPs use distinct attribute names to pass user group claim information.
+The automatic user creation feature works by extracting certain SAML attributes in the SAML response from the IdP after successful authentication with that IdP. It is important to know, however, that not all IdPs configure their SAML attributes the same way. Different IdPs use distinct attribute names to pass user group claim information.
 
 To alleviate these inconsistencies, Aembit allows you to map your IdP’s SAML attributes to the user roles available in your Aembit Tenant. See [Configure automatic user creation](automatic-user-creation.md) for details.
 
@@ -100,4 +101,5 @@ The following pages provide more information about working with Identity Provide
 * [Creating SAML 2.0 Identity Providers](create-idp-saml.md) - Set up SAML 2.0 SSO in your Aembit Tenant
 * [Creating OIDC 1.0 Identity Providers](create-idp-oidc.md) - Set up OIDC 1.0 SSO in your Aembit Tenant
 * [Automatic User Creation](automatic-user-creation.md) - Configure automatic user creation with Identity Providers
+* [Configure user group lookup](user-group-lookup.md) - Let Access Policies match the groups your users belong to in an OIDC Identity Provider
 * [How to set up Okta SSO with your Aembit Tenant](okta/set-up-sso.md) - Set up Okta SSO with the Aembit integration from the Okta app catalog

@@ -3,7 +3,7 @@ type: reference
 title: "TrustProviderSecretSlimDTO"
 resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
 interface: api
-timestamp: 2026-10-13T16:56:08-07:00
+timestamp: 2026-11-03T18:06:18-08:00
 ---
 
 # TrustProviderSecretSlimDTO
@@ -13,5 +13,7 @@ timestamp: 2026-10-13T16:56:08-07:00
 **Properties:**
 
 - **externalId** *(optional)*: string (uuid)
+- **name** *(optional)*: null,string
 - **secret** *(required)*: string
 - **type** *(optional)*: [TrustProviderSecretType](trust-provider-secret-type.md)
+- **expiresAt** *(optional)*: null,string (date-time)

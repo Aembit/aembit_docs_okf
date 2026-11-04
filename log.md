@@ -1,5 +1,58 @@
 # Aembit Changelog
 
+## 2026-11-03
+
+### Improved MCP client sign-in and Client Workload identification
+
+Client Workloads have more ways to identify MCP clients, and MCP sign-in follows the Identity Providers you assign. This release also includes fixes for MCP sessions, Client Workload editing, and the Aembit MCP Server.
+
+### MCP client identification and sign-in
+
+* **Redirect URI and CIMD Client ID together** - One Client Workload can now carry both a Redirect URI and a CIMD Client ID identifier. See [Redirect URI](user-guide/access-policies/client-workloads/identification/redirect-uri.md).
+* **Enforce SSO for CIMD Client IDs** - A Client Workload with only a CIMD Client ID can now turn on **Enforce SSO** and select its Identity Providers. See [CIMD Client ID](user-guide/access-policies/client-workloads/identification/cimd-client-id.md).
+* **Assigned Identity Providers only** - With **Enforce SSO** on, the MCP sign-in page lists only the Identity Providers assigned to the Client Workload.
+* **Native MCP clients** - Dynamic Client Registration accepts an `application_type` of `native` or `web`, so native clients can register custom-scheme redirect URIs such as `vscode://`. See [MCP Authorization Server reference](user-guide/deploy-install/mcp-authorization-server/reference-mcp-auth-server.md).
+* **Trailing slash in URL paths** - The **URL Path** of an MCP Server Workload can now end in `/`, such as `/mcp/`.
+
+### Fixes
+
+* **Revoke sessions by email** - On an Identity Provider’s **Sessions** tab, a full email address in **Filter Users** now enables **Revoke filtered**. See [Manage MCP user sessions](user-guide/administration/identity-providers/manage-mcp-user-sessions.md).
+* **Aembit MCP Server and Resource Sets** - Aembit MCP Server tools now load for users whose access covers only Resource Sets other than the default one.
+* **Fewer sign-in prompts** - MCP clients such as VS Code no longer ask users to sign in again after a token refresh. This applies when the Client-to-Gateway Access Policy uses the OIDC ID Token Credential Provider.
+* **Saved Identity Provider selection** - An existing Client Workload with **Enforce SSO** on and no saved Identity Providers now opens with none selected, and **Save** requires at least one.
+
+### MCP Access Activities and MCP Access Exceptions now available
+
+The Reporting dashboard now has two views of the MCP requests that pass through MCP Identity Gateway. See [MCP reports](user-guide/audit-report/mcp/overview.md).
+
+* **MCP Access Activities** - Lists the MCP requests with no error or exception code, grouped by user, MCP client, MCP server, MCP method, and target. See [How to review MCP Access Activities](user-guide/audit-report/mcp/access-activities.md).
+* **MCP Access Exceptions** - Lists the MCP requests that have an error or an exception code, with the category and code of each exception. See [How to review MCP Access Exceptions](user-guide/audit-report/mcp/access-exceptions.md) and [MCP exception codes](user-guide/audit-report/mcp/exception-codes.md).
+* **Request detail** - Open a row to see each request in it. For a request, Aembit shows its Access Policy decisions, its outcome on each MCP server, and its events.
+
+Both views include only requests through MCP Identity Gateway 1.35.6263 or later. See [MCP Identity Gateway supported versions](reference/edge-components/edge-component-supported-versions.md#mcp-identity-gateway). They open only when your role has **Read Only** permission on **Workload Events**.
+
+### Stronger OAuth validation and Aembit Tenant UI sign-in protection
+
+Aembit Cloud now applies stricter checks to OAuth authorization for Credential Providers and to sign-in to the Aembit Tenant UI. Aembit applied these updates to Aembit Cloud for you, so you have nothing to change.
+
+* **Issuer verification** - After a user consents, Aembit Cloud checks that the authorization server’s response comes from the issuer it discovered for the Credential Provider. A response from a different authorization server cannot complete the authorization.
+* **OAuth request validation** - Aembit Cloud applies tighter checks to OAuth callbacks and to the authorization server endpoints it calls.
+* **Sign-in protection** - The Aembit Tenant UI has stronger protection against repeated failed password sign-ins.
+* **Content Security Policy** - The Aembit Tenant UI sends a stricter Content Security Policy, which allows scripts and fonts from fewer outside sources.
+* **Container image update** - Aembit Cloud container images include the Debian security update for the published vulnerability `CVE-2026-111497` in the Brotli compression library.
+
+### User Group identifier for MCP Identity Gateway now available
+
+A Client Workload can now match MCP Identity Gateway users by the groups they belong to in an OIDC Identity Provider. Use the **User Group** identifier to limit an MCP server to the members of a team, such as `engineering` or every group that starts with `finance-`. See [User Group](user-guide/access-policies/client-workloads/identification/user-group.md).
+
+* **Group lookup** - Turn on **User Groups & MCP Policy Access** on an OIDC 1.0 Identity Provider to set the group claim and the cache time. See [Configure user group lookup](user-guide/administration/identity-providers/user-group-lookup.md).
+* **UserInfo requests** - When the sign-in tokens carry no group claim, Aembit requests it from the Identity Provider’s UserInfo endpoint.
+* **Names and patterns** - Each User Group value names an Identity Provider and a group name or a pattern that uses `*`, matched case-sensitively against the whole group name.
+* **More than one Identity Provider** - A user needs to match any one User Group value, so one Client Workload can serve users from two Identity Providers.
+* **Group refresh** - After the cache time passes, Aembit refreshes a user’s groups from UserInfo in the background. See [When changes take effect](user-guide/administration/identity-providers/user-group-lookup.md#when-changes-take-effect).
+* **Removed groups** - When UserInfo answers without the group claim, Aembit clears the user’s stored groups. When a UserInfo request fails, Aembit keeps the last stored groups.
+* **UserInfo health** - The Identity Provider’s **Details** tab shows the **UserInfo Health (Last 24 Hours)** card. See [Check group lookup health](user-guide/administration/identity-providers/user-group-lookup.md#check-group-lookup-health).
+
 ## 2026-10-30
 
 ### Aembit Cloud and Aembit Edge stop trusting compromised eMudhra certificates
@@ -864,7 +917,7 @@ Aembit has expanded the event coverage and reporting surfaces for troubleshootin
 * **User identity on MCP Workload Events**: MCP Workload Events now include a `userId` field at `application.mcp.userId` for flows that involve a human identity, such as MCP Authorization Server flows. The Workload Events view exposes a matching **User (MCP App Protocol only)** filter for per-user investigations and SIEM scoping.
 * **Trust Provider failures emit at Error severity**: Trust Provider attestation failures in MCP flows now emit at `Error` severity rather than warning, so SIEM alerts that watch for `Error` events catch real authorization failures reliably.
 * **Clearer expired-credential explanations**: The `access.credential` event’s reason now identifies which token expired and at which step, making it easier to decide between re-authentication, credential refresh, or Credential Provider reconfiguration.
-* **MCP Authorization Tracing view**: A new live diagnostic view in the Reporting dashboard surfaces inbound authorization requests at the MCP Identity Gateway in real time, with the redirect URI, resource, matched Client Workload, and policy outcome for each request. See [MCP Authorization Tracing](user-guide/audit-report/mcp-authorization-tracing.md).
+* **MCP Authorization Tracing view**: A new live diagnostic view in the Reporting dashboard surfaces inbound authorization requests at the MCP Identity Gateway in real time, with the redirect URI, resource, matched Client Workload, and policy outcome for each request. See [MCP Authorization Tracing](user-guide/audit-report/mcp/authorization-tracing.md).
 
 For an end-to-end investigation flow that uses these reporting surfaces together, see [Troubleshoot MCP and AI IAM access](user-guide/troubleshooting/mcp-ai-iam.md).
 

@@ -5,7 +5,7 @@ description: "Prerequisites and authentication for connecting your AI tools to t
 resource: https://docs.aembit.io/user-guide/mcp-server/connect/
 interface: mcp
 tags: ["connect", "mcp-server"]
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-11-03T18:51:02-08:00
 ---
 
 # Connect to the MCP Server
@@ -50,7 +50,7 @@ Authorization: Bearer <apiToken>
 
 ### Resource set scoping Optional
 
-By default, queries use your default resource set. To scope queries to a different resource set, include:
+By default, queries use the default Resource Set if you have access to it, and otherwise a Resource Set where you can read the requested data. To scope queries to a different resource set, include:
 
 ```shell
 X-Aembit-ResourceSet: <resourceSetId>

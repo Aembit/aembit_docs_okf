@@ -4,7 +4,7 @@ title: "RevokeUserSessionRequestDTO"
 description: "Request payload to revoke SSO Identity Provider user sessions"
 resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
 interface: api
-timestamp: 2026-10-13T16:56:08-07:00
+timestamp: 2026-11-03T18:06:18-08:00
 ---
 
 # RevokeUserSessionRequestDTO

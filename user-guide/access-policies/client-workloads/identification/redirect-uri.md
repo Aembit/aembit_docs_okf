@@ -5,7 +5,7 @@ description: "How to identify MCP client workloads using a Redirect URI within A
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/redirect-uri/
 interface: web-ui
 tags: ["mcp", "identification", "client-workload", "access-policy"]
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-11-03T18:51:02-08:00
 ---
 
 # Redirect URI
@@ -48,14 +48,18 @@ To configure a Client Workload using the Redirect URI identifier, follow these s
 
    > **Redirect URI scope**
    >
-   > Redirect URI is one of the identifier types available for MCP Client Workloads; the other is [CIMD Client ID](cimd-client-id.md). A Client Workload uses a single MCP identifier type, and you can’t combine it with other identifier types such as Hostname or Source IP Address to narrow the scope. You can add multiple redirect URIs to a single Client Workload, but each URI grants access through the associated Access Policy using OR logic. Any MCP client whose redirect URI matches one of the configured values receives access.
+   > Redirect URI is one of the identifier types available for MCP Client Workloads; the other is [CIMD Client ID](cimd-client-id.md). A Client Workload can have both a Redirect URI and a CIMD Client ID. You cannot combine either MCP identifier type with other identifier types such as Hostname or Source IP Address. Combining a Redirect URI and a CIMD Client ID does not narrow the scope: an MCP client that matches either one receives access. You can add multiple redirect URIs to a single Client Workload, but each URI grants access through the associated Access Policy using OR logic. Any MCP client whose redirect URI matches one of the configured values receives access.
    >
    > To maintain precise control, assign one redirect URI per Client Workload and create separate Access Policies for each MCP client you want to manage independently.
 
 6. Under **MCP Authorization Configuration**, configure the **Enforce SSO** option:
 
-   * **On** (default) - Users must authenticate through a configured identity provider during the OAuth flow. When Enforce SSO is on, a multi-select dropdown appears listing the SSO identity providers configured for your tenant. By default, Aembit selects all identity providers. Deselect any that you don’t want to appear on the MCP authentication page for this Client Workload.
-   * **Off** - The OAuth flow completes without user authentication.
+   | Setting          | Behavior                                                                              |
+   | ---------------- | ------------------------------------------------------------------------------------- |
+   | **On** (default) | Users must authenticate through a configured identity provider during the OAuth flow. |
+   | **Off**          | The OAuth flow completes without user authentication.                                 |
+
+   When Enforce SSO is on, a multi-select dropdown appears listing the active SSO identity providers configured for your tenant. By default, Aembit selects all identity providers. Deselect any that you don’t want to appear on the MCP authentication page for this Client Workload. Keep at least one selected, or Aembit does not save the Client Workload.
 
    For architecture diagrams comparing these flows, see [MCP Authorization Server architecture](../../../deploy-install/mcp-authorization-server/concepts-mcp-auth-server.md#mcp-authorization-server-architecture).
 

@@ -110,15 +110,15 @@ Each user authorizes access to GitLab when they first connect through MCP Identi
 
 On the **Select Existing** tab, select the Credential Provider you saved during GitLab setup and click **Use Selected**. The linked setup procedure describes creating a new Credential Provider. Reuse yours so its **Callback URL** matches GitLab’s **Redirect URI**.
 
-This section creates the Gateway-to-Server Access Policy, which authorizes the MCP Identity Gateway to access GitLab on behalf of authenticated users.
+This section creates the Gateway-to-Server Access Policy, which authorizes MCP Identity Gateway to access GitLab on behalf of authenticated users.
 
-Create an Access Policy linking the MCP Identity Gateway (as the Client Workload), the Credential Provider you created, and the Server Workload for GitLab.
+Create an Access Policy linking MCP Identity Gateway (as the Client Workload), the Credential Provider you created, and the Server Workload for GitLab.
 
 > **The Gateway is the Client Workload**
 >
-> In this policy, the Client Workload is the MCP Identity Gateway itself—not the AI agent or individual users. The AI agent connects through the separate Client-to-Gateway policy, and the Credential Provider enforces per-user access.
+> In this policy, the Client Workload is MCP Identity Gateway itself—not the AI agent or individual users. The AI agent connects through the separate Client-to-Gateway policy, and the Credential Provider enforces per-user access.
 
-For step-by-step instructions, including the Client Workload settings that identify the Gateway, see [Create the gateway-to-server Access Policy](../../../access-policies/mcp-identity-gateway/setup-mcp-gateway.md#create-the-gateway-to-server-access-policy).
+For step-by-step instructions, including the Client Workload settings that identify MCP Identity Gateway, see [Create the gateway-to-server Access Policy](../../../access-policies/mcp-identity-gateway/setup-mcp-gateway.md#create-the-gateway-to-server-access-policy).
 
 ## Verify
 

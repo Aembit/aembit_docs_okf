@@ -5,7 +5,7 @@ description: "Secure OAuth 2.1 authorization for Model Context Protocol (MCP) cl
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-authorization-server/
 interface: mcp
 tags: ["mcp-authorization-server", "deploy-install"]
-timestamp: 2026-10-15T06:25:14-07:00
+timestamp: 2026-11-03T15:14:28-05:00
 ---
 
 # MCP Authorization Server
@@ -66,9 +66,9 @@ When Enforce SSO is on, Aembit’s MCP Authorization Server supports both OIDC a
 * **SAML**: Use the [SAMLv2 Response Trust Provider](../../access-policies/trust-providers/saml-response-trust-provider.md) in your Access Policy to validate SAML responses. A Credential Provider generates the access token.
 * **No user auth**: When Enforce SSO is off, the policy needs no Trust Provider or identity provider. A Credential Provider still generates the access token.
 
-When Enforce SSO is on, both protocols require an identity provider configured in your Aembit tenant under **Administration > Identity Providers**.
+When Enforce SSO is on, both protocols require an identity provider configured in your Aembit Tenant under **Administration > Identity Providers**.
 
-If you configure multiple identity providers for your tenant, users select their IdP during the authentication flow.
+If you configure multiple identity providers for your Aembit Tenant, users select their IdP during the authentication flow.
 
 ## Observability and troubleshooting
 
@@ -76,7 +76,7 @@ Aembit’s MCP Authorization Server uses the same observability and audit pipeli
 
 * **[Access Authorization Events](../../audit-report/access-authorization-events.md)** - authorization decisions for MCP client and server workloads, including the `access.discovery` event type and Access Condition failures
 * **[Workload Events](../../audit-report/workload-events/overview.md)** - request and response traffic for MCP flows, with MCP-specific user and workload fields
-* **[MCP Authorization Tracing](../../audit-report/mcp-authorization-tracing.md)** - live view of inbound MCP authorization requests at the Identity Gateway
+* **[MCP Authorization Tracing](../../audit-report/mcp/authorization-tracing.md)** - live view of inbound MCP authorization requests at the Identity Gateway
 
 For end-to-end investigation that ties these surfaces together, see [Troubleshoot MCP and AI IAM access](../../troubleshooting/mcp-ai-iam.md).
 

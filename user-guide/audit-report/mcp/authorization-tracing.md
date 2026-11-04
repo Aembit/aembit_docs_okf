@@ -2,10 +2,10 @@
 type: how-to
 title: "How to review MCP Authorization Tracing"
 description: "How to review MCP Authorization Tracing information in the Reporting dashboard"
-resource: https://docs.aembit.io/user-guide/audit-report/mcp-authorization-tracing/
+resource: https://docs.aembit.io/user-guide/audit-report/mcp/authorization-tracing/
 interface: web-ui
-tags: ["audit-report"]
-timestamp: 2026-09-16T12:05:53-04:00
+tags: ["mcp", "audit-report"]
+timestamp: 2026-11-03T15:14:28-05:00
 ---
 
 # How to review MCP Authorization Tracing
@@ -16,7 +16,7 @@ timestamp: 2026-09-16T12:05:53-04:00
 
 Use MCP Authorization Tracing when an MCP error doesn’t appear in a static event record. Use it to confirm which Client Workload and Server Workload matched a specific request. It also gives immediate feedback while you verify a new Access Policy or workload configuration.
 
-For root-cause investigation of past failures, use [Access Authorization Events](access-authorization-events.md) and [Workload Events](workload-events/overview.md) instead. For end-to-end investigation of an MCP failure that spans both the Authorization Server and the Identity Gateway, see [Troubleshoot MCP and AI IAM access](../troubleshooting/mcp-ai-iam.md).
+For root-cause investigation of past failures, use [Access Authorization Events](../access-authorization-events.md) and [Workload Events](../workload-events/overview.md) instead. For end-to-end investigation of an MCP failure that spans both the Authorization Server and the Identity Gateway, see [Troubleshoot MCP and AI IAM access](../../troubleshooting/mcp-ai-iam.md).
 
 ## What MCP Authorization Tracing displays
 
@@ -66,12 +66,12 @@ To review MCP Authorization Tracing data, do the following:
 
 ## Limitations
 
-* Tracing shows authorization requests inbound to the MCP Identity Gateway. It doesn’t show the outbound proxied request to the upstream MCP server. For that, use [Workload Events](workload-events/overview.md).
+* Tracing shows authorization requests inbound to the MCP Identity Gateway. It doesn’t show the outbound proxied request to the upstream MCP server. For that, use [Workload Events](../workload-events/overview.md).
 * Tracing is a live view. Entries aren’t retained as durable records—use Access Authorization Events for historical investigation, audit, and SIEM forwarding.
 
 ## Related pages
 
-* [Access Authorization Events](access-authorization-events.md)
-* [Workload Events](workload-events/overview.md)
-* [Troubleshoot MCP and AI IAM access](../troubleshooting/mcp-ai-iam.md)
-* [MCP Identity Gateway](../deploy-install/mcp-identity-gateway/overview.md)
+* [Access Authorization Events](../access-authorization-events.md)
+* [Workload Events](../workload-events/overview.md)
+* [Troubleshoot MCP and AI IAM access](../../troubleshooting/mcp-ai-iam.md)
+* [MCP Identity Gateway](../../deploy-install/mcp-identity-gateway/overview.md)

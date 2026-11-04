@@ -5,7 +5,7 @@ description: "Technical reference for the Aembit Model Context Protocol (MCP) Se
 resource: https://docs.aembit.io/user-guide/mcp-server/reference-mcp-server/
 interface: mcp
 tags: ["mcp-server"]
-timestamp: 2026-10-14T16:36:12-04:00
+timestamp: 2026-11-03T18:51:02-08:00
 ---
 
 # Aembit MCP Server reference
@@ -32,10 +32,12 @@ Replace `<tenantId>` with your tenant identifier, visible in the Aembit Admin UI
 
 All requests require bearer token authentication using your Aembit API Token.
 
-| Header                 | Required | Description                                                                      |
-| ---------------------- | -------- | -------------------------------------------------------------------------------- |
-| `Authorization`        | Required | Bearer token for all requests.                                                   |
-| `X-Aembit-ResourceSet` | Optional | Scope queries to a specific resource set. Omit to use your default resource set. |
+| Header                 | Required | Description                                                                                                                                                                                |
+| ---------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `Authorization`        | Required | Bearer token for all requests.                                                                                                                                                             |
+| `X-Aembit-ResourceSet` | Optional | Scope queries to a specific Resource Set. When omitted, Aembit uses the default Resource Set if you have access to it, and otherwise a Resource Set where you can read the requested data. |
+
+Each tool requires read access to its data: **Audit Logs** for `get_audit_logs`, **Access Authorization Events** for `get_auth_events`, and **Workload Events** for `get_workload_events`. A tool returns an access denied error when you lack read access in the Resource Set it queries.
 
 **Authorization:**
 
@@ -76,6 +78,7 @@ All parameters are optional.
 | `spanLastDays`    | integer        | `30`          | Return logs from the last N days. Only applies when you don’t specify `startDate`/`endDate` or `spanLastMinutes`.                                |
 | `category`        | string \| null | `null`        | Filter by audit log category. See [Audit log categories](#audit-log-categories) for valid values.                                                |
 | `severity`        | string \| null | `null`        | Filter by severity. Valid values: `Info`, `Warn`, `Alert`.                                                                                       |
+| `resourceSetId`   | string \| null | `null`        | ID of the Resource Set to query. Overrides the `X-Aembit-ResourceSet` header.                                                                    |
 
 **Date range priority:** `startDate`/`endDate` > `spanLastMinutes` > `spanLastDays`.
 
@@ -115,6 +118,7 @@ All parameters are optional.
 | `spanLastHours`   | integer        | `24`          | Return events from the last N hours. Only applies when you don’t specify `startDate`/`endDate` or `spanLastMinutes`.        |
 | `severity`        | string \| null | `null`        | Filter by severity. Valid values: `Error`, `Alert`, `Warn`, `Info`.                                                         |
 | `eventType`       | string \| null | `null`        | Filter by event type. Valid values: `Request`, `Authorization`, `Credential`, `Discovery`, `Registration`.                  |
+| `resourceSetId`   | string \| null | `null`        | ID of the Resource Set to query. Overrides the `X-Aembit-ResourceSet` header.                                               |
 
 **Date range priority:** `startDate`/`endDate` > `spanLastMinutes` > `spanLastHours`.
 
@@ -157,6 +161,7 @@ All parameters are optional.
 | `appProtocol`     | string \| null           | `null`        | Filter by application protocol. See [Workload event types](#workload-event-types) for valid values.                         |
 | `sourceWorkload`  | array of `UUIDs` \| null | `null`        | Filter by client workload IDs.                                                                                              |
 | `targetWorkload`  | array of `UUIDs` \| null | `null`        | Filter by server workload IDs.                                                                                              |
+| `resourceSetId`   | string \| null           | `null`        | ID of the Resource Set to query. Overrides the `X-Aembit-ResourceSet` header.                                               |
 
 **Date range priority:** `startDate`/`endDate` > `spanLastMinutes` > `spanLastHours`.
 

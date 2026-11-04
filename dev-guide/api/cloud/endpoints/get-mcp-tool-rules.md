@@ -5,7 +5,7 @@ description: "Get a page of MCP Tool Access Rules"
 resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
 interface: api
 tags: ["mcp-tool-access-rule"]
-timestamp: 2026-10-13T16:56:08-07:00
+timestamp: 2026-11-03T18:06:18-08:00
 ---
 
 # GET /api/v1/content-security/{csId}/mcp-tool-rules

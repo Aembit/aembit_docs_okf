@@ -5,7 +5,7 @@ description: "Description of what Resource Sets are and how they work"
 resource: https://docs.aembit.io/user-guide/administration/resource-sets/
 interface: web-ui
 tags: ["resource-set", "administration"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-11-03T13:17:32-08:00
 ---
 
 # Resource Sets overview
@@ -59,6 +59,12 @@ A Resource Set is a collection of individual resources grouped together. Within 
 * Assign roles to users based on their responsibilities for managing the Resource Set. When thinking of roles and role assignments, consider the role assignment from a resource-first perspective.
 
 * Grant permissions for each Role to ensure the user can perform their required tasks. Permissions in a role work with the Resource Set association to enable access to specific Resource Set entities as configured.
+
+### Default administrative roles
+
+Aembit automatically assigns the **SuperAdmin** and **Auditor** system roles to every new Resource Set. These assignments preserve administrative access and audit visibility across Resource Sets. You cannot remove or replace these assignments in the Aembit Tenant UI or through the [Aembit Cloud API](../../../dev-guide/api/cloud/overview.md). You also cannot edit these system roles or their permissions. Custom role assignments apply alongside these defaults, rather than replacing them.
+
+Resource Set API responses list the default role IDs alongside any custom role IDs. In Terraform provider v1.35.1, the `roles` attribute in state lists this full set of role IDs. For Terraform configuration, see the [`aembit_resource_set` resource documentation](https://registry.terraform.io/providers/Aembit/aembit/latest/docs/resources/resource_set).
 
 ## Additional resources
 

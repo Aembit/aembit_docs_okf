@@ -51,6 +51,7 @@
 * [CPTypeUsernamePasswordUIV2DTO](cp-type-username-password-uiv2-dto.md)
 * [CPTypeVaultClientTokenV2DTO](cp-type-vault-client-token-v2-dto.md)
 * [CreatePolicyDTO](create-policy-dto.md) - Create/Update Access Policy
+* [CreateScenarioDTO](create-scenario-dto.md) - Create or Update Access Scenario
 * [CredentialProviderDTO](credential-provider-dto.md) - Individual Credential Provider
 * [CredentialProviderIntegrationDTO](credential-provider-integration-dto.md) - Individual Credential Provider Integration
 * [CredentialProviderIntegrationPatchDTO](credential-provider-integration-patch-dto.md) - Patch Request for an individual Credential Provider Integration
@@ -63,17 +64,24 @@
 * [CrowdStrikeAccessConditionDTO](crowd-strike-access-condition-dto.md)
 * [CrowdStrikeAIDRContentSecurityDTO](crowd-strike-aidr-content-security-dto.md) - Individual Content Security
 * [CrowdStrikeIntegrationDTO](crowd-strike-integration-dto.md) - Integration details for 3rd party data used by Access Conditions
+* [DiscoveredGroupDTO](discovered-group-dto.md)
+* [DiscoveredGroupListDTO](discovered-group-list-dto.md)
 * [DiscoveryIntegrationDTO](discovery-integration-dto.md) - Integration details for 3rd party data used by Discovery
 * [DiscoveryIntegrationListDTO](discovery-integration-list-dto.md) - Page of Integrations
 * [DiscoveryIntegrationPatchDTO](discovery-integration-patch-dto.md) - Patch request for an individual Integration
 * [EntityMetaDTO](entity-meta-dto.md)
 * [EntityPatchDTO](entity-patch-dto.md)
+* [EventApplicationDTO](event-application-dto.md)
+* [EventApplicationHttpDTO](event-application-http-dto.md)
+* [EventApplicationMcpDTO](event-application-mcp-dto.md)
 * [EventDTO](event-dto.md)
 * [EventListDTO](event-list-dto.md)
 * [EventMetaDTO](event-meta-dto.md)
 * [EventNetworkDTO](event-network-dto.md)
 * [EventOutcomeDTO](event-outcome-dto.md)
 * [EventResultDTO](event-result-dto.md)
+* [EventWorkloadDTO](event-workload-dto.md)
+* [EventWorkloadItemDTO](event-workload-item-dto.md)
 * [GenericResponseDTO](generic-response-dto.md) - DTO for a Generic API Response
 * [GeoIPAccessConditionDTO](geo-ip-access-condition-dto.md)
 * [GeoIPAccessConditionLocationDTO](geo-ip-access-condition-location-dto.md)
@@ -81,10 +89,15 @@
 * [GeoIPIntegrationDTO](geo-ip-integration-dto.md) - Integration details for 3rd party data used by Access Conditions
 * [GetPolicyDTO](get-policy-dto.md) - Individual Access Policy
 * [GetPolicyDTOListDTO](get-policy-dto-list-dto.md)
+* [GetScenarioDTO](get-scenario-dto.md) - Individual Scenario
+* [GetScenarioDTOListDTO](get-scenario-dto-list-dto.md)
 * [GetSignInPolicyDTO](get-sign-in-policy-dto.md)
 * [GitLabCredentialProviderIntegrationDTO](git-lab-credential-provider-integration-dto.md) - Individual Credential Provider Integration
+* [GroupByDTO](group-by-dto.md)
 * [GuidStringKeyValuePairDto](guid-string-key-value-pair-dto.md)
 * [HealthDTO](health-dto.md) - Aembit Health Status
+* [IdpUserInfoMetricsDTO](idp-user-info-metrics-dto.md)
+* [IdpUserInfoMetricsHourlyBucketDTO](idp-user-info-metrics-hourly-bucket-dto.md)
 * [IntegrationDTO](integration-dto.md) - Integration details for 3rd party data used by Access Conditions
 * [IntegrationDTOIntegrationListDTO](integration-dto-integration-list-dto.md) - Page of Integrations
 * [IntegrationPatchDTO](integration-patch-dto.md) - Patch request for an individual Integration
@@ -103,6 +116,14 @@
 * [LogStreamListDTO](log-stream-list-dto.md) - Page of Log Streams
 * [LogStreamPatchDTO](log-stream-patch-dto.md) - Patch Request for an individual of Log Stream
 * [LogStreamSplunkDestinationDTO](log-stream-splunk-destination-dto.md) - Individual Log Stream
+* [McpAccessDecisionDTO](mcp-access-decision-dto.md) - Access policy decision for an MCP boundary
+* [McpActivityReportItemDTO](mcp-activity-report-item-dto.md)
+* [McpActivityReportItemDTOListDTO](mcp-activity-report-item-dto-list-dto.md)
+* [McpRelevantEventItemDTO](mcp-relevant-event-item-dto.md) - A relevant event item in the chronological lifecycle of an MCP request
+* [McpRequestDetailDTO](mcp-request-detail-dto.md) - Detailed information for an MCP request transaction
+* [McpRequestHistoryItemDTO](mcp-request-history-item-dto.md) - MCP request transaction history item
+* [McpRequestHistoryItemDTOListDTO](mcp-request-history-item-dto-list-dto.md)
+* [McpServerOutcomeDTO](mcp-server-outcome-dto.md) - Outcome for a specific MCP server within a request
 * [McpToolAccessControlContentSecurityDTO](mcp-tool-access-control-content-security-dto.md) - Individual Content Security
 * [McpToolAccessControlRuleDTO](mcp-tool-access-control-rule-dto.md)
 * [McpToolAccessControlRuleDTOListDTO](mcp-tool-access-control-rule-dto-list-dto.md)
@@ -111,6 +132,7 @@
 * [OidcClientAuthType](oidc-client-auth-type.md)
 * [OidcIdentityProviderDTO](oidc-identity-provider-dto.md) - Individual SSO Identity Provider
 * [PatchPolicyV2DTO](patch-policy-v2-dto.md) - Patch request for an Access Policy
+* [PatchScenarioDTO](patch-scenario-dto.md) - Patch Access Scenario
 * [PermissionDTO](permission-dto.md) - Individual Permission details
 * [PolicyCredentialMappingDTO](policy-credential-mapping-dto.md) - Access Policy Credential Mappings
 * [PolicyCredentialProviderMappingTypes](policy-credential-provider-mapping-types.md)
@@ -147,6 +169,11 @@
 * [RoutingDTOListDTO](routing-dto-list-dto.md)
 * [RoutingPatchDTO](routing-patch-dto.md) - Patch request for an individual Routing
 * [SamlIdentityProviderDTO](saml-identity-provider-dto.md) - Individual SSO Identity Provider
+* [ScenarioClientDTO](scenario-client-dto.md) - Scenario Client Workload Configuration
+* [ScenarioHumanContextDTO](scenario-human-context-dto.md) - Scenario Human Context Configuration
+* [ScenarioOverlapCheckResultDTO](scenario-overlap-check-result-dto.md) - Scenario Overlap Check Result
+* [ScenarioPolicyOverlapDTO](scenario-policy-overlap-dto.md) - Scenario Policy Overlap Detail
+* [ScenarioTargetServerDTO](scenario-target-server-dto.md) - Scenario Target Server Configuration
 * [ServerWorkloadExternalDTO](server-workload-external-dto.md) - Individual Server Workload
 * [ServerWorkloadListDTO](server-workload-list-dto.md) - Page of Server Workloads
 * [SettingDTO](setting-dto.md)

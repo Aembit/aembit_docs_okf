@@ -5,7 +5,7 @@ description: "Create a Credential Provider"
 resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
 interface: api
 tags: ["credential-provider-v2"]
-timestamp: 2026-10-13T16:56:08-07:00
+timestamp: 2026-11-03T18:06:18-08:00
 ---
 
 # POST /api/v2/credential-providers

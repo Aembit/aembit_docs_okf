@@ -4,7 +4,7 @@ title: "TrustProviderDTO"
 description: "Individual Trust Provider"
 resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
 interface: api
-timestamp: 2026-10-13T16:56:08-07:00
+timestamp: 2026-11-03T18:06:18-08:00
 ---
 
 # TrustProviderDTO
@@ -40,3 +40,4 @@ Individual Trust Provider
 - **isAembitTenantOidcToken** *(optional)*: boolean
 - **metadataUrl** *(optional)*: null,string - Metadata URL of the remote SSO Identity Provider
 - **metadataXml** *(optional)*: null,string - Metadata XML content of the remote SSO Identity Provider
+- **zeroUiEnabled** *(optional)*: boolean - Enable Zero-UI mode for OAuth Private Client trust provider

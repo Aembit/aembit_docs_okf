@@ -1,0 +1,41 @@
+---
+type: reference
+title: "GET /api/v1/access-scenarios"
+description: "Get a page of Access Scenarios"
+resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
+interface: api
+tags: ["access-scenario"]
+timestamp: 2026-11-03T18:06:18-08:00
+---
+
+# GET /api/v1/access-scenarios
+
+Retrieve a page of Access Scenarios matching search criteria.
+
+**Operation ID:** `get-access-scenarios`
+
+**Parameters:**
+
+- **X-Aembit-ResourceSet** (header) *(optional)*: string (uuid)
+- **page** (query) *(optional)*: integer (int32)
+- **per-page** (query) *(optional)*: integer (int32)
+- **filter** (query) *(optional)*: string - Filter returned access scenarios using keywords
+- **query** (query) *(optional)*: string - Query criteria for access scenarios
+- **order** (query) *(optional)*: string
+
+**Responses:**
+
+- **200**: Page of Access Scenarios
+  - `application/json`: [GetScenarioDTOListDTO](../schemas/get-scenario-dto-list-dto.md)
+- **400**: Bad Request
+- **401**: Not Authenticated
+- **500**: Internal Server Error
+  - `application/json`: [GenericResponseDTO](../schemas/generic-response-dto.md)
+
+**Example:**
+
+```bash
+curl -X GET \
+  -H "X-Aembit-ResourceSet: your-resource-set-id" -H "Authorization: Bearer your-access-token" \
+  "https://your-tenant.aembit.io/api/v1/access-scenarios?page=example-value&per-page=example-value&filter=example-value&query=example-value&order=example-value"
+```

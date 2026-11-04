@@ -5,7 +5,7 @@ description: "The common fields that every Workload Event shares, with examples"
 resource: https://docs.aembit.io/user-guide/audit-report/workload-events/reference/
 interface: web-ui
 tags: ["workload-event", "audit-report"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-11-03T15:14:28-05:00
 ---
 
 # Workload Event reference
@@ -39,17 +39,18 @@ Example top-level fields
 
 ### `meta`
 
-| Field                | Presence | Description                                                                                            |
-| -------------------- | -------- | ------------------------------------------------------------------------------------------------------ |
-| `timestamp`          | Always   | The time the event occurred, in Coordinated Universal Time (UTC).                                      |
-| `eventType`          | Always   | The event type, in the form `<protocol>.<direction>`, such as `mcp.request` or `postgres.response`.    |
-| `connectionId`       | Always   | The identifier of the connection the event belongs to.                                                 |
-| `eventId`            | Always   | The unique identifier of the event.                                                                    |
-| `action`             | Always   | The action Agent Proxy took. Always `forward`.                                                         |
-| `severity`           | Always   | The event severity: `Error`, `Warning`, or `Info`. See [`severity`](#severity).                        |
-| `policyId`           | Always   | The identifier of the Access Policy applied to the traffic, or `null` when no policy applied.          |
-| `resourceSetId`      | Optional | The identifier of the Resource Set the workloads belong to. Present when available.                    |
-| `identifiedProtocol` | Optional | For TCP Passthrough events, the underlying protocol Agent Proxy identified, when it can determine one. |
+| Field                | Presence | Description                                                                                                                                                                                                                        |
+| -------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `timestamp`          | Always   | The time the event occurred, in Coordinated Universal Time (UTC).                                                                                                                                                                  |
+| `eventType`          | Always   | The event type, in the form `<protocol>.<direction>`, such as `mcp.request` or `postgres.response`.                                                                                                                                |
+| `connectionId`       | Always   | The identifier of the connection the event belongs to.                                                                                                                                                                             |
+| `eventId`            | Always   | The unique identifier of the event.                                                                                                                                                                                                |
+| `action`             | Always   | The action Agent Proxy took. Always `forward`.                                                                                                                                                                                     |
+| `severity`           | Always   | The event severity: `Error`, `Warning`, or `Info`. See [`severity`](#severity).                                                                                                                                                    |
+| `policyId`           | Always   | The identifier of the Access Policy applied to the traffic, or `null` when no policy applied.                                                                                                                                      |
+| `resourceSetId`      | Optional | The identifier of the Resource Set the workloads belong to. Present when available.                                                                                                                                                |
+| `identifiedProtocol` | Optional | For TCP Passthrough events, the underlying protocol Agent Proxy identified, when it can determine one.                                                                                                                             |
+| `correlationId`      | Optional | For MCP events, the identifier of the MCP request the event belongs to. Every event of one MCP request shares it, including the events for each MCP server the request reaches. MCP Identity Gateway 1.35.6263 and later sends it. |
 
 Example `meta` block
 
@@ -62,7 +63,8 @@ Example `meta` block
   "policyId": "dd987f8c-34fb-43e2-9d43-89d862e6b7ec",
   "action": "forward",
   "severity": "Info",
-  "resourceSetId": "ffffffff-ffff-ffff-ffff-ffffffffffff"
+  "resourceSetId": "ffffffff-ffff-ffff-ffff-ffffffffffff",
+  "correlationId": "5c1d8e2a-9b47-4f3e-8a6d-0e2b7c4f9d15"
 }
 ```
 

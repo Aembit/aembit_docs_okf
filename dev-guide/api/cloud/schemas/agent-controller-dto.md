@@ -4,7 +4,7 @@ title: "AgentControllerDTO"
 description: "DTO of an individual Agent Controller for Agent Proxy management"
 resource: https://docs.aembit.io/dev-guide/api/cloud/api-reference-cloud/
 interface: api
-timestamp: 2026-10-13T16:56:08-07:00
+timestamp: 2026-11-03T18:06:18-08:00
 ---
 
 # AgentControllerDTO
@@ -31,3 +31,5 @@ DTO of an individual Agent Controller for Agent Proxy management
 - **lastReportedUptime** *(optional)*: integer (int64) - Last Reported Agent Controller Uptime (in seconds)
 - **lastReportedHealthTime** *(optional)*: null,string (date) - Last Reported Agent Controller Health Time
 - **allowedTlsHostname** *(optional)*: null,string - Allowed TLS Hostname for Aembit Managed TLS
+- **isDebugMode** *(optional)*: boolean (boolean) - Debug Mode active status of the Agent Controller
+- **debugModeExpiresAt** *(optional)*: null,string (date-time) - Debug Mode expiration timestamp of the Agent Controller

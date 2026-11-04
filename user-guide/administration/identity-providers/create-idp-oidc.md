@@ -1,14 +1,14 @@
 ---
 type: how-to
-title: "How to create an OIDC 1.0 Identity Provider"
+title: "Create an OIDC 1.0 Identity Provider"
 description: "How to create an OIDC 1.0 Identity Provider for Single Sign-On"
 resource: https://docs.aembit.io/user-guide/administration/identity-providers/create-idp-oidc/
 interface: web-ui
 tags: ["identity-provider", "administration"]
-timestamp: 2026-10-13T13:28:30-07:00
+timestamp: 2026-11-03T11:36:11-05:00
 ---
 
-# How to create an OIDC 1.0 Identity Provider
+# Create an OIDC 1.0 Identity Provider
 
 Configuring an OpenID Connect (OIDC) 1.0 Identity Provider (IdP) allows you to offer alternate authentication methods for how users sign in to your Aembit Tenant. For example, Single Sign-On (SSO) instead of the default authentication method of an email and password.
 
@@ -32,7 +32,7 @@ Before you configure an OIDC 1.0 Identity Provider, ensure:
 
 > **Deciding on an authentication method**
 >
-> When configuring the **Authentication Method** for your OIDC IdP, you have two options:
+> When configuring the **Authentication Method** for your OIDC IdP, choose from these methods:
 >
 > **Client Secret**: Simpler to set up. Your IdP provides a secret string that Aembit stores securely.
 >
@@ -48,7 +48,7 @@ To configure an OIDC 1.0 IdP to work with Aembit, follow these steps:
 
 2. Click **Administration** in the left sidebar.
 
-3. At the top, select **Administration ☰ Identity Providers**.
+3. Select **Administration ☰ Identity Providers**.
 
    Aembit displays the **Identity Providers** page with a list of existing Identity Providers.
 
@@ -64,39 +64,41 @@ To configure an OIDC 1.0 IdP to work with Aembit, follow these steps:
 
    * **Identity Provider Type** - Select **OIDC 1.0** from the dropdown.
 
-   * **Identity Provider Base URL** - The OIDC base URL of your Identity Provider. This is typically the issuer URL or OIDC discovery endpoint.
-
-     See [Provider-specific examples](#provider-specific-examples) for guidance on finding this URL of your IdP.
+   * **Identity Provider Base URL** - The OIDC base URL of your Identity Provider, typically the issuer URL or OIDC discovery endpoint. See [Provider-specific examples](#provider-specific-examples) for guidance on finding this URL of your IdP.
 
    * **Identity Provider Client ID** - The Client ID from your OIDC application in your Identity Provider.
 
    * **Identity Provider Scopes** - The OIDC scopes required for authentication.
 
-     Aembit provides a default set of required scopes: `openid profile email`.
+     * Aembit provides a default set of required scopes: `openid profile email`.
 
-     You can add additional scopes, such as `groups`, if your IdP supports them and you want to enable automatic user creation based on group membership. See [Configure automatic user creation](automatic-user-creation.md) for more information.
+     * You can add additional scopes, such as `groups`, if your IdP supports them and you want to enable automatic user creation based on group membership. See [Configure automatic user creation](automatic-user-creation.md) for more information.
 
-     Add `offline_access` if you use the [MCP Enterprise Managed Access Token](../../access-policies/credential-providers/mcp-enterprise-managed-access-token.md) Credential Provider, so that Aembit receives a refresh token for each user. See [Prepare the Identity Provider for enterprise-managed access](../../access-policies/credential-providers/mcp-enterprise-managed-access-token-idp.md).
+     * If your IdP sends group names only for a requested scope, add that scope when Access Policies match user groups. See [Configure user group lookup](user-group-lookup.md).
+
+     * Add `offline_access` if you use the [MCP Enterprise Managed Access Token](../../access-policies/credential-providers/mcp-enterprise-managed-access-token.md) Credential Provider, so that Aembit receives a refresh token for each user. See [Prepare the Identity Provider for enterprise-managed access](../../access-policies/credential-providers/mcp-enterprise-managed-access-token-idp.md).
 
    * **PKCE Required** - Enable this checkbox to require Proof Key for Code Exchange (PKCE), an additional security layer for OAuth 2.0 flows. Aembit recommends leaving this enabled for enhanced security.
 
    * **Authentication Method** - Choose between **Client Secret** and **Public Private Keypair**:
 
-     * **Client Secret**: If you select this option, you’ll need to enter the client secret from your OIDC application in the **Client Secret** field.
+     * **Client Secret** - If you select this option, you need to enter the client secret from your OIDC application in the **Client Secret** field.
 
-     * **Public Private Keypair**: If you select this option, Aembit provides a JWKS URL that you must configure in your IdP. Ensure your IdP can access this URL over the internet for key validation. This allows secure communication using JWT signing without requiring a client secret.
+     * **Public Private Keypair** - Configure the JWKS URL that Aembit provides in your IdP, and ensure your IdP can reach it over the internet for key validation. This allows secure communication using JWT signing without requiring a client secret.
 
-6. Optionally, in the **Mappings** tab of the **Identity Provider** page you may specify mapping information between group claims configured in your IdP and user roles available in your tenant.
+6. Optionally, in the **Mappings** tab of the **Identity Provider** page you can specify mapping information between group claims configured in your IdP and user roles available in your Aembit Tenant.
 
    Adding this information enables automatic user creation based on the information in the OIDC ID token sent by your IdP.
 
    See [Configure automatic user creation](automatic-user-creation.md) for more information.
 
-7. Click **Save**.
+7. Optionally, on the **Details** tab, turn on **User Groups & MCP Policy Access** so Aembit can read your users’ groups from UserInfo and keep them current for Access Policies. See [Configure user group lookup](user-group-lookup.md).
+
+8. Click **Save**.
 
    Aembit displays the newly created OIDC IdP on the **Identity Provider** page. Now, when users log in to your Aembit Tenant, the login UI displays the available OIDC SSO option.
 
-8. Click the new Identity Provider to open it, and copy its **Aembit Redirect URL**.
+9. Click the new Identity Provider to open it, and copy its **Aembit Redirect URL**.
 
    Aembit displays the **Aembit Redirect URL** only after you save the Identity Provider. Configure this URL in your third-party IdP as the redirect URI or callback URL of your OIDC application.
 
@@ -180,25 +182,25 @@ Before enabling “Require Single Sign On” for your entire organization, test 
 
 3. Click your new OIDC SSO option (for example, “Okta OIDC” or “Azure OIDC”).
 
-4. Verify you’re redirected to your IdP’s login page.
+4. Verify your browser redirects to your IdP’s login page.
 
 5. Log in using your IdP credentials.
 
-6. Verify you’re redirected back to Aembit and successfully logged in.
+6. Verify your browser redirects back to Aembit and you log in successfully.
 
-7. Don’t enable “Require Single Sign On” in your Sign-On Policy until you have successfully tested SSO login with at least one user.
+7. Do not enable “Require Single Sign On” in your Sign-On Policy until you have successfully tested SSO login with at least one user.
 
-> **Caution**
+> **Test SSO before requiring it**
 >
-> Don’t enable “Require Single Sign On” in your [Sign-On Policy](../sign-on-policy/overview.md) until you’ve successfully tested SSO login with at least one user. Otherwise, Aembit may lock out users who encounter issues.
+> Do not enable “Require Single Sign On” in your [Sign-On Policy](../sign-on-policy/overview.md) until you have successfully tested SSO login with at least one user. Otherwise, Aembit might lock out users who encounter issues.
 
 ## Troubleshooting
 
-The following sections describe common issues you may encounter when setting up OIDC SSO and how to resolve them.
+The following sections describe common issues you might encounter when setting up OIDC SSO and how to resolve them.
 
-### SSO button doesn’t appear on login page
+### SSO button does not appear on login page
 
-**Solution**: Wait a few moments and refresh the page. If the button still doesn’t appear, verify that you clicked **Save** in the Identity Provider configuration.
+**Solution**: Wait a few moments and refresh the page. If the button still does not appear, verify that you clicked **Save** in the Identity Provider configuration.
 
 ### Error after IdP login
 
@@ -218,3 +220,4 @@ The following sections describe common issues you may encounter when setting up 
 * [Automatic User Creation](automatic-user-creation.md) - Configure automatic user creation with Identity Providers
 * [How to set up Okta SSO with your Aembit Tenant](okta/set-up-sso.md) - Set up Okta SSO with the Aembit integration from the Okta app catalog
 * [Sign-On Policy](../sign-on-policy/overview.md) - Configure Sign-On policies including SSO requirements
+* [Configure user group lookup](user-group-lookup.md) - Let Access Policies match the groups your users belong to

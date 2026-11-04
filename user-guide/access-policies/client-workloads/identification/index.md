@@ -1,4 +1,4 @@
-* [Client Workload Identifiers overview](overview.md) - This page provides a high-level description of Client Workload Identifiers in Aembit.
+* [Client Workload Identifiers overview](overview.md) - A high-level description of Client Workload Identifiers in Aembit.
 * [Aembit Client ID](aembit-client-id.md) - This document outlines the Aembit Client ID method for identifying Client Workloads.
 * [AWS Account ID](aws-account-id.md) - How to identify AWS workloads using the AWS Account ID within Aembit
 * [AWS EC2 Instance ID](aws-ec2-instance-id.md) - How to identify AWS workloads using the AWS EC2 Instance ID within Aembit
@@ -35,4 +35,5 @@
 * [Terraform Cloud Organization ID](terraform-cloud-id-token-organization-id.md) - How to identify Terraform Cloud Workloads using the organization ID from a Terraform Cloud Identity Token in Aembit
 * [Terraform Cloud Project ID](terraform-cloud-id-token-project-id.md) - How to identify Terraform Cloud Workloads using the project ID from a Terraform Cloud Identity Token in Aembit
 * [Terraform Cloud Workspace ID](terraform-cloud-id-token-workspace-id.md) - How to identify Terraform Cloud Workloads using the workspace ID from a Terraform Cloud Identity Token in Aembit
+* [User Group](user-group.md) - How to identify MCP Identity Gateway users by the groups they belong to in an OIDC Identity Provider
 * [Using multiple Client Workload identifiers](client-workload-multiple-ids.md) - How to use multiple Client Workload identifiers to increase uniqueness across Client Workloads
