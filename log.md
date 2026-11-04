@@ -1,5 +1,22 @@
 # Aembit Changelog
 
+## 2026-11-04
+
+### Aembit Desktop now in public beta
+
+Aembit Desktop is now in public beta for Windows 11 on x64. A person signs in once through your Identity Provider. The tools they run then reach enterprise HTTP and HTTPS services through a proxy on their own machine, which injects credentials as each request passes through. No tool on the machine holds the service credential, and revoking access is a change to the Access Policy rather than a search of every machine. Contact [Aembit support](https://aembit.io/contact) to enable Aembit Desktop for your Aembit Tenant.
+
+For how the pieces fit together, see the [Aembit Desktop overview](user-guide/desktop/overview.md).
+
+**Key capabilities:**
+
+* **Sign-in through your Identity Provider** - People sign in through an OIDC 1.0 or SAML 2.0 Identity Provider that has user access turned on. See [Configure Identity Provider user access](user-guide/administration/identity-providers/configure-user-access.md).
+* **Credentials injected per request** - An Access Policy decides which services a person’s tools reach, and the local proxy adds the service credential to each request. See [Set up user access](user-guide/desktop/set-up-user-access.md).
+* **Managed settings** - Administrators can deliver settings as JSON files, and a managed settings file overrides what a person sets on their own machine. See [Configure Aembit Desktop settings](user-guide/desktop/configure.md).
+* **AWS CLI support** - `adt beta tool aws` runs AWS CLI commands with the AWS credential an Access Policy supplies, with no AWS access keys on the machine. See [Use the AWS CLI with Aembit Desktop](user-guide/desktop/aws-cli.md).
+
+To try it end to end, follow [Get started with Aembit Desktop](user-guide/desktop/get-started.md).
+
 ## 2026-11-03
 
 ### Improved MCP client sign-in and Client Workload identification

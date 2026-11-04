@@ -4,7 +4,7 @@ title: "Aembit User Guide Overview"
 description: "How to set up and use Aembit"
 resource: https://docs.aembit.io/user-guide/
 interface: web-ui
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-11-04T14:15:50-08:00
 ---
 
 # Aembit User Guide Overview
@@ -52,9 +52,25 @@ This section includes topics covering:
 * [Set up the MCP Identity Gateway](access-policies/mcp-identity-gateway/setup-mcp-gateway.md)
 * [Set up the MCP Authorization Server](access-policies/mcp-authorization-server/setup-mcp-auth-server.md)
 
+## Aembit Desktop
+
+This section covers Aembit Desktop, which gives people on Windows 11 machines access to HTTP and HTTPS services without static credentials. It covers setting up user access in your Aembit Tenant, installing Aembit Desktop and signing in, and delivering its settings.
+
+This section includes topics covering:
+
+* [Aembit Desktop overview](desktop/overview.md)
+* [Get started with Aembit Desktop](desktop/get-started.md)
+* [Aembit Desktop concepts](desktop/concepts.md)
+* [Set up user access](desktop/set-up-user-access.md)
+* [Install Aembit Desktop and sign in](desktop/install.md)
+* [Configure Aembit Desktop settings](desktop/configure.md)
+* [Use the AWS CLI with Aembit Desktop](desktop/aws-cli.md)
+* [Troubleshoot Aembit Desktop](desktop/troubleshooting.md)
+* [Aembit Desktop reference](desktop/reference.md)
+
 ## Aembit MCP Server
 
-This section covers the Aembit MCP Server, which exposes your Tenant’s configuration to an MCP client so you can query and manage Aembit from an AI assistant. It covers connecting supported clients and the prompts Aembit publishes for them.
+This section covers the Aembit MCP Server, which exposes your Aembit Tenant’s configuration to an MCP client so you can query and manage Aembit from an AI assistant. It covers connecting supported clients and the prompts Aembit publishes for them.
 
 This section includes topics covering:
 

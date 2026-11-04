@@ -5,23 +5,24 @@ description: "Description of what Identity Providers are and how they work in th
 resource: https://docs.aembit.io/user-guide/administration/identity-providers/
 interface: web-ui
 tags: ["identity-provider", "administration"]
-timestamp: 2026-11-03T11:36:11-05:00
+timestamp: 2026-11-04T14:15:50-08:00
 ---
 
 # Identity Providers overview
 
-Identity Providers let users sign in to Aembit through an external SSO provider.
+An Identity Provider lets users sign in to Aembit with accounts your organization already manages in a system such as Okta or Microsoft Entra ID.
 
-* **Ready to set up SSO?** See [Creating SAML 2.0 Identity Providers](create-idp-saml.md) or [Creating OIDC 1.0 Identity Providers](create-idp-oidc.md)
+* **Ready to set up Single Sign-On (SSO)?** See [Creating SAML 2.0 Identity Providers](create-idp-saml.md) or [Creating OIDC 1.0 Identity Providers](create-idp-oidc.md)
 * **Using Okta?** See [How to set up Okta SSO with your Aembit Tenant](okta/set-up-sso.md) to set up SSO with the Aembit integration from the Okta app catalog
 * **Need to configure automatic user creation?** See [Automatic User Creation](automatic-user-creation.md)
 * **Need to revoke a user’s MCP sessions?** The **Sessions** tab on each Identity Provider lists the MCP user sessions of people who signed in through it. See [Manage MCP user sessions](manage-mcp-user-sessions.md)
 * **Need to limit MCP servers to an IdP group?** Turn on group lookup on an OIDC Identity Provider. See [Configure user group lookup](user-group-lookup.md)
+* **Need user access?** To let users sign in to Aembit Desktop through an Identity Provider, see [Configure Identity Provider user access](configure-user-access.md)
 * **Just exploring?** Keep reading to understand the concepts
 
-In your Aembit Tenant, the Identity Providers feature lets you offer users alternate sign-in methods. The default authentication method is to use an email and password with the option to [enable and require MFA](../sign-on-policy/overview.md#require-multi-factor-authentication-for-native-sign-in).
+In your Aembit Tenant, the Identity Providers feature lets you offer users alternate sign-in methods. The default authentication method is to use an email and password with the option to [enable and require Multi-Factor Authentication (MFA)](../sign-on-policy/overview.md#require-multi-factor-authentication-for-native-sign-in).
 
-Requiring your users to remember and manually enter a username and password every time they sign in to your Aembit Tenant is tedious, error-prone, and insecure long-term. To improve user experience and security, set up Single Sign-On (SSO). Integrate an external Identity Provider (IdP) such as Okta, Google, or Microsoft Entra ID. Aembit supports both SAML 2.0 and OIDC 1.0 protocols for SSO authentication.
+Requiring your users to remember and manually enter a username and password every time they sign in to your Aembit Tenant is tedious, error-prone, and insecure long-term. To improve user experience and security, set up SSO. Integrate an external Identity Provider (IdP) such as Okta, Google, or Microsoft Entra ID. Aembit supports both Security Assertion Markup Language (SAML) 2.0 and OpenID Connect (OIDC) 1.0 protocols for SSO authentication.
 
 To enforce the exclusive use of SSO and prevent your users from authenticating with their username and password, enable [Require Single Sign On](../sign-on-policy/overview.md#require-single-sign-on).
 
@@ -31,7 +32,7 @@ To enforce the exclusive use of SSO and prevent your users from authenticating w
 
 ## SSO overview
 
-SAML 2.0 (Security Assertion Markup Language) is an open standard for cross-domain Single Sign-On (SSO). SSO allows a user to authenticate in one system—the [Identity Provider](#saml-identity-provider)—and gain access to a different system. The [Service Provider](#service-provider) accepts proof of authentication from the IdP.
+SAML 2.0 is an open standard for cross-domain SSO. SSO allows a user to authenticate in one system—the [Identity Provider](#saml-identity-provider)—and gain access to a different system. The [Service Provider](#service-provider) accepts proof of authentication from the IdP.
 
 ### SAML Identity Provider
 
@@ -55,7 +56,7 @@ The following occurs during the SSO authentication process on your Aembit Tenant
 
 5. Aembit logs the user in through the successful SSO authentication.
 
-SSO authentication fails when the IdP’s response fails validation or when Aembit cannot create the user or map them to a role. SSO authentication also fails when the user has no account, an inactive account, or no active role. In that case, Aembit returns the user to the login page with the message “Single Sign-On login failed. Check your Identity Provider configuration.” Aembit also records an [Audit Log](../../audit-report/audit-logs.md#sso-login-failures) event in the `Authentication` category that names the step that failed.
+SSO authentication fails when the IdP’s response fails validation or when Aembit can’t create the user or map them to a role. It also fails when the user has no account, an inactive account, or no active role. In that case, Aembit returns the user to the login page with the message “Single Sign-On login failed. Check your Identity Provider configuration.” Aembit also records an [Audit Log](../../audit-report/audit-logs.md#sso-login-failures) event in the `Authentication` category that names the step that failed.
 
 If Aembit cannot redirect the user to the IdP, the login page shows `Single Sign-On challenge failed. Please contact your administrator.`
 
@@ -79,6 +80,14 @@ Aembit requires an email address to uniquely identify users of your Aembit Tenan
 
 Aembit extracts user information from authentication response claims including email, name, and group membership. For technical details about specific claim requirements and attribute names, see [Configure automatic user creation](automatic-user-creation.md).
 
+## About user access
+
+User access lets users sign in to Aembit Desktop through an Identity Provider you already use for SSO. Turn it on for each Identity Provider with **Enable User Access** on the Identity Provider’s **Users** tab. The **Users** tab appears once Aembit support enables Aembit Desktop for your Aembit Tenant, and you can select it after you save the Identity Provider.
+
+At sign-in, Aembit offers only Identity Providers that are active and have user access turned on. If exactly one qualifies, Aembit sends the user straight to it. If more than one qualifies, the user picks one from a list.
+
+See [Configure Identity Provider user access](configure-user-access.md) to turn on user access and set session lifetimes.
+
 ## Complete setup checklist
 
 Setting up SSO requires configuration in two places. For Okta, [How to set up Okta SSO with your Aembit Tenant](okta/set-up-sso.md) covers both, in the order the setup needs.
@@ -92,7 +101,9 @@ Setting up SSO requires configuration in two places. For Okta, [How to set up Ok
 
 3. **(Optional) Configure automatic user creation** - See [Automatic User Creation](automatic-user-creation.md)
 
-4. **Test SSO with a test user before enforcing it** - Verify SSO works before enabling “Require Single Sign On”
+4. **(Optional) Turn on user access for Aembit Desktop** - See [Configure Identity Provider user access](configure-user-access.md)
+
+5. **Test SSO with a test user before enforcing it** - Verify SSO works before enabling “Require Single Sign On”
 
 ## Additional resources
 
@@ -103,3 +114,4 @@ The following pages provide more information about working with Identity Provide
 * [Automatic User Creation](automatic-user-creation.md) - Configure automatic user creation with Identity Providers
 * [Configure user group lookup](user-group-lookup.md) - Let Access Policies match the groups your users belong to in an OIDC Identity Provider
 * [How to set up Okta SSO with your Aembit Tenant](okta/set-up-sso.md) - Set up Okta SSO with the Aembit integration from the Okta app catalog
+* [Configure Identity Provider user access](configure-user-access.md) - Let users sign in to Aembit Desktop through an Identity Provider
