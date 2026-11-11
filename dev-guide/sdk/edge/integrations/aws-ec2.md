@@ -5,7 +5,7 @@ description: "Retrieve credentials from an EC2 instance using the Edge SDK and t
 resource: https://docs.aembit.io/dev-guide/sdk/edge/integrations/aws-ec2/
 interface: sdk
 tags: ["integration", "edge", "sdk"]
-timestamp: 2026-10-15T12:57:18-07:00
+timestamp: 2026-11-10T19:33:34-08:00
 ---
 
 # Use the Edge SDK on an AWS EC2 instance
@@ -22,10 +22,35 @@ For the request and response shapes behind that exchange, see [Edge API authenti
 
 ## Before you start
 
-* An Aembit Tenant with at least Read Only permission for Trust Providers.
+* An Aembit Tenant with **Read/Write** permission for Trust Providers and Access Policies, or at least **Read Only** permission for Trust Providers if your Access Policy already has its Trust Provider.
 * An Access Policy for the service your application reaches.
-* An [AWS Metadata Service Trust Provider](../../../../user-guide/access-policies/trust-providers/aws-metadata-service-trust-provider.md) with match rules that identify your EC2 instance.
 * An EC2 instance with IMDSv2 enabled and reachable at `169.254.169.254`, running Node.js 20 or later for TypeScript, or Python 3.10 or later for Python.
+
+## Create the Trust Provider
+
+Create an [AWS Metadata Service Trust Provider](../../../../user-guide/access-policies/trust-providers/aws-metadata-service-trust-provider.md) with match rules that identify your EC2 instance. If your Access Policy already has one, skip this section.
+
+The SDK’s Trust Provider object collects identity evidence in your program, and the Trust Provider in your Aembit Tenant verifies that evidence. To create one and add it to your Access Policy, you need **Read/Write** permission for Trust Providers and Access Policies.
+
+1. Log in to your Aembit Tenant and go to **Trust Providers** in the left sidebar.
+
+2. Click **+ New**.
+
+3. Enter a **Name** for the Trust Provider.
+
+4. In the **Trust Provider** list, select the type this page names. The form then shows the fields for that type.
+
+5. Fill in the fields the type requires, and add the **Match Rules** this page describes. The Trust Provider page for the type lists each field and match rule attribute.
+
+6. Click **Save**.
+
+Then add the Trust Provider to your Access Policy, as [Client Workload identity attestation](../../../../user-guide/access-policies/trust-providers/add-trust-provider.md#client-workload-identity-attestation) describes.
+
+Create the Trust Provider with Terraform
+
+To manage the Trust Provider as code, create it with the [`aembit_trust_provider`](https://registry.terraform.io/providers/Aembit/aembit/latest/docs/resources/trust_provider) resource in the [Aembit Terraform provider](../../../../user-guide/access-policies/advanced-options/terraform/terraform-configuration.md). Terraform provisions the Aembit configuration, and your program uses the Edge SDK to retrieve credentials at runtime.
+
+Of the Trust Provider types the Edge SDK supports, all but three expose the Edge SDK Client ID in the resource’s read-only `client_id` attribute. For the AWS Metadata Service, AWS Role, and Azure Instance Metadata Service types, the attribute is null, so copy the Edge SDK Client ID from the Aembit Tenant UI.
 
 ## Get your Edge SDK Client ID
 
@@ -45,7 +70,7 @@ Your application needs the Edge SDK Client ID from the [AWS Metadata Service Tru
 
 > **Two different identifiers**
 >
-> The SDK’s `clientId` is the Edge SDK Client ID from the Trust Provider. It isn’t the **Client Identifier** on your Client Workload, which is a separate value on a separate page that policy configuration can use.
+> The SDK’s `clientId` is the Edge SDK Client ID from the Trust Provider. It is not the **Client Identifier** on your Client Workload, which is a separate value on a separate page that policy configuration can use.
 
 ## Wire up the SDK
 
@@ -125,7 +150,7 @@ A `401` status carries the same message whichever check failed. Work through the
 
 5. Confirm the Trust Provider’s match rules hold this workload’s values. Aembit groups the rules by **Attribute**, and by **Key** for custom claim rules, and each group needs a matching rule. A **Value** containing `*` matches any run of characters in that position. Any other value must match exactly, including case, unless your Trust Provider’s checks after this list say otherwise. A rule with an empty **Value** fails the Trust Provider, so fill in the **Value** or delete the rule. A Trust Provider with no match rules accepts any workload whose evidence passes validation. Compare each rule’s **Value** with the matching field in real evidence from this workload, and correct the rule.
 
-For an AWS Metadata Service Trust Provider, the validation in the fourth check verifies the instance identity document’s signature with the **Certificate** on the Trust Provider. Confirm **Certificate** holds the AWS public certificate from the RSA tab for the instance’s Region, and that the certificate hasn’t expired, as [AWS Metadata Service Trust Provider](../../../../user-guide/access-policies/trust-providers/aws-metadata-service-trust-provider.md#additional-configurations) describes.
+For an AWS Metadata Service Trust Provider, the validation in the fourth check verifies the instance identity document’s signature with the **Certificate** on the Trust Provider. Confirm **Certificate** holds the AWS public certificate from the RSA tab for the instance’s Region, and that the certificate has not expired, as [AWS Metadata Service Trust Provider](../../../../user-guide/access-policies/trust-providers/aws-metadata-service-trust-provider.md#additional-configurations) describes.
 
 Each attribute, such as `accountId`, `region`, or `instanceId`, compares the instance identity document field of the same name.
 

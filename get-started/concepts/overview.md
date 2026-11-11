@@ -4,7 +4,7 @@ title: "Conceptual overview"
 description: "This page provides a high-level conceptual overview of Aembit and its components"
 resource: https://docs.aembit.io/get-started/concepts/
 tags: ["concept"]
-timestamp: 2026-09-09T08:20:13-07:00
+timestamp: 2026-11-05T18:18:07-08:00
 ---
 
 # Conceptual overview
@@ -13,13 +13,13 @@ This topic explains how Aembit operates behind the scenes (at a high level) to p
 
 ## Aembit as an identity broker
 
-Aembit operates conceptually as an identity broker. It acts as an intermediary, facilitating secure access requests initiated by a Client Workload (like an application or script) attempting to connect to a target Server Workload (like an API or database).
+Aembit operates conceptually as an identity broker. It acts as an intermediary, facilitating secure access requests initiated by a Client Workload (like an AI agent, application, or script) attempting to connect to a target Server Workload (like an API or database).
 
 These workloads may operate across security boundaries or reside in different compute environments. For example, a Client Workload in AWS accessing a Server Workload in Azure. By centralizing the brokering function, Aembit helps you simplify the management of trust relationships and Access Policies across your disparate security boundaries and environments.
 
 ## Workloads
 
-Workloads are the fundamental entities in Aembit’s access control model. They represent software applications, services, or processes that either request access to resources ([Client Workloads](#client-workloads)) or provide resources that others access ([Server Workloads](#server-workloads)).
+Workloads are the fundamental entities in Aembit’s access control model. They represent AI agents, software applications, services, or processes that either request access to resources ([Client Workloads](#client-workloads)) or provide resources that others access ([Server Workloads](#server-workloads)).
 
 Aembit establishes secure communication channels between these workloads by verifying their identities, evaluating access policies, and providing Just-In-Time (JIT) credentials without requiring code changes to your applications.
 
@@ -27,7 +27,7 @@ Aembit establishes secure communication channels between these workloads by veri
 
 Client Workloads are the initiators of access requests in Aembit’s security model. They represent any non-human entity that needs to consume services or resources provided by Server Workloads. Examples include:
 
-* Web applications requesting data from APIs
+* AI agents and web applications requesting data from APIs
 * Microservices communicating with other services
 * Background jobs accessing databases
 * CI/CD pipelines deploying to cloud environments
@@ -82,7 +82,7 @@ Aembit uses Access Policies to control which Client Workloads can access which S
 Access Policies evaluate the following components when making access decisions:
 
 * **Client Workloads** - Any non-human entity that initiates an access request to consume a service or resource provided by a Server Workload.
-* Trust Providers - Attest to workload identities and provide information about the environment in which they operate with high reliability and trustworthiness.
+* Trust Providers - Verify workload attestation evidence or user identity claims.
 * Access Conditions - Criteria Aembit checks when evaluating an Access Policy to determine whether to grant a Client Workload access to a target Server Workload.
 * Credential Providers - Systems that provide access credentials, such as OAuth tokens, service account tokens, API keys, or username-and-password pairs.
 * **Server Workloads** - Software applications that serve requests from Client Workloads such as third-party SaaS APIs, API gateways, databases, and data warehouses.
@@ -107,9 +107,9 @@ If a request meets all requirements, Aembit allows the connection and injects th
 
 ### Trust Providers
 
-Instead of Client Workloads managing and presenting a long-lived secret for authentication, Aembit uses [Trust Providers](trust-providers.md). Trust Providers cryptographically verify the identity of Client Workloads attempting to access target Server Workloads. Trust Providers verify a Client Workload’s identity using evidence obtained directly from its runtime environment—also known as workload attestation.
+Instead of Client Workloads managing and presenting a long-lived secret for authentication, Aembit uses [Trust Providers](trust-providers.md). Trust Providers verify identity evidence for Access Policy evaluation. They validate runtime evidence through workload attestation. For blended identity, they validate user identity claims from an Identity Provider.
 
-Aembit integrates with many Trust Providers to support attestation across different environments:
+The following examples describe workload attestation across different runtime environments:
 
 * AWS
 * Azure
@@ -117,7 +117,7 @@ Aembit integrates with many Trust Providers to support attestation across differ
 * CI/CD platforms
 * Aembit Agent Controller in Kerberos environments
 
-Trust Providers supply cryptographically signed evidence, such as platform identity documents or tokens, about the Client Workload to Aembit Cloud. Aembit Cloud then validates this evidence to confirm the workload’s identity before proceeding with access policy evaluation. Upon successful attestation, Aembit Cloud gains high confidence in the Client Workload’s identity without relying on a shared secret.
+During workload attestation, Aembit Cloud validates signed evidence, such as platform identity documents or tokens, to confirm the workload’s identity before proceeding with Access Policy evaluation. Upon successful attestation, Aembit Cloud gains high confidence in the Client Workload’s identity without relying on a shared secret.
 
 ![](https://docs.aembit.io/aembit-icons/lightbulb-light.svg)
 

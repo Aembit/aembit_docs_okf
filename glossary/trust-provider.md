@@ -1,13 +1,13 @@
 ---
 type: definition
 title: "Trust Provider"
-description: "Trust Providers validate Client Workload identities through workload attestation, verifying identity claims from the workload's runtime environment rather than relying on pre-shared secrets."
+description: "Trust Providers verify identity claims from a workload's runtime environment or an Identity Provider instead of relying on pre-shared secrets. They support workload attestation and user identity validation for blended identity."
 tags: ["core-concepts"]
-timestamp: 2025-10-14T06:32:52-07:00
+timestamp: 2026-11-05T18:18:07-08:00
 ---
 
 # Trust Provider
 
-Trust Providers validate Client Workload identities through workload attestation, verifying identity claims from the workload's runtime environment rather than relying on pre-shared secrets.
+Trust Providers verify identity claims from a workload's runtime environment or an Identity Provider instead of relying on pre-shared secrets. They support workload attestation and user identity validation for blended identity.
 
 Learn more: [Trust Provider](../get-started/concepts/trust-providers.md)

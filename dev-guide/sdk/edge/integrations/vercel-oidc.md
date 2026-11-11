@@ -5,29 +5,56 @@ description: "Authenticate a Vercel Function with its OIDC token and retrieve a 
 resource: https://docs.aembit.io/dev-guide/sdk/edge/integrations/vercel-oidc/
 interface: sdk
 tags: ["integration", "edge", "sdk"]
-timestamp: 2026-10-15T12:57:18-07:00
+timestamp: 2026-11-10T19:33:34-08:00
 ---
 
 # Use the Edge SDK on Vercel Functions
 
 With OIDC federation turned on, Vercel signs a short-lived token for each function invocation and attaches it to the incoming request. The Edge SDK presents that token to Aembit as proof of identity, so a function can reach a protected service without holding a long-lived secret in its environment.
 
-This guide covers the parts specific to Vercel. For what the SDK does in general, see the [Edge SDK overview](../overview.md).
+For what the SDK does in general, see the [Edge SDK overview](../overview.md).
 
 ## Before you start
 
 On the Vercel side, enable OIDC federation on the project and run the function on the Node.js runtime for TypeScript or the Python runtime for Python.
 
-In Aembit, configure an Access Policy with these pieces:
+In your Aembit Tenant, configure an Access Policy with these pieces, plus the Trust Provider that the next section creates:
 
-* An [OIDC ID Token Trust Provider](../../../../user-guide/access-policies/trust-providers/oidc-id-token-trust-provider.md) carrying an Edge SDK Client ID.
 * A Client Workload whose [identifier](../../../../user-guide/access-policies/client-workloads/identification/oidc-id-token.md) matches a claim in the Vercel token.
 * A Server Workload whose Service Endpoint host and port match what your function requests.
 * A Credential Provider that returns the credential type your function asks for.
 
+You need **Read/Write** permission for Trust Providers and Access Policies, or at least **Read Only** permission for Trust Providers if your Access Policy already has its Trust Provider.
+
+## Create the Trust Provider
+
+Create an [OIDC ID Token Trust Provider](../../../../user-guide/access-policies/trust-providers/oidc-id-token-trust-provider.md). It carries the Edge SDK Client ID your function passes to Aembit. If your Access Policy already has one, skip this section.
+
 This flow has a setup step the cloud provider methods skip. Aembit verifies the token signature itself, so it needs the public keys from Vercel before the first request can pass. The OIDC Discovery attestation method is the least work. Give it the issuer URL, and Aembit finds the provider configuration and public keys from there.
 
-Read the issuer and audience values off a real token rather than guessing them. Both depend on your Vercel team, so deploy the function once, log the decoded token, and write the `iss` and `aud` values you see into the match rules.
+Read the issuer and audience values off a real token rather than guessing them. Both depend on your Vercel team. Run `vercel env pull` in the project, decode the `VERCEL_OIDC_TOKEN` value it writes to `.env.local`, and write the `iss` and `aud` values you see into the match rules.
+
+The SDK’s Trust Provider object collects identity evidence in your program, and the Trust Provider in your Aembit Tenant verifies that evidence. To create one and add it to your Access Policy, you need **Read/Write** permission for Trust Providers and Access Policies.
+
+1. Log in to your Aembit Tenant and go to **Trust Providers** in the left sidebar.
+
+2. Click **+ New**.
+
+3. Enter a **Name** for the Trust Provider.
+
+4. In the **Trust Provider** list, select the type this page names. The form then shows the fields for that type.
+
+5. Fill in the fields the type requires, and add the **Match Rules** this page describes. The Trust Provider page for the type lists each field and match rule attribute.
+
+6. Click **Save**.
+
+Then add the Trust Provider to your Access Policy, as [Client Workload identity attestation](../../../../user-guide/access-policies/trust-providers/add-trust-provider.md#client-workload-identity-attestation) describes.
+
+Create the Trust Provider with Terraform
+
+To manage the Trust Provider as code, create it with the [`aembit_trust_provider`](https://registry.terraform.io/providers/Aembit/aembit/latest/docs/resources/trust_provider) resource in the [Aembit Terraform provider](../../../../user-guide/access-policies/advanced-options/terraform/terraform-configuration.md). Terraform provisions the Aembit configuration, and your program uses the Edge SDK to retrieve credentials at runtime.
+
+Of the Trust Provider types the Edge SDK supports, all but three expose the Edge SDK Client ID in the resource’s read-only `client_id` attribute. For the AWS Metadata Service, AWS Role, and Azure Instance Metadata Service types, the attribute is null, so copy the Edge SDK Client ID from the Aembit Tenant UI.
 
 ## Where the token comes from
 
@@ -86,7 +113,7 @@ In production, the token arrives on the request as the `x-vercel-oidc-token` hea
 
 ## Write the function
 
-Build the Trust Provider and the client inside the handler. The token belongs to a single request, so nothing exists to read at module load time. A client constructed there would capture a token that has already expired, or never existed at all:
+Build the SDK’s Trust Provider object and the client inside the handler. The token belongs to a single request, so nothing exists to read at module load time. A client constructed there would capture a token that has already expired, or never existed at all:
 
 * TypeScript
 
@@ -270,7 +297,13 @@ A `401` status carries the same message whichever check failed. Work through the
 For an OIDC ID Token Trust Provider, the validation in the fourth check covers two things:
 
 * The token must be inside the validity window its `exp` and `nbf` claims set, with 5 minutes of clock skew allowed. If it has expired, request a new token and retry.
-* The **Method** under **Attestation Method** must verify the token’s signature. With **OIDC Discovery**, each **OIDC Endpoint** must be the token issuer’s base URL, without the `.well-known` path. With **Upload JWKS** or **Upload Public Key**, the key must be the public key of the token’s signer. With **Symmetric Key**, the key must be the shared secret that signed the token. With **Aembit Tenant OIDC ID Token**, your Aembit Tenant must have issued the token.
+
+* The **Method** under **Attestation Method** must verify the token’s signature.
+
+  * With **OIDC Discovery**, each **OIDC Endpoint** must be the token issuer’s base URL, without the `.well-known` path.
+  * With **Upload JWKS** or **Upload Public Key**, the key must be the public key of the token’s signer.
+  * With **Symmetric Key**, the key must be the shared secret that signed the token.
+  * With **Aembit Tenant OIDC ID Token**, your Aembit Tenant must have issued the token.
 
 Aembit checks the token’s issuer and audience only through match rules. The `sub`, `aud`, and `iss` attributes compare the token’s claims of the same name, and `custom_claim` compares the claim you name in **Key**. Decode a real token and compare each claim with the **Value** of its rule.
 
@@ -322,7 +355,7 @@ When a Client Workload uses the **Aembit Client ID** identifier, the SDK doesn�
 
 For this platform, **OIDC ID Token Subject**, **OIDC ID Token Issuer**, and **OIDC ID Token Audience** compare the token’s `sub`, `iss`, and `aud` claims.
 
-## How to find your Edge SDK Client ID
+## Find your Edge SDK Client ID
 
 1. Log in to your Aembit Tenant.
 

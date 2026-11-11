@@ -4,16 +4,14 @@ title: "About Trust Providers"
 description: "Understanding Trust Providers and their role in verifying workload identities in Aembit"
 resource: https://docs.aembit.io/get-started/concepts/trust-providers/
 tags: ["concept"]
-timestamp: 2026-10-16T17:35:53-07:00
+timestamp: 2026-11-05T18:18:07-08:00
 ---
 
 # About Trust Providers
 
-Trust Providers validate the identity of [Client Workloads](client-workloads.md) through a process called workload attestation. Instead of relying on pre-shared secrets like API keys, passwords, or certificates Trust Providers verify identity by consulting trusted systems in the workload’s runtime environment.
+Trust Providers verify identity evidence for [Client Workload](client-workloads.md) access requests. They validate workloads through workload attestation or verify user identity claims from an Identity Provider. This supports AI agents acting on behalf of users with blended identity. Trust Providers use verifiable identity evidence instead of pre-shared secrets. For workload attestation, this evidence comes from the workload’s runtime environment.
 
-The core idea is simple but powerful: rather than asking, “What secret do you know?” Trust Providers ask, “Can your environment vouch for who you are?” It’s similar to checking someone’s government-issued ID rather than taking their word for it.
-
-You can think of Trust Providers as a kind of certificate authority for workloads—but instead of issuing certificates, they produce cryptographically verifiable claims about a workload’s environment. Aembit uses these claims to establish trust before granting access, reducing the risk of unauthorized workloads posing as trusted ones.
+For workload attestation, a trusted platform provides signed evidence about a workload’s environment. Aembit validates this evidence before granting access.
 
 ![](https://docs.aembit.io/aembit-icons/gears-light.svg)
 
@@ -23,11 +21,9 @@ You can think of Trust Providers as a kind of certificate authority for workload
 
 ## How Trust Providers work
 
-The following steps outline the process of how Trust Providers work in Aembit:
+The following steps and diagram describe workload attestation using runtime identity evidence. For blended identity, Trust Providers also validate the user’s identity claims from an Identity Provider.
 
-1. **Client Workload Request** - A Client Workload (for example, a microservice or application) attempts to access a
-
-   Server Workload (for example, a database or API).
+1. **Client Workload Request** - A Client Workload, such as an autonomous AI agent or a microservice, attempts to access a Server Workload.
 
 2. **Workload Attestation** - When a Client Workload attempts to access a Server Workload, Aembit Edge gathers identity evidence from the Client Workload’s runtime environment.
 

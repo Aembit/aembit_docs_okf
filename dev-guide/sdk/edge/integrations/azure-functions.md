@@ -5,14 +5,14 @@ description: "Authenticate an Azure Function with an Entra token from its manage
 resource: https://docs.aembit.io/dev-guide/sdk/edge/integrations/azure-functions/
 interface: sdk
 tags: ["integration", "edge", "sdk"]
-timestamp: 2026-10-15T12:57:18-07:00
+timestamp: 2026-11-10T19:33:34-08:00
 ---
 
 # Use the Edge SDK in Azure Functions
 
 An Azure Function App with managed identity enabled can request a Microsoft Entra access token for itself. The Edge SDK presents that token to an OIDC ID Token Trust Provider in Aembit, so your function needs no secret to authenticate with Aembit.
 
-This guide covers the parts specific to Azure Functions. For what the SDK does in general, see the [Edge SDK overview](../overview.md).
+For what the SDK does in general, see the [Edge SDK overview](../overview.md).
 
 ## Before you start
 
@@ -22,14 +22,39 @@ On the Azure side, you need the following:
 * Managed identity enabled on the Function App.
 * A Microsoft Entra app registration whose Application ID URI represents Aembit as the token audience.
 
-In Aembit, configure an Access Policy with these pieces:
+In your Aembit Tenant, configure an Access Policy with these pieces, plus the Trust Provider that the next section creates:
 
-* An [OIDC ID Token Trust Provider](../../../../user-guide/access-policies/trust-providers/oidc-id-token-trust-provider.md) carrying an Edge SDK Client ID.
 * A Client Workload whose [OIDC ID Token Subject](../../../../user-guide/access-policies/client-workloads/identification/oidc-id-token-subject.md) identifier matches the `sub` claim in the Entra token.
 * A Server Workload whose Service Endpoint host and port match what your function requests.
 * A Credential Provider that returns the credential type your function asks for.
 
-Match the Trust Provider’s issuer (`iss`) rule on your Entra tenant issuer and its audience (`aud`) rule on the Application ID URI the function requests a token for.
+You need **Read/Write** permission for Trust Providers and Access Policies, or at least **Read Only** permission for Trust Providers if your Access Policy already has its Trust Provider.
+
+## Create the Trust Provider
+
+Create an [OIDC ID Token Trust Provider](../../../../user-guide/access-policies/trust-providers/oidc-id-token-trust-provider.md). It carries the Edge SDK Client ID your function passes to Aembit. Match its issuer (`iss`) rule on your Entra tenant issuer and its audience (`aud`) rule on the Application ID URI the function requests a token for. If your Access Policy already has one, skip this section.
+
+The SDK’s Trust Provider object collects identity evidence in your program, and the Trust Provider in your Aembit Tenant verifies that evidence. To create one and add it to your Access Policy, you need **Read/Write** permission for Trust Providers and Access Policies.
+
+1. Log in to your Aembit Tenant and go to **Trust Providers** in the left sidebar.
+
+2. Click **+ New**.
+
+3. Enter a **Name** for the Trust Provider.
+
+4. In the **Trust Provider** list, select the type this page names. The form then shows the fields for that type.
+
+5. Fill in the fields the type requires, and add the **Match Rules** this page describes. The Trust Provider page for the type lists each field and match rule attribute.
+
+6. Click **Save**.
+
+Then add the Trust Provider to your Access Policy, as [Client Workload identity attestation](../../../../user-guide/access-policies/trust-providers/add-trust-provider.md#client-workload-identity-attestation) describes.
+
+Create the Trust Provider with Terraform
+
+To manage the Trust Provider as code, create it with the [`aembit_trust_provider`](https://registry.terraform.io/providers/Aembit/aembit/latest/docs/resources/trust_provider) resource in the [Aembit Terraform provider](../../../../user-guide/access-policies/advanced-options/terraform/terraform-configuration.md). Terraform provisions the Aembit configuration, and your program uses the Edge SDK to retrieve credentials at runtime.
+
+Of the Trust Provider types the Edge SDK supports, all but three expose the Edge SDK Client ID in the resource’s read-only `client_id` attribute. For the AWS Metadata Service, AWS Role, and Azure Instance Metadata Service types, the attribute is null, so copy the Edge SDK Client ID from the Aembit Tenant UI.
 
 ## Where the token comes from
 
@@ -37,9 +62,9 @@ The function asks Azure for an Entra access token through `ManagedIdentityCreden
 
 The token request names a scope, which is the Application ID URI followed by `/.default`. The default Application ID URI takes the form `api://<application-client-id>`. The examples append `/.default` for you, so leave it off the audience you configure.
 
-Keep the audience stable once you configure Aembit. To find the `sub` value your Client Workload identifier has to match, decode a token issued for your audience and copy its `sub` claim.
+Keep the audience stable after you configure Aembit. To find the `sub` value your Client Workload identifier has to match, decode a token issued for your audience and copy its `sub` claim.
 
-For local development outside Azure, set the `AZURE_ENTRA_ACCESS_TOKEN` environment variable to an Entra access token. The function uses that value when it’s present and skips managed identity, which the examples don’t emulate locally.
+For local development outside Azure, set the `AZURE_ENTRA_ACCESS_TOKEN` environment variable to an Entra access token. The function uses that value when it is present and skips managed identity, which the examples do not emulate locally.
 
 ## Write the function
 
@@ -212,7 +237,7 @@ The Trust Provider takes a function rather than a string for the token. The SDK 
 
   List `azure-functions`, `azure-identity`, and `aembit-edge-sdk` in the function’s `requirements.txt`.
 
-The runnable examples in the SDK repository, in [TypeScript](https://github.com/Aembit/edge-sdks/tree/main/ts/examples/azure-function-entra-oidc) and [Python](https://github.com/Aembit/edge-sdks/tree/main/py/examples/azure_function_entra_oidc), add the logging and error handling this excerpt trims, along with build and deployment steps.
+The SDK repository has runnable examples in [TypeScript](https://github.com/Aembit/edge-sdks/tree/main/ts/examples/azure-function-entra-oidc) and [Python](https://github.com/Aembit/edge-sdks/tree/main/py/examples/azure_function_entra_oidc). They add the logging and error handling this excerpt trims, plus the build and deployment steps.
 
 The function registers with `authLevel: "function"` in TypeScript and `func.AuthLevel.FUNCTION` in Python, so every caller must present a function key. Treat the endpoint as a test harness rather than a general credential broker for arbitrary callers.
 
@@ -223,7 +248,7 @@ Set each value in `EXAMPLE_CONFIG` at the top of the function:
 | TypeScript value              | Python value                    | Where it comes from                                                                                                                                                                                    |
 | ----------------------------- | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `baseUrl`                     | `base_url`                      | The Edge API base URL in your Aembit Tenant profile. See [Get your Aembit Edge API base URL](../../../api/edge/quickstart-edge.md#get-your-aembit-edge-api-base-url).                                   |
-| `clientId`                    | `client_id`                     | The Edge SDK Client ID from your OIDC ID Token Trust Provider. See [How to find your Edge SDK Client ID](#how-to-find-your-edge-sdk-client-id).                                                        |
+| `clientId`                    | `client_id`                     | The Edge SDK Client ID from your OIDC ID Token Trust Provider. See [Find your Edge SDK Client ID](#find-your-edge-sdk-client-id).                                                                      |
 | `serverHost` and `serverPort` | `server_host` and `server_port` | The **Host** and **Port** under **Service Endpoint** on your Server Workload, which Aembit uses to find the Access Policy. **Port** must be equal, and **Host** must be equal or match a `*` wildcard. |
 | `credentialType`              | `credential_type`               | The credential type your Credential Provider returns, such as `ApiKey`.                                                                                                                                |
 | `resourceSet`                 | `resource_set`                  | Leave unset unless your Access Policy lives in a non-default Resource Set. It takes the Resource Set ID, not its name.                                                                                 |
@@ -286,7 +311,13 @@ A `401` status carries the same message whichever check failed. Work through the
 For an OIDC ID Token Trust Provider, the validation in the fourth check covers two things:
 
 * The token must be inside the validity window its `exp` and `nbf` claims set, with 5 minutes of clock skew allowed. If it has expired, request a new token and retry.
-* The **Method** under **Attestation Method** must verify the token’s signature. With **OIDC Discovery**, each **OIDC Endpoint** must be the token issuer’s base URL, without the `.well-known` path. With **Upload JWKS** or **Upload Public Key**, the key must be the public key of the token’s signer. With **Symmetric Key**, the key must be the shared secret that signed the token. With **Aembit Tenant OIDC ID Token**, your Aembit Tenant must have issued the token.
+
+* The **Method** under **Attestation Method** must verify the token’s signature.
+
+  * With **OIDC Discovery**, each **OIDC Endpoint** must be the token issuer’s base URL, without the `.well-known` path.
+  * With **Upload JWKS** or **Upload Public Key**, the key must be the public key of the token’s signer.
+  * With **Symmetric Key**, the key must be the shared secret that signed the token.
+  * With **Aembit Tenant OIDC ID Token**, your Aembit Tenant must have issued the token.
 
 Aembit checks the token’s issuer and audience only through match rules. The `sub`, `aud`, and `iss` attributes compare the token’s claims of the same name, and `custom_claim` compares the claim you name in **Key**. Decode a real token and compare each claim with the **Value** of its rule.
 
@@ -338,7 +369,7 @@ When a Client Workload uses the **Aembit Client ID** identifier, the SDK doesn�
 
 For this platform, **OIDC ID Token Subject**, **OIDC ID Token Issuer**, and **OIDC ID Token Audience** compare the token’s `sub`, `iss`, and `aud` claims.
 
-## How to find your Edge SDK Client ID
+## Find your Edge SDK Client ID
 
 1. Log in to your Aembit Tenant.
 

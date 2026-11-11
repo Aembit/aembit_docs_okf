@@ -5,27 +5,54 @@ description: "Authenticate a Cloud Run function with a Google identity token and
 resource: https://docs.aembit.io/dev-guide/sdk/edge/integrations/gcp-cloud-run/
 interface: sdk
 tags: ["integration", "edge", "sdk"]
-timestamp: 2026-10-15T12:57:18-07:00
+timestamp: 2026-11-10T19:33:34-08:00
 ---
 
 # Use the Edge SDK on Google Cloud Run
 
 A Cloud Run function already has an identity. Google attaches a service account to the runtime and issues signed identity tokens for it through the metadata server. The Edge SDK presents that token as proof of who the workload is, so your function needs no secret to authenticate with Aembit.
 
-This guide covers the parts specific to Cloud Run. For what the SDK does in general, see the [Edge SDK overview](../overview.md).
+For what the SDK does in general, see the [Edge SDK overview](../overview.md).
 
 ## Before you start
 
 On the Google side, you need a Cloud Run runtime with a service account attached. The function reaches the metadata server over the internal network, so that path needs no extra configuration.
 
-In Aembit, configure an Access Policy with these pieces:
+In your Aembit Tenant, configure an Access Policy with these pieces, plus the Trust Provider that the next section creates:
 
 * A Client Workload that uses the GCP Identity Token [Client Identifier](../../../../user-guide/access-policies/client-workloads/identification/gcp-identity-token.md).
-* A [GCP Identity Token Trust Provider](../../../../user-guide/access-policies/trust-providers/gcp-identity-token-trust-provider.md).
 * A Server Workload whose Service Endpoint host and port match what your function requests.
 * A Credential Provider that returns the credential type your function asks for.
 
+You need **Read/Write** permission for Trust Providers and Access Policies, or at least **Read Only** permission for Trust Providers if your Access Policy already has its Trust Provider.
+
 Both the Client Workload identifier and the Trust Provider match on the `email` claim in the Google token, which is the service account address.
+
+## Create the Trust Provider
+
+Create a [GCP Identity Token Trust Provider](../../../../user-guide/access-policies/trust-providers/gcp-identity-token-trust-provider.md) with a match rule on the `email` claim. If your Access Policy already has one, skip this section.
+
+The SDK’s Trust Provider object collects identity evidence in your program, and the Trust Provider in your Aembit Tenant verifies that evidence. To create one and add it to your Access Policy, you need **Read/Write** permission for Trust Providers and Access Policies.
+
+1. Log in to your Aembit Tenant and go to **Trust Providers** in the left sidebar.
+
+2. Click **+ New**.
+
+3. Enter a **Name** for the Trust Provider.
+
+4. In the **Trust Provider** list, select the type this page names. The form then shows the fields for that type.
+
+5. Fill in the fields the type requires, and add the **Match Rules** this page describes. The Trust Provider page for the type lists each field and match rule attribute.
+
+6. Click **Save**.
+
+Then add the Trust Provider to your Access Policy, as [Client Workload identity attestation](../../../../user-guide/access-policies/trust-providers/add-trust-provider.md#client-workload-identity-attestation) describes.
+
+Create the Trust Provider with Terraform
+
+To manage the Trust Provider as code, create it with the [`aembit_trust_provider`](https://registry.terraform.io/providers/Aembit/aembit/latest/docs/resources/trust_provider) resource in the [Aembit Terraform provider](../../../../user-guide/access-policies/advanced-options/terraform/terraform-configuration.md). Terraform provisions the Aembit configuration, and your program uses the Edge SDK to retrieve credentials at runtime.
+
+Of the Trust Provider types the Edge SDK supports, all but three expose the Edge SDK Client ID in the resource’s read-only `client_id` attribute. For the AWS Metadata Service, AWS Role, and Azure Instance Metadata Service types, the attribute is null, so copy the Edge SDK Client ID from the Aembit Tenant UI.
 
 ## Where the token comes from
 
@@ -45,7 +72,7 @@ The request also needs an `audience` query parameter, because Google issues no t
 https://<tenant>.id.<stack>.aembit.io
 ```
 
-Aembit rejects a token whose audience isn’t this host, which the GCP Identity Token Trust Provider shows as **Edge SDK Audience**. Aembit identifies the workload by the token’s `email` claim.
+Aembit rejects a token whose audience is not this host, which the GCP Identity Token Trust Provider shows as **Edge SDK Audience**. Aembit identifies the workload by the token’s `email` claim.
 
 The audience host uses the `id` subdomain, and `baseUrl` uses the `ec` subdomain. Check both values before you deploy.
 
@@ -233,7 +260,7 @@ Invoke the function and read the JSON it returns. A working flow reports the cre
 
 Every error the Edge SDK raises carries a `kind`, which narrows the failure to one side of the exchange. Alongside `kind`, each error carries `statusCode`, `apiCode`, and `requestId` when Aembit supplies them, and `retryable` to report whether another attempt might succeed.
 
-### The function can’t get a token
+### The function cannot get a token
 
 Confirm the runtime has a service account attached and that the metadata request carries the `Metadata-Flavor: Google` header.
 
@@ -265,7 +292,7 @@ For a GCP Identity Token Trust Provider, the validation in the fourth check incl
 * The token’s issuer must be `https://accounts.google.com`, which is the issuer of tokens from the metadata server.
 * The token must be inside the validity window its `exp` and `nbf` claims set, with 5 minutes of clock skew allowed. If it has expired, request a new token and retry.
 
-The `email` attribute compares the token’s `email` claim, which holds the service account email. A match rule on a claim the token doesn’t carry fails.
+The `email` attribute compares the token’s `email` claim, which holds the service account email. A match rule on a claim the token does not carry fails.
 
 ### The credential request raises an error
 
@@ -315,7 +342,7 @@ When a Client Workload uses the **Aembit Client ID** identifier, the SDK doesn�
 
 For this platform, **GCP Identity Token** compares the token’s `email` claim.
 
-## How to find your Edge SDK Client ID
+## Find your Edge SDK Client ID
 
 1. Log in to your Aembit Tenant.
 

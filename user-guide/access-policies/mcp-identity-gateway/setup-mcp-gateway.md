@@ -5,7 +5,7 @@ description: "Configure your Aembit Tenant for the managed MCP Identity Gateway.
 resource: https://docs.aembit.io/user-guide/access-policies/mcp-identity-gateway/setup-mcp-gateway/
 interface: mcp
 tags: ["mcp-identity-gateway", "access-policy"]
-timestamp: 2026-11-03T11:36:11-05:00
+timestamp: 2026-11-10T23:08:08-08:00
 ---
 
 # Set up MCP Identity Gateway
@@ -24,7 +24,7 @@ Before you begin, ensure you have:
 * A provisioned MCP Identity Gateway endpoint for your Aembit Tenant (`https://<tenant-id>.mcpgateway.aembit.io`). If you do not have one yet, contact your Aembit representative.
 * An identity provider (Okta, Google, Microsoft Entra ID, or similar) for user authentication
 * The OAuth redirect URLs of the MCP clients (AI agents) you plan to connect
-* The hostname and OAuth configuration for each MCP server you plan to proxy
+* The hostname and OAuth or API key configuration for each MCP server you plan to proxy
 
 > **MCP resource support**
 >
@@ -53,9 +53,9 @@ Unlike typical Aembit workload-to-workload scenarios, MCP requests involve two i
 * **MCP client identity** (workload) - The AI agent or application making the request, identified by its redirect URL.
 * **User identity** (human) - The person using the AI agent, identified by claims from your IdP (such as email address).
 
-MCP Identity Gateway needs both: it validates *which* MCP client is connecting and *who* is using it. The Credential Provider then stores tokens per-user, tying each user’s MCP server access to their own authorization.
+MCP Identity Gateway needs both: it validates *which* MCP client is connecting and *who* is using it. An MCP User-Based or Enterprise Managed Access Token Credential Provider then ties each user’s MCP server access to their own authorization.
 
-In this model, you configure identity once at the Aembit Tenant level. Many users can share the same set of Access Policies, while the per-user credentials the Credential Provider manages isolate their individual access.
+In this model, you configure identity once at the Aembit Tenant level. Many users can share the same set of Access Policies, while per-user credentials from an MCP User-Based or Enterprise Managed Access Token Credential Provider isolate their individual access.
 
 In your Aembit Tenant, go to **Administration -> Identity Providers** and configure your IdP using [OIDC](../../administration/identity-providers/create-idp-oidc.md) or [SAML](../../administration/identity-providers/create-idp-saml.md). The MCP Enterprise Managed Access Token Credential Provider requires an OIDC Identity Provider with the `offline_access` scope. See [Prepare the Identity Provider for enterprise-managed access](../credential-providers/mcp-enterprise-managed-access-token-idp.md).
 
@@ -191,11 +191,11 @@ The token contains the authenticated user’s identity (for example, an email cl
 
 ## Create the gateway-to-server Access Policy
 
-The second Access Policy governs MCP Identity Gateway’s access to each MCP server. The Credential Provider enforces per-user access by storing OAuth tokens for each user.
+The second Access Policy governs MCP Identity Gateway’s access to each MCP server.
 
 > **Per-user access control**
 >
-> In this Access Policy, the **Client Workload** is MCP Identity Gateway itself, not individual users. The Credential Provider enforces per-user access: with MCP User-Based Access Token, each user completes an OAuth authorization flow once per MCP server, and Aembit stores their tokens individually. With MCP Enterprise Managed Access Token, Aembit exchanges each user’s SSO identity for the MCP server token, and no user sees a consent prompt. Optional Access Conditions can add Time or GeoIP restrictions.
+> In this Access Policy, the **Client Workload** is MCP Identity Gateway itself, not individual users. The MCP User-Based Access Token and MCP Enterprise Managed Access Token Credential Providers enforce per-user access. With MCP User-Based Access Token, each user completes an OAuth authorization flow once per MCP server, and Aembit stores their tokens individually. With MCP Enterprise Managed Access Token, Aembit exchanges each user’s SSO identity for the MCP server token, and no user sees a consent prompt. An API Key Credential Provider shares one key across every user, so it does not enforce per-user access. Optional Access Conditions can add Time or GeoIP restrictions.
 
 ### Name the Access Policy
 
@@ -283,7 +283,7 @@ See [Trust Providers](../trust-providers/overview.md) for additional configurati
 
 ### Credential Provider
 
-Create a Credential Provider that retrieves credentials for the MCP server. MCP Identity Gateway supports the following Credential Provider types for this Access Policy, depending on how the MCP server issues credentials.
+Create a Credential Provider that retrieves credentials for the MCP server. An MCP server that accepts only a static API key, such as the self-hosted [CrowdStrike Falcon MCP server](../../deploy-install/mcp-identity-gateway/supported-servers/crowdstrike.md), uses an [API Key](../credential-providers/api-key.md) Credential Provider. Its Server Workload sets **Authentication Method** to **API Key** and **Authentication Scheme** to **Header**. Every user shares that one key, so the Credential Provider does not enforce per-user access. For an MCP server that uses OAuth, MCP Identity Gateway supports the following Credential Provider types for this Access Policy, depending on how the MCP server issues credentials.
 
 #### Choosing a credential type
 
@@ -438,7 +438,7 @@ To add Access Conditions, click **+ Configure** in the **Access Conditions** car
 >
 > Access Conditions are optional. Without them, any authenticated user routed through MCP Identity Gateway can access the MCP server.
 >
-> Each user has their own OAuth tokens managed by the Credential Provider. When MCP Identity Gateway acts on behalf of a user, it retrieves that user’s specific credentials.
+> With an MCP User-Based or Enterprise Managed Access Token Credential Provider, each user has their own credentials. When MCP Identity Gateway acts on behalf of that user, it retrieves that user’s specific credentials.
 
 ### Content Security Optional
 
@@ -464,6 +464,8 @@ For MCP servers that require user authorization (for example, via OAuth 2.0 flow
 3. After the user completes the flow, Aembit obtains credentials from the MCP server’s authorization infrastructure and associates those credentials with that user and MCP server.
 
 Subsequent access for that user and server proceeds without repeated consent, subject to token expiration and revocation policies.
+
+An application that uses [embedded user authorization](embedded-user-authorization.md) collects the person’s consent during its own flow, before its first request for that person through MCP Identity Gateway.
 
 This consent flow applies to MCP User-Based Access Token. With [MCP Enterprise Managed Access Token](../credential-providers/about-mcp-enterprise-managed-access-token.md) no consent flow runs, because Aembit exchanges the user’s SSO identity for the token.
 
@@ -525,6 +527,7 @@ To use MCP Identity Gateway, you only configure:
   * [MCP User-Based Access Token](../credential-providers/mcp-user-based-access-token.md) when the server requires per-user OAuth credentials
   * [MCP Enterprise Managed Access Token](../credential-providers/mcp-enterprise-managed-access-token.md) when the server and your OIDC Identity Provider support Enterprise-Managed Authorization
   * [OAuth 2.0 Authorization Code](../credential-providers/oauth-authorization-code.md) for shared credentials
+  * [API Key](../credential-providers/api-key.md) when the server accepts only a static API key, such as the [CrowdStrike Falcon MCP server](../../deploy-install/mcp-identity-gateway/supported-servers/crowdstrike.md)
 
 Follow the “Set up the MCP Authorization Server” steps only when you are explicitly using Aembit as a standalone MCP Authorization Server for your own MCP servers.
 
@@ -540,4 +543,5 @@ Follow the “Set up the MCP Authorization Server” steps only when you are exp
 * [Connect Microsoft Copilot Studio](../../deploy-install/mcp-identity-gateway/connect-copilot-studio.md) - Connect Copilot Studio agents to your MCP servers through MCP Identity Gateway
 * [MCP Identity Gateway reference](../../deploy-install/mcp-identity-gateway/reference-mcp-gateway.md) - Token formats, proxied MCP methods, session management, connectivity, and workload events
 * [Client Workload identification in MCP Identity Gateway](client-workload-identification.md) - How MCP Identity Gateway identifies users in multi-user deployments
+* [Embedded user authorization](embedded-user-authorization.md) - Let your own application sign people in and authorize MCP servers with no Aembit pages
 * [Audit and report on Workload activity](../../audit-report/overview.md) - Review MCP request and response events for your Aembit Tenant

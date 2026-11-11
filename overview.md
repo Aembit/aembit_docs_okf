@@ -3,7 +3,7 @@ type: reference
 title: "Aembit Docs"
 description: "Attest. Authenticate. Accelerate."
 resource: https://docs.aembit.io/
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-11-09T14:11:42-08:00
 ---
 
 # Aembit Docs

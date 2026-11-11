@@ -4,7 +4,7 @@ title: "MCP Identity Gateway concepts"
 description: "Architecture, token handling, Access Policies, and deployment patterns for MCP Identity Gateway."
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/concepts-mcp-gateway/
 tags: ["mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-11-02T13:04:06-08:00
+timestamp: 2026-11-09T14:11:42-08:00
 ---
 
 # MCP Identity Gateway concepts
@@ -28,12 +28,12 @@ Unlike typical workload-to-workload scenarios, MCP traffic involves a human user
 * **MCP client identity (workload)** - The AI agent application making the request, identified by its OAuth redirect URL (for example, `https://claude.ai/api/mcp/auth_callback`)
 * **User identity (human)** - The person using the AI agent, identified by claims from your IdP such as their email address
 
-MCP Identity Gateway uses both identities for access control. The MCP client identity determines *which* AI agents can connect, while the user identity determines *who* can access which MCP servers and enables per-user credential isolation.
+MCP Identity Gateway uses both identities for access control. The MCP client identity determines *which* AI agents can connect, while the user identity determines *who* can access which MCP servers. With an MCP User-Based or Enterprise Managed Access Token Credential Provider, the user identity also keeps each user’s credentials separate.
 
 In the client-to-Gateway policy, the Credential Provider extracts the user’s identity from their IdP token. You specify this using a dynamic claim expression like `${oidc.identityToken.decode.payload.<user-claim>}`. Replace `<user-claim>` with a claim from your IdP that uniquely identifies users (such as `email`, `sub`, or `preferred_username`). This embeds the user’s identity in the access token, enabling Aembit to:
 
 * Enforce per-user Access Policies
-* Store OAuth tokens for each user in isolation
+* Store OAuth tokens for each user in isolation, with an MCP User-Based Access Token Credential Provider
 * Provide user-level audit trails showing who accessed which MCP servers
 
 ## MCP Identity Gateway architecture
@@ -66,13 +66,13 @@ MCP Identity Gateway evaluates every MCP interaction against Aembit Access Polic
 
 ![Two Access Policies required by the MCP Identity Gateway: client-to-gateway and gateway-to-server](https://docs.aembit.io/d2/docs/user-guide/deploy-install/mcp-identity-gateway/concepts-mcp-gateway-2.svg)
 
-You configure one Client-to-Gateway policy per MCP Identity Gateway and one Gateway-to-Server policy per MCP server—not one policy per user. This model supports many users sharing the same policies while maintaining per-user credential isolation through the Credential Provider.
+You configure one Client-to-Gateway policy per MCP Identity Gateway and one Gateway-to-Server policy per MCP server—not one policy per user. This model supports many users sharing the same policies, and an MCP User-Based or Enterprise Managed Access Token Credential Provider keeps each user’s credentials isolated.
 
 **Client-to-Gateway policy** - Validates which MCP client is connecting (by redirect URL) and authenticates the user through your IdP via a Trust Provider.
 
 This policy handles blended access: both the AI agent identity and the user identity.
 
-**Gateway-to-Server policy** - Authorizes MCP Identity Gateway to access MCP servers on behalf of authenticated users. The Credential Provider manages access to the MCP server, with optional Access Conditions for time or GeoIP restrictions. Use [MCP User-Based Access Token](../../access-policies/credential-providers/about-mcp-user-based-access-token.md) when the MCP server requires per-user OAuth credentials (most SaaS MCP servers). Use [OAuth 2.0 Authorization Code](../../access-policies/credential-providers/oauth-authorization-code.md) when the server accepts a shared, administrator-authorized token. Use [MCP Enterprise Managed Access Token](../../access-policies/credential-providers/about-mcp-enterprise-managed-access-token.md) when the MCP server and your OIDC Identity Provider both support Enterprise-Managed Authorization, so users never see a consent prompt for the server.
+**Gateway-to-Server policy** - Authorizes MCP Identity Gateway to access MCP servers on behalf of authenticated users. The Credential Provider manages access to the MCP server, with optional Access Conditions for time or GeoIP restrictions. Use [MCP User-Based Access Token](../../access-policies/credential-providers/about-mcp-user-based-access-token.md) when the MCP server requires per-user OAuth credentials (most SaaS MCP servers). Use [OAuth 2.0 Authorization Code](../../access-policies/credential-providers/oauth-authorization-code.md) when the server accepts a shared, administrator-authorized token. Use [MCP Enterprise Managed Access Token](../../access-policies/credential-providers/about-mcp-enterprise-managed-access-token.md) when the MCP server and your OIDC Identity Provider both support Enterprise-Managed Authorization, so users never see a consent prompt for the server. Use [API Key](../../access-policies/credential-providers/api-key.md) when the MCP server accepts only a static API key that every user shares, such as the [CrowdStrike Falcon MCP server](supported-servers/crowdstrike.md).
 
 With MCP User-Based Access Token, each user completes an OAuth flow once per MCP server. If unauthorized, MCP Identity Gateway denies the request and logs the event.
 

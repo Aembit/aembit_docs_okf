@@ -3,7 +3,7 @@ type: reference
 title: "What is Aembit?"
 description: "An overview of Aembit, its core principles, and key capabilities"
 resource: https://docs.aembit.io/get-started/
-timestamp: 2026-11-03T09:49:54-08:00
+timestamp: 2026-11-09T14:11:42-08:00
 ---
 
 # What is Aembit?
@@ -146,7 +146,7 @@ Every access event carries both the user and the AI agent (dual attribution), an
 
 For AI agents and MCP clients, Aembit’s MCP Identity Gateway sits in front of your MCP servers as a transparent proxy. It enforces Access Policies and injects per-request credentials that Aembit manages, so the AI agent never holds credentials for the MCP servers it reaches.
 
-For example, an engineering team points Claude Desktop at MCP Identity Gateway instead of connecting to MCP servers directly. Aembit authenticates each user, applies your Access Policies, and injects each user’s own credentials per request. As a result, each user’s access stays isolated from the rest and the AI agent holds none of them.
+For example, an engineering team points Claude Desktop at MCP Identity Gateway instead of connecting to MCP servers directly. Aembit authenticates each user, applies your Access Policies, and injects credentials per request, so the AI agent holds none of them. With an MCP User-Based or Enterprise Managed Access Token Credential Provider, each user gets their own credentials. Each user’s access then stays isolated from the rest.
 
 AI agents hold no downstream credentials, access follows the policies you define, and every request is attributable to a specific user, AI agent, and target MCP server.
 

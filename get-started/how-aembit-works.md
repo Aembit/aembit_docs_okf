@@ -3,12 +3,12 @@ type: explanation
 title: "How Aembit works"
 description: "A simplified description of how Aembit works, including its architecture and components"
 resource: https://docs.aembit.io/get-started/how-aembit-works/
-timestamp: 2026-09-15T18:18:13-07:00
+timestamp: 2026-11-05T18:18:07-08:00
 ---
 
 # How Aembit works
 
-In modern technical environments, applications, services, scripts, APIs, and AI agents frequently need to communicate with each other. They also access shared resources like databases, SaaS platforms, and other internal services. These automated systems operating without direct human interaction are **Non-Human Identities (NHI)**, commonly called **workloads**. AI agents are a distinct class of non-human identity. Whether a user-driven assistant like Claude Desktop or an autonomous service, they authenticate and reach systems through APIs, databases, and MCP servers the same way other workloads do.
+In modern technical environments, AI agents, applications, services, scripts, and APIs frequently need to communicate with each other. They also access shared resources like databases, SaaS platforms, and other internal services. These AI agents and other software systems are **Non-Human Identities (NHI)**, commonly called **workloads**. AI agents are a distinct class of non-human identity. Whether a user-driven assistant like Claude Desktop or an autonomous service, they authenticate and reach systems through APIs, databases, and MCP servers the same way other workloads do.
 
 Use the links in each section to dive deeper into specific topics related to how Aembit works or start configuring and using those features.
 
@@ -27,19 +27,21 @@ AI agents compound this problem in two ways. First, the MCP servers that connect
 
 Aembit solves these challenges with its Workload Identity and Access Management (Workload IAM) platform, which secures two forms of non-human identity under one identity-first model.
 
-**Traditional workloads** are the applications, services, scripts, and APIs that run your business. Examples include a microservice calling an API, a script accessing a database, or a CI/CD job deploying to a cloud provider.
-
 **AI agents** are a form of non-human identity in their own right. A user-driven assistant like Claude Desktop or an autonomous agent reaches tools and data through APIs, databases, and MCP servers.
 
-Both forms interact the same way: one workload (a Client Workload) initiates a request to access another workload or service (a Server Workload). A Client Workload might be a microservice calling a payments API or an AI agent calling an MCP server. The Server Workload is whatever it needs to reach.
+**Traditional workloads** are the applications, services, scripts, and APIs that run your business. Examples include a microservice calling an API, a script accessing a database, or a CI/CD job deploying to a cloud provider.
 
-Aembit shifts authentication away from what a workload knows (static secrets) toward who a workload verifiably is, using evidence from its environment and context. Instead of using a traditional password or API key, Aembit verifies a workload’s identity cryptographically using evidence from its runtime environment, such as:
+Both forms interact the same way: one workload (a Client Workload) initiates a request to access another workload or service (a Server Workload). A Client Workload might be an AI agent calling an MCP server or a microservice calling a payments API. The Server Workload is whatever it needs to reach.
+
+Aembit shifts authentication away from what a workload knows (static secrets) toward who a workload verifiably is, using evidence from its environment and context. For workload attestation, Aembit verifies runtime identity evidence, such as:
 
 * Where the workload is running
 * What platform issued the workload’s identity
 * Cloud instance metadata
 * Kubernetes service account tokens
 * SPIFFE Verifiable Identity Documents (SVID)
+
+For blended identity, Trust Providers also validate user identity claims from an Identity Provider.
 
 ![Simplified Workload IAM overview showing a Client Workload requesting access through Aembit to a Server Workload](https://docs.aembit.io/d2/docs/get-started/how-aembit-works-0.svg)
 
@@ -95,7 +97,7 @@ An AI agent acts as a Client Workload, so Aembit’s model already secures it. U
 
 Aembit manages workload-to-workload access through Access Policies. Access Policies serve as the central control mechanism to define **who** (which Client Workload) **can access what** (which Server Workload) **under what conditions**. This policy-driven approach replaces the need for Client Workloads to possess static secrets for every service they need to access.
 
-Instead of relying on secrets embedded in the client, Access Policies work by leveraging the inherent identity of the workload. Aembit verifies a Client Workload’s identity from its runtime environment. It then provisions the necessary credentials Just-In-Time (JIT) to the Server Workload it’s trying to access.
+Instead of relying on secrets embedded in the client, Access Policies work by leveraging the inherent identity of the workload. For workload attestation, Aembit verifies a Client Workload’s identity from its runtime environment. For blended identity, it also validates user identity claims from an Identity Provider. It then provisions the necessary credentials Just-In-Time (JIT) to the Server Workload it’s trying to access.
 
 ![Simplified Access Policy showing Client Workload, Access Policy evaluation, and Server Workload](https://docs.aembit.io/d2/docs/get-started/how-aembit-works-1.svg)
 
@@ -117,7 +119,7 @@ The components of an Access Policy include:
 
 * A Client Workload (who wants access)
 * A Server Workload (what they want to access)
-* A Trust Provider (how to verify the client’s identity)
+* A Trust Provider (how to verify workload or user identity)
 * Access Conditions (when/where/under what circumstances to allow access)
 * Content Security (how to govern MCP tool traffic)
 * A Credential Provider (what credentials to issue)
@@ -126,13 +128,13 @@ The following sections describe these key components of an Access Policy:
 
 ### Trust Providers
 
-Trust Providers are fundamental to Aembit’s “secretless” approach. Trust Providers **cryptographically verify the identity** of Client Workloads *without* clients needing a pre-shared secret to authenticate itself to Aembit.
+Trust Providers are fundamental to Aembit’s “secretless” approach. Trust Providers verify workload attestation evidence or user identity claims without requiring the Client Workload to present a pre-shared secret.
 
-Trust Providers authenticate the workload’s identity by examining verifiable evidence from its environment, such as cloud instance metadata, Kubernetes service account tokens, or OIDC tokens from CI/CD platforms.
+The following diagram illustrates workload attestation using runtime evidence, such as cloud instance metadata, Kubernetes service account tokens, or identity tokens from CI/CD platforms.
 
 ![Simplified Trust Provider identity verification within an Access Policy](https://docs.aembit.io/d2/docs/get-started/how-aembit-works-2.svg)
 
-Aembit calls this Workload Attestation. If the Trust Provider can’t verify the workload’s identity, Aembit denies access to the Server Workload.
+Aembit calls this workload attestation. If the Trust Provider can’t verify the workload’s identity, Aembit denies access to the Server Workload.
 
 ![](https://docs.aembit.io/aembit-icons/lightbulb-light.svg)
 

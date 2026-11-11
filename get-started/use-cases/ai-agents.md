@@ -4,7 +4,7 @@ title: "Securing AI agent access to your resources"
 description: "How Aembit secures AI agent access to enterprise resources through the Model Context Protocol (MCP)"
 resource: https://docs.aembit.io/get-started/use-cases/ai-agents/
 tags: ["use-case"]
-timestamp: 2026-11-03T09:49:54-08:00
+timestamp: 2026-11-09T14:11:42-08:00
 ---
 
 # Securing AI agent access to your resources
@@ -37,7 +37,7 @@ With Aembit, you get:
 
 * Blended identity access control that evaluates both the user (through your IdP) and the AI agent (through workload identity) in a single access decision, not just “who is this user?” but “who is this user, using which AI agent?”
 * Credential isolation, so AI agents never see the actual credentials for backend systems
-* Per-user credential scoping, where each user’s AI agent receives different downstream credentials based on their identity, even when all users share the same AI agent and policies
+* Per-user credential scoping with an MCP User-Based or Enterprise Managed Access Token Credential Provider behind MCP Identity Gateway. Each user’s requests use their own downstream credentials, even when all users share one AI agent.
 * A centralized audit trail that logs every AI agent request with both user identity and AI agent identity
 * Instant revocation by disabling access for a specific user, AI agent type, or user-agent combination through policy changes, not credential rotation
 
@@ -74,9 +74,9 @@ Aembit offers two components for securing MCP traffic:
 
 **MCP Authorization Server** Issues short-lived tokens to AI agents after user authentication. The AI agent holds the token and presents it to the MCP server on each request. Implements blended identity through a single Access Policy that evaluates both user and AI agent.
 
-**MCP Identity Gateway** Proxies all MCP traffic through Aembit, so the AI agent never holds any credential, not even the short-lived token. Every MCP request flows through MCP Identity Gateway, which validates the user’s identity and injects credentials for each request. Extends blended identity across two policy hops, enabling per-user credential isolation for each downstream MCP server.
+**MCP Identity Gateway** Proxies all MCP traffic through Aembit, so the AI agent never holds any credential, not even the short-lived token. Every MCP request flows through MCP Identity Gateway, which validates the user’s identity and injects credentials for each request. Extends blended identity across two Access Policies. With an MCP User-Based or Enterprise Managed Access Token Credential Provider, each user’s credentials stay isolated for each downstream MCP server.
 
-MCP Identity Gateway provides the strongest security (zero credential exposure to the AI agent and per-user credential scoping) but introduces latency and a single point of failure. The authorization server model is simpler and sufficient for most use cases, as the short-lived tokens expire fast and scope to specific resources. Both models implement [blended identity](../../user-guide/access-policies/blended-identity.md), combining user and workload identity in every access decision.
+MCP Identity Gateway provides the strongest security but introduces latency and a single point of failure. It gives zero credential exposure to the AI agent. The authorization server model is simpler and sufficient for most use cases, as the short-lived tokens expire fast and scope to specific resources. Both models implement [blended identity](../../user-guide/access-policies/blended-identity.md), combining user and workload identity in every access decision.
 
 ### Why this architecture matters for AI agents
 
@@ -84,7 +84,7 @@ AI agents introduce security challenges that traditional secret management does 
 
 Unlike scripts or applications, AI agents make decisions about what to access and when. An AI agent might query your entire Jira backlog or search Confluence for sensitive keywords. Blended identity policies let you scope access based on both the user and the AI agent. You can allow your security team to use Claude Desktop for vulnerability data while restricting engineering to Jira and Confluence only.
 
-As AI assistants become standard developer tools, every employee needs access to backend systems. Distributing static credentials to hundreds of AI agent configurations creates significant risk. Blended identity eliminates this problem. Aembit issues credentials per user per session, scopes them to specific resources, and never shares them across users or AI agents.
+As AI assistants become standard developer tools, every employee needs access to backend systems. Distributing static credentials to hundreds of AI agent configurations creates significant risk. Blended identity eliminates this problem. With an MCP User-Based or Enterprise Managed Access Token Credential Provider behind MCP Identity Gateway, each user’s requests use their own downstream credentials, which Aembit never shares across users.
 
 When an AI agent takes an action on behalf of a user, compliance teams need to know who was responsible. Aembit’s logging ties every MCP request to both a verified user identity and the specific AI agent that made the request.
 
@@ -136,6 +136,6 @@ Aembit’s MCP Authorization Server supports OAuth 2.1 with dynamic client regis
 
 ### Related use cases
 
-* [MCP server access](mcp-server-access.md) covers MCP Identity Gateway, a centralized proxy that adds per-user credential isolation and zero credential exposure when AI agents reach many MCP servers
+* [MCP server access](mcp-server-access.md) covers MCP Identity Gateway, a centralized proxy that keeps credentials away from AI agents that reach many MCP servers.
 * [AI and LLM Access](ai-llm-access.md) covers securing your applications’ access to AI APIs (OpenAI, Anthropic, etc.), which is distinct from securing AI agents’ access to your enterprise resources
 * [Multicloud](multicloud.md) explains how Aembit provides unified workload identity across cloud providers, relevant if your AI agents access resources across AWS, Azure, and GCP

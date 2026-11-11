@@ -2,7 +2,9 @@
 * [Atlassian MCP Server](atlassian.md) - Configure the Atlassian MCP Server to work with AI agents through the Aembit MCP Identity Gateway.
 * [BigQuery MCP Server](bigquery.md) - Configure the BigQuery MCP Server to work with AI agents through the Aembit MCP Identity Gateway.
 * [Box MCP Server](box.md) - Configure the Box MCP Server to work with AI agents through the Aembit MCP Identity Gateway.
+* [CrowdStrike Falcon MCP Server](crowdstrike.md) - Configure the CrowdStrike Falcon MCP Server to work with AI agents through the Aembit MCP Identity Gateway.
 * [Databricks MCP Server](databricks.md) - Configure the Databricks MCP Server to work with AI agents through the Aembit MCP Identity Gateway.
+* [Datadog MCP Server](datadog.md) - Configure the Datadog MCP Server to work with AI agents through the Aembit MCP Identity Gateway.
 * [GitHub MCP Server](github.md) - Configure the GitHub MCP Server to work with AI agents through the Aembit MCP Identity Gateway.
 * [GitLab MCP Server](gitlab.md) - Configure the GitLab MCP Server to work with AI agents through the Aembit MCP Identity Gateway.
 * [Google Workspace MCP Servers](google-workspace.md) - Configure the Google Workspace MCP Servers (Drive, Calendar, People, and Chat) to work with AI agents through the Aembit MCP Identity Gateway.

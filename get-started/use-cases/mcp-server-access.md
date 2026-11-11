@@ -4,7 +4,7 @@ title: "Securing MCP server access"
 description: "How Aembit's MCP Identity Gateway gives AI agents centralized, zero-credential access to your MCP servers."
 resource: https://docs.aembit.io/get-started/use-cases/mcp-server-access/
 tags: ["use-case"]
-timestamp: 2026-11-03T09:49:54-08:00
+timestamp: 2026-11-09T14:11:42-08:00
 ---
 
 # Securing MCP server access
@@ -26,7 +26,7 @@ MCP Identity Gateway is a data-plane proxy that Aembit operates as a managed ser
 With Aembit, you get:
 
 * Zero credential exposure, because AI agents never hold credentials for your MCP servers. MCP Identity Gateway holds them in memory and injects them per request.
-* Per-user credential isolation, where many users share the same two Access Policies, yet each user’s requests use their own downstream credentials scoped to their identity.
+* Per-user credential isolation with an MCP User-Based or Enterprise Managed Access Token Credential Provider. Many users share the same two Access Policies, yet each user’s requests use their own downstream credentials.
 * Centralized routing, where a single MCP Identity Gateway endpoint reaches multiple MCP servers, so you add or remove servers through policy instead of reconfiguring every AI agent.
 * Full attribution, because MCP Identity Gateway logs every request with the user identity, the AI agent identity, the target MCP server, and the policy decision.
 
@@ -39,7 +39,7 @@ AI agents connect to MCP Identity Gateway instead of connecting directly to your
 MCP Identity Gateway evaluates every MCP request against two Access Policies:
 
 * The Client-to-Gateway policy validates which AI agent (MCP client) is connecting and authenticates the user through your identity provider with a Trust Provider.
-* The Gateway-to-Server policy authorizes MCP Identity Gateway to reach a specific MCP server and uses a Credential Provider to obtain that user’s credentials for it.
+* The Gateway-to-Server policy authorizes MCP Identity Gateway to reach a specific MCP server and uses a Credential Provider to obtain credentials for it. An MCP User-Based or Enterprise Managed Access Token Credential Provider obtains them per user.
 
 Because the user’s identity rides in every request, MCP Identity Gateway extends blended identity across both Access Policies, combining the human user and the AI agent in a single access decision.
 
@@ -62,7 +62,7 @@ For how Aembit handles different MCP service types, including the current suppor
 ### Configure identity and policies
 
 * [Trust Providers](../concepts/trust-providers.md) for authenticating the user behind each AI agent
-* [Credential Providers](../concepts/credential-providers.md) for obtaining per-user credentials for each MCP server
+* [Credential Providers](../concepts/credential-providers.md) for obtaining credentials for each MCP server, per user with the MCP User-Based and Enterprise Managed Access Token types
 * [Access Policies](../concepts/access-policies.md) for defining who can reach which MCP servers and under what conditions
 
 ### Understand blended identity

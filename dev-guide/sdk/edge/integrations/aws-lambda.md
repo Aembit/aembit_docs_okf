@@ -5,7 +5,7 @@ description: "Retrieve credentials from a Lambda function using the Edge SDK and
 resource: https://docs.aembit.io/dev-guide/sdk/edge/integrations/aws-lambda/
 interface: sdk
 tags: ["integration", "edge", "sdk"]
-timestamp: 2026-10-15T12:57:18-07:00
+timestamp: 2026-11-10T19:33:34-08:00
 ---
 
 # Use the Edge SDK in an AWS Lambda function
@@ -22,14 +22,39 @@ For the request and response shapes behind that exchange, see [Edge API authenti
 
 ## Before you start
 
-* An Aembit Tenant with at least Read Only permission for Trust Providers.
+* An Aembit Tenant with **Read/Write** permission for Trust Providers and Access Policies, or at least **Read Only** permission for Trust Providers if your Access Policy already has its Trust Provider.
 * An Access Policy for the service your function reaches.
-* An [AWS Role Trust Provider](../../../../user-guide/access-policies/trust-providers/aws-role-trust-provider.md) with match rules that identify your function’s execution role.
 * A Lambda function on a Node.js 20 or later runtime for TypeScript, or a Python 3.10 or later runtime for Python, with an execution role attached.
+
+## Create the Trust Provider
+
+Create an [AWS Role Trust Provider](../../../../user-guide/access-policies/trust-providers/aws-role-trust-provider.md) with match rules that identify your function’s execution role. If your Access Policy already has one, skip this section.
+
+The SDK’s Trust Provider object collects identity evidence in your program, and the Trust Provider in your Aembit Tenant verifies that evidence. To create one and add it to your Access Policy, you need **Read/Write** permission for Trust Providers and Access Policies.
+
+1. Log in to your Aembit Tenant and go to **Trust Providers** in the left sidebar.
+
+2. Click **+ New**.
+
+3. Enter a **Name** for the Trust Provider.
+
+4. In the **Trust Provider** list, select the type this page names. The form then shows the fields for that type.
+
+5. Fill in the fields the type requires, and add the **Match Rules** this page describes. The Trust Provider page for the type lists each field and match rule attribute.
+
+6. Click **Save**.
+
+Then add the Trust Provider to your Access Policy, as [Client Workload identity attestation](../../../../user-guide/access-policies/trust-providers/add-trust-provider.md#client-workload-identity-attestation) describes.
+
+Create the Trust Provider with Terraform
+
+To manage the Trust Provider as code, create it with the [`aembit_trust_provider`](https://registry.terraform.io/providers/Aembit/aembit/latest/docs/resources/trust_provider) resource in the [Aembit Terraform provider](../../../../user-guide/access-policies/advanced-options/terraform/terraform-configuration.md). Terraform provisions the Aembit configuration, and your program uses the Edge SDK to retrieve credentials at runtime.
+
+Of the Trust Provider types the Edge SDK supports, all but three expose the Edge SDK Client ID in the resource’s read-only `client_id` attribute. For the AWS Metadata Service, AWS Role, and Azure Instance Metadata Service types, the attribute is null, so copy the Edge SDK Client ID from the Aembit Tenant UI.
 
 ## Get your Edge SDK Client ID
 
-Your function needs the Edge SDK Client ID from the [AWS Role Trust Provider](../../../../user-guide/access-policies/trust-providers/aws-role-trust-provider.md) whose match rules identify your function’s execution role. Lambda execution roles match on `accountId` and `roleArn`, where the `roleArn` takes the form `arn:aws:sts::<accountId>:assumed-role/<functionRoleName>/<functionName>`.
+Your function needs the Edge SDK Client ID from the [AWS Role Trust Provider](../../../../user-guide/access-policies/trust-providers/aws-role-trust-provider.md) whose match rules identify your function’s execution role. Lambda execution roles match on `accountId` and `roleArn`, where the `roleArn` takes the form `arn:aws:sts::<account-id>:assumed-role/<function-role-name>/<function-name>`.
 
 1. Log in to your Aembit Tenant.
 
@@ -43,11 +68,11 @@ Your function needs the Edge SDK Client ID from the [AWS Role Trust Provider](..
 
    ![Aembit UI Trust Provider page](https://docs.aembit.io/_astro/edge-sdk-client-id.BJB7d1dG_H47oi.webp)
 
-Your Client Workload also needs an identification method. The example uses Aembit Client ID identification: it reads the Aembit Client ID value from the `CLIENT_WORKLOAD_ID` environment variable and passes it to the SDK. The SDK doesn’t send the function’s Amazon Resource Name (ARN), so [AWS Lambda ARN](../../../../user-guide/access-policies/client-workloads/identification/aws-lambda-arn.md) identification matches only when your code adds the ARN to `clientWorkloadDetails` as `aws.lambda.arn`.
+Your Client Workload also needs an identification method. The example uses Aembit Client ID identification: it reads the Aembit Client ID value from the `CLIENT_WORKLOAD_ID` environment variable and passes it to the SDK. The SDK does not send the function’s Amazon Resource Name (ARN), so [AWS Lambda ARN](../../../../user-guide/access-policies/client-workloads/identification/aws-lambda-arn.md) identification matches only when your code adds the ARN to `clientWorkloadDetails` as `aws.lambda.arn`.
 
 > **Two different identifiers**
 >
-> The SDK’s `clientId` is the Edge SDK Client ID from the Trust Provider. It isn’t the **Client Identifier** on your Client Workload, which is a separate value on a separate page that policy configuration can use. Lambda needs both when you use Aembit Client ID identification: the Edge SDK Client ID as `clientId`, and the Client Identifier as `CLIENT_WORKLOAD_ID`.
+> The SDK’s `clientId` is the Edge SDK Client ID from the Trust Provider. It is not the **Client Identifier** on your Client Workload, which is a separate value on a separate page that policy configuration can use. Lambda needs both when you use Aembit Client ID identification: the Edge SDK Client ID as `clientId`, and the Client Identifier as `CLIENT_WORKLOAD_ID`.
 
 ## Wire up the SDK
 
@@ -141,7 +166,7 @@ A `401` status carries the same message whichever check failed. Work through the
 
 5. Confirm the Trust Provider’s match rules hold this workload’s values. Aembit groups the rules by **Attribute**, and by **Key** for custom claim rules, and each group needs a matching rule. A **Value** containing `*` matches any run of characters in that position. Any other value must match exactly, including case, unless your Trust Provider’s checks after this list say otherwise. A rule with an empty **Value** fails the Trust Provider, so fill in the **Value** or delete the rule. A Trust Provider with no match rules accepts any workload whose evidence passes validation. Compare each rule’s **Value** with the matching field in real evidence from this workload, and correct the rule.
 
-For an AWS Role Trust Provider, Aembit sends the signed AWS Security Token Service (STS) `GetCallerIdentity` request on to AWS and compares the identity AWS returns with the match rules. `accountId` compares `Account`, `roleArn` compares `Arn`, `assumedRole` compares the role name, the part of `Arn` between the first and second `/`, and `userId` compares `UserId`. For a Lambda function, `Arn` takes the `assumed-role` form shown earlier on this page, so a `roleArn` rule that holds the IAM role’s own ARN doesn’t match.
+For an AWS Role Trust Provider, Aembit sends the signed AWS Security Token Service (STS) `GetCallerIdentity` request on to AWS and compares the identity AWS returns with the match rules. `accountId` compares `Account`, `roleArn` compares `Arn`, `assumedRole` compares the role name, the part of `Arn` between the first and second `/`, and `userId` compares `UserId`. For a Lambda function, `Arn` takes the `assumed-role` form shown earlier on this page, so a `roleArn` rule that holds the IAM role’s own ARN does not match.
 
 ### The credential request raises an error
 
@@ -189,4 +214,4 @@ A request with no `credentialType` gets `OAuthToken`. An `X509Svid` request also
 
 When a Client Workload uses the **Aembit Client ID** identifier, the SDK doesn’t read the `CLIENT_WORKLOAD_ID` environment variable. Pass the value in your client configuration instead, as `clientWorkloadDetails: { os: { environment: { CLIENT_WORKLOAD_ID: "<value>" } } }`, or as the same structure in `client_workload_details` in Python.
 
-For this function, **Aembit Client ID** matches the value the example passes from `CLIENT_WORKLOAD_ID`. **AWS Lambda Arn** matches only when your code adds the function’s ARN to `clientWorkloadDetails` as `aws.lambda.arn`, because the SDK doesn’t send it.
+For this function, **Aembit Client ID** matches the value the example passes from `CLIENT_WORKLOAD_ID`. **AWS Lambda Arn** matches only when your code adds the function’s ARN to `clientWorkloadDetails` as `aws.lambda.arn`, because the SDK does not send it.

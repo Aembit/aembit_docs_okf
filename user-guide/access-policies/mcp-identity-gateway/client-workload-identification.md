@@ -4,7 +4,7 @@ title: "Client Workload identification in MCP Identity Gateway"
 description: "How MCP Identity Gateway identifies which user makes each request when multiple users share it."
 resource: https://docs.aembit.io/user-guide/access-policies/mcp-identity-gateway/client-workload-identification/
 tags: ["mcp-identity-gateway", "access-policy"]
-timestamp: 2026-11-02T13:04:06-08:00
+timestamp: 2026-11-09T14:11:42-08:00
 ---
 
 # Client Workload identification in MCP Identity Gateway
@@ -52,11 +52,11 @@ User identification affects three areas of MCP Identity Gateway:
 
 The Client-to-Gateway policy uses the user’s identity to determine whether to allow the request. The Trust Provider validates that a trusted IdP issued the token and that the user’s claims meet the policy requirements.
 
-The Gateway-to-Server policy authorizes MCP Identity Gateway to access MCP servers on behalf of the authenticated user. The user’s identity determines which credentials the Credential Provider retrieves.
+The Gateway-to-Server policy authorizes MCP Identity Gateway to access MCP servers on behalf of the authenticated user. The user’s identity determines which credentials an MCP User-Based or Enterprise Managed Access Token Credential Provider retrieves.
 
 ### Credential isolation
 
-Each user gets their own set of credentials for each MCP server. When User `A` connects to an MCP server through MCP Identity Gateway, Aembit stores User `A`’s credentials in isolation from User `B`’s credentials.
+With those Credential Provider types, each user gets their own set of credentials for each MCP server. When User `A` connects to an MCP server through MCP Identity Gateway, Aembit stores User `A`’s credentials in isolation from User `B`’s credentials.
 
 This isolation means:
 

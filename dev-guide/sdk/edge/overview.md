@@ -5,12 +5,12 @@ description: "Language libraries that let your application authenticate workload
 resource: https://docs.aembit.io/dev-guide/sdk/edge/
 interface: sdk
 tags: ["edge", "sdk"]
-timestamp: 2026-10-15T12:30:16-07:00
+timestamp: 2026-11-10T10:42:48-08:00
 ---
 
 # Aembit Edge SDKs
 
-The Aembit Edge SDKs are language libraries that wrap the [Aembit Edge API](../../api/edge/overview.md). Your application authenticates a workload and retrieves credentials through a few method calls, without hand-rolling HTTP requests or managing token lifecycles. The SDK runs inside your application process, so there’s nothing extra to deploy or operate alongside it.
+The Aembit Edge SDKs are language libraries that wrap the [Aembit Edge API](../../api/edge/overview.md). Your application authenticates a workload and retrieves credentials through a few method calls, without hand-rolling HTTP requests or managing token lifecycles. The SDK runs inside your application process, so there is nothing extra to deploy or operate alongside it.
 
 The SDKs are available for TypeScript and Python.
 
@@ -18,17 +18,19 @@ The SDKs are available for TypeScript and Python.
 
 The [Developer Guide overview](../../overview.md#get-credentials-into-your-workload-at-runtime) compares all four ways to get a credential into a workload: Agent Proxy, the Edge SDK, the Aembit CLI, and the Edge API.
 
-Choose an SDK when you can change the application’s source and you want credential retrieval to be explicit in your code. It suits environments where running a proxy next to the workload isn’t practical, such as serverless functions, ephemeral CI containers, and platforms where you don’t control the runtime.
+Choose an SDK when you can change the application’s source and you want credential retrieval to be explicit in your code. It suits environments where running a proxy next to the workload is not practical, such as serverless functions, ephemeral CI containers, and platforms where you do not control the runtime.
 
-If changing application code isn’t an option, Agent Proxy reaches the same outcome by intercepting traffic instead. That path trades code changes for components you deploy and operate.
+If changing application code is not an option, Agent Proxy reaches the same outcome by intercepting traffic instead. That path trades code changes for components you deploy and operate.
 
 ## What the SDKs handle for you
 
-An SDK covers the same three steps you’d otherwise implement yourself against the Edge API:
+An SDK covers the same three steps you would otherwise implement yourself against the Edge API:
 
 * **Workload attestation.** The SDK collects identity evidence from the environment it runs in, such as a cloud instance identity document or an OIDC token, and presents that evidence to Aembit. Aembit verifies it against the Trust Provider you configured.
-* **Token lifecycle.** The SDK caches the resulting access token in memory and refreshes it before it expires, so repeated calls don’t re-authenticate.
-* **Credential retrieval.** The SDK requests a credential for the service your application needs to reach. Aembit returns one only if an Access Policy permits that access. When the Access Policy holds more than one AWS STS Federation Credential Provider, pass an Access Key ID selector as connection metadata to [select one](multiple-credential-providers.md).
+* **Token lifecycle.** The SDK caches the resulting access token in memory and reuses it for later calls until the token is within its expiry window. [How the Edge SDK works](how-it-works.md) explains when the SDK authenticates again.
+* **Credential retrieval.** The SDK requests a credential for the service your application needs to reach. Aembit returns one only if an Access Policy permits that access.
+
+For credential retrieval, when the Access Policy holds more than one AWS STS Federation Credential Provider, pass an Access Key ID selector as connection metadata to [select one](multiple-credential-providers.md).
 
 The SDKs use the same Aembit primitives as every other access path, so the console-side configuration is familiar. You configure a Trust Provider to verify the workload’s identity and a Credential Provider to supply the credential. An Access Policy then authorizes a specific Client Workload to reach a specific Server Workload, using those providers.
 

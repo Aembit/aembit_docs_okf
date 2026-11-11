@@ -4,16 +4,16 @@ title: "About Client Workloads"
 description: "Understanding Client Workloads and their role as access requesters in Aembit"
 resource: https://docs.aembit.io/get-started/concepts/client-workloads/
 tags: ["concept"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-11-05T18:18:07-08:00
 ---
 
 # About Client Workloads
 
-Client Workloads represent the software applications, scripts, or automated processes that initiate access requests to Server Workloads. They’re the “clients” in Aembit’s client-server access model, acting as the requesting party that needs to consume services, APIs, or data from other workloads.
+Client Workloads represent AI agents, software applications, scripts, or automated processes that initiate access requests to Server Workloads. They’re the “clients” in Aembit’s client-server access model, acting as the requesting party that needs to consume services, APIs, or data from other workloads.
 
-Unlike human users, Client Workloads operate autonomously without direct user interaction. They include applications like microservices, CI/CD pipeline jobs, serverless functions, background scripts, and AI agents that need to access databases, APIs, or other services as part of their automated workflows.
+Client Workloads can act on behalf of a user with blended identity or operate autonomously. They include AI agents, microservices, CI/CD pipeline jobs, serverless functions, and background scripts that access databases, APIs, or other services.
 
-The core challenge Client Workloads solve is **secretless authentication**—eliminating the need to store and manage long-lived credentials like API keys or passwords within the workload itself. Instead, Aembit identifies and authenticates Client Workloads based on verifiable evidence from their runtime environment.
+The core challenge Client Workloads solve is **secretless authentication**—eliminating the need to store and manage long-lived credentials like API keys or passwords within the workload itself. For workload attestation, Aembit authenticates Client Workloads using verifiable evidence from their runtime environment.
 
 ![](https://docs.aembit.io/aembit-icons/client-workload.svg)
 
@@ -23,9 +23,9 @@ The core challenge Client Workloads solve is **secretless authentication**—eli
 
 ## How Client Workloads work
 
-The following steps outline how Client Workloads function within Aembit’s access control flow:
+The following steps and diagram describe a workload-attestation flow using runtime identity evidence.
 
-1. **Access Request** - A Client Workload (for example, a microservice, CI/CD job, or Lambda function) attempts to access a Server Workload (for example, a database or API).
+1. **Access Request** - A Client Workload, such as an autonomous AI agent, a microservice, or a CI/CD job, attempts to access a Server Workload, such as a database or API.
 
 2. **Send Identity Evidence** - Aembit Edge intercepts the request and collects identity evidence from the Client Workload’s runtime environment. This evidence varies by platform—for example, Kubernetes service account tokens, AWS instance metadata, or GitHub Actions OIDC tokens. Aembit Edge then sends this evidence to Aembit Cloud for processing.
 

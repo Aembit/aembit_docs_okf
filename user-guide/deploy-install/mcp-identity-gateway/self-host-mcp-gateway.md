@@ -5,7 +5,7 @@ description: "Deploy and operate the Aembit MCP Identity Gateway on your own Lin
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/self-host-mcp-gateway/
 interface: mcp
 tags: ["mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-10-16T17:35:53-07:00
+timestamp: 2026-11-10T23:01:24-08:00
 ---
 
 # Self-host the MCP Identity Gateway
@@ -240,7 +240,7 @@ Because you run the Gateway yourself, you also operate it:
   sudo journalctl --namespace aembit_mcp_gateway -f
   ```
 
-* **Upgrade** by downloading a newer release and rerunning the install command.
+* **Upgrade** by downloading a newer release and rerunning the install command with `--upgrade`.
 
 * **Renew TLS certificates** before they expire, as described in [Obtain a TLS certificate](#obtain-a-tls-certificate).
 

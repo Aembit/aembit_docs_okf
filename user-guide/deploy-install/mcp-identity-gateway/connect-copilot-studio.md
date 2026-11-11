@@ -5,12 +5,12 @@ description: "Connect Microsoft Copilot Studio agents to enterprise MCP servers 
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/connect-copilot-studio/
 interface: mcp
 tags: ["mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-11-03T15:14:28-05:00
+timestamp: 2026-11-09T14:11:42-08:00
 ---
 
 # Connect Microsoft Copilot Studio
 
-Microsoft Copilot Studio agents can reach your enterprise Model Context Protocol (MCP) servers through MCP Identity Gateway. Copilot Studio connects to MCP Identity Gateway as an MCP client, and MCP Identity Gateway enforces your Aembit Access Policies and presents per-user credentials to each downstream MCP server.
+Microsoft Copilot Studio agents can reach your enterprise Model Context Protocol (MCP) servers through MCP Identity Gateway. Copilot Studio connects to MCP Identity Gateway as an MCP client, and MCP Identity Gateway enforces your Aembit Access Policies and presents credentials to each downstream MCP server.
 
 These steps cover the Copilot Studio side of the connection. For the Aembit Tenant configuration, see [Set up MCP Identity Gateway](../../access-policies/mcp-identity-gateway/setup-mcp-gateway.md).
 

@@ -1,5 +1,35 @@
 # Aembit Changelog
 
+## 2026-11-11
+
+### Embedded user authorization now available
+
+Your application can now sign a person in and connect an MCP server for them, and a successful flow shows no Aembit page. At the end of the flow, your application gets an MCP Identity Gateway access token that acts as that person. See [Embedded user authorization](user-guide/access-policies/mcp-identity-gateway/embedded-user-authorization.md).
+
+### Key capabilities
+
+* **Your application’s own UI** - Your application runs a standard OAuth authorization code flow with PKCE against Aembit. When the flow succeeds, Aembit shows no login page, Identity Provider picker, or consent page of its own.
+* **One MCP server per flow** - Your application names the MCP server the person authorizes in the `mcp_server_url` parameter.
+* **The person’s own credential** - MCP Identity Gateway presents the person’s own credential to the MCP server.
+* **Aembit Client ID on OIDC 1.0 Identity Providers** - A saved OIDC 1.0 Identity Provider now shows the **Aembit Client ID** that your application sends to Aembit as `client_id`.
+
+To set it up, see [Set up embedded user authorization](user-guide/access-policies/mcp-identity-gateway/setup-embedded-user-authorization.md).
+
+### MCP Identity Gateway 1.35.6382 release
+
+Aembit has released version 1.35.6382 of [MCP Identity Gateway](user-guide/deploy-install/mcp-identity-gateway/overview.md). You can now set how many workload events it sends to Aembit Cloud at once. New metrics report credential injection and workload event batch sizes, and the upstream HTTP request metric now counts authentication errors from MCP servers.
+
+For the latest available versions of these components, see the [Edge Components Supported Versions](reference/edge-components/edge-component-supported-versions.md) page.
+
+Key Updates:
+
+* **Workload event batch size** - By default, MCP Identity Gateway sends at most 250 workload events to Aembit Cloud in one batch. To change the limit on a self-hosted MCP Identity Gateway, set [`AEMBIT_EVENT_MAX_SEND_BATCH`](user-guide/deploy-install/mcp-identity-gateway/env-vars-mcp-gateway.md#aembit_event_max_send_batch) to a value from 1 to 500.
+* **Credential injection metric** - The `aembit_mcp_gateway_upstream_mcp_server_credential_injections_total` metric counts requests to MCP servers by whether MCP Identity Gateway added the credential the Access Policy configures.
+* **Authentication errors from MCP servers** - The `aembit_mcp_gateway_upstream_mcp_server_http_requests_total` metric reports `outcome="auth_error"` when an MCP server returns HTTP `401`, `403`, or `407`.
+* **Workload event batch metric** - The `aembit_event_batch_size` histogram records how many workload events each batch carried, for each batch that reached Aembit Cloud.
+
+See [Prometheus metrics](user-guide/deploy-install/mcp-identity-gateway/reference-mcp-gateway.md#prometheus-metrics) for other metrics from MCP Identity Gateway.
+
 ## 2026-11-04
 
 ### Aembit Desktop now in public beta

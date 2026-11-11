@@ -4,12 +4,12 @@ title: "About Access Policies"
 description: "Description of Access Policies, their components, and how the evaluation flow works"
 resource: https://docs.aembit.io/get-started/concepts/access-policies/
 tags: ["concept"]
-timestamp: 2026-09-09T08:20:13-07:00
+timestamp: 2026-11-05T18:18:07-08:00
 ---
 
 # About Access Policies
 
-Access Policies are the central mechanism within Aembit. Access Policies define, enforce, and audit access between Non-Human Identities (NHI), such as applications, scripts, services, and infrastructure components.
+Access Policies are the central mechanism within Aembit. Access Policies define, enforce, and audit access between Non-Human Identities (NHI), such as AI agents, applications, scripts, services, and infrastructure components.
 
 The fundamental purpose of Access Policies is to govern workload-to-workload interactions. They do by cryptographically verifying workload identity and contextual factors, rather than relying on the distribution and management of static secrets. This approach aims to deliver granular, dynamic, and continuously verifiable control over NHI access, enhancing security posture and simplifying operations in complex, distributed environments.
 
@@ -33,7 +33,7 @@ Click each link card to learn more details about each Access Policy component.
 
 ![](https://docs.aembit.io/aembit-icons/trust-provider.svg)
 
-[Trust Providers](../../user-guide/access-policies/trust-providers/overview.md) attest to workload identities and provide information about the environment in which they operate with high reliability and trustworthiness.
+[Trust Providers](../../user-guide/access-policies/trust-providers/overview.md) verify workload attestation evidence or user identity claims from an Identity Provider.
 
 →
 
@@ -69,11 +69,11 @@ This modularity allows Aembit to adapt to diverse environments and authenticatio
 
 The power of Aembit Access Policies lies in the coordinated interaction of its distinct components during an access attempt.
 
-The following Access Policy evaluation flow diagram illustrates this process:
+The following diagram describes an Access Policy flow using workload attestation.
 
 ![Access Policy evaluation flow from request interception through credential provisioning](https://docs.aembit.io/d2/docs/get-started/concepts/access-policies-0.svg)
 
-The following explains the Access Policy evaluation flow in detail:
+The following steps describe the workload-attestation flow shown in the diagram:
 
 1. **Request Initiation & Interception** - A Client Workload attempts to connect to a Server Workload. When you deploy Aembit Edge alongside your Client Workloads, it transparently intercepts this outgoing network request.
 

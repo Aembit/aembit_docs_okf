@@ -5,7 +5,7 @@ description: "Environment variables for configuring a self-hosted MCP Identity G
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/env-vars-mcp-gateway/
 interface: mcp
 tags: ["mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-10-28T15:13:06-07:00
+timestamp: 2026-11-10T23:01:24-08:00
 ---
 
 # MCP Identity Gateway environment variables (self-hosted only)
@@ -86,6 +86,33 @@ Filesystem path to the TLS private key file (PEM format). Store in a secrets man
 ***
 
 ## Optional variables
+
+### `AEMBIT_EVENT_MAX_SEND_BATCH`
+
+Default - `250`
+
+The most workload events MCP Identity Gateway sends to Aembit Cloud in one batch. Set a whole number from `1` to `500`. Any other value stops MCP Identity Gateway from starting.
+
+This value limits the size of each batch, not how many workload events MCP Identity Gateway can queue.
+
+Set it on the install command. The installer writes the value into the systemd unit for MCP Identity Gateway, so setting the variable in a shell later has no effect. To change it on a host where MCP Identity Gateway is already installed, create `/etc/systemd/system/aembit_mcp_gateway.service.d/event-batch-size.conf`. A file of its own keeps this setting apart from any other drop-in, such as the one for [`AEMBIT_MCP_GATEWAY_TIMEOUT`](#aembit_mcp_gateway_timeout):
+
+```ini
+[Service]
+Environment="AEMBIT_EVENT_MAX_SEND_BATCH=100"
+```
+
+Then reload systemd and restart MCP Identity Gateway:
+
+```shell
+sudo systemctl daemon-reload
+sudo systemctl restart aembit_mcp_gateway
+```
+
+*Example*:\
+`100`
+
+***
 
 ### `AEMBIT_LOG_LEVEL`
 

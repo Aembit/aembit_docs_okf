@@ -5,7 +5,7 @@ description: "Retrieve credentials from a Kubernetes pod using the Edge SDK and 
 resource: https://docs.aembit.io/dev-guide/sdk/edge/integrations/kubernetes/
 interface: sdk
 tags: ["integration", "edge", "sdk"]
-timestamp: 2026-10-15T12:57:18-07:00
+timestamp: 2026-11-10T19:33:34-08:00
 ---
 
 # Use the Edge SDK with a Kubernetes service account
@@ -24,11 +24,36 @@ For the request shape behind that exchange, see [Kubernetes attestation](../../.
 
 ## Before you start
 
-* An Aembit Tenant with at least Read Only permission for Trust Providers.
+* An Aembit Tenant with **Read/Write** permission for Trust Providers and Access Policies, or at least **Read Only** permission for Trust Providers if your Access Policy already has its Trust Provider.
 * An Access Policy for the service your application reaches.
-* A [Kubernetes Service Account Trust Provider](../../../../user-guide/access-policies/trust-providers/kubernetes-service-account-trust-provider.md) with at least one match rule on the `iss` claim, the `sub` claim, or the namespace, pod name, or service account name of your pod. With the OIDC Discovery attestation method, the Trust Provider also holds your cluster’s OIDC issuer URL.
 * A Client Workload identified by your pod’s [Kubernetes Namespace](../../../../user-guide/access-policies/client-workloads/identification/kubernetes-namespace.md), [Kubernetes Service Account Name](../../../../user-guide/access-policies/client-workloads/identification/kubernetes-service-account-name.md), or [Kubernetes Service Account UID](../../../../user-guide/access-policies/client-workloads/identification/kubernetes-service-account-uid.md). Aembit reads these values from the service account token the SDK sends.
 * A pod with its service account token mounted, running Node.js 20 or later for TypeScript, or Python 3.10 or later for Python. Kubernetes mounts the token unless the pod or its service account sets `automountServiceAccountToken: false`.
+
+## Create the Trust Provider
+
+Create a [Kubernetes Service Account Trust Provider](../../../../user-guide/access-policies/trust-providers/kubernetes-service-account-trust-provider.md) with at least one match rule on the `iss` claim, the `sub` claim, or the namespace, pod name, or service account name of your pod. With the OIDC Discovery attestation method, the Trust Provider also holds your cluster’s OIDC issuer URL. If your Access Policy already has one, skip this section.
+
+The SDK’s Trust Provider object collects identity evidence in your program, and the Trust Provider in your Aembit Tenant verifies that evidence. To create one and add it to your Access Policy, you need **Read/Write** permission for Trust Providers and Access Policies.
+
+1. Log in to your Aembit Tenant and go to **Trust Providers** in the left sidebar.
+
+2. Click **+ New**.
+
+3. Enter a **Name** for the Trust Provider.
+
+4. In the **Trust Provider** list, select the type this page names. The form then shows the fields for that type.
+
+5. Fill in the fields the type requires, and add the **Match Rules** this page describes. The Trust Provider page for the type lists each field and match rule attribute.
+
+6. Click **Save**.
+
+Then add the Trust Provider to your Access Policy, as [Client Workload identity attestation](../../../../user-guide/access-policies/trust-providers/add-trust-provider.md#client-workload-identity-attestation) describes.
+
+Create the Trust Provider with Terraform
+
+To manage the Trust Provider as code, create it with the [`aembit_trust_provider`](https://registry.terraform.io/providers/Aembit/aembit/latest/docs/resources/trust_provider) resource in the [Aembit Terraform provider](../../../../user-guide/access-policies/advanced-options/terraform/terraform-configuration.md). Terraform provisions the Aembit configuration, and your program uses the Edge SDK to retrieve credentials at runtime.
+
+Of the Trust Provider types the Edge SDK supports, all but three expose the Edge SDK Client ID in the resource’s read-only `client_id` attribute. For the AWS Metadata Service, AWS Role, and Azure Instance Metadata Service types, the attribute is null, so copy the Edge SDK Client ID from the Aembit Tenant UI.
 
 ## Get your Edge SDK Client ID
 
@@ -48,7 +73,7 @@ Your application needs the Edge SDK Client ID from the [Kubernetes Service Accou
 
 > **Two different identifiers**
 >
-> The SDK’s `clientId` is the Edge SDK Client ID from the Trust Provider. It isn’t the **Client Identifier** on your Client Workload, which is a separate value on a separate page that policy configuration can use.
+> The SDK’s `clientId` is the Edge SDK Client ID from the Trust Provider. It is not the **Client Identifier** on your Client Workload, which is a separate value on a separate page that policy configuration can use.
 
 ## Wire up the SDK
 
@@ -206,9 +231,9 @@ The runnable examples in the SDK repository, in [TypeScript](https://github.com/
 
 Every error the Edge SDK raises carries a `kind`, which narrows the failure to one side of the exchange. Alongside `kind`, each error carries `statusCode`, `apiCode`, and `requestId` when Aembit supplies them, and `retryable` to report whether another attempt might succeed. The Python SDK names these fields `status_code`, `api_code`, `request_id`, and `retryable`.
 
-### The SDK can’t read the service account token
+### The SDK cannot read the service account token
 
-The SDK raises a `trust_provider` error when it can’t get a non-empty service account token, and it never contacts Aembit. Confirm the token file exists at `/var/run/secrets/kubernetes.io/serviceaccount/token` inside the pod, or at the `token_path` you pass in Python. If it’s missing, the pod spec or its service account sets `automountServiceAccountToken: false`. Set `automountServiceAccountToken: true` in the pod spec, which overrides the service account’s setting, and recreate the pod. To test outside a cluster, pass the token yourself, as the examples do with `AEMBIT_K8S_SERVICE_ACCOUNT_TOKEN`.
+The SDK raises a `trust_provider` error when it cannot get a non-empty service account token, and it never contacts Aembit. Confirm the token file exists at `/var/run/secrets/kubernetes.io/serviceaccount/token` inside the pod, or at the `token_path` you pass in Python. If it is missing, the pod spec or its service account sets `automountServiceAccountToken: false`. Set `automountServiceAccountToken: true` in the pod spec, which overrides the service account’s setting, and recreate the pod. To test outside a cluster, pass the token yourself, as the examples do with `AEMBIT_K8S_SERVICE_ACCOUNT_TOKEN`.
 
 ### Authentication fails
 
@@ -237,9 +262,9 @@ For a Kubernetes Service Account Trust Provider, the validation in the fourth ch
 * With **OIDC Discovery**, each **OIDC Endpoint** must be your cluster’s service account issuer base URL, without the `.well-known` path.
 * With **Upload JWKS** or **Upload Public Key**, the key must be the public key your cluster signs service account tokens with.
 * **Symmetric Key** accepts only tokens signed with an HMAC algorithm, and Kubernetes signs service account tokens with a private key, so every service account token fails. Switch the **Method** to **OIDC Discovery**, **Upload JWKS**, or **Upload Public Key**.
-* **Aembit Tenant OIDC ID Token** appears under **Method**, but this Trust Provider doesn’t verify service account tokens against your Aembit Tenant’s signing keys, so this method can’t attest a pod. Switch the **Method** to **OIDC Discovery**, **Upload JWKS**, or **Upload Public Key**.
+* **Aembit Tenant OIDC ID Token** under **Method** cannot attest a pod, because this Trust Provider does not verify service account tokens against your Aembit Tenant’s signing keys. Switch the **Method** to **OIDC Discovery**, **Upload JWKS**, or **Upload Public Key**.
 
-Validation doesn’t check the token’s issuer or audience, so an `iss` match rule is what ties the Trust Provider to one cluster. The `iss` and `sub` attributes compare the token’s claims of the same name. The `kubernetes.io { namespace }`, `kubernetes.io { pod { name } }`, and `kubernetes.io { serviceaccount { name } }` attributes compare fields of the token’s `kubernetes.io` claim.
+Validation does not check the token’s issuer or audience, so an `iss` match rule is what ties the Trust Provider to one cluster. The `iss` and `sub` attributes compare the token’s claims of the same name. The `kubernetes.io { namespace }`, `kubernetes.io { pod { name } }`, and `kubernetes.io { serviceaccount { name } }` attributes compare fields of the token’s `kubernetes.io` claim.
 
 ### The credential request raises an error
 

@@ -5,14 +5,14 @@ description: "Authenticate a GitLab CI/CD job with its OIDC ID token and retriev
 resource: https://docs.aembit.io/dev-guide/sdk/edge/integrations/gitlab-ci/
 interface: sdk
 tags: ["integration", "edge", "sdk"]
-timestamp: 2026-10-15T12:57:18-07:00
+timestamp: 2026-11-10T19:33:34-08:00
 ---
 
 # Use the Edge SDK in GitLab CI/CD
 
 A GitLab CI/CD job can ask GitLab for a signed OpenID Connect (OIDC) ID token that describes the job and its project. The Edge SDK presents that token to a GitLab Job ID Token Trust Provider in Aembit, so a program in the job needs no stored secret to authenticate with Aembit.
 
-This guide covers the parts specific to GitLab CI/CD. For what the SDK does in general, see the [Edge SDK overview](../overview.md).
+For what the SDK does in general, see the [Edge SDK overview](../overview.md).
 
 If your job needs credentials in shell commands rather than in your own program, the [Aembit GitLab CI/CD component or the Aembit CLI](../../../../user-guide/deploy-install/ci-cd/gitlab/overview.md) retrieves them without code. Use the Edge SDK when a TypeScript or Python program in the job requests the credential itself.
 
@@ -20,12 +20,39 @@ If your job needs credentials in shell commands rather than in your own program,
 
 On the GitLab side, you need GitLab CI/CD 15.7 or later, which provides OIDC ID tokens to jobs through the `id_tokens` keyword. The Python example needs Python 3.10 or later.
 
-In Aembit, configure an Access Policy with these pieces:
+In your Aembit Tenant, configure an Access Policy with these pieces, plus the Trust Provider that the next section creates:
 
-* A [GitLab Job ID Token Trust Provider](../../../../user-guide/access-policies/trust-providers/gitlab-trust-provider.md) carrying an Edge SDK Client ID.
 * A Client Workload whose identifier matches the job, such as [GitLab ID Token Project Path](../../../../user-guide/access-policies/client-workloads/identification/gitlab-id-token-project-path.md) or [GitLab ID Token Subject](../../../../user-guide/access-policies/client-workloads/identification/gitlab-id-token-subject.md).
 * A Server Workload whose Service Endpoint host and port match what your program requests.
 * A Credential Provider that returns the credential type your program asks for.
+
+You need **Read/Write** permission for Trust Providers and Access Policies, or at least **Read Only** permission for Trust Providers if your Access Policy already has its Trust Provider.
+
+## Create the Trust Provider
+
+Create a [GitLab Job ID Token Trust Provider](../../../../user-guide/access-policies/trust-providers/gitlab-trust-provider.md). It carries the Edge SDK Client ID your program passes to Aembit. Add at least one match rule on the `namespace_path`, `project_path`, `ref_path`, or `subject` attribute. The first three compare the job token’s claims of the same name, and `subject` compares its `sub` claim. If your Access Policy already has one, skip this section.
+
+The SDK’s Trust Provider object collects identity evidence in your program, and the Trust Provider in your Aembit Tenant verifies that evidence. To create one and add it to your Access Policy, you need **Read/Write** permission for Trust Providers and Access Policies.
+
+1. Log in to your Aembit Tenant and go to **Trust Providers** in the left sidebar.
+
+2. Click **+ New**.
+
+3. Enter a **Name** for the Trust Provider.
+
+4. In the **Trust Provider** list, select the type this page names. The form then shows the fields for that type.
+
+5. Fill in the fields the type requires, and add the **Match Rules** this page describes. The Trust Provider page for the type lists each field and match rule attribute.
+
+6. Click **Save**.
+
+Then add the Trust Provider to your Access Policy, as [Client Workload identity attestation](../../../../user-guide/access-policies/trust-providers/add-trust-provider.md#client-workload-identity-attestation) describes.
+
+Create the Trust Provider with Terraform
+
+To manage the Trust Provider as code, create it with the [`aembit_trust_provider`](https://registry.terraform.io/providers/Aembit/aembit/latest/docs/resources/trust_provider) resource in the [Aembit Terraform provider](../../../../user-guide/access-policies/advanced-options/terraform/terraform-configuration.md). Terraform provisions the Aembit configuration, and your program uses the Edge SDK to retrieve credentials at runtime.
+
+Of the Trust Provider types the Edge SDK supports, all but three expose the Edge SDK Client ID in the resource’s read-only `client_id` attribute. For the AWS Metadata Service, AWS Role, and Azure Instance Metadata Service types, the attribute is null, so copy the Edge SDK Client ID from the Aembit Tenant UI.
 
 ## Where the token comes from
 
@@ -39,7 +66,7 @@ id_tokens:
     aud: https://<tenant>.id.<stack>.aembit.io
 ```
 
-Set `aud` to the **Edge SDK Audience** value shown on your GitLab Job ID Token Trust Provider, which takes the form `https://<tenant>.id.<stack>.aembit.io`. Aembit rejects a token whose audience doesn’t match. The audience host uses the `id` subdomain, and `baseUrl` uses the `ec` subdomain.
+Set `aud` to the **Edge SDK Audience** value shown on your GitLab Job ID Token Trust Provider, which takes the form `https://<tenant>.id.<stack>.aembit.io`. Aembit rejects a token whose audience does not match. The audience host uses the `id` subdomain, and `baseUrl` uses the `ec` subdomain.
 
 Both examples read `GITLAB_OIDC_TOKEN`. The TypeScript example checks `AEMBIT_GITLAB_OIDC_TOKEN` first, so you can declare the token under that name instead.
 
@@ -203,7 +230,7 @@ Set each value in `EXAMPLE_CONFIG` at the top of the program:
 | TypeScript value              | Python value                    | Where it comes from                                                                                                                                                                                    |
 | ----------------------------- | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `baseUrl`                     | `base_url`                      | The Edge API base URL in your Aembit Tenant profile. See [Get your Aembit Edge API base URL](../../../api/edge/quickstart-edge.md#get-your-aembit-edge-api-base-url).                                   |
-| `clientId`                    | `client_id`                     | The Edge SDK Client ID from your GitLab Job ID Token Trust Provider. See [How to find your Edge SDK Client ID](#how-to-find-your-edge-sdk-client-id).                                                  |
+| `clientId`                    | `client_id`                     | The Edge SDK Client ID from your GitLab Job ID Token Trust Provider. See [Find your Edge SDK Client ID](#find-your-edge-sdk-client-id).                                                                |
 | `serverHost` and `serverPort` | `server_host` and `server_port` | The **Host** and **Port** under **Service Endpoint** on your Server Workload, which Aembit uses to find the Access Policy. **Port** must be equal, and **Host** must be equal or match a `*` wildcard. |
 | `credentialType`              | `credential_type`               | The credential type your Credential Provider returns, such as `ApiKey`.                                                                                                                                |
 | `resourceSet`                 | `resource_set`                  | Leave unset unless your Access Policy lives in a non-default Resource Set. It takes the Resource Set ID, not its name.                                                                                 |
@@ -270,7 +297,7 @@ For a GitLab Job ID Token Trust Provider, the validation in the fourth check inc
 * The token’s signature must verify against the keys Aembit fetches from the **OIDC Endpoint** on the Trust Provider. If it fails, confirm **OIDC Endpoint** points at the GitLab instance that runs the job.
 * The token must be inside the validity window its `exp` and `nbf` claims set, with 5 minutes of clock skew allowed. If it has expired, request a new token and retry.
 
-The `namespace_path`, `project_path`, and `ref_path` attributes compare the token’s claims of the same name, and `subject` compares the `sub` claim. A match rule on a claim the token doesn’t carry fails.
+The `namespace_path`, `project_path`, and `ref_path` attributes compare the token’s claims of the same name, and `subject` compares the `sub` claim. A match rule on a claim the token does not carry fails.
 
 ### The credential request raises an error
 
@@ -320,7 +347,7 @@ When a Client Workload uses the **Aembit Client ID** identifier, the SDK doesn�
 
 For this platform, **GitLab ID Token Subject**, **GitLab ID Token Project Path**, **GitLab ID Token Namespace Path**, and **GitLab ID Token Ref Path** compare the token’s `sub`, `project_path`, `namespace_path`, and `ref_path` claims.
 
-## How to find your Edge SDK Client ID
+## Find your Edge SDK Client ID
 
 1. Log in to your Aembit Tenant.
 

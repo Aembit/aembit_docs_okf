@@ -5,7 +5,7 @@ description: "Identity federation for MCP clients connecting to MCP servers thro
 resource: https://docs.aembit.io/user-guide/deploy-install/mcp-identity-gateway/
 interface: mcp
 tags: ["mcp-identity-gateway", "deploy-install"]
-timestamp: 2026-11-03T15:14:28-05:00
+timestamp: 2026-11-09T14:11:42-08:00
 ---
 
 # MCP Identity Gateway
@@ -20,7 +20,7 @@ AI agents connect to MCP Identity Gateway as if it were an MCP server. MCP Ident
 
 ### Enforces identity-aware policies
 
-MCP Identity Gateway validates the AI agent’s access token on every MCP request. It then asks Aembit Cloud to evaluate the Gateway-to-Server Access Policy for the target MCP server. Aembit Cloud evaluates the Client-to-Gateway Access Policy when the AI agent initially connects and obtains an access token. A Trust Provider validates user identity, and Credential Providers manage per-user credentials.
+MCP Identity Gateway validates the AI agent’s access token on every MCP request. It then asks Aembit Cloud to evaluate the Gateway-to-Server Access Policy for the target MCP server. Aembit Cloud evaluates the Client-to-Gateway Access Policy when the AI agent initially connects and obtains an access token. A Trust Provider validates user identity, and Credential Providers manage MCP server credentials, per user for the MCP User-Based and Enterprise Managed Access Token types.
 
 ### Performs secure token exchange
 
@@ -46,7 +46,7 @@ Use MCP Identity Gateway when you need:
 * Auditability for which user and AI agent accessed which MCP server, tools, and resources
 * Guarantees that AI agents never hold reusable credentials to critical systems
 
-MCP Identity Gateway targets those who need to secure, control, and audit access from AI agents to third-party and custom-built MCP servers. A single MCP Identity Gateway instance can route traffic to multiple MCP servers while sharing centralized policies across many users, with each user’s access isolated by their own credentials.
+MCP Identity Gateway targets those who need to secure, control, and audit access from AI agents to third-party and custom-built MCP servers. A single MCP Identity Gateway instance can route traffic to multiple MCP servers while sharing centralized policies across many users. Under an MCP User-Based or Enterprise Managed Access Token Credential Provider, each user’s own credentials isolate their access.
 
 ## Deployment options
 
@@ -109,7 +109,7 @@ After token validation succeeds, MCP Identity Gateway requests policy evaluation
 
 1. **Client-to-Gateway policy** - Validates which MCP client is connecting and which user it represents.
 2. **Gateway-to-Server policy** - Authorizes access to the target MCP server. Optional Access Conditions can enforce time-based or geographic restrictions.
-3. **Credential retrieval** - The Credential Provider retrieves the user’s OAuth tokens for the target MCP server.
+3. **Credential retrieval** - The Credential Provider retrieves the user’s OAuth tokens for the target MCP server, or the shared key for an API Key Credential Provider.
 
 If policy evaluation fails, MCP Identity Gateway rejects the request and logs the decision.
 

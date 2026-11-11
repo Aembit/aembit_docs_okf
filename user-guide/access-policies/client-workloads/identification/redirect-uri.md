@@ -5,7 +5,7 @@ description: "How to identify MCP client workloads using a Redirect URI within A
 resource: https://docs.aembit.io/user-guide/access-policies/client-workloads/identification/redirect-uri/
 interface: web-ui
 tags: ["mcp", "identification", "client-workload", "access-policy"]
-timestamp: 2026-11-03T18:51:02-08:00
+timestamp: 2026-11-10T23:08:08-08:00
 ---
 
 # Redirect URI
@@ -24,7 +24,10 @@ For more about how redirect URIs work in MCP authorization flows, see [Redirect 
 
 ## Applicable deployment type
 
-This method is for [MCP Authorization Server](../../../deploy-install/mcp-authorization-server/overview.md) deployments. It identifies MCP clients that connect to MCP servers protected by Aembit’s MCP Authorization Server.
+This method identifies MCP clients by the redirect URI they send in the OAuth authorization request. It applies to these deployments:
+
+* [MCP Identity Gateway](../../../deploy-install/mcp-identity-gateway/overview.md), for MCP clients that connect through MCP Identity Gateway and for an application that uses [embedded user authorization](../../mcp-identity-gateway/embedded-user-authorization.md)
+* [MCP Authorization Server](../../../deploy-install/mcp-authorization-server/overview.md), for MCP clients that connect to MCP servers that Aembit’s MCP Authorization Server protects
 
 ## Create a Client Workload with a Redirect URI identifier
 
@@ -43,6 +46,8 @@ To configure a Client Workload using the Redirect URI identifier, follow these s
    For **Value**, enter the redirect URI that your MCP client uses for OAuth callbacks.
 
    For example: `http://localhost:7777/oauth/callback`
+
+   End a value with `/*` to match that path and any path under it, on the same scheme, host, and port. For example, `https://app.example.com/oauth/*` matches `https://app.example.com/oauth/callback`.
 
    Optionally, add additional redirect URIs by clicking **+** to allow multiple MCP clients or multiple redirect URIs for a single client. If you don’t know the redirect URI for your MCP client, see [Find the redirect URI](#find-the-redirect-uri).
 

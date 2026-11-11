@@ -1,13 +1,13 @@
 ---
 type: definition
 title: "Client Workload"
-description: "Client Workloads represent software applications, scripts, or automated processes that initiate access requests to Server Workloads, operating autonomously without direct user interaction."
+description: "Client Workloads represent AI agents, software applications, scripts, or automated processes that initiate access requests to Server Workloads. They can act on behalf of a user under blended identity or operate autonomously, as when one service calls another."
 tags: ["core-concepts"]
-timestamp: 2025-10-14T06:32:52-07:00
+timestamp: 2026-11-05T18:18:07-08:00
 ---
 
 # Client Workload
 
-Client Workloads represent software applications, scripts, or automated processes that initiate access requests to Server Workloads, operating autonomously without direct user interaction.
+Client Workloads represent AI agents, software applications, scripts, or automated processes that initiate access requests to Server Workloads. They can act on behalf of a user under blended identity or operate autonomously, as when one service calls another.
 
 Learn more: [Client Workload](../get-started/concepts/client-workloads.md)

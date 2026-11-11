@@ -4,7 +4,7 @@ title: "Understanding Blended Identities"
 description: "How Aembit combines user identity and AI agent workload identity into unified access decisions"
 resource: https://docs.aembit.io/user-guide/access-policies/blended-identity/
 tags: ["access-policy"]
-timestamp: 2026-11-02T13:04:06-08:00
+timestamp: 2026-11-09T14:11:42-08:00
 ---
 
 # Understanding Blended Identities
@@ -50,15 +50,15 @@ The user authenticates through your IdP, the redirect URL identifies the AI agen
 [MCP Identity Gateway](../deploy-install/mcp-identity-gateway/overview.md) extends blended identity across two Access Policies:
 
 * **Client-to-Gateway policy** - Validates the AI agent’s identity (redirect URL) *and* the user’s identity (IdP claims) together. The Credential Provider embeds the user’s identity into the access token using dynamic claim expressions like `${oidc.identityToken.decode.payload.email}`.
-* **Gateway-to-Server policy** - Uses MCP Identity Gateway’s workload identity plus the embedded user context to obtain per-user credentials for each downstream MCP server.
+* **Gateway-to-Server policy** - Uses MCP Identity Gateway’s workload identity plus the embedded user context to obtain credentials for each downstream MCP server.
 
-This architecture enables per-user credential isolation: each user’s AI agent receives different downstream credentials based on their identity, even though all users connect through the same MCP Identity Gateway.
+With an MCP User-Based or Enterprise Managed Access Token Credential Provider, this architecture enables per-user credential isolation. Each user’s requests use their own downstream credentials based on their identity, even though all users connect through the same MCP Identity Gateway.
 
 ### Per-user credential isolation
 
-A key benefit of blended identity is that Aembit scopes credentials to individual users, not shared across an AI agent type. When MCP Identity Gateway connects to a downstream MCP server on behalf of a user:
+With an MCP User-Based or Enterprise Managed Access Token Credential Provider, Aembit scopes credentials to individual users, not shared across an AI agent type. When MCP Identity Gateway connects to a downstream MCP server on behalf of a user with an MCP User-Based Access Token Credential Provider:
 
-* MCP Identity Gateway stores OAuth tokens per user, not per AI agent
+* Aembit stores OAuth tokens per user, not per AI agent
 * Each user completes their own authorization flow for each MCP server
 * Revoking one user’s access does not affect others
 

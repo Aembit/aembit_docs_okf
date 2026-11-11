@@ -5,7 +5,7 @@ description: "How to create an OIDC 1.0 Identity Provider for Single Sign-On"
 resource: https://docs.aembit.io/user-guide/administration/identity-providers/create-idp-oidc/
 interface: web-ui
 tags: ["identity-provider", "administration"]
-timestamp: 2026-11-03T11:36:11-05:00
+timestamp: 2026-11-10T23:08:08-08:00
 ---
 
 # Create an OIDC 1.0 Identity Provider
@@ -101,6 +101,8 @@ To configure an OIDC 1.0 IdP to work with Aembit, follow these steps:
 9. Click the new Identity Provider to open it, and copy its **Aembit Redirect URL**.
 
    Aembit displays the **Aembit Redirect URL** only after you save the Identity Provider. Configure this URL in your third-party IdP as the redirect URI or callback URL of your OIDC application.
+
+   After **Aembit Redirect URL**, the **Details** tab also shows a read-only **Aembit Client ID**. An application sends this value as its Client ID in [embedded user authorization](../../access-policies/mcp-identity-gateway/embedded-user-authorization.md).
 
 ## Provider-specific examples
 
@@ -221,3 +223,4 @@ The following sections describe common issues you might encounter when setting u
 * [How to set up Okta SSO with your Aembit Tenant](okta/set-up-sso.md) - Set up Okta SSO with the Aembit integration from the Okta app catalog
 * [Sign-On Policy](../sign-on-policy/overview.md) - Configure Sign-On policies including SSO requirements
 * [Configure user group lookup](user-group-lookup.md) - Let Access Policies match the groups your users belong to
+* [Set up embedded user authorization](../../access-policies/mcp-identity-gateway/setup-embedded-user-authorization.md) - Let your application authorize people for MCP servers through this Identity Provider

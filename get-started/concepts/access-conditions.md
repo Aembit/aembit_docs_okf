@@ -4,7 +4,7 @@ title: "About Access Conditions"
 description: "Understanding Access Conditions and their role in context-aware authorization"
 resource: https://docs.aembit.io/get-started/concepts/access-conditions/
 tags: ["concept"]
-timestamp: 2026-09-08T23:32:41-07:00
+timestamp: 2026-11-05T18:18:07-08:00
 ---
 
 # About Access Conditions
@@ -29,7 +29,7 @@ The following steps outline how Aembit evaluates Access Conditions during the au
 
 1. **Request Initiation** - A Client Workload attempts to access a Server Workload.
 
-2. **Identity Verification** - Aembit Edge sends identity evidence to Aembit Cloud, where [Trust Providers](trust-providers.md) verify the Client Workload’s identity through workload attestation.
+2. **Identity Verification** - Aembit Cloud uses [Trust Providers](trust-providers.md) to validate the identity evidence required by the Access Policy. This evidence can include workload attestation evidence or user identity claims from an Identity Provider.
 
 3. **Context Gathering** - Access Conditions gather contextual information from multiple sources (time, location, security tools). Aembit caches context data it collects from thrid-party security tools in Aembit Cloud to avoid latency and unnecessary API calls on every access request.
 

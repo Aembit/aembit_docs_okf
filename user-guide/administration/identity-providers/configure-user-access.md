@@ -5,7 +5,7 @@ description: "Enable user access through an Identity Provider and configure Aemb
 resource: https://docs.aembit.io/user-guide/administration/identity-providers/configure-user-access/
 interface: web-ui
 tags: ["identity-provider", "administration"]
-timestamp: 2026-11-04T14:15:50-08:00
+timestamp: 2026-11-10T23:08:08-08:00
 ---
 
 # Configure Identity Provider user access
@@ -58,7 +58,7 @@ Before you configure user access, make sure you have:
 
 9. Copy the **Aembit Client ID** with the copy button beside the field.
 
-   The value identifies this Identity Provider rather than an individual person, and a Client Workload’s Aembit Client ID is a different value. Give it to everyone who signs in to Aembit Desktop through this Identity Provider.
+   Give it to everyone who signs in to Aembit Desktop through this Identity Provider. The value identifies this Identity Provider rather than an individual person, and a Client Workload’s Aembit Client ID is a different value. The **Aembit Client ID** on an OIDC Identity Provider’s **Details** tab is a third value, which [embedded user authorization](../../access-policies/mcp-identity-gateway/embedded-user-authorization.md) uses.
 
 10. Click **Save**.
 
