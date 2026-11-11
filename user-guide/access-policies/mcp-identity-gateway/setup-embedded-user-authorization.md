@@ -5,7 +5,7 @@ description: "Configure your Aembit Tenant so your application can authorize peo
 resource: https://docs.aembit.io/user-guide/access-policies/mcp-identity-gateway/setup-embedded-user-authorization/
 interface: mcp
 tags: ["mcp-identity-gateway", "access-policy"]
-timestamp: 2026-11-10T23:08:08-08:00
+timestamp: 2026-11-11T10:31:46-08:00
 ---
 
 # Set up embedded user authorization
@@ -86,7 +86,7 @@ The access token your application gets at the end of the flow comes from this Cr
 
 > **Refresh token support sets how often people go back to the MCP server**
 >
-> With **Enable Refresh Token Support** turned off, your application gets no refresh token. Each time the access token ends, your application must run the flow again. With an MCP User-Based Access Token on the Gateway-to-Server Policy, Aembit then sends the person back to the MCP server.
+> With **Enable Refresh Token Support** turned off, your application gets no refresh token. Each time the access token ends, your application must run the flow again. Aembit then sends the person back to the MCP server.
 >
 > To let your application refresh the access token instead, turn on **Enable Refresh Token Support** and set **Absolute Token Lifetime**. Your application runs the flow again only after the **Absolute Token Lifetime** ends. See [Consent at the MCP server](reference-embedded-user-authorization.md#consent-at-the-mcp-server).
 
@@ -103,7 +103,7 @@ Each MCP server your application authorizes people for needs a Gateway-to-Server
 
 * The Server Workload must point to the same MCP server URL your application requests. For how Aembit compares the two, see [MCP server URL rules](reference-embedded-user-authorization.md#mcp_server_url-rules).
 * Only one Gateway-to-Server Policy available to the person can match each MCP server. When more than one matches, Aembit stops the flow and returns the person’s browser to your application with an error.
-* The Access Policy must have exactly one active MCP User-Based Access Token or SSO Access Token Passthrough Credential Provider, and SSO Access Token Passthrough skips consent at the MCP server. MCP Enterprise Managed Access Token and OAuth 2.0 Authorization Code do not work with embedded user authorization.
+* The Access Policy must have exactly one active MCP User-Based Access Token Credential Provider and no active SSO Access Token Passthrough Credential Provider. MCP Enterprise Managed Access Token and OAuth 2.0 Authorization Code do not work with embedded user authorization.
 
 ## Values your application sends
 

@@ -4,7 +4,7 @@ title: "Embedded user authorization"
 description: "How your application signs a person in and connects an MCP server for them without Aembit pages, then uses that access at runtime."
 resource: https://docs.aembit.io/user-guide/access-policies/mcp-identity-gateway/embedded-user-authorization/
 tags: ["mcp-identity-gateway", "access-policy"]
-timestamp: 2026-11-10T23:08:08-08:00
+timestamp: 2026-11-11T10:31:46-08:00
 ---
 
 # Embedded user authorization
@@ -21,10 +21,6 @@ Your application must run a standard OAuth authorization code flow with PKCE aga
 * Your application decides which MCP server a person authorizes.
 
 ## How embedded user authorization works
-
-> **SSO Access Token Passthrough skips consent at the MCP server**
->
-> With an SSO Access Token Passthrough Credential Provider on the Gateway-to-Server Policy, Aembit does not send the person to the MCP server, so the person sees no consent page. The rest of this section uses an MCP User-Based Access Token Credential Provider.
 
 ### What the person sees
 
@@ -53,13 +49,13 @@ For every parameter, rule, and error in this flow, see [Embedded user authorizat
 Each Access Policy in the flow requires a specific Credential Provider.
 
 * The Client-to-Gateway Policy needs an OIDC ID Token Credential Provider, with its **Audience** set to the MCP Identity Gateway URL.
-* The Gateway-to-Server Policy needs an MCP User-Based Access Token or SSO Access Token Passthrough Credential Provider. Exactly one Gateway-to-Server Policy must match the MCP server the person is authorizing.
+* The Gateway-to-Server Policy needs exactly one active MCP User-Based Access Token Credential Provider and no active SSO Access Token Passthrough Credential Provider. Exactly one Gateway-to-Server Policy must match the MCP server the person is authorizing.
 
 ### Token lifetimes
 
 When the MCP server issues a refresh token, Aembit refreshes the stored MCP server token on its own for as long as the MCP server honors that refresh token.
 
-The access token your application gets lasts for the lifetime the Client-to-Gateway Policy’s Credential Provider sets. When that Credential Provider has **Enable Refresh Token Support** turned on, your application also gets a refresh token. Your application exchanges the refresh token for a new access token until the Credential Provider’s **Absolute Token Lifetime** ends. Without a valid refresh token, your application must run the flow again when the access token expires. With an MCP User-Based Access Token Credential Provider, Aembit then sends the person back to the MCP server.
+The access token your application gets lasts for the lifetime the Client-to-Gateway Policy’s Credential Provider sets. When that Credential Provider has **Enable Refresh Token Support** turned on, your application also gets a refresh token. Your application exchanges the refresh token for a new access token until the Credential Provider’s **Absolute Token Lifetime** ends. Without a valid refresh token, your application must run the flow again when the access token expires. Aembit then sends the person back to the MCP server.
 
 ## Limitations
 

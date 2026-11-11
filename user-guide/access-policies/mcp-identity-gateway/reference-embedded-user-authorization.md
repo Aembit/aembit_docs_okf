@@ -5,7 +5,7 @@ description: "Request parameters, lifetimes, errors, and events for embedded use
 resource: https://docs.aembit.io/user-guide/access-policies/mcp-identity-gateway/reference-embedded-user-authorization/
 interface: mcp
 tags: ["mcp-identity-gateway", "access-policy"]
-timestamp: 2026-11-10T23:08:08-08:00
+timestamp: 2026-11-11T10:31:46-08:00
 ---
 
 # Embedded user authorization reference
@@ -87,9 +87,7 @@ See [Redirect URI](../client-workloads/identification/redirect-uri.md).
 
 ## Consent at the MCP server
 
-With an SSO Access Token Passthrough Credential Provider on the Gateway-to-Server Policy, Aembit skips this step and returns the authorization response directly.
-
-With an MCP User-Based Access Token Credential Provider, Aembit sends the person to the MCP server’s authorization server on every run of the flow. It does so even when Aembit already holds a token for that person and MCP server. The `prompt` value Aembit sends depends on the **Authorization URL** of the MCP User-Based Access Token Credential Provider:
+Aembit sends the person to the MCP server’s authorization server on every run of the flow. It does so even when Aembit already holds a token for that person and MCP server. The `prompt` value Aembit sends depends on the **Authorization URL** of the MCP User-Based Access Token Credential Provider:
 
 | When the Authorization URL contains | `prompt` value   | What Aembit asks the authorization server for                |
 | ----------------------------------- | ---------------- | ------------------------------------------------------------ |
@@ -168,11 +166,13 @@ Aembit expects the user identifier to be an email address, so configure your Ide
 
 ## Errors
 
-Errors that come before Aembit trusts `redirect_uri` do not reach your application. Aembit returns HTTP 400 or shows an Aembit error page in the browser instead, for any of these conditions:
+Errors that come before Aembit trusts `redirect_uri` do not reach your application. Aembit returns HTTP 400 or shows an Aembit error page in the browser instead, for conditions such as these:
 
 * `client_id` is not a valid Aembit Client ID, names another Aembit Tenant, or names an inactive Identity Provider.
 * `redirect_uri` matches no **Redirect URI** identifier (`invalid_redirect_uri`).
 * `mcp_server_url` breaks a rule (`invalid_request`).
+* The PKCE parameters are missing or invalid (`invalid_request`).
+* `resource` is not an absolute URI (`invalid_target`).
 
 Errors after that point redirect the browser to `redirect_uri` with `error`, `error_description`, and the original `state`.
 
